@@ -33,7 +33,7 @@ const CONFIG = {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZtcGhvdWRqc2xtd3NlYnF0dGxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM4NjAxNTQsImV4cCI6MjA5OTQzNjE1NH0.w10MlWop_go_qp7eIyYYFIy3ts38ReYmZJjQJqKZKmM",
 
   // Point this at your backend. Empty string = same origin.
-  API_BASE: "http://localhost:5000",
+  API_BASE: "",
 
   // Chat endpoint (relative = served by whatever host serves the page).
   CHAT_ENDPOINT: "/ai/chat",
