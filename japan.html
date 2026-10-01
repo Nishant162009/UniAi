@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniAI — Study in Japan</title>
+<meta name="description" content="Explore studying in Japan with UniAI — universities, cities, costs, visas, language schools, scholarships and your journey.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Noto+Serif+JP:wght@500;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#08080c;
+  --surface:#111119;
+  --surface2:#171720;
+  --text:#fff8fb;
+  --muted:#b7adb4;
+  --line:rgba(255,255,255,.105);
+  --pink:#ff82ad;
+  --pink2:#ffb8d0;
+  --pink3:#ffd9e5;
+  --max:1240px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:"DM Sans",sans-serif;overflow-x:hidden;
+}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+::selection{background:rgba(255,130,173,.38)}
+
+/* ---------- NAV ---------- */
+.nav{
+  position:fixed;z-index:100;inset:0 0 auto;height:76px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 4vw;transition:.4s;
+}
+.nav.scrolled{
+  background:rgba(8,8,12,.72);backdrop-filter:blur(22px);
+  border-bottom:1px solid var(--line);
+}
+.logo{
+  font-family:"Space Grotesk";font-size:23px;font-weight:700;
+  letter-spacing:-.06em;
+}
+.logo span{opacity:.4}
+.navlinks{display:flex;gap:27px;font-size:13px;color:#e5dce1}
+.navlinks a{opacity:.75;transition:.2s}
+.navlinks a:hover{opacity:1;color:var(--pink2)}
+.nav-cta{
+  cursor:pointer;color:white;background:rgba(255,130,173,.11);
+  border:1px solid rgba(255,130,173,.5);padding:11px 17px;border-radius:999px;
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  min-height:100svh;position:relative;display:flex;align-items:flex-end;
+  overflow:hidden;isolation:isolate;
+  background:
+    linear-gradient(180deg,rgba(7,6,10,.12),rgba(7,6,10,.28) 42%,#08080c 100%),
+    url("https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=2400&q=88") center/cover;
+}
+.hero:before{
+  content:"";position:absolute;inset:-5%;z-index:-2;
+  background:url("https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=2400&q=88") center/cover;
+  animation:heroZoom 20s ease-in-out infinite alternate;
+}
+.hero:after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:
+    radial-gradient(circle at 72% 25%,rgba(255,130,173,.24),transparent 27%),
+    linear-gradient(90deg,rgba(4,4,8,.88),rgba(4,4,8,.18) 75%);
+}
+@keyframes heroZoom{to{transform:scale(1.075)}}
+
+.hero-kanji{
+  position:absolute;right:5vw;top:16vh;z-index:0;
+  font-family:"Noto Serif JP";font-size:clamp(110px,16vw,250px);
+  line-height:.8;color:rgba(255,184,208,.11);
+  writing-mode:vertical-rl;letter-spacing:.1em;pointer-events:none;
+}
+.hero-inner{
+  width:min(var(--max),92vw);margin:auto;padding:155px 0 75px;position:relative;z-index:2;
+}
+.eyebrow{
+  display:flex;align-items:center;gap:10px;color:var(--pink2);
+  text-transform:uppercase;letter-spacing:.2em;font-size:11px;margin-bottom:20px;
+}
+.eyebrow:before{content:"";height:1px;width:29px;background:var(--pink)}
+.jp-label{
+  font-family:"Noto Serif JP";font-size:17px;color:#ffe0e9;
+  letter-spacing:.18em;margin-left:7px;opacity:.9;
+}
+h1{
+  font-family:"Space Grotesk";font-size:clamp(68px,10vw,144px);
+  line-height:.84;letter-spacing:-.075em;margin:0 0 28px;max-width:930px;
+}
+h1 em{
+  font-family:"Noto Serif JP";font-style:normal;font-weight:700;
+  color:var(--pink2);letter-spacing:-.06em;
+}
+.hero-copy{max-width:610px;color:#ddd2d8;font-size:18px;line-height:1.7}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:33px}
+.btn{
+  cursor:pointer;padding:14px 20px;border-radius:999px;
+  border:1px solid var(--line);background:rgba(255,255,255,.075);color:white;transition:.25s;
+}
+.btn.primary{background:var(--pink);border-color:var(--pink);color:#190b11;font-weight:700}
+.btn:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(255,130,173,.18)}
+.hero-meta{
+  display:flex;gap:40px;flex-wrap:wrap;margin-top:60px;
+  padding-top:20px;border-top:1px solid var(--line);
+}
+.meta strong{display:block;font-family:"Space Grotesk";font-size:27px}
+.meta span{font-size:11px;color:#afa4aa;text-transform:uppercase;letter-spacing:.11em}
+
+/* ---------- SHIMMER MARQUEE ---------- */
+.marquee{border-block:1px solid var(--line);overflow:hidden;white-space:nowrap;padding:19px 0;background:rgba(255,130,173,.025)}
+.track{display:inline-flex;gap:48px;animation:marquee 30s linear infinite}
+.track span{font-size:11px;color:#a99da4;text-transform:uppercase;letter-spacing:.2em}
+.track .pink{color:#eaa0ba}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* ---------- COMMON ---------- */
+.section{padding:125px 0;position:relative}
+.container{width:min(var(--max),92vw);margin:auto}
+.kicker{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--pink2);margin-bottom:15px}
+.title{
+  font-family:"Space Grotesk";font-size:clamp(44px,5.6vw,78px);
+  line-height:.94;letter-spacing:-.06em;margin:0;max-width:880px;
+}
+.sub{color:var(--muted);font-size:17px;line-height:1.75;max-width:660px;margin-top:22px}
+.reveal{opacity:0;transform:translateY(38px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* ---------- CITY WORLD ---------- */
+.cities{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:15px;margin-top:58px}
+.city{
+  min-height:500px;position:relative;overflow:hidden;border-radius:24px;
+  background-size:cover;background-position:center;border:1px solid var(--line);
+  display:flex;align-items:flex-end;transition:.45s;
+}
+.city:hover{transform:translateY(-7px);border-color:rgba(255,130,173,.48)}
+.city:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 32%,rgba(5,5,9,.9))}
+.city-content{position:relative;z-index:2;padding:28px;width:100%}
+.city-jp{font-family:"Noto Serif JP";font-size:14px;color:var(--pink2);margin-bottom:5px}
+.city h3{font-family:"Space Grotesk";font-size:35px;letter-spacing:-.045em;margin:0 0 8px}
+.city p{font-size:13px;color:#c4bac0;margin:0}
+
+/* ---------- CULTURE ---------- */
+.culture{
+  background:
+    radial-gradient(circle at 15% 45%,rgba(255,130,173,.09),transparent 27%),
+    #0a0a0f;
+}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.jp-wall{
+  min-height:470px;border:1px solid var(--line);border-radius:26px;
+  background:linear-gradient(145deg,#12111a,#0c0c11);overflow:hidden;position:relative;
+  display:flex;align-items:center;justify-content:center;
+}
+.jp-wall:before{
+  content:"日本";position:absolute;font-family:"Noto Serif JP";
+  font-size:260px;color:rgba(255,130,173,.045);line-height:1;
+}
+.jp-wall-content{position:relative;text-align:center}
+.jp-wall-content .kanji{font-family:"Noto Serif JP";font-size:92px;color:var(--pink2)}
+.jp-wall-content p{max-width:330px;color:#bdb3ba;line-height:1.7;font-size:14px}
+
+/* ---------- UNIVERSITY CARDS ---------- */
+.uni-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:58px}
+.uni{
+  min-height:265px;padding:30px;border:1px solid var(--line);border-radius:20px;
+  background:linear-gradient(145deg,#15131c,#0e0e14);transition:.3s;position:relative;overflow:hidden;
+}
+.uni:after{
+  content:"";position:absolute;width:140px;height:140px;right:-75px;bottom:-75px;
+  border-radius:50%;background:rgba(255,130,173,.1);filter:blur(15px);
+}
+.uni:hover{transform:translateY(-6px);border-color:rgba(255,130,173,.45)}
+.uni small{color:#c88ba3;text-transform:uppercase;letter-spacing:.14em;font-size:10px}
+.uni h3{font-family:"Space Grotesk";font-size:27px;letter-spacing:-.04em;margin:28px 0 9px}
+.uni p{color:var(--muted);font-size:14px;line-height:1.6}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:7px 10px;font-size:10px;color:#cfc3c9;margin:5px 4px 0 0}
+
+/* ---------- LANGUAGE ---------- */
+.language-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:58px}
+.lang-card{
+  min-height:330px;border-radius:24px;border:1px solid var(--line);padding:36px;
+  background:linear-gradient(140deg,#17121a,#0e0e13);position:relative;overflow:hidden;
+}
+.lang-card.big{background:linear-gradient(140deg,rgba(255,130,173,.18),rgba(17,17,25,.95))}
+.lang-symbol{font-family:"Noto Serif JP";font-size:110px;color:rgba(255,184,208,.75);line-height:.8}
+.lang-card h3{font-family:"Space Grotesk";font-size:30px;margin:30px 0 10px}
+.lang-card p{color:var(--muted);line-height:1.65;max-width:450px}
+
+/* ---------- COST ---------- */
+.cost{background:#0b0b10}
+.cost-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:15px;margin-top:58px}
+.panel{border:1px solid var(--line);background:var(--surface);border-radius:23px;padding:35px}
+.row{display:flex;justify-content:space-between;gap:20px;padding:21px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row span{color:var(--muted)}.row strong{font-family:"Space Grotesk"}
+.money{
+  min-height:100%;display:flex;flex-direction:column;justify-content:center;
+  background:linear-gradient(145deg,rgba(255,130,173,.13),#111119)
+}
+.money-symbol{font-size:90px;font-family:"Space Grotesk";color:var(--pink);line-height:1}
+.money h3{font-size:27px;margin:25px 0 8px}
+.money p{color:var(--muted);line-height:1.7}
+
+/* ---------- VISA ---------- */
+.timeline{position:relative;margin-top:60px}
+.timeline:before{content:"";position:absolute;left:25px;top:0;bottom:0;width:1px;background:linear-gradient(var(--pink),var(--line))}
+.step{position:relative;padding:0 0 55px 77px}
+.step:last-child{padding-bottom:0}
+.dot{
+  position:absolute;left:14px;top:0;width:23px;height:23px;border-radius:50%;
+  border:1px solid var(--pink);background:var(--bg);
+  box-shadow:0 0 0 7px var(--bg),0 0 20px rgba(255,130,173,.15)
+}
+.step small{color:#ca8ea6;letter-spacing:.17em}
+.step h3{font-family:"Space Grotesk";font-size:29px;margin:9px 0}
+.step p{color:var(--muted);line-height:1.65;max-width:690px}
+
+/* ---------- FEATURE CTA ---------- */
+.feature{padding:125px 0}
+.feature-card{
+  min-height:520px;border:1px solid rgba(255,130,173,.28);border-radius:30px;
+  overflow:hidden;position:relative;display:flex;align-items:center;padding:60px;
+  background:
+    linear-gradient(90deg,rgba(5,4,8,.94),rgba(5,4,8,.38)),
+    url("https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?w=1900&q=85") center/cover;
+}
+.feature-card:before{
+  content:"桜";position:absolute;right:2vw;top:-70px;
+  font-family:"Noto Serif JP";font-size:390px;line-height:1;
+  color:rgba(255,130,173,.08);
+}
+.feature-content{position:relative;z-index:2;max-width:680px}
+.feature-content h2{font-family:"Space Grotesk";font-size:clamp(46px,6vw,82px);line-height:.92;letter-spacing:-.07em;margin:0 0 22px}
+.feature-content p{color:#d6cbd1;line-height:1.7}
+
+/* ---------- FOOTER ---------- */
+.footer{border-top:1px solid var(--line);padding:55px 0;color:#9e949b}
+.footer-inner{width:min(var(--max),92vw);margin:auto;display:flex;justify-content:space-between;gap:25px;flex-wrap:wrap}
+.footer-logo{font-family:"Space Grotesk";font-weight:700;font-size:23px;color:#fff}
+.footer a{font-size:13px;margin-right:18px}
+.top{cursor:pointer;border:1px solid var(--line);background:none;color:#eee;padding:10px 15px;border-radius:999px}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:900px){
+  .navlinks{display:none}
+  .cities,.split,.cost-grid,.language-grid{grid-template-columns:1fr}
+  .city{min-height:390px}
+  .uni-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .hero-inner{padding-bottom:55px}
+  h1{font-size:65px}
+  .hero-copy{font-size:16px}
+  .hero-kanji{right:-15px;opacity:.7}
+  .hero-meta{gap:22px}
+  .section,.feature{padding:85px 0}
+  .uni-grid{grid-template-columns:1fr}
+  .feature-card{padding:30px;min-height:540px}
+  .feature-card:before{font-size:230px}
+}
+</style>
+</head>
+
+<body>
+
+<nav class="nav" id="nav">
+  <a class="logo" href="../index.html">Uni<span>AI</span></a>
+  <div class="navlinks">
+    <a href="#cities">Cities</a>
+    <a href="#universities">Universities</a>
+    <a href="#language">Language</a>
+    <a href="#cost">Costs</a>
+    <a href="#visa">Visa</a>
+  </div>
+  <button class="nav-cta" onclick="document.querySelector('#plan').scrollIntoView({behavior:'smooth'})">Build my plan →</button>
+</nav>
+
+<header class="hero">
+  <div class="hero-kanji">日本</div>
+  <div class="hero-inner">
+    <div class="eyebrow">Study destination / Japan <span class="jp-label">日本</span></div>
+    <h1>Enter the<br><em>future.</em></h1>
+    <p class="hero-copy">
+      Where centuries-old temples meet bullet trains, neon nights meet quiet mornings,
+      and an education can become a doorway into an entirely different way of seeing the world.
+    </p>
+    <div class="actions">
+      <button class="btn primary" onclick="document.querySelector('#universities').scrollIntoView({behavior:'smooth'})">Explore universities</button>
+      <button class="btn" onclick="document.querySelector('#plan').scrollIntoView({behavior:'smooth'})">Start my Japan plan</button>
+    </div>
+    <div class="hero-meta">
+      <div class="meta"><strong>47</strong><span>prefectures</span></div>
+      <div class="meta"><strong>Tokyo → Kyoto</strong><span>worlds apart, same country</span></div>
+      <div class="meta"><strong>日本</strong><span>learn beyond the classroom</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee">
+  <div class="track">
+    <span>東京 Tokyo</span><span class="pink">桜 Sakura</span><span>京都 Kyoto</span><span>大阪 Osaka</span><span>北海道 Hokkaido</span><span>研究 Research</span><span class="pink">未来 Future</span><span>新幹線 Shinkansen</span><span>文化 Culture</span>
+    <span>東京 Tokyo</span><span class="pink">桜 Sakura</span><span>京都 Kyoto</span><span>大阪 Osaka</span><span>北海道 Hokkaido</span><span>研究 Research</span><span class="pink">未来 Future</span><span>新幹線 Shinkansen</span><span>文化 Culture</span>
+  </div>
+</div>
+
+<section class="section" id="cities">
+<div class="container">
+  <div class="reveal">
+    <div class="kicker">01 / Choose your Japan</div>
+    <h2 class="title">One country. Completely different worlds.</h2>
+    <p class="sub">Your city shapes your Japanese experience. Choose neon energy, ancient streets, startup culture or a slower rhythm surrounded by nature.</p>
+  </div>
+
+  <div class="cities">
+    <article class="city reveal" style="background-image:url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1300&q=85')">
+      <div class="city-content"><div class="city-jp">東京</div><h3>Tokyo</h3><p>Technology · Business · Design · Endless energy</p></div>
+    </article>
+    <article class="city reveal" style="background-image:url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1100&q=85')">
+      <div class="city-content"><div class="city-jp">京都</div><h3>Kyoto</h3><p>Tradition · Culture · Temples · Art</p></div>
+    </article>
+    <article class="city reveal" style="background-image:url('https://images.unsplash.com/photo-1590559899731-a382839e5549?w=1100&q=85')">
+      <div class="city-content"><div class="city-jp">大阪</div><h3>Osaka</h3><p>Food · Business · Community · Nightlife</p></div>
+    </article>
+  </div>
+</div>
+</section>
+
+<section class="section culture">
+<div class="container split">
+  <div class="reveal">
+    <div class="kicker">02 / More than a degree</div>
+    <h2 class="title">Learn the place, not just the subject.</h2>
+    <p class="sub">Japan can give your education a second dimension: language, design, technology, social customs, food, history and everyday life become part of the experience.</p>
+  </div>
+  <div class="jp-wall reveal">
+    <div class="jp-wall-content">
+      <div class="kanji">学</div>
+      <p>学 — learning. A small character for a journey that can completely change how you see the world.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="universities">
+<div class="container">
+  <div class="reveal">
+    <div class="kicker">03 / University universe</div>
+    <h2 class="title">Build a shortlist worth crossing an ocean for.</h2>
+    <p class="sub">A starting point for exploration. Confirm current programs, language requirements, fees and admission rules with each institution.</p>
+  </div>
+
+  <div class="uni-grid">
+    <article class="uni reveal"><small>Tokyo · National</small><h3>The University of Tokyo</h3><p>Japan's flagship national university with broad academic and research offerings.</p><span class="tag">Research</span><span class="tag">Tokyo</span></article>
+    <article class="uni reveal"><small>Kyoto · National</small><h3>Kyoto University</h3><p>A major research university in one of Japan's most historic academic cities.</p><span class="tag">Research</span><span class="tag">Kyoto</span></article>
+    <article class="uni reveal"><small>Tokyo · Private</small><h3>Waseda University</h3><p>A large private university with an international student community and diverse programs.</p><span class="tag">Private</span><span class="tag">International</span></article>
+    <article class="uni reveal"><small>Tokyo · Private</small><h3>Keio University</h3><p>Historic private university with strong academic and professional networks.</p><span class="tag">Business</span><span class="tag">Tokyo</span></article>
+    <article class="uni reveal"><small>Tokyo · Science</small><h3>Tokyo Institute of Technology</h3><p>Science and technology-focused education and research in the Tokyo area.</p><span class="tag">STEM</span><span class="tag">Technology</span></article>
+    <article class="uni reveal"><small>Tokyo · International</small><h3>University of Tsukuba</h3><p>A major national university with broad fields of study and international programs.</p><span class="tag">Research</span><span class="tag">International</span></article>
+  </div>
+</div>
+</section>
+
+<section class="section" id="language">
+<div class="container">
+  <div class="reveal">
+    <div class="kicker">04 / Language</div>
+    <h2 class="title">Japanese isn't a requirement. It can be the adventure.</h2>
+    <p class="sub">Programs vary: some are taught in English, some in Japanese, and language schools offer another route for students who want to build Japanese proficiency.</p>
+  </div>
+
+  <div class="language-grid">
+    <article class="lang-card big reveal">
+      <div class="lang-symbol">言</div>
+      <h3>Study in English</h3>
+      <p>Explore English-taught degrees and international programs while building Japanese gradually through everyday life.</p>
+    </article>
+    <article class="lang-card reveal">
+      <div class="lang-symbol">語</div>
+      <h3>Go deeper in Japanese</h3>
+      <p>For Japanese-medium programs or students who want stronger language skills, Japanese study can become part of the main journey.</p>
+    </article>
+  </div>
+</div>
+</section>
+
+<section class="section cost" id="cost">
+<div class="container">
+  <div class="reveal">
+    <div class="kicker">05 / The money map</div>
+    <h2 class="title">Plan the yen before you plan the flight.</h2>
+    <p class="sub">Your real budget depends on institution, city, housing and lifestyle. Use these categories to build a personal estimate.</p>
+  </div>
+
+  <div class="cost-grid">
+    <div class="panel reveal">
+      <div class="row"><span>Tuition</span><strong>Institution dependent</strong></div>
+      <div class="row"><span>Accommodation</span><strong>City + housing type</strong></div>
+      <div class="row"><span>Food + transport</span><strong>Lifestyle dependent</strong></div>
+      <div class="row"><span>Insurance + setup</span><strong>Current rules apply</strong></div>
+      <div class="row"><span>Language study</span><strong>Optional / program dependent</strong></div>
+    </div>
+    <div class="panel money reveal">
+      <div class="money-symbol">¥</div>
+      <h3>Think city-first.</h3>
+      <p>Tokyo, Kyoto, Osaka and smaller university cities can create very different budgets. Compare rent, commuting and everyday spending alongside tuition.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="visa">
+<div class="container">
+  <div class="reveal">
+    <div class="kicker">06 / Visa runway</div>
+    <h2 class="title">From acceptance letter to konnichiwa.</h2>
+    <p class="sub">The exact process depends on your program and circumstances. Use this as a planning flow and confirm current requirements through official Japanese sources and your institution.</p>
+  </div>
+
+  <div class="timeline">
+    <div class="step reveal"><div class="dot"></div><small>STEP 01</small><h3>Choose your program</h3><p>Compare degree programs, language of instruction, intake, location, admission requirements and costs.</p></div>
+    <div class="step reveal"><div class="dot"></div><small>STEP 02</small><h3>Apply + receive admission</h3><p>Prepare academic documents, language evidence where required and the materials requested by your institution.</p></div>
+    <div class="step reveal"><div class="dot"></div><small>STEP 03</small><h3>Certificate of Eligibility</h3><p>For many student visa cases, the institution supports the process for obtaining the Certificate of Eligibility.</p></div>
+    <div class="step reveal"><div class="dot"></div><small>STEP 04</small><h3>Student visa application</h3><p>Follow the current instructions from the Japanese embassy or consulate responsible for your application.</p></div>
+    <div class="step reveal"><div class="dot"></div><small>STEP 05</small><h3>Land in Japan</h3><p>Sort housing, registration, transport, banking and orientation — then start your new routine.</p></div>
+  </div>
+</div>
+</section>
+
+<section class="feature" id="plan">
+<div class="container">
+  <div class="feature-card reveal">
+    <div class="feature-content">
+      <div class="kicker">07 / Your Japan chapter</div>
+      <h2>Maybe the next chapter starts here.</h2>
+      <p>Turn your Japan dream into a real application plan — shortlist universities, compare cities, map documents, estimate costs and track your milestones.</p>
+      <div class="actions">
+        <button class="btn primary" onclick="alert('Connect this button to your UniAI application planner.')">Build my Japan roadmap →</button>
+        <button class="btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to top</button>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<footer class="footer">
+<div class="footer-inner">
+  <div><div class="footer-logo">UniAI</div><div style="margin-top:8px;font-size:13px">Study abroad, but smarter. <span style="color:#ff82ad">桜</span></div></div>
+  <div>
+    <a href="../index.html">Home</a>
+    <a href="#universities">Universities</a>
+    <a href="#language">Language</a>
+    <a href="#visa">Visa</a>
+    <button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
+  </div>
+</div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:.12});
+
+document.querySelectorAll('.reveal').forEach((el,i)=>{
+  el.style.transitionDelay=(i%4)*70+'ms';
+  observer.observe(el);
+});
+</script>
+
+</body>
+</html>

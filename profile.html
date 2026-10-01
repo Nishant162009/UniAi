@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>University Profile | UniAI</title>
+
+  <link rel="stylesheet" href="/UI/main.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  
+</head>
+<style></style>
+
+<body>
+
+  <main class="profile-page">
+
+
+    <!-- =================================================
+         TOP BAR
+         ================================================= -->
+
+    <div class="profile-topbar">
+
+      <a href="/" class="back-btn">
+        ← Back to University Finder
+      </a>
+
+      <div class="profile-label">
+        <span class="profile-label-dot"></span>
+        UniAI University Profile
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         UNIVERSITY HERO
+         ================================================= -->
+
+    <section class="university-hero">
+
+      <div
+        class="hero-background"
+        id="uni-banner">
+      </div>
+
+      <div class="hero-gradient"></div>
+
+
+      <div class="hero-content">
+
+        <div class="hero-main">
+
+
+          <img
+            id="uni-logo"
+            class="university-logo"
+            src="https://placehold.co/120x120?text=UNI"
+            alt="University logo"
+          >
+
+
+          <div class="hero-info">
+
+            <div class="rank-pill">
+              ★ QS Ranked Institution
+            </div>
+
+
+            <h1
+              id="uni-name"
+              class="loading">
+              Loading University...
+            </h1>
+
+
+            <p
+              id="uni-location"
+              class="hero-location">
+              📍 Loading location...
+            </p>
+
+
+            <div class="hero-actions">
+
+              <a
+                id="val-web"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="action-btn action-primary">
+                🌐 Official Website
+              </a>
+
+
+              <a
+                id="wiki-link"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="action-btn action-secondary">
+                📚 Wikipedia
+              </a>
+
+            </div>
+
+          </div>
+
+
+          <!-- Overall Score -->
+
+          <div class="hero-score">
+
+            <span class="hero-score-label">
+              Overall Score
+            </span>
+
+            <div
+              id="hero-score-value"
+              class="hero-score-value">
+              --
+            </div>
+
+            <span class="hero-score-sub">
+              UniAI profile
+            </span>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         MAIN CONTENT
+         ================================================= -->
+
+    <div class="profile-grid">
+
+
+      <!-- =================================================
+           RANKING
+           ================================================= -->
+
+      <section class="profile-card ranking-card">
+
+        <div class="card-header">
+
+          <div>
+            <h2 class="card-title">
+              📊 Ranking Snapshot
+            </h2>
+
+            <p class="card-subtitle">
+              Key indicators from the university profile
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="ranking-grid">
+
+
+          <div class="ranking-item">
+
+            <span class="ranking-item-label">
+              QS World Rank
+            </span>
+
+            <span
+              id="val-rank"
+              class="ranking-item-value">
+              --
+            </span>
+
+          </div>
+
+
+          <div class="ranking-item">
+
+            <span class="ranking-item-label">
+              Overall Score
+            </span>
+
+            <span
+              id="val-score"
+              class="ranking-item-value">
+              --
+            </span>
+
+          </div>
+
+
+          <div class="ranking-item">
+
+            <span class="ranking-item-label">
+              Academic Reputation
+            </span>
+
+            <span
+              id="val-academic"
+              class="ranking-item-value">
+              --
+            </span>
+
+          </div>
+
+
+          <div class="ranking-item">
+
+            <span class="ranking-item-label">
+              Employer Reputation
+            </span>
+
+            <span
+              id="val-employer-short"
+              class="ranking-item-value">
+              --
+            </span>
+
+          </div>
+
+
+          <div class="ranking-item">
+
+            <span class="ranking-item-label">
+              International
+            </span>
+
+            <span
+              id="val-intl-short"
+              class="ranking-item-value">
+              --
+            </span>
+
+          </div>
+
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           ABOUT
+           ================================================= -->
+
+      <section class="profile-card about-card">
+
+        <div class="card-header">
+
+          <div>
+
+            <h2 class="card-title">
+              🏛 About Institution
+            </h2>
+
+            <p class="card-subtitle">
+              University overview
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <p
+          id="uni-bio"
+          class="about-text">
+          Fetching university biography...
+        </p>
+
+      </section>
+
+
+
+      <!-- =================================================
+           QUICK FACTS
+           ================================================= -->
+
+      <section class="profile-card">
+
+        <div class="card-header">
+
+          <div>
+
+            <h2 class="card-title">
+              📌 Quick Facts
+            </h2>
+
+            <p class="card-subtitle">
+              Essential information
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="facts-list">
+
+
+          <div class="fact">
+
+            <span class="fact-label">
+              Founded
+            </span>
+
+            <span
+              id="val-founded"
+              class="fact-value">
+              --
+            </span>
+
+          </div>
+
+
+          <div class="fact">
+
+            <span class="fact-label">
+              Institution Type
+            </span>
+
+            <span class="fact-value">
+              Research Institution
+            </span>
+
+          </div>
+
+
+          <div class="fact">
+
+            <span class="fact-label">
+              Country
+            </span>
+
+            <span
+              id="fact-country"
+              class="fact-value">
+              --
+            </span>
+
+          </div>
+
+
+          <div class="fact">
+
+            <span class="fact-label">
+              City
+            </span>
+
+            <span
+              id="fact-city"
+              class="fact-value">
+              --
+            </span>
+
+          </div>
+
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           FINANCIAL
+           ================================================= -->
+
+      <section class="profile-card">
+
+        <div class="card-header">
+
+          <div>
+
+            <h2 class="card-title">
+              💰 Financial Overview
+            </h2>
+
+            <p class="card-subtitle">
+              Estimated study costs
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="info-grid">
+
+
+          <div class="info-box">
+
+            <div class="info-icon">
+              💵
+            </div>
+
+            <span class="info-label">
+              Annual Tuition
+            </span>
+
+            <span
+              id="val-tuition"
+              class="info-value highlight">
+              --
+            </span>
+
+          </div>
+
+
+          <div class="info-box">
+
+            <div class="info-icon">
+              🎓
+            </div>
+
+            <span class="info-label">
+              Scholarships
+            </span>
+
+            <span class="info-value">
+              Available
+            </span>
+
+          </div>
+
+
+          <div class="info-box">
+
+            <div class="info-icon">
+              💳
+            </div>
+
+            <span class="info-label">
+              Financial Aid
+            </span>
+
+            <span class="info-value">
+              International
+            </span>
+
+          </div>
+
+
+          <div class="info-box">
+
+            <div class="info-icon">
+              🌍
+            </div>
+
+            <span class="info-label">
+              International Students
+            </span>
+
+            <span class="info-value">
+              Supported
+            </span>
+
+          </div>
+
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           ADMISSIONS
+           ================================================= -->
+
+      <section class="profile-card">
+
+        <div class="card-header">
+
+          <div>
+
+            <h2 class="card-title">
+              📝 Admission Benchmarks
+            </h2>
+
+            <p class="card-subtitle">
+              Typical language requirements
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="info-grid">
+
+
+          <div class="info-box">
+
+            <div class="info-icon">
+              🗣️
+            </div>
+
+            <span class="info-label">
+              IELTS Target
+            </span>
+
+            <span
+              id="val-ielts"
+              class="info-value highlight">
+              --
+            </span>
+
+          </div>
+
+
+          <div class="info-box">
+
+            <div class="info-icon">
+              🎧
+            </div>
+
+            <span class="info-label">
+              TOEFL Minimum
+            </span>
+
+            <span
+              id="val-toefl"
+              class="info-value">
+              --
+            </span>
+
+          </div>
+
+
+          <div class="info-box">
+
+            <div class="info-icon">
+              📚
+            </div>
+
+            <span class="info-label">
+              GPA Scale
+            </span>
+
+            <span class="info-value">
+              4.0
+            </span>
+
+          </div>
+
+
+          <div class="info-box">
+
+            <div class="info-icon">
+              🌐
+            </div>
+
+            <span class="info-label">
+              International Admission
+            </span>
+
+            <span class="info-value">
+              Yes
+            </span>
+
+          </div>
+
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           PERFORMANCE
+           ================================================= -->
+
+      <section class="profile-card performance-card">
+
+        <div class="card-header">
+
+          <div>
+
+            <h2 class="card-title">
+              📈 Reputation & Performance
+            </h2>
+
+            <p class="card-subtitle">
+              Comparative university indicators
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="performance-grid">
+
+
+          <div class="performance-item">
+
+            <span class="performance-label">
+              Employer Reputation
+            </span>
+
+            <span
+              id="val-employer"
+              class="performance-value">
+              --
+            </span>
+
+          </div>
+
+
+          <div class="performance-item">
+
+            <span class="performance-label">
+              Faculty Student Ratio
+            </span>
+
+            <span
+              id="val-faculty"
+              class="performance-value">
+              --
+            </span>
+
+          </div>
+
+
+          <div class="performance-item">
+
+            <span class="performance-label">
+              Citations per Faculty
+            </span>
+
+            <span
+              id="val-citations"
+              class="performance-value">
+              --
+            </span>
+
+          </div>
+
+
+          <div class="performance-item">
+
+            <span class="performance-label">
+              International Score
+            </span>
+
+            <span
+              id="val-intl"
+              class="performance-value">
+              --
+            </span>
+
+          </div>
+
+
+          <div class="performance-item">
+
+            <span class="performance-label">
+              Sustainability Score
+            </span>
+
+            <span
+              id="val-sustain"
+              class="performance-value">
+              --
+            </span>
+
+          </div>
+
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           VISUAL SCORE PROFILE
+           ================================================= -->
+
+      <section class="profile-card">
+
+        <div class="card-header">
+
+          <div>
+
+            <h2 class="card-title">
+              📊 Score Profile
+            </h2>
+
+            <p class="card-subtitle">
+              Performance at a glance
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="score-row">
+
+          <div class="score-top">
+
+            <span class="score-name">
+              Academic Reputation
+            </span>
+
+            <span
+              id="bar-academic-value"
+              class="score-number">
+              --
+            </span>
+
+          </div>
+
+          <div class="score-track">
+
+            <div
+              id="bar-academic"
+              class="score-fill">
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="score-row">
+
+          <div class="score-top">
+
+            <span class="score-name">
+              Employer Reputation
+            </span>
+
+            <span
+              id="bar-employer-value"
+              class="score-number">
+              --
+            </span>
+
+          </div>
+
+          <div class="score-track">
+
+            <div
+              id="bar-employer"
+              class="score-fill">
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="score-row">
+
+          <div class="score-top">
+
+            <span class="score-name">
+              International
+            </span>
+
+            <span
+              id="bar-intl-value"
+              class="score-number">
+              --
+            </span>
+
+          </div>
+
+          <div class="score-track">
+
+            <div
+              id="bar-intl"
+              class="score-fill">
+            </div>
+
+          </div>
+
+        </div>
+
+
+      </section>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         CTA
+         ================================================= -->
+
+    <section class="profile-cta">
+
+      <div>
+
+        <h2 class="cta-title">
+          🎓 Interested in this university?
+        </h2>
+
+        <p class="cta-text">
+          Explore courses, scholarships, admission requirements
+          and your study-abroad options with UniAI.
+        </p>
+
+      </div>
+
+
+      <a
+        href="/"
+        class="cta-button">
+        Explore More Universities →
+      </a>
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- =====================================================
+       PROFILE DATA
+       ===================================================== -->
+
+  <script>
+
+    async function loadProfile() {
+
+      const slug =
+        window.location.pathname
+          .split("/")
+          .filter(Boolean)
+          .pop();
+
+
+      try {
+
+        const res =
+          await fetch(`/universities/${slug}`);
+
+
+        if (!res.ok) {
+          throw new Error("University not found");
+        }
+
+
+        const data =
+          await res.json();
+
+
+        /* ================================================
+           HERO
+           ================================================ */
+
+        document
+          .getElementById("uni-name")
+          .textContent =
+            data.name ||
+            "Unknown University";
+
+
+        document
+          .getElementById("uni-name")
+          .classList.remove("loading");
+
+
+        const location = [
+          data.city,
+          data.state,
+          data.country
+        ]
+        .filter(Boolean)
+        .join(", ");
+
+
+        document
+          .getElementById("uni-location")
+          .textContent =
+            "📍 " +
+            (location || "Global");
+
+
+        /* ================================================
+           LOGO
+           ================================================ */
+
+        const logo =
+          document.getElementById("uni-logo");
+
+
+        logo.src =
+          data.logo ||
+          "https://placehold.co/120x120?text=UNI";
+
+
+        logo.onerror = () => {
+
+          logo.src =
+            "https://placehold.co/120x120?text=UNI";
+
+        };
+
+
+        /* ================================================
+           BANNER
+           ================================================ */
+
+        const banner =
+          document.getElementById("uni-banner");
+
+
+        banner.style.backgroundImage =
+          `url("${data.banner ||
+          "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1600"}")`;
+
+
+        /* ================================================
+           LOCATION FACTS
+           ================================================ */
+
+        document
+          .getElementById("fact-country")
+          .textContent =
+            data.country ||
+            "N/A";
+
+
+        document
+          .getElementById("fact-city")
+          .textContent =
+            data.city ||
+            "N/A";
+
+
+        /* ================================================
+           RANKING
+           ================================================ */
+
+        const rank =
+          data.qs_rank ||
+          data["2024 RANK"] ||
+          "N/A";
+
+
+        document
+          .getElementById("val-rank")
+          .textContent = rank;
+
+
+        const score =
+          data.overall_score ??
+          "N/A";
+
+
+        document
+          .getElementById("val-score")
+          .textContent =
+            score;
+
+
+        document
+          .getElementById("hero-score-value")
+          .textContent =
+            score;
+
+
+        const academic =
+          data.academic_score ??
+          "N/A";
+
+
+        document
+          .getElementById("val-academic")
+          .textContent =
+            academic;
+
+
+        /* ================================================
+           REPUTATION
+           ================================================ */
+
+        const employer =
+          data.employer_score ??
+          "N/A";
+
+
+        const faculty =
+          data.faculty_score ??
+          "N/A";
+
+
+        const citations =
+          data.citations_score ??
+          "N/A";
+
+
+        const intl =
+          data.international_score ??
+          "N/A";
+
+
+        const sustain =
+          data.sustainability_score ??
+          "N/A";
+
+
+        document
+          .getElementById("val-employer")
+          .textContent =
+            employer;
+
+
+        document
+          .getElementById("val-faculty")
+          .textContent =
+            faculty;
+
+
+        document
+          .getElementById("val-citations")
+          .textContent =
+            citations;
+
+
+        document
+          .getElementById("val-intl")
+          .textContent =
+            intl;
+
+
+        document
+          .getElementById("val-sustain")
+          .textContent =
+            sustain;
+
+
+        document
+          .getElementById("val-employer-short")
+          .textContent =
+            employer;
+
+
+        document
+          .getElementById("val-intl-short")
+          .textContent =
+            intl;
+
+
+        /* ================================================
+           SCORE BARS
+           ================================================ */
+
+        setScoreBar(
+          "bar-academic",
+          "bar-academic-value",
+          academic
+        );
+
+
+        setScoreBar(
+          "bar-employer",
+          "bar-employer-value",
+          employer
+        );
+
+
+        setScoreBar(
+          "bar-intl",
+          "bar-intl-value",
+          intl
+        );
+
+
+        /* ================================================
+           TUITION
+           ================================================ */
+
+        const tuition =
+          data.tuition_fee;
+
+
+        document
+          .getElementById("val-tuition")
+          .textContent =
+            tuition
+              ? "$" +
+                Number(tuition)
+                  .toLocaleString()
+              : "Not Available";
+
+
+        /* ================================================
+           TEST REQUIREMENTS
+           ================================================ */
+
+        document
+          .getElementById("val-ielts")
+          .textContent =
+            data.ielts ||
+            "Not Available";
+
+
+        document
+          .getElementById("val-toefl")
+          .textContent =
+            data.toefl ||
+            "Not Available";
+
+
+        /* ================================================
+           FOUNDED
+           ================================================ */
+
+        document
+          .getElementById("val-founded")
+          .textContent =
+            data.founded_year ||
+            "N/A";
+
+
+        /* ================================================
+           WEBSITE
+           ================================================ */
+
+        const website =
+          document.getElementById("val-web");
+
+
+        if (data.website) {
+
+          let url =
+            data.website;
+
+
+          if (
+            !url.startsWith("http")
+          ) {
+
+            url =
+              "https://" +
+              url;
+
+          }
+
+
+          website.href =
+            url;
+
+
+          website.style.display =
+            "inline-flex";
+
+        }
+        else {
+
+          website.style.display =
+            "none";
+
+        }
+
+
+        /* ================================================
+           WIKIPEDIA
+           ================================================ */
+
+        const wiki =
+          document.getElementById("wiki-link");
+
+
+        if (data.wikipedia) {
+
+          wiki.href =
+            data.wikipedia;
+
+
+          wiki.style.display =
+            "inline-flex";
+
+        }
+        else {
+
+          wiki.style.display =
+            "none";
+
+        }
+
+
+        /* ================================================
+           DESCRIPTION
+           ================================================ */
+
+        document
+          .getElementById("uni-bio")
+          .textContent =
+            data.description ||
+            `${data.name || "This university"} is a leading institution in ${
+              data.country || "its country"
+            }. More information will be available soon.`;
+
+
+      }
+      catch (error) {
+
+        console.error(
+          "University profile error:",
+          error
+        );
+
+
+        document
+          .getElementById("uni-name")
+          .textContent =
+            "University Not Found";
+
+
+        document
+          .getElementById("uni-location")
+          .textContent =
+            "";
+
+
+        document
+          .getElementById("uni-bio")
+          .textContent =
+            "Unable to load university information. Please return to the University Finder and try again.";
+
+      }
+
+    }
+
+
+
+    /* =====================================================
+       SCORE BAR HELPER
+       ===================================================== */
+
+    function setScoreBar(
+      barId,
+      valueId,
+      value
+    ) {
+
+      const bar =
+        document.getElementById(barId);
+
+
+      const label =
+        document.getElementById(valueId);
+
+
+      if (
+        value === null ||
+        value === undefined ||
+        value === "N/A"
+      ) {
+
+        label.textContent =
+          "N/A";
+
+        bar.style.width =
+          "0%";
+
+        return;
+
+      }
+
+
+      const number =
+        Number(value);
+
+
+      if (Number.isNaN(number)) {
+
+        label.textContent =
+          value;
+
+        bar.style.width =
+          "0%";
+
+        return;
+
+      }
+
+
+      label.textContent =
+        number;
+
+
+      /*
+       * Most ranking indicators are
+       * approximately 0–100.
+       */
+
+      const percentage =
+        Math.max(
+          0,
+          Math.min(
+            100,
+            number
+          )
+        );
+
+
+      requestAnimationFrame(() => {
+
+        bar.style.setProperty(
+          "--score",
+          percentage + "%"
+        );
+
+      });
+
+    }
+
+
+    /* =====================================================
+       START
+       ===================================================== */
+
+    window.addEventListener(
+      "DOMContentLoaded",
+      loadProfile
+    );
+
+  </script>
+
+</body>
+</html>

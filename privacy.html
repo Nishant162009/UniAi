@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f7fb">
+  <meta name="description" content="UniAI Privacy Policy: what UniAI collects, where it is stored, who else sees it, and how to delete it.">
+  <title>Privacy Policy — UniAI</title>
+  <link rel="stylesheet" href="UI/main.css">
+  <script>
+    (() => {
+      let saved = null;
+      try { saved = localStorage.getItem("uniai-theme"); } catch (e) {}
+      const root = document.documentElement;
+      if (!root.dataset.theme || saved) root.dataset.theme = saved === "dark" ? "dark" : "light";
+    })();
+  </script>
+</head>
+
+<body>
+  <main class="privacy-page">
+    <div class="privacy-ambient" aria-hidden="true"></div>
+    <div class="privacy-shell">
+
+      <nav class="privacy-nav" aria-label="Privacy page navigation">
+        <a class="privacy-brand" href="index.html" aria-label="Back to UniAI home">
+          <span class="privacy-brand-mark">U</span>
+          <span>Uni<span class="privacy-gradient">AI</span></span>
+        </a>
+        <div class="privacy-nav-actions">
+          <a class="privacy-mini-btn" href="#controls">Delete local data</a>
+          <a class="privacy-mini-btn" href="terms.html">Terms</a>
+        </div>
+      </nav>
+
+      <header class="privacy-hero">
+        <div>
+          <div class="privacy-eyebrow"><span class="privacy-eyebrow-dot"></span> Privacy Policy</div>
+          <h1>Your data, in <span class="privacy-gradient">plain language.</span></h1>
+          <p class="privacy-lede">
+            UniAI is a student project that helps people plan studying abroad. This page says what
+            we collect, where it goes, who else can see it, and how you can remove it.
+          </p>
+          <div class="privacy-meta">
+            <span class="privacy-pill">We do not sell your data</span>
+            <span class="privacy-pill">No ads or analytics trackers</span>
+            <span class="privacy-pill">Most data stays in your browser</span>
+          </div>
+        </div>
+        <div class="privacy-hero-art" aria-hidden="true">
+          <div class="privacy-orbit">
+            <span class="privacy-orbit-node">📥</span>
+            <span class="privacy-orbit-node">🤖</span>
+            <span class="privacy-orbit-node">🔐</span>
+            <span class="privacy-orbit-node">🧹</span>
+            <span class="privacy-core">U</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="privacy-layout">
+        <aside class="privacy-toc" aria-label="On this page">
+          <div class="privacy-toc-label">On this page</div>
+          <a href="#overview">Overview</a>
+          <a href="#data">What we collect</a>
+          <a href="#ai">AI Assistant</a>
+          <a href="#others">Other services</a>
+          <a href="#controls">Your controls</a>
+          <a href="#retention">Keeping and deleting</a>
+          <a href="#young">If you are under 18</a>
+          <a href="#contact">Changes and contact</a>
+        </aside>
+
+        <div class="privacy-content">
+
+          <section class="privacy-section" id="overview">
+            <div class="privacy-section-header">
+              <div>
+                <p class="privacy-kicker">The short version</p>
+                <h2>What UniAI does with your information</h2>
+              </div>
+            </div>
+            <p>
+              UniAI is an independent student project, not a company. It collects only what its features need:
+              an account (email, username, role), the searches you run, and, if you use the AI Assistant, the
+              messages you send it. Your shortlist, roadmap progress, settings and chat history are saved in your
+              own browser. We do not sell your data and we do not run advertising or analytics trackers.
+            </p>
+          </section>
+
+          <section class="privacy-section" id="data">
+            <div class="privacy-section-header">
+              <div>
+                <p class="privacy-kicker">Collection</p>
+                <h2>What we collect, and where it lives</h2>
+              </div>
+            </div>
+            <div class="privacy-data-grid">
+              <article class="privacy-data-card">
+                <div class="privacy-data-top"><h3>Account</h3><span class="privacy-tag">Server</span></div>
+                <p>Email, username, role (student or counselor) and password. Sign-in is handled by Supabase Auth, so UniAI never sees or stores your password itself. Your sign-in session is kept in your browser.</p>
+              </article>
+              <article class="privacy-data-card">
+                <div class="privacy-data-top"><h3>University Finder</h3><span class="privacy-tag">Server</span></div>
+                <p>The country, search text and budget you enter are sent to the UniAI backend to filter universities. Your GPA is used only in your browser to label each result Safe, Target or Dream.</p>
+              </article>
+              <article class="privacy-data-card">
+                <div class="privacy-data-top"><h3>AI Assistant</h3><span class="privacy-tag">Server</span></div>
+                <p>Your message, the earlier messages in that chat and any saved preferences are sent to the UniAI backend to produce a reply. See the AI Assistant section below.</p>
+              </article>
+              <article class="privacy-data-card">
+                <div class="privacy-data-top"><h3>SOP &amp; LOR tools</h3><span class="privacy-tag">Browser</span></div>
+                <p>Drafts and evaluations are created in your browser. This version does not send them to a server or save them in your account.</p>
+              </article>
+              <article class="privacy-data-card">
+                <div class="privacy-data-top"><h3>Saved items</h3><span class="privacy-tag">Browser</span></div>
+                <p>Your shortlist, roadmap checkboxes, theme and settings, and AI chat history are saved in your browser's local storage on this device only.</p>
+              </article>
+              <article class="privacy-data-card">
+                <div class="privacy-data-top"><h3>Cookies and tracking</h3><span class="privacy-tag">None</span></div>
+                <p>UniAI does not use advertising or analytics cookies. Supabase keeps your sign-in session in local storage.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="privacy-section" id="ai">
+            <div class="privacy-section-header">
+              <div>
+                <p class="privacy-kicker">AI</p>
+                <h2>How the AI Assistant handles your messages</h2>
+              </div>
+            </div>
+            <p>
+              When you send a message, UniAI's backend passes it to an AI model provider to generate a reply,
+              and the reply is shown to you. UniAI does not train any model on your messages. The provider has
+              its own terms for how it handles data it processes, so <strong>do not share sensitive details</strong> such as
+              passport or ID numbers, bank details, or other people's personal information.
+            </p>
+            <p>
+              The conversation is also saved in your browser so it is there when you come back. You can delete it
+              with <strong>New Chat</strong> or with the purge button below.
+            </p>
+          </section>
+
+          <section class="privacy-section" id="others">
+            <div class="privacy-section-header">
+              <div>
+                <p class="privacy-kicker">Other services</p>
+                <h2>Who else may see your connection</h2>
+              </div>
+            </div>
+            <p>
+              Loading the site involves other services. Each one can see your IP address and browser details
+              when your browser contacts it. None of them receive your account details or messages from UniAI.
+            </p>
+            <ul>
+              <li><strong>Supabase:</strong> account sign-in and session handling.</li>
+              <li><strong>Google Fonts:</strong> page fonts.</li>
+              <li><strong>unpkg:</strong> delivers the Supabase browser library.</li>
+              <li><strong>Unsplash:</strong> destination photos on the home page.</li>
+              <li><strong>exchangerate-api.com:</strong> live rates for the Currency Converter (it receives only the currency code).</li>
+              <li><strong>restcountries.com:</strong> country list, used only if the UniAI backend is unavailable.</li>
+              <li><strong>placehold.co and university websites:</strong> fallback logos and logos loaded from university sources.</li>
+            </ul>
+          </section>
+
+          <section class="privacy-section" id="controls">
+            <div class="privacy-section-header">
+              <div>
+                <p class="privacy-kicker">Your controls</p>
+                <h2>Delete what is stored on this device</h2>
+              </div>
+            </div>
+            <p>
+              The button below removes UniAI's data from this browser: settings, shortlist, roadmap progress,
+              AI chat history and your sign-in session. You will be signed out on this device. It does not delete
+              your account. To delete your account, see the next section.
+            </p>
+            <div class="privacy-action">
+              <div class="privacy-action-copy">
+                <h2>Clear UniAI data on this device</h2>
+                <p>Removes local UniAI data and signs you out here. Your account stays until you ask for it to be deleted.</p>
+              </div>
+              <div class="privacy-actions">
+                <button class="privacy-btn danger" type="button" onclick="purgeLocalData()">Clear local data</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="privacy-section" id="retention">
+            <div class="privacy-section-header">
+              <div>
+                <p class="privacy-kicker">Keeping and deleting</p>
+                <h2>How long data stays</h2>
+              </div>
+            </div>
+            <p>
+              Account details are kept until you ask for the account to be deleted. Browser data stays until you
+              clear it. There is no automatic deletion schedule. To view, correct or delete your account details,
+              email the contact address below from the address you signed up with, and the account will be removed
+              manually.
+            </p>
+          </section>
+
+          <section class="privacy-section" id="young">
+            <div class="privacy-section-header">
+              <div>
+                <p class="privacy-kicker">Younger users</p>
+                <h2>If you are under 18</h2>
+              </div>
+            </div>
+            <p>
+              Many people planning to study abroad are under 18. If you are, please ask a parent or guardian
+              before creating an account, and share only what you need to. A parent or guardian can email the
+              contact address below to ask for an account to be deleted.
+            </p>
+          </section>
+
+          <section class="privacy-section" id="contact">
+            <div class="privacy-section-header">
+              <div>
+                <p class="privacy-kicker">Changes and contact</p>
+                <h2>Questions or deletion requests</h2>
+              </div>
+            </div>
+            <p>
+              Email <a href="mailto:contact@YOUR-DOMAIN">contact@YOUR-DOMAIN</a> for any privacy question or
+              request. If this policy changes in a way that matters, the date below will change and the
+              update will be noted on the site.
+            </p>
+            <div class="privacy-meta">
+              <span class="privacy-pill">Last updated: <strong>September 24, 2026</strong></span>
+              <span class="privacy-pill">Version: <strong>3.0</strong></span>
+            </div>
+            <p>This policy is written in plain language for a student project. It is not legal advice.</p>
+          </section>
+
+          <footer class="privacy-footer">
+            <span>UniAI Privacy Policy</span>
+            <span><a href="terms.html">Terms &amp; Conditions</a> · <a href="index.html">Back to UniAI</a></span>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function purgeLocalData() {
+      if (!window.confirm("Clear UniAI data on this device? This will also sign you out here. It does not delete your account.")) return;
+
+      const isUniAIKey = (k) => /^(uniai|uniAI|sb-)/.test(k) || k === "theme";
+
+      try {
+        [localStorage, sessionStorage].forEach((store) => {
+          Object.keys(store).filter(isUniAIKey).forEach((k) => store.removeItem(k));
+        });
+        window.alert("UniAI data was cleared from this browser.");
+      } catch (error) {
+        window.alert("Your browser did not allow local data to be cleared.");
+      }
+    }
+  </script>
+</body>
+</html>

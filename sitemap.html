@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="UniAI platform sitemap — access every core tool, guide, workspace and account area.">
+  <title>UniAI — System Sitemap</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="UI/main.css">
+  <script>
+    // Keep the page compatible with the app's existing data-theme controller.
+    if (!document.documentElement.dataset.theme) document.documentElement.dataset.theme = 'light';
+  </script>
+</head>
+<body>
+<main class="sitemap-page">
+  <div class="sitemap-ambient sitemap-ambient-a"></div>
+  <div class="sitemap-ambient sitemap-ambient-b"></div>
+
+  <nav class="sitemap-nav" aria-label="Sitemap navigation">
+    <a class="sitemap-brand" href="index.html?page=home" data-app-page="home">
+      <span class="brand-mark">✦</span>
+      <span>Uni<span>AI</span></span>
+    </a>
+    <div class="sitemap-nav-actions">
+      <a href="index.html?page=home" class="sitemap-nav-link" data-app-page="home">Dashboard</a>
+      <a href="privacy.html" class="sitemap-nav-link">Privacy</a>
+      <a href="terms.html" class="sitemap-nav-link">Terms</a>
+    </div>
+  </nav>
+
+  <header class="sitemap-hero">
+    <div class="hero-copy">
+      <div class="sitemap-eyebrow"><span></span> PLATFORM INDEX / 2026</div>
+      <h1>Everything UniAI.<br><strong>One map.</strong></h1>
+      <p>Explore the complete UniAI workspace — from university discovery and scholarships to AI guidance, visa planning, application tools, and your personal workspace.</p>
+      <div class="hero-actions">
+        <a class="sitemap-primary-btn" href="index.html?page=home" data-app-page="home">Open Dashboard <span>↗</span></a>
+        <a class="sitemap-secondary-btn" href="#platform">Explore modules</a>
+      </div>
+    </div>
+
+    <div class="sitemap-orbit" aria-hidden="true">
+      <div class="orbit orbit-one"></div>
+      <div class="orbit orbit-two"></div>
+      <div class="orbit orbit-three"></div>
+      <div class="orbit-core"><span>✦</span><small>UNIAI</small></div>
+      <i class="orbit-node node-a">🎓</i>
+      <i class="orbit-node node-b">🤖</i>
+      <i class="orbit-node node-c">✈️</i>
+      <i class="orbit-node node-d">🧭</i>
+    </div>
+  </header>
+
+  <section class="sitemap-stats" aria-label="Platform overview">
+    <div><strong>13</strong><span>app destinations</span></div>
+    <div><strong>5</strong><span>planning layers</span></div>
+    <div><strong>1</strong><span>connected workspace</span></div>
+    <div><strong>24/7</strong><span>AI guidance concept</span></div>
+  </section>
+
+  <section id="platform" class="sitemap-layout">
+    <aside class="sitemap-index">
+      <div class="index-kicker">MAP</div>
+      <h2>Navigate by intent</h2>
+      <p>Jump directly into the part of the journey you need right now.</p>
+      <a href="#discover">01 <span>Discover</span></a>
+      <a href="#plan">02 <span>Plan &amp; fund</span></a>
+      <a href="#apply">03 <span>Apply</span></a>
+      <a href="#workspace">04 <span>Workspace</span></a>
+      <a href="#account">05 <span>Account</span></a>
+    </aside>
+
+    <div class="sitemap-content">
+      <section id="discover" class="sitemap-section">
+        <div class="section-heading"><span>01</span><div><small>DISCOVER</small><h2>Find where you belong</h2></div></div>
+        <div class="sitemap-grid two">
+          <a class="map-card featured" href="index.html" onclick="showPage('universityFinder', event)" data-app-page="universityFinder">
+            <div class="map-card-top"><span class="map-icon">⌕</span><span class="map-code">CORE / 01</span></div>
+            <h3>University Finder</h3><p>Search and filter universities using destination, academics, budget, and fit signals.</p><span class="map-link">Launch Finder <b>→</b></span>
+          </a>
+          <a class="map-card" href="index.html?page=scholarships" data-app-page="scholarships">
+            <div class="map-card-top"><span class="map-icon">◆</span><span class="map-code">FUND / 02</span></div>
+            <h3>Scholarships</h3><p>Explore scholarship opportunities and narrow results by country, field, and name.</p><span class="map-link">Browse scholarships <b>→</b></span>
+          </a>
+        </div>
+      </section>
+
+      <section id="plan" class="sitemap-section">
+        <div class="section-heading"><span>02</span><div><small>PLAN &amp; FUND</small><h2>Turn research into a route</h2></div></div>
+        <div class="sitemap-grid three">
+          <a class="map-card" href="index.html?page=studyAbroadGuide" data-app-page="studyAbroadGuide"><div class="map-card-top"><span class="map-icon">◎</span><span class="map-code">GUIDE / 03</span></div><h3>Study Abroad Guide</h3><p>Move from country research to testing, funding, documents, applications, and departure.</p><span class="map-link">Open guide <b>→</b></span></a>
+          <a class="map-card" href="index.html?page=living" data-app-page="living"><div class="map-card-top"><span class="map-icon">▣</span><span class="map-code">MONEY / 04</span></div><h3>Cost Calculator</h3><p>Estimate tuition and living costs to build a more realistic study-abroad budget.</p><span class="map-link">Calculate costs <b>→</b></span></a>
+          <a class="map-card" href="index.html?page=currency" data-app-page="currency"><div class="map-card-top"><span class="map-icon">↔</span><span class="map-code">MONEY / 05</span></div><h3>Currency Converter</h3><p>Convert currencies while comparing international education and living expenses.</p><span class="map-link">Convert currency <b>→</b></span></a>
+        </div>
+      </section>
+
+      <section id="apply" class="sitemap-section">
+        <div class="section-heading"><span>03</span><div><small>APPLY</small><h2>Build, submit, and move forward</h2></div></div>
+        <div class="sitemap-grid three">
+          <a class="map-card ai-card" href="index.html?page=ai-chat" data-app-page="ai-chat"><div class="map-card-top"><span class="map-icon">✦</span><span class="map-code">INTEL / 06</span></div><h3>AI Assistant</h3><p>Ask about universities, costs, visas, deadlines, and application strategy.</p><span class="map-link">Ask UniAI <b>→</b></span></a>
+          <a class="map-card" href="index.html?page=sopStudio" data-app-page="sopStudio"><div class="map-card-top"><span class="map-icon">✎</span><span class="map-code">WRITE / 07</span></div><h3>SOP &amp; LOR Tools</h3><p>Work on statements, recommendation-letter materials, and application writing.</p><span class="map-link">Open writing tools <b>→</b></span></a>
+          <a class="map-card" href="index.html?page=roadmap" data-app-page="roadmap"><div class="map-card-top"><span class="map-icon">⌁</span><span class="map-code">TRACK / 08</span></div><h3>Roadmap</h3><p>Organize the journey from preparation through applications and next steps.</p><span class="map-link">Open roadmap <b>→</b></span></a>
+          <a class="map-card" href="index.html?page=visaGuide" data-app-page="visaGuide"><div class="map-card-top"><span class="map-icon">✈</span><span class="map-code">MOVE / 09</span></div><h3>Visa Guide</h3><p>Review visa-oriented planning as you transition from admission to departure.</p><span class="map-link">Open visa guide <b>→</b></span></a>
+          <a class="map-card" href="index.html?page=aiFreeJobs" data-app-page="aiFreeJobs"><div class="map-card-top"><span class="map-icon">▤</span><span class="map-code">WORK / 10</span></div><h3>AI Free Jobs</h3><p>Explore the platform's job-focused area for opportunities and career discovery.</p><span class="map-link">Explore jobs <b>→</b></span></a>
+        </div>
+      </section>
+
+      <section id="workspace" class="sitemap-section">
+        <div class="section-heading"><span>04</span><div><small>WORKSPACE</small><h2>Keep your journey together</h2></div></div>
+        <div class="sitemap-grid two">
+          <a class="map-card" href="index.html?page=saved" data-app-page="saved"><div class="map-card-top"><span class="map-icon">♡</span><span class="map-code">SAVE / 11</span></div><h3>Saved</h3><p>Return to saved universities, opportunities, and other items you've chosen to keep close.</p><span class="map-link">Open saved <b>→</b></span></a>
+          <a class="map-card" href="index.html?page=profile" data-app-page="profile"><div class="map-card-top"><span class="map-icon">◎</span><span class="map-code">ME / 12</span></div><h3>Profile</h3><p>Review the personal profile information that helps UniAI personalize your workspace.</p><span class="map-link">View profile <b>→</b></span></a>
+        </div>
+      </section>
+
+      <section id="account" class="sitemap-section">
+        <div class="section-heading"><span>05</span><div><small>ACCOUNT</small><h2>Control your experience</h2></div></div>
+        <div class="sitemap-grid three">
+          <a class="map-card" href="index.html?page=settings#" data-app-page="settings"><div class="map-card-top"><span class="map-icon">⚙</span><span class="map-code">CONTROL / 13</span></div><h3>Settings</h3><p>Manage appearance, account, notifications, preferences, session, and interface behavior.</p><span class="map-link">Open settings <b>→</b></span></a>
+          <a class="map-card legal-card" href="privacy.html"><div class="map-card-top"><span class="map-icon">⌁</span><span class="map-code">LEGAL / P</span></div><h3>Privacy Center</h3><p>Understand data handling, AI processing, storage, local state, and available controls.</p><span class="map-link">Read privacy <b>→</b></span></a>
+          <a class="map-card legal-card" href="terms.html"><div class="map-card-top"><span class="map-icon">§</span><span class="map-code">LEGAL / T</span></div><h3>Terms &amp; Conditions</h3><p>Review usage rules, advisory limitations, intellectual property, and service governance.</p><span class="map-link">Read terms <b>→</b></span></a>
+        </div>
+      </section>
+
+      <section class="sitemap-journey">
+        <div><small>RECOMMENDED FLOW</small><h2>Discover → plan → apply → prepare</h2><p>UniAI's modules are designed to work as one continuous study-abroad journey rather than isolated tools.</p></div>
+        <a href="index.html?page=universityFinder" data-app-page="universityFinder">Start with Finder <span>↗</span></a>
+      </section>
+    </div>
+  </section>
+
+  <footer class="sitemap-footer">
+    <div><strong>✦ UniAI</strong><span>Plan smarter. Go farther.</span></div>
+    <nav><a href="index.html?page=home" data-app-page="home">Dashboard</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="sitemap.html">Sitemap</a></nav>
+    <p>© 2026 UniAI · Platform index</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  const links = document.querySelectorAll('[data-app-page]');
+  links.forEach(link => {
+    link.addEventListener('click', function () {
+      const page = this.dataset.appPage;
+      try { sessionStorage.setItem('uniai_pending_page', page); } catch (e) {}
+    });
+  });
+})();
+</script>
+</body>
+</html>

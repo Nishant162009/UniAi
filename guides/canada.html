@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study in Canada Guide | UniAI</title>
+  <meta name="description" content="A practical guide for international students planning to study in Canada: universities, programs, costs, scholarships, study permits, work rules, housing, and arrival." />
+  <style>
+    :root{
+      --red:#d62828;
+      --red-dark:#a91f1f;
+      --navy:#10233f;
+      --ink:#172033;
+      --muted:#667085;
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --line:#e6eaf0;
+      --green:#16845b;
+      --shadow:0 16px 45px rgba(16,35,63,.10);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.65;
+    }
+    a{color:inherit}
+    .hero{
+      min-height:560px;
+      display:flex;
+      align-items:center;
+      position:relative;
+      overflow:hidden;
+      color:#fff;
+      background:
+        linear-gradient(90deg,rgba(7,20,39,.88),rgba(7,20,39,.55),rgba(7,20,39,.18)),
+        url("https://www.utoronto.ca/sites/default/files/styles/scale_image_750_width_/public/2026-03/UofT98541_0A1A8512alice.xue_.photography.2025-crop.jpg?itok=N6ocgDQh") center/cover;
+    }
+    .hero:after{
+      content:"";
+      position:absolute;inset:auto 0 0;
+      height:90px;
+      background:linear-gradient(transparent,var(--bg));
+    }
+    .container{width:min(1120px,92%);margin:auto}
+    .hero-content{position:relative;z-index:1;max-width:760px;padding:90px 0}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.24);
+      padding:8px 14px;border-radius:999px;
+      font-size:.88rem;font-weight:700;letter-spacing:.04em;
+    }
+    h1{font-size:clamp(2.7rem,7vw,5.3rem);line-height:1.03;margin:20px 0 18px}
+    .hero p{font-size:1.15rem;max-width:680px;color:#edf2f7}
+    .btn{
+      display:inline-block;text-decoration:none;
+      padding:12px 18px;border-radius:12px;font-weight:800;
+      background:#fff;color:var(--navy);margin:8px 8px 0 0;
+    }
+    .btn.primary{background:var(--red);color:#fff}
+    .quick-nav{
+      position:sticky;top:0;z-index:10;
+      background:rgba(255,255,255,.94);backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--line);
+    }
+    .quick-nav .container{display:flex;gap:10px;overflow:auto;padding:12px 0}
+    .quick-nav a{
+      white-space:nowrap;text-decoration:none;
+      padding:8px 12px;border-radius:999px;color:var(--muted);font-weight:700;font-size:.9rem
+    }
+    .quick-nav a:hover{background:#eef2f7;color:var(--navy)}
+    section{padding:76px 0}
+    .section-head{max-width:760px;margin-bottom:30px}
+    .section-head h2{font-size:clamp(2rem,4vw,3rem);line-height:1.1;margin:0 0 12px;color:var(--navy)}
+    .section-head p{color:var(--muted);font-size:1.04rem}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .grid.two{grid-template-columns:repeat(2,1fr)}
+    .card{
+      background:var(--card);border:1px solid var(--line);
+      border-radius:var(--radius);padding:26px;box-shadow:0 8px 25px rgba(16,35,63,.045)
+    }
+    .card h3{margin:0 0 9px;color:var(--navy)}
+    .card p{margin:0;color:#5d6879}
+    .icon{
+      width:48px;height:48px;border-radius:15px;display:grid;place-items:center;
+      background:#fff1f1;color:var(--red);font-size:1.4rem;margin-bottom:16px
+    }
+    .photo-grid{display:grid;grid-template-columns:1.35fr .9fr;gap:20px}
+    .photo{
+      min-height:330px;border-radius:var(--radius);overflow:hidden;position:relative;
+      background:#ddd;
+    }
+    .photo img{width:100%;height:100%;object-fit:cover;display:block}
+    .photo.small{min-height:155px}
+    .photo-stack{display:grid;gap:20px}
+    .caption{
+      position:absolute;left:16px;right:16px;bottom:16px;
+      background:rgba(0,0,0,.63);color:#fff;padding:9px 12px;border-radius:11px;font-size:.85rem
+    }
+    .steps{counter-reset:step;display:grid;gap:16px}
+    .step{
+      display:grid;grid-template-columns:58px 1fr;gap:18px;align-items:start;
+      background:#fff;border:1px solid var(--line);padding:22px;border-radius:18px
+    }
+    .step-num{
+      width:48px;height:48px;border-radius:50%;display:grid;place-items:center;
+      background:var(--navy);color:#fff;font-weight:900
+    }
+    .step h3{margin:0 0 5px}
+    .step p{margin:0;color:var(--muted)}
+    .money{
+      display:flex;align-items:flex-end;gap:7px;margin:8px 0 2px
+    }
+    .money strong{font-size:1.65rem;color:var(--navy)}
+    .money span{color:var(--muted);font-size:.9rem}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:#fff}
+    table{width:100%;border-collapse:collapse;min-width:650px}
+    th,td{padding:15px 16px;text-align:left;border-bottom:1px solid var(--line)}
+    th{background:#f1f4f8;color:var(--navy)}
+    tr:last-child td{border-bottom:0}
+    .callout{
+      background:linear-gradient(135deg,#10233f,#1b3c67);
+      color:#fff;border-radius:26px;padding:32px;
+    }
+    .callout h2{margin-top:0}
+    .callout p{color:#dbe6f2}
+    .checklist{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0;list-style:none}
+    .checklist li{
+      background:#fff;border:1px solid var(--line);padding:13px 15px;border-radius:12px
+    }
+    .checklist li:before{content:"✓";color:var(--green);font-weight:900;margin-right:9px}
+    .notice{
+      border-left:5px solid var(--red);background:#fff4f4;padding:18px 20px;border-radius:12px;
+      color:#5d3131
+    }
+    footer{background:#0d1b2f;color:#dbe6f2;padding:45px 0}
+    footer a{color:#fff}
+    .source-note{font-size:.85rem;color:#7a8492}
+    @media(max-width:800px){
+      .grid,.grid.two,.photo-grid{grid-template-columns:1fr}
+      .checklist{grid-template-columns:1fr}
+      .hero{min-height:620px}
+      section{padding:56px 0}
+    }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container hero-content">
+    <span class="eyebrow">🇨🇦 UniAI • Canada Study Guide</span>
+    <h1>Study in Canada</h1>
+    <p>
+      A practical guide for international students planning their Canadian study journey —
+      from choosing a school and budgeting to applications, study permits, housing and arrival.
+    </p>
+    <a class="btn primary" href="#roadmap">Start the roadmap</a>
+    <a class="btn" href="#costs">See costs</a>
+  </div>
+</header>
+
+<nav class="quick-nav">
+  <div class="container">
+    <a href="#why">Why Canada?</a>
+    <a href="#education">Education</a>
+    <a href="#universities">Universities</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#costs">Costs</a>
+    <a href="#permit">Study permit</a>
+    <a href="#work">Work</a>
+    <a href="#arrival">Arrival</a>
+    <a href="#checklist">Checklist</a>
+  </div>
+</nav>
+
+<main>
+  <section id="why">
+    <div class="container">
+      <div class="section-head">
+        <h2>Why study in Canada?</h2>
+        <p>
+          Canada has universities, colleges and vocational institutions across many regions,
+          with programs in areas such as business, engineering, health care, IT, law, science
+          and sustainable technologies.
+        </p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <div class="icon">🎓</div>
+          <h3>Wide program choice</h3>
+          <p>Explore undergraduate, graduate, college, vocational and language-study pathways.</p>
+        </article>
+        <article class="card">
+          <div class="icon">🌎</div>
+          <h3>International environment</h3>
+          <p>Canadian institutions welcome students from many countries and regions.</p>
+        </article>
+        <article class="card">
+          <div class="icon">🏙️</div>
+          <h3>Different city experiences</h3>
+          <p>Compare large urban campuses with smaller communities and different cost-of-living profiles.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container photo-grid">
+      <div class="photo">
+        <img src="https://www.utoronto.ca/sites/default/files/styles/scale_image_750_width_/public/2026-03/UofT98541_0A1A8512alice.xue_.photography.2025-crop.jpg?itok=N6ocgDQh" alt="Students walking on the University of Toronto campus">
+        <div class="caption">University of Toronto — students on the St. George campus</div>
+      </div>
+      <div class="photo-stack">
+        <div class="photo small">
+          <img src="https://extendedlearning.ubc.ca/sites/default/files/styles/card_568_x_400/public/2025-12/gather_584x408.jpg?h=29617525&itok=bSQpG83z" alt="Students gathering at UBC Vancouver">
+          <div class="caption">UBC Vancouver — campus life</div>
+        </div>
+        <div class="photo small">
+          <img src="https://visit.ubc.ca/wp-content/uploads/2019/04/tour_nav-1536x964_2x.jpg" alt="UBC Vancouver campus walkway">
+          <div class="caption">UBC Vancouver — campus walkway</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="container">
+      <div class="section-head">
+        <h2>Understand the Canadian education system</h2>
+        <p>Start with the credential that matches your academic level and career plan.</p>
+      </div>
+      <div class="grid two">
+        <article class="card"><h3>Universities</h3><p>Offer bachelor's, master's and doctoral degrees. Program length and admission requirements vary by institution and field.</p></article>
+        <article class="card"><h3>Colleges & polytechnics</h3><p>Often emphasize applied learning, career-focused programs and, in some programs, work placements.</p></article>
+        <article class="card"><h3>Vocational programs</h3><p>Provide practical training for specific occupations and skills.</p></article>
+        <article class="card"><h3>Language schools</h3><p>English- and French-language programs can be used for language development or shorter study experiences.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="universities">
+    <div class="container">
+      <div class="section-head">
+        <h2>How to choose a university or college</h2>
+        <p>Do not choose only by reputation. Compare the details that affect your actual student experience.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Compare</th><th>What to check</th></tr></thead>
+          <tbody>
+            <tr><td>Program</td><td>Modules, curriculum, labs, projects, co-op/internship options and graduation requirements</td></tr>
+            <tr><td>Admission</td><td>Academic prerequisites, English/French requirements, portfolio or other program-specific requirements</td></tr>
+            <tr><td>Location</td><td>City, climate, transportation, housing availability and living costs</td></tr>
+            <tr><td>Budget</td><td>Tuition plus housing, food, transport, insurance, books and personal expenses</td></tr>
+            <tr><td>International support</td><td>Orientation, academic advising, student services, career services and international-student support</td></tr>
+            <tr><td>Immigration eligibility</td><td>Confirm the institution and program meet the requirements relevant to your study-permit plans</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <div class="container">
+      <div class="section-head">
+        <h2>Your Canada study roadmap</h2>
+        <p>EduCanada's current journey is organized around finding a school, budgeting, applying to school, applying to study and coming to Canada.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div><h3>Find a school & program</h3><p>Match your interests, career goals, academic background and preferred location with eligible programs.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div><h3>Build a realistic budget</h3><p>Calculate tuition and living costs before applying. Keep funds available for the full study period and required expenses.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div><h3>Apply to the institution</h3><p>Prepare transcripts, language results and any program-specific documents. Follow the school's own deadline and document list.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div><h3>Apply for a study permit</h3><p>After receiving the required school documents, check the current IRCC requirements, including proof of funds and any PAL/TAL or Quebec requirements that apply to you.</p></div></div>
+        <div class="step"><div class="step-num">5</div><div><h3>Prepare for arrival</h3><p>Arrange housing, travel documents, insurance/health coverage where applicable, banking, transportation and your first-week essentials.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="costs">
+    <div class="container">
+      <div class="section-head">
+        <h2>Study costs in Canada</h2>
+        <p>Costs vary significantly by program, institution, province and city. Use these figures as planning references, not guarantees.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <h3>University tuition</h3>
+          <div class="money"><strong>~CAD 41,746</strong><span>/year</span></div>
+          <p>EduCanada reports this 2026 average for international undergraduate university tuition.</p>
+        </article>
+        <article class="card">
+          <h3>Graduate tuition</h3>
+          <div class="money"><strong>~CAD 24,028</strong><span>/year</span></div>
+          <p>EduCanada reports this 2026 average for international graduate university tuition.</p>
+        </article>
+        <article class="card">
+          <h3>Living costs</h3>
+          <div class="money"><strong>CAD 23,000+</strong><span>/year</span></div>
+          <p>EduCanada advises budgeting at least this amount for living costs for one student, with more needed when family members accompany you.</p>
+        </article>
+      </div>
+      <div class="notice" style="margin-top:20px">
+        <strong>Budget tip:</strong> Your real budget should include housing, food, transportation, health coverage, books, technology, phone/internet, winter clothing and an emergency reserve.
+      </div>
+    </div>
+  </section>
+
+  <section id="permit">
+    <div class="container">
+      <div class="section-head">
+        <h2>Study permit essentials</h2>
+        <p>Immigration rules change. Always use the official Government of Canada / IRCC pages for the final requirements before submitting an application.</p>
+      </div>
+      <div class="grid two">
+        <article class="card">
+          <h3>Core documents</h3>
+          <ul>
+            <li>Valid passport or travel document</li>
+            <li>Letter of acceptance from the institution</li>
+            <li>Proof of funds</li>
+            <li>Provincial/Territorial Attestation Letter (PAL/TAL) when required</li>
+            <li>Quebec Acceptance Certificate (CAQ) when studying in Quebec and required</li>
+            <li>Other documents requested by IRCC for your situation</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>2026 notes</h3>
+          <ul>
+            <li>Study permit processing fee: CAD 150.</li>
+            <li>Biometrics fee for an individual applicant: CAD 85 when biometrics are required.</li>
+            <li>From January 1, 2026, eligible master's and doctoral students at public DLIs are exempt from the PAL/TAL requirement.</li>
+            <li>PAL/TAL rules have other exemptions, so check the official eligibility tool for your case.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="callout" style="margin-top:22px">
+        <h2>Important: verify before you pay</h2>
+        <p>Use the official IRCC study-permit checklist and your institution's instructions. Do not rely on an old social-media post, agent message or outdated checklist when immigration requirements may have changed.</p>
+        <a class="btn primary" href="https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit.html" target="_blank" rel="noopener">Open IRCC Study Permit</a>
+        <a class="btn" href="https://www.educanada.ca/start-commencez/index.aspx?lang=eng" target="_blank" rel="noopener">Open EduCanada Roadmap</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="container">
+      <div class="section-head">
+        <h2>Working while studying</h2>
+        <p>Work eligibility depends on your study situation and the conditions on your permit.</p>
+      </div>
+      <div class="grid two">
+        <article class="card">
+          <h3>Off-campus work</h3>
+          <p>Eligible students can generally work up to <strong>24 hours per week</strong> during regular academic terms. During scheduled breaks, eligible students can work unlimited hours. Always confirm that you meet the current eligibility conditions.</p>
+        </article>
+        <article class="card">
+          <h3>Co-op & placements</h3>
+          <p>As of April 1, 2026, post-secondary international students generally do not need a separate co-op work permit for student work placements such as co-op placements or internships, subject to the current rules.</p>
+        </article>
+      </div>
+      <p class="source-note" style="margin-top:16px">Working is not a substitute for demonstrating the funds required for your study-permit application.</p>
+    </div>
+  </section>
+
+  <section id="arrival">
+    <div class="container">
+      <div class="section-head">
+        <h2>Preparing for arrival</h2>
+        <p>Make your first week easier by handling the practical basics before you fly.</p>
+      </div>
+      <div class="grid">
+        <article class="card"><div class="icon">🏠</div><h3>Housing</h3><p>Compare residence, homestay and private rental options. Understand the deposit, lease, utilities and commute before committing.</p></article>
+        <article class="card"><div class="icon">💳</div><h3>Money</h3><p>Plan access to Canadian dollars, banking, cards and emergency funds. Keep important financial documents secure.</p></article>
+        <article class="card"><div class="icon">🧥</div><h3>Weather</h3><p>Canada's climate differs by region. Check the city-specific weather and prepare appropriate clothing for the season you arrive.</p></article>
+        <article class="card"><div class="icon">🚌</div><h3>Transport</h3><p>Research the local transit system, airport transfer and your route from housing to campus.</p></article>
+        <article class="card"><div class="icon">📚</div><h3>Campus setup</h3><p>Complete orientation, student ID, course registration and academic-system setup as instructed by your institution.</p></article>
+        <article class="card"><div class="icon">🤝</div><h3>Support</h3><p>Save your institution's international-student, academic advising, health and emergency contact information.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="checklist">
+    <div class="container">
+      <div class="section-head">
+        <h2>Canada application checklist</h2>
+        <p>Use this as a planning list, then verify your exact institution and IRCC requirements.</p>
+      </div>
+      <ul class="checklist">
+        <li>Choose program and intake</li>
+        <li>Shortlist institutions</li>
+        <li>Check academic prerequisites</li>
+        <li>Check English/French requirements</li>
+        <li>Calculate tuition + living budget</li>
+        <li>Check scholarship opportunities</li>
+        <li>Submit school application</li>
+        <li>Receive letter of acceptance</li>
+        <li>Check PAL/TAL or Quebec requirements</li>
+        <li>Prepare proof of funds</li>
+        <li>Submit study permit application</li>
+        <li>Complete biometrics if required</li>
+        <li>Arrange housing</li>
+        <li>Plan flights and arrival</li>
+        <li>Complete university orientation</li>
+        <li>Keep copies of important documents</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="callout">
+        <h2>Official resources</h2>
+        <p>For current rules, costs and application steps, use the Government of Canada and EduCanada resources below.</p>
+        <p>
+          <a class="btn primary" href="https://www.educanada.ca/" target="_blank" rel="noopener">EduCanada</a>
+          <a class="btn" href="https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada.html" target="_blank" rel="noopener">Canada.ca — Study in Canada</a>
+          <a class="btn" href="https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit.html" target="_blank" rel="noopener">IRCC — Study Permit</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <strong>UniAI — Study in Canada Guide</strong>
+    <p class="source-note">
+      This guide is for planning and educational purposes. Immigration, tuition and institutional requirements can change.
+      Confirm current requirements with the relevant school and official Government of Canada sources before applying.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

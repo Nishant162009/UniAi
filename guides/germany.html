@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study in Germany Guide | UniAI</title>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="guard.js"></script>
+
+  <style>
+    /* =====================================================
+       GERMAN THEME COLOR PALETTE & STYLES
+    ====================================================== */
+    :root {
+      --de-black: #121212;
+      --de-gold: #ffcc00;
+      --de-gold-dark: #d4a000;
+      --de-red: #dd0000;
+      --de-bg-dark: #1a1a1a;
+      --de-card-bg: #242424;
+      --de-border: #333333;
+      --de-text-light: #f5f5f5;
+      --de-text-muted: #aaaaaa;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--de-black);
+      color: var(--de-text-light);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      position: relative;
+      background: linear-gradient(180deg, rgba(18,18,18,0.7) 0%, rgba(18,18,18,0.95) 100%),
+                  url('https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcRi076PLQ-q-1aWVLb2xtAhDvvyJEofA2KySqsvWBly7Xl20shXjSEpfbRBRBLSugubc_ZiTF3FYhhRZlk') center/cover no-repeat;
+      padding: 5rem 0 3rem;
+      border-bottom: 4px solid var(--de-gold);
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background-color: var(--de-red);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      color: #ffffff;
+    }
+
+    .hero h1 span {
+      color: var(--de-gold);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--de-text-muted);
+      max-width: 700px;
+      margin: 0 auto 2rem;
+    }
+
+    /* STATS STRIP */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .stat-card {
+      background-color: var(--de-card-bg);
+      border-left: 4px solid var(--de-gold);
+      padding: 1.25rem;
+      border-radius: 8px;
+    }
+
+    .stat-card .number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--de-gold);
+    }
+
+    .stat-card .label {
+      font-size: 0.9rem;
+      color: var(--de-text-muted);
+    }
+
+    /* MAIN CONTENT LAYOUT */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2.5rem;
+      padding: 3rem 0;
+    }
+
+    @media (max-width: 900px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .guide-section {
+      background-color: var(--de-bg-dark);
+      border: 1px solid var(--de-border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .guide-section h2 {
+      font-size: 1.6rem;
+      color: var(--de-gold);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .guide-section p {
+      margin-bottom: 1rem;
+      color: #dddddd;
+    }
+
+    .image-frame {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin: 1rem 0;
+      border: 1px solid var(--de-border);
+    }
+
+    /* SIDEBAR */
+    .sidebar-card {
+      background-color: var(--de-card-bg);
+      border: 1px solid var(--de-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-card h3 {
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--de-red);
+      padding-bottom: 0.5rem;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.8rem;
+      font-size: 0.95rem;
+    }
+
+    .checklist-item input {
+      margin-top: 0.3rem;
+      accent-color: var(--de-gold);
+    }
+
+    /* TABLE STYLES */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    .data-table th, .data-table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--de-border);
+    }
+
+    .data-table th {
+      background-color: var(--de-card-bg);
+      color: var(--de-gold);
+    }
+
+    .btn-cta {
+      display: inline-block;
+      width: 100%;
+      background-color: var(--de-gold);
+      color: #000;
+      font-weight: 700;
+      text-align: center;
+      padding: 0.8rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s;
+    }
+
+    .btn-cta:hover {
+      background-color: var(--de-gold-dark);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO SECTION -->
+  <header class="hero">
+    <div class="container">
+      <span class="hero-badge">🇩🇪 Destination Guide</span>
+      <h1>Study in <span>Germany</span></h1>
+      <p>Your complete roadmap to world-class, tuition-free education in the heart of Europe.</p>
+
+      <div class="stats-strip">
+        <div class="stat-card">
+          <div class="number">€0</div>
+          <div class="label">Tuition at Public Universities</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">€11,208</div>
+          <div class="label">Blocked Account / Year</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">18 Months</div>
+          <div class="label">Post-Study Work Visa</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">120 Days</div>
+          <div class="label">Part-Time Work Limit / Year</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+    <div class="content-grid">
+      
+      <!-- LEFT COLUMN: DETAILED GUIDES -->
+      <div class="main-content">
+        
+        <!-- SECTION 1 -->
+        <article class="guide-section">
+          <h2>🏛️ Why Study in Germany?</h2>
+          <p>Germany is home to some of the world's most prestigious technical and research universities. Most public universities charge zero tuition fees for both EU and non-EU international students, requiring only a nominal administrative semester fee (typically €150–€350).</p>
+          
+          <img class="image-frame" src="https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcRyslBFnmrKbbocmTq09zvSu5U3JvpKnPAlCRXqprUxtiYzaUDQr_2V4UIDKUrkoY7a2SeJ5B4pzmrjtwo" alt="Students in a German university lecture hall">
+
+          <p>Whether you study engineering at TU Munich, humanities at Humboldt University Berlin, or business in Frankfurt, you gain access to state-of-the-art research facilities and strong industry connections with global brands like BMW, Siemens, and SAP.</p>
+        </article>
+
+        <!-- SECTION 2 -->
+        <article class="guide-section">
+          <h2>📋 Admission Requirements</h2>
+          <p>Requirements vary depending on degree level and language of instruction:</p>
+          
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Requirement</th>
+                <th>Bachelor's Degree</th>
+                <th>Master's Degree</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Academic Baseline</strong></td>
+                <td>Abitur equivalent or Studienkolleg</td>
+                <td>Relevant Bachelor's degree (180–240 ECTS)</td>
+              </tr>
+              <tr>
+                <td><strong>Language Proficiency</strong></td>
+                <td>German (TestDaF / DSH) or IELTS (6.5+)</td>
+                <td>IELTS (6.5+) or TOEFL (90+) for English programs</td>
+              </tr>
+              <tr>
+                <td><strong>Aps Certificate</strong></td>
+                <td>Mandatory for selected countries</td>
+                <td>Mandatory for selected countries</td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+
+        <!-- SECTION 3 -->
+        <article class="guide-section">
+          <h2>💶 Living Costs & Blocked Account</h2>
+          <p>While public tuition is free, international students must prove financial self-sufficiency. As of 2024/2025, you must deposit <strong>€11,208</strong> into an official German Blocked Account (<em>Sperrkonto</em>), which pays out roughly €934 per month for living expenses.</p>
+          
+          <img class="image-frame" src="https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcTNHV-mHBE_cmdUuPN46kIa38c_TBiR9XoOjsMYstywHHk48qBC_CJckEVrdH05itTRqW9cJ3P2Gu1WKDU" alt="German landscape with Neuschwanstein Castle">
+        </article>
+
+      </div>
+
+      <!-- RIGHT COLUMN: SIDEBAR TOOLS -->
+      <aside class="sidebar">
+        
+        <div class="sidebar-card">
+          <h3>📌 Application Checklist</h3>
+          <div class="checklist-item">
+            <input type="checkbox" id="c1">
+            <label for="c1">Verify university eligibility (Anabin database)</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="c2">
+            <label for="c2">Get APS Certificate (if required)</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="c3">
+            <label for="c3">Take IELTS / TestDaF exam</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="c4">
+            <label for="c4">Open Sperrkonto (Blocked Account)</label>
+          </div>
+          <div class="checklist-item">
+            <input type="checkbox" id="c5">
+            <label for="c5">Submit via uni-assist or direct portal</label>
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>🤖 Need Personal Help?</h3>
+          <p style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--de-text-muted);">
+            UniAI can match your grades to tuition-free German programs in seconds.
+          </p>
+          <a href="#" class="btn-cta" onclick="showPage('universityFinder', event)">Find German Universities</a>
+        </div>
+
+      </aside>
+
+    </div>
+  </main>
+
+</body>
+</html>

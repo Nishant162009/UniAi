@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniAI — Study in the USA</title>
+<meta name="description" content="Explore studying in the USA with UniAI — universities, cities, costs, visas, scholarships and your application journey.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#07090e;
+  --surface:#0e121a;
+  --surface-2:#141a25;
+  --text:#f7f8fb;
+  --muted:#aeb6c7;
+  --line:rgba(255,255,255,.11);
+  --accent:#78a9ff;
+  --accent-2:#b8d0ff;
+  --max:1240px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:"DM Sans",system-ui,sans-serif;overflow-x:hidden;
+}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+::selection{background:rgba(120,169,255,.35)}
+
+.nav{
+  position:fixed;z-index:100;top:0;left:0;right:0;
+  height:76px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 4vw;transition:.35s;
+}
+.nav.scrolled{background:rgba(7,9,14,.78);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.logo{font-family:"Space Grotesk";font-weight:700;letter-spacing:-.04em;font-size:22px}
+.logo span{opacity:.5}
+.navlinks{display:flex;gap:26px;font-size:14px;color:#d8dce6}
+.navlinks a{opacity:.8;transition:.2s}
+.navlinks a:hover{opacity:1}
+.nav-cta{
+  border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);
+  color:white;padding:11px 17px;border-radius:999px;cursor:pointer;
+}
+.hero{
+  min-height:100svh;position:relative;display:flex;align-items:flex-end;
+  isolation:isolate;overflow:hidden;
+  background:
+    linear-gradient(180deg,rgba(5,7,12,.2),rgba(5,7,12,.4) 38%,#07090e 100%),
+    url("https://images.unsplash.com/photo-1501466044931-62695aada8e9?w=2200&q=85") center/cover;
+}
+.hero:before{
+  content:"";position:absolute;inset:-5%;
+  background:inherit;z-index:-2;animation:heroZoom 18s ease-in-out infinite alternate;
+}
+.hero:after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:
+    radial-gradient(circle at 78% 30%,rgba(92,145,255,.2),transparent 30%),
+    linear-gradient(90deg,rgba(4,6,10,.84),transparent 65%);
+}
+@keyframes heroZoom{to{transform:scale(1.07)}}
+.hero-inner{width:min(var(--max),92vw);margin:0 auto;padding:150px 0 80px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;color:#dce7ff;
+  font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:22px
+}
+.eyebrow:before{content:"";width:26px;height:1px;background:var(--accent)}
+h1{
+  font-family:"Space Grotesk";font-size:clamp(62px,9vw,128px);
+  line-height:.87;letter-spacing:-.07em;max-width:930px;margin:0 0 28px;
+}
+.hero-copy{max-width:620px;color:#d3d8e2;font-size:18px;line-height:1.65}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+.btn{
+  border:1px solid var(--line);padding:14px 20px;border-radius:999px;
+  background:rgba(255,255,255,.08);color:white;cursor:pointer;transition:.25s;
+}
+.btn.primary{background:#fff;color:#080a0f;border-color:#fff}
+.btn:hover{transform:translateY(-2px)}
+.hero-meta{
+  display:flex;gap:38px;flex-wrap:wrap;margin-top:65px;padding-top:20px;border-top:1px solid var(--line)
+}
+.meta strong{display:block;font-family:"Space Grotesk";font-size:25px}
+.meta span{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em}
+
+.section{padding:120px 0}
+.container{width:min(var(--max),92vw);margin:auto}
+.section-kicker{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#9ebcff;margin-bottom:16px}
+.section-title{
+  font-family:"Space Grotesk";font-size:clamp(40px,5vw,72px);
+  line-height:.95;letter-spacing:-.055em;margin:0;max-width:800px
+}
+.section-sub{color:var(--muted);max-width:640px;line-height:1.7;font-size:17px;margin-top:22px}
+
+.reveal{opacity:0;transform:translateY(35px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:none}
+
+.marquee{overflow:hidden;border-block:1px solid var(--line);padding:18px 0;white-space:nowrap}
+.marquee-track{display:inline-flex;gap:45px;animation:scroll 26s linear infinite}
+.marquee span{font-family:"Space Grotesk";font-size:13px;color:#aab4c7;text-transform:uppercase;letter-spacing:.13em}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+.grid{display:grid;gap:16px}
+.cities{grid-template-columns:repeat(4,1fr);margin-top:55px}
+.city{
+  min-height:430px;border-radius:22px;overflow:hidden;position:relative;
+  background-size:cover;background-position:center;display:flex;align-items:flex-end;
+  transition:transform .45s;
+}
+.city:hover{transform:translateY(-7px)}
+.city:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 35%,rgba(0,0,0,.85))}
+.city-content{position:relative;z-index:2;padding:25px;width:100%}
+.city h3{font-family:"Space Grotesk";font-size:32px;margin:0 0 8px;letter-spacing:-.04em}
+.city p{margin:0;color:#c3c8d1;font-size:14px}
+
+.dual{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.stats-panel{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:24px;overflow:hidden
+}
+.stat{background:var(--surface);padding:30px;min-height:160px}
+.stat strong{font-family:"Space Grotesk";font-size:34px;display:block}
+.stat span{color:var(--muted);font-size:13px;line-height:1.5;display:block;margin-top:8px}
+
+.uni-grid{grid-template-columns:repeat(3,1fr);margin-top:55px}
+.uni{
+  padding:28px;border:1px solid var(--line);background:linear-gradient(145deg,#111621,#0c1017);
+  border-radius:20px;min-height:245px;transition:.3s
+}
+.uni:hover{border-color:rgba(120,169,255,.5);transform:translateY(-5px)}
+.uni-rank{font-size:11px;color:#8fa5d1;letter-spacing:.12em;text-transform:uppercase}
+.uni h3{font-family:"Space Grotesk";font-size:28px;margin:30px 0 9px}
+.uni p{color:var(--muted);font-size:14px;line-height:1.55}
+.tag{
+  display:inline-block;border:1px solid var(--line);border-radius:999px;
+  padding:7px 10px;font-size:11px;color:#cbd2df;margin:5px 4px 0 0
+}
+
+.cost-section{background:#0a0d13}
+.cost-wrap{margin-top:55px;display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+.cost-card{border:1px solid var(--line);background:var(--surface);border-radius:22px;padding:35px}
+.cost-row{display:flex;justify-content:space-between;gap:20px;padding:21px 0;border-bottom:1px solid var(--line)}
+.cost-row:last-child{border-bottom:0}
+.cost-row span{color:var(--muted)}
+.cost-row strong{font-family:"Space Grotesk"}
+.big-cost{display:flex;flex-direction:column;justify-content:center;min-height:100%}
+.big-cost .number{font-family:"Space Grotesk";font-size:clamp(48px,6vw,82px);letter-spacing:-.07em}
+.big-cost p{color:var(--muted);line-height:1.6}
+
+.timeline{margin-top:60px;position:relative}
+.timeline:before{content:"";position:absolute;left:24px;top:0;bottom:0;width:1px;background:var(--line)}
+.step{position:relative;padding:0 0 55px 75px}
+.step:last-child{padding-bottom:0}
+.step-dot{
+  position:absolute;left:13px;top:0;width:23px;height:23px;border-radius:50%;
+  border:1px solid #a9c2ff;background:var(--bg);box-shadow:0 0 0 7px var(--bg)
+}
+.step small{color:#8fa5d1;letter-spacing:.15em}
+.step h3{font-family:"Space Grotesk";font-size:28px;margin:10px 0}
+.step p{color:var(--muted);line-height:1.6;max-width:650px}
+
+.feature{padding:120px 0;position:relative;overflow:hidden}
+.feature:before{
+  content:"USA";position:absolute;right:-5vw;top:-100px;font-family:"Space Grotesk";
+  font-size:28vw;font-weight:700;letter-spacing:-.1em;color:rgba(255,255,255,.025);pointer-events:none
+}
+.feature-card{
+  position:relative;border:1px solid var(--line);border-radius:28px;overflow:hidden;
+  min-height:470px;background:
+  linear-gradient(90deg,rgba(4,6,10,.92),rgba(4,6,10,.35)),
+  url("https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?w=1800&q=80") center/cover;
+  display:flex;align-items:center;padding:55px
+}
+.feature-content{max-width:600px}
+.feature-content h2{font-family:"Space Grotesk";font-size:clamp(44px,6vw,76px);line-height:.95;letter-spacing:-.06em;margin:0 0 22px}
+.feature-content p{color:#d1d6df;line-height:1.7}
+
+.footer{border-top:1px solid var(--line);padding:55px 0;color:#9da6b8}
+.footer-inner{width:min(var(--max),92vw);margin:auto;display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
+.footer-logo{font-family:"Space Grotesk";font-size:22px;color:white}
+.footer a{font-size:13px;margin-right:18px}
+.top{cursor:pointer;border:1px solid var(--line);border-radius:999px;padding:11px 16px;background:none;color:white}
+
+@media(max-width:900px){
+  .navlinks{display:none}
+  .cities{grid-template-columns:1fr 1fr}
+  .dual,.cost-wrap{grid-template-columns:1fr;gap:35px}
+  .uni-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .hero-inner{padding-bottom:55px}
+  h1{font-size:62px}
+  .hero-copy{font-size:16px}
+  .hero-meta{gap:20px}
+  .section,.feature{padding:85px 0}
+  .cities,.uni-grid{grid-template-columns:1fr}
+  .city{min-height:350px}
+  .stats-panel{grid-template-columns:1fr}
+  .feature-card{padding:30px;min-height:510px}
+}
+</style>
+</head>
+
+<body>
+<nav class="nav" id="nav">
+  <a href="../index.html" class="logo">Uni<span>AI</span></a>
+  <div class="navlinks">
+    <a href="#cities">Cities</a>
+    <a href="#universities">Universities</a>
+    <a href="#cost">Costs</a>
+    <a href="#visa">Visa</a>
+  </div>
+  <button class="nav-cta" onclick="document.querySelector('#plan').scrollIntoView({behavior:'smooth'})">Build my plan →</button>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Study destination / United States</div>
+    <h1>Make it<br>in America.</h1>
+    <p class="hero-copy">
+      From research labs and global companies to huge campuses and unforgettable cities,
+      the USA gives international students room to build something ambitious.
+    </p>
+    <div class="hero-actions">
+      <button class="btn primary" onclick="document.querySelector('#universities').scrollIntoView({behavior:'smooth'})">Explore universities</button>
+      <button class="btn" onclick="document.querySelector('#plan').scrollIntoView({behavior:'smooth'})">Start my USA plan</button>
+    </div>
+    <div class="hero-meta">
+      <div class="meta"><strong>4,000+</strong><span>degree institutions</span></div>
+      <div class="meta"><strong>50</strong><span>states</span></div>
+      <div class="meta"><strong>4 seasons</strong><span>of student life</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee">
+  <div class="marquee-track">
+    <span>New York</span><span>Boston</span><span>California</span><span>Chicago</span><span>Seattle</span><span>Texas</span><span>Research</span><span>Innovation</span><span>Opportunity</span>
+    <span>New York</span><span>Boston</span><span>California</span><span>Chicago</span><span>Seattle</span><span>Texas</span><span>Research</span><span>Innovation</span><span>Opportunity</span>
+  </div>
+</div>
+
+<section class="section" id="cities">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-kicker">01 / Find your city</div>
+      <h2 class="section-title">Your university is only half the story.</h2>
+      <p class="section-sub">Pick a city that matches the life you want outside the classroom — from fast-paced finance to startup culture, research and coastal living.</p>
+    </div>
+
+    <div class="grid cities">
+      <article class="city reveal" style="background-image:url('https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?w=1000&q=80')">
+        <div class="city-content"><h3>New York</h3><p>Finance · Media · Arts · Global business</p></div>
+      </article>
+      <article class="city reveal" style="background-image:url('https://images.unsplash.com/photo-1501975558162-0be7b8ca95ea?w=1000&q=80')">
+        <div class="city-content"><h3>Boston</h3><p>Research · Biotech · Universities · Innovation</p></div>
+      </article>
+      <article class="city reveal" style="background-image:url('https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1000&q=80')">
+        <div class="city-content"><h3>California</h3><p>Technology · Startups · Design · Coast</p></div>
+      </article>
+      <article class="city reveal" style="background-image:url('https://images.unsplash.com/photo-1494522855154-9297ac14b55f?w=1000&q=80')">
+        <div class="city-content"><h3>Chicago</h3><p>Business · Architecture · Culture · Big city</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container dual">
+    <div class="reveal">
+      <div class="section-kicker">02 / The experience</div>
+      <h2 class="section-title">Go where the ideas are moving.</h2>
+      <p class="section-sub">American universities span liberal arts colleges, massive public universities, specialist schools and world-leading research institutions.</p>
+    </div>
+    <div class="stats-panel reveal">
+      <div class="stat"><strong>STEM</strong><span>Computer science, engineering, data, biotech and more.</span></div>
+      <div class="stat"><strong>MBA</strong><span>Business ecosystems connected to major industries.</span></div>
+      <div class="stat"><strong>PhD</strong><span>Research-heavy programs and academic pathways.</span></div>
+      <div class="stat"><strong>Arts</strong><span>Design, film, media, music and liberal arts.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="universities">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-kicker">03 / University universe</div>
+      <h2 class="section-title">Big names. Big possibilities.</h2>
+      <p class="section-sub">A starting point for your shortlist. Always verify current programs, fees and admission requirements on each university's official site.</p>
+    </div>
+
+    <div class="grid uni-grid">
+      <article class="uni reveal"><div class="uni-rank">Research · Massachusetts</div><h3>MIT</h3><p>Known for science, engineering, computing and research.</p><span class="tag">STEM</span><span class="tag">Research</span></article>
+      <article class="uni reveal"><div class="uni-rank">Research · California</div><h3>Stanford</h3><p>Strong connections across technology, entrepreneurship and research.</p><span class="tag">Tech</span><span class="tag">Innovation</span></article>
+      <article class="uni reveal"><div class="uni-rank">Research · Massachusetts</div><h3>Harvard</h3><p>A broad academic ecosystem spanning many disciplines and schools.</p><span class="tag">Liberal arts</span><span class="tag">Research</span></article>
+      <article class="uni reveal"><div class="uni-rank">Research · California</div><h3>UC Berkeley</h3><p>A major public research university with a wide range of programs.</p><span class="tag">Public</span><span class="tag">Research</span></article>
+      <article class="uni reveal"><div class="uni-rank">Research · New York</div><h3>Columbia</h3><p>An urban university experience in the heart of New York City.</p><span class="tag">NYC</span><span class="tag">Research</span></article>
+      <article class="uni reveal"><div class="uni-rank">Research · Illinois</div><h3>University of Chicago</h3><p>Intensive academic culture with strengths across disciplines.</p><span class="tag">Research</span><span class="tag">Chicago</span></article>
+    </div>
+  </div>
+</section>
+
+<section class="section cost-section" id="cost">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-kicker">04 / Money map</div>
+      <h2 class="section-title">Budget the dream before you book the flight.</h2>
+      <p class="section-sub">Costs vary dramatically by university, city, program and lifestyle. Use these as planning categories, not fixed quotes.</p>
+    </div>
+
+    <div class="cost-wrap">
+      <div class="cost-card reveal">
+        <div class="cost-row"><span>Tuition</span><strong>Program dependent</strong></div>
+        <div class="cost-row"><span>Housing</span><strong>City dependent</strong></div>
+        <div class="cost-row"><span>Food + transport</span><strong>Lifestyle dependent</strong></div>
+        <div class="cost-row"><span>Health insurance</span><strong>University dependent</strong></div>
+        <div class="cost-row"><span>Books + supplies</span><strong>Program dependent</strong></div>
+      </div>
+      <div class="cost-card big-cost reveal">
+        <div class="number">$$$</div>
+        <p>The USA can range from relatively affordable public-university pathways to very high-cost private and metropolitan options. Compare the complete annual cost, not tuition alone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="visa">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-kicker">05 / Visa runway</div>
+      <h2 class="section-title">From admission letter to takeoff.</h2>
+      <p class="section-sub">The exact process depends on your school and circumstances. Treat this as a visual roadmap and confirm requirements with official U.S. government and university sources.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="step reveal"><div class="step-dot"></div><small>STEP 01</small><h3>Choose your program</h3><p>Shortlist universities, courses, intakes and entry requirements.</p></div>
+      <div class="step reveal"><div class="step-dot"></div><small>STEP 02</small><h3>Apply + get admitted</h3><p>Prepare your academic documents, test scores where required, essays and financial information.</p></div>
+      <div class="step reveal"><div class="step-dot"></div><small>STEP 03</small><h3>Receive your I-20</h3><p>After admission and required financial documentation, your school handles the student record and I-20 process.</p></div>
+      <div class="step reveal"><div class="step-dot"></div><small>STEP 04</small><h3>Student visa process</h3><p>Review the current F-1 student visa process, fees, appointment availability and interview requirements through official sources.</p></div>
+      <div class="step reveal"><div class="step-dot"></div><small>STEP 05</small><h3>Arrive + begin</h3><p>Plan housing, travel, orientation and your first semester before departure.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="plan">
+  <div class="container">
+    <div class="feature-card reveal">
+      <div class="feature-content">
+        <div class="section-kicker">06 / Your move</div>
+        <h2>Turn “maybe America” into an actual plan.</h2>
+        <p>Shortlist universities, compare cities, map your documents and build a timeline around your intake.</p>
+        <div class="hero-actions">
+          <button class="btn primary" onclick="alert('Connect this button to your UniAI application planner.')">Build my USA roadmap →</button>
+          <button class="btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to top</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="footer-logo">UniAI</div><div style="margin-top:8px;font-size:13px">Study abroad, but smarter.</div></div>
+    <div>
+      <a href="../index.html">Home</a>
+      <a href="#universities">Universities</a>
+      <a href="#cost">Costs</a>
+      <a href="#visa">Visa</a>
+      <button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
+
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach((entry)=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:.12});
+
+document.querySelectorAll('.reveal').forEach((el,i)=>{
+  el.style.transitionDelay=(i%4)*70+'ms';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,5078 @@
+[
+  {
+    "id": "canada",
+    "country": "Canada",
+    "countryCode": "CA",
+    "flag": "🇨🇦",
+    "region": "north-america",
+    "visaTypes": [
+      {
+        "id": "study-permit",
+        "name": "Study Permit",
+        "shortDescription": "Required for most international students studying in Canada.",
+        "description": "A Canadian study permit allows eligible international students to study at a designated learning institution in Canada.",
+
+        "eligibility": [
+          "Acceptance from a Designated Learning Institution",
+          "Valid passport or travel document",
+          "Proof of sufficient financial support",
+          "Meet applicable admissibility requirements"
+        ],
+
+        "documents": [
+          "Passport",
+          "Letter of acceptance",
+          "Proof of financial support",
+          "Passport-size photographs",
+          "Academic documents",
+          "Additional documents if requested"
+        ],
+
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive a letter of acceptance from a Canadian Designated Learning Institution."
+          },
+          {
+            "step": 2,
+            "title": "Prepare documents",
+            "description": "Collect your passport, acceptance letter, financial documents and other required documents."
+          },
+          {
+            "step": 3,
+            "title": "Submit application",
+            "description": "Submit your study permit application through the appropriate application process."
+          },
+          {
+            "step": 4,
+            "title": "Biometrics",
+            "description": "Provide biometrics when required."
+          },
+          {
+            "step": 5,
+            "title": "Wait for decision",
+            "description": "The application is reviewed and a decision is made."
+          }
+        ],
+
+        "financialRequirement": {
+          "required": true,
+          "description": "You generally need to demonstrate that you can support yourself during your studies."
+        },
+
+        "processingTime": "Varies",
+
+        "officialSources": [
+          {
+            "title": "Government of Canada",
+            "url": "https://www.canada.ca/"
+          }
+        ]
+      }
+    ],
+
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "united-kingdom",
+    "country": "United Kingdom",
+    "countryCode": "GB",
+    "flag": "🇬🇧",
+    "region": "europe",
+    "visaTypes": [
+      {
+        "id": "student-visa",
+        "name": "Student Visa",
+        "shortDescription": "For international students studying eligible courses in the UK.",
+        "description": "The UK Student visa is used by eligible international students who have been accepted onto an approved course of study.",
+
+        "eligibility": [
+          "Acceptance from an approved education provider",
+          "Confirmation of Acceptance for Studies (CAS)",
+          "Meet applicable financial requirements",
+          "Meet immigration requirements"
+        ],
+
+        "documents": [
+          "Valid passport",
+          "CAS",
+          "Financial evidence when required",
+          "Academic documents",
+          "Additional documents where applicable"
+        ],
+
+        "steps": [
+          {
+            "step": 1,
+            "title": "Receive admission",
+            "description": "Get accepted by an approved UK education provider."
+          },
+          {
+            "step": 2,
+            "title": "Receive CAS",
+            "description": "Your education provider issues your Confirmation of Acceptance for Studies."
+          },
+          {
+            "step": 3,
+            "title": "Prepare application",
+            "description": "Prepare the required documents and application information."
+          },
+          {
+            "step": 4,
+            "title": "Apply for visa",
+            "description": "Submit your Student visa application through the official UK process."
+          },
+          {
+            "step": 5,
+            "title": "Complete required checks",
+            "description": "Complete biometrics or other required steps."
+          }
+        ],
+
+        "financialRequirement": {
+          "required": true,
+          "description": "Applicants may need to demonstrate sufficient funds according to the applicable immigration rules."
+        },
+
+        "processingTime": "Varies",
+
+        "officialSources": [
+          {
+            "title": "UK Government",
+            "url": "https://www.gov.uk/"
+          }
+        ]
+      }
+    ],
+
+    "lastUpdated": "2026-09-01"
+  },
+
+
+
+  {
+    "id": "australia",
+    "country": "Australia",
+    "countryCode": "AU",
+    "flag": "🇦🇺",
+    "region": "oceania",
+    "visaTypes": [
+      {
+        "id": "student-visa",
+        "name": "Student Visa (Subclass 500)",
+        "shortDescription": "For international students studying eligible courses in Australia.",
+        "description": "The Australian Student visa (subclass 500) allows eligible international students to study a registered course in Australia.",
+        "eligibility": [
+          "Acceptance into a registered Australian education provider",
+          "Confirmation of Enrolment (CoE)",
+          "Valid passport or travel document",
+          "Meet applicable financial requirements",
+          "Meet health and character requirements",
+          "Meet applicable English-language requirements",
+          "Genuine Student requirement"
+        ],
+        "documents": [
+          "Passport",
+          "Confirmation of Enrolment (CoE)",
+          "Financial evidence when required",
+          "English-language evidence when required",
+          "Health insurance evidence",
+          "Academic documents",
+          "Additional documents if requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Choose a course",
+            "description": "Select an eligible course with an Australian education provider."
+          },
+          {
+            "step": 2,
+            "title": "Get admission",
+            "description": "Receive an offer and complete the enrolment process."
+          },
+          {
+            "step": 3,
+            "title": "Receive CoE",
+            "description": "Obtain your Confirmation of Enrolment from the education provider."
+          },
+          {
+            "step": 4,
+            "title": "Prepare documents",
+            "description": "Prepare financial, identity, academic, health insurance and other required documents."
+          },
+          {
+            "step": 5,
+            "title": "Submit application",
+            "description": "Apply for the Student visa through the official Australian immigration process."
+          },
+          {
+            "step": 6,
+            "title": "Complete checks",
+            "description": "Complete biometrics, health examinations or other checks when required."
+          },
+          {
+            "step": 7,
+            "title": "Wait for decision",
+            "description": "The application is assessed and a decision is issued."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Applicants may need to demonstrate access to sufficient funds for travel, tuition and living expenses according to applicable requirements."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Australian Government - Department of Home Affairs",
+            "url": "https://immi.homeaffairs.gov.au/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "united-states",
+    "country": "United States",
+    "countryCode": "US",
+    "flag": "🇺🇸",
+    "region": "north-america",
+    "visaTypes": [
+      {
+        "id": "f1-student-visa",
+        "name": "F-1 Student Visa",
+        "shortDescription": "For international students pursuing academic studies in the United States.",
+        "description": "The F-1 visa is generally used by international students attending approved academic institutions in the United States.",
+        "eligibility": [
+          "Acceptance by a Student and Exchange Visitor Program-certified institution",
+          "Form I-20",
+          "Valid passport",
+          "Evidence of ability to pay educational and living expenses",
+          "Intent to pursue the approved course of study",
+          "Meet applicable visa requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Form I-20",
+          "DS-160 confirmation",
+          "SEVIS fee payment evidence",
+          "Visa application documents",
+          "Financial evidence",
+          "Academic documents",
+          "Photograph when required"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Apply to a SEVP-certified US institution and receive admission."
+          },
+          {
+            "step": 2,
+            "title": "Receive Form I-20",
+            "description": "The institution issues the required Form I-20."
+          },
+          {
+            "step": 3,
+            "title": "Pay required fees",
+            "description": "Complete applicable SEVIS and visa fee payments."
+          },
+          {
+            "step": 4,
+            "title": "Complete DS-160",
+            "description": "Complete the online nonimmigrant visa application."
+          },
+          {
+            "step": 5,
+            "title": "Schedule interview",
+            "description": "Schedule a visa interview according to the applicable US embassy or consulate process."
+          },
+          {
+            "step": 6,
+            "title": "Attend interview",
+            "description": "Attend the visa interview and provide required documents."
+          },
+          {
+            "step": 7,
+            "title": "Wait for decision",
+            "description": "The application is reviewed and a decision is issued."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Students generally need to demonstrate that they have sufficient funds to cover the costs shown for their program."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "US Department of State",
+            "url": "https://travel.state.gov/"
+          },
+          {
+            "title": "Study in the States",
+            "url": "https://studyinthestates.dhs.gov/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "new-zealand",
+    "country": "New Zealand",
+    "countryCode": "NZ",
+    "flag": "🇳🇿",
+    "region": "oceania",
+    "visaTypes": [
+      {
+        "id": "student-visa",
+        "name": "Fee Paying Student Visa",
+        "shortDescription": "For international students paying to study an approved course in New Zealand.",
+        "description": "The Fee Paying Student Visa allows eligible international students to study full-time at an approved New Zealand education provider.",
+        "eligibility": [
+          "Offer of place from an approved education provider",
+          "Valid passport",
+          "Evidence of sufficient funds",
+          "Evidence of suitable accommodation when required",
+          "Meet health requirements",
+          "Meet character requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Offer of place",
+          "Financial evidence",
+          "Tuition fee evidence",
+          "Accommodation evidence when required",
+          "Academic documents",
+          "Medical or police documents when required"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Choose a course",
+            "description": "Select an eligible course from an approved education provider."
+          },
+          {
+            "step": 2,
+            "title": "Receive offer",
+            "description": "Obtain an offer of place from your education provider."
+          },
+          {
+            "step": 3,
+            "title": "Prepare funds",
+            "description": "Prepare evidence showing that you can meet applicable study and living costs."
+          },
+          {
+            "step": 4,
+            "title": "Prepare documents",
+            "description": "Collect identity, academic, financial and other required documents."
+          },
+          {
+            "step": 5,
+            "title": "Apply",
+            "description": "Submit the student visa application through Immigration New Zealand."
+          },
+          {
+            "step": 6,
+            "title": "Complete checks",
+            "description": "Complete medical, identity or other checks when required."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Applicants generally need to show they have enough money for tuition and living costs under the applicable rules."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Immigration New Zealand",
+            "url": "https://www.immigration.govt.nz/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "ireland",
+    "country": "Ireland",
+    "countryCode": "IE",
+    "flag": "🇮🇪",
+    "region": "europe",
+    "visaTypes": [
+      {
+        "id": "long-stay-study-visa",
+        "name": "Long Stay 'D' Study Visa",
+        "shortDescription": "For students planning to study in Ireland for longer than 90 days.",
+        "description": "Eligible students who intend to undertake a long-term course of study in Ireland may need a Long Stay 'D' study visa.",
+        "eligibility": [
+          "Acceptance into an eligible Irish education programme",
+          "Valid passport",
+          "Evidence of sufficient finances",
+          "Evidence of tuition payment when required",
+          "Meet immigration requirements",
+          "Meet applicable health and character requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Letter of acceptance",
+          "Evidence of tuition payment",
+          "Financial evidence",
+          "Academic documents",
+          "Accommodation information when required",
+          "Insurance evidence",
+          "Additional documents if requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive acceptance from an eligible Irish education provider."
+          },
+          {
+            "step": 2,
+            "title": "Prepare documents",
+            "description": "Collect financial, academic, identity and supporting documents."
+          },
+          {
+            "step": 3,
+            "title": "Complete application",
+            "description": "Complete the applicable Irish visa application."
+          },
+          {
+            "step": 4,
+            "title": "Submit documents",
+            "description": "Submit the application and supporting documents through the applicable process."
+          },
+          {
+            "step": 5,
+            "title": "Complete required checks",
+            "description": "Provide biometrics or other information when required."
+          },
+          {
+            "step": 6,
+            "title": "Wait for decision",
+            "description": "The application is assessed and a decision is issued."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Students must generally demonstrate access to sufficient funds for their stay in Ireland."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Irish Immigration Service",
+            "url": "https://www.irishimmigration.ie/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "germany",
+    "country": "Germany",
+    "countryCode": "DE",
+    "flag": "🇩🇪",
+    "region": "europe",
+    "visaTypes": [
+      {
+        "id": "student-visa",
+        "name": "Student Visa",
+        "shortDescription": "For international students planning to study at a German university or recognized institution.",
+        "description": "International students who require a visa can use the German student visa process to enter Germany for higher education.",
+        "eligibility": [
+          "Admission to a recognized German educational institution",
+          "Valid passport",
+          "Proof of financial resources",
+          "Appropriate health insurance",
+          "Meet visa and residence requirements"
+        ],
+        "documents": [
+          "Passport",
+          "University admission letter",
+          "Proof of financial resources",
+          "Health insurance evidence",
+          "Academic certificates",
+          "Visa application forms",
+          "Biometric photographs",
+          "Additional documents when requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive admission from a recognized German institution."
+          },
+          {
+            "step": 2,
+            "title": "Prepare finances",
+            "description": "Arrange acceptable evidence of sufficient financial resources."
+          },
+          {
+            "step": 3,
+            "title": "Arrange insurance",
+            "description": "Obtain appropriate health insurance coverage."
+          },
+          {
+            "step": 4,
+            "title": "Prepare application",
+            "description": "Prepare the visa application and supporting documents."
+          },
+          {
+            "step": 5,
+            "title": "Submit application",
+            "description": "Apply through the responsible German mission or applicable online process."
+          },
+          {
+            "step": 6,
+            "title": "Complete checks",
+            "description": "Attend an appointment and provide biometrics or other required information."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Students generally need to demonstrate sufficient financial resources for their stay."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "German Federal Foreign Office",
+            "url": "https://www.auswaertiges-amt.de/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "france",
+    "country": "France",
+    "countryCode": "FR",
+    "flag": "🇫🇷",
+    "region": "europe",
+    "visaTypes": [
+      {
+        "id": "student-long-stay-visa",
+        "name": "Long-Stay Student Visa",
+        "shortDescription": "For international students undertaking longer-term studies in France.",
+        "description": "The French long-stay student visa allows eligible international students to study in France for longer-term academic programmes.",
+        "eligibility": [
+          "Admission to an eligible French institution",
+          "Valid passport",
+          "Proof of accommodation or arrangements when required",
+          "Proof of financial resources",
+          "Meet applicable immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission or enrolment confirmation",
+          "Financial evidence",
+          "Accommodation evidence",
+          "Academic documents",
+          "Visa application documents",
+          "Photographs",
+          "Additional documents if requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Apply to institution",
+            "description": "Apply to an eligible French education institution."
+          },
+          {
+            "step": 2,
+            "title": "Receive admission",
+            "description": "Obtain the required admission or enrolment documentation."
+          },
+          {
+            "step": 3,
+            "title": "Complete Campus France process",
+            "description": "Complete the applicable Campus France procedure where required."
+          },
+          {
+            "step": 4,
+            "title": "Prepare visa application",
+            "description": "Prepare the required visa documents."
+          },
+          {
+            "step": 5,
+            "title": "Submit application",
+            "description": "Submit the visa application through the applicable French visa process."
+          },
+          {
+            "step": 6,
+            "title": "Attend appointment",
+            "description": "Attend the required appointment and provide supporting information."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Students generally need to demonstrate sufficient resources for their stay."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "France-Visas",
+            "url": "https://france-visas.gouv.fr/"
+          },
+          {
+            "title": "Campus France",
+            "url": "https://www.campusfrance.org/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "netherlands",
+    "country": "Netherlands",
+    "countryCode": "NL",
+    "flag": "🇳🇱",
+    "region": "europe",
+    "visaTypes": [
+      {
+        "id": "student-residence-permit",
+        "name": "Student Residence Permit",
+        "shortDescription": "For international students studying at recognized Dutch higher-education institutions.",
+        "description": "International students from outside the EU, EEA and Switzerland may require a residence permit to study in the Netherlands.",
+        "eligibility": [
+          "Admission to a recognized Dutch educational institution",
+          "Full-time study",
+          "Sufficient financial resources",
+          "Valid travel document",
+          "Meet applicable residence requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission or enrolment evidence",
+          "Financial evidence",
+          "Academic documents",
+          "Additional immigration documents when required"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive admission from a recognized Dutch institution."
+          },
+          {
+            "step": 2,
+            "title": "Institution submits application",
+            "description": "The recognized institution generally handles the residence permit application."
+          },
+          {
+            "step": 3,
+            "title": "Provide documents",
+            "description": "Provide the required identity, financial and academic documents."
+          },
+          {
+            "step": 4,
+            "title": "Complete entry process",
+            "description": "Complete the applicable MVV process when required."
+          },
+          {
+            "step": 5,
+            "title": "Collect residence permit",
+            "description": "Collect the residence document after approval."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Students generally need to demonstrate sufficient funds for living expenses according to the applicable Dutch requirements."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Immigration and Naturalisation Service",
+            "url": "https://ind.nl/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "sweden",
+    "country": "Sweden",
+    "countryCode": "SE",
+    "flag": "🇸🇪",
+    "region": "europe",
+    "visaTypes": [
+      {
+        "id": "residence-permit-studies",
+        "name": "Residence Permit for Studies",
+        "shortDescription": "For students admitted to full-time higher education programmes in Sweden.",
+        "description": "Students from outside the EU/EEA generally need a residence permit to study in Sweden for longer periods.",
+        "eligibility": [
+          "Admission to a full-time programme",
+          "Valid passport",
+          "Evidence of financial support",
+          "Required tuition payment where applicable",
+          "Meet residence permit requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission decision",
+          "Financial evidence",
+          "Tuition payment evidence when applicable",
+          "Academic documents",
+          "Additional documents if requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Apply to university",
+            "description": "Apply to an eligible Swedish higher education programme."
+          },
+          {
+            "step": 2,
+            "title": "Receive admission",
+            "description": "Obtain the official admission decision."
+          },
+          {
+            "step": 3,
+            "title": "Pay tuition when required",
+            "description": "Complete applicable tuition payment requirements."
+          },
+          {
+            "step": 4,
+            "title": "Prepare permit application",
+            "description": "Prepare identity, financial and supporting documents."
+          },
+          {
+            "step": 5,
+            "title": "Apply for residence permit",
+            "description": "Submit the application through the Swedish Migration Agency."
+          },
+          {
+            "step": 6,
+            "title": "Complete identity checks",
+            "description": "Provide biometrics or complete other identity procedures when required."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Applicants generally need to show sufficient funds to support themselves during their studies."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Swedish Migration Agency",
+            "url": "https://www.migrationsverket.se/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "finland",
+    "country": "Finland",
+    "countryCode": "FI",
+    "flag": "🇫🇮",
+    "region": "europe",
+    "visaTypes": [
+      {
+        "id": "residence-permit-studies",
+        "name": "Residence Permit for Studies",
+        "shortDescription": "For international students studying in Finland for longer than a short visit.",
+        "description": "Students from outside the EU/EEA generally need a residence permit for longer-term studies in Finland.",
+        "eligibility": [
+          "Admission to an eligible Finnish educational institution",
+          "Valid passport",
+          "Proof of sufficient financial resources",
+          "Health insurance where required",
+          "Meet applicable residence requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Financial evidence",
+          "Insurance evidence",
+          "Academic documents",
+          "Additional documents if requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive admission from a Finnish educational institution."
+          },
+          {
+            "step": 2,
+            "title": "Prepare documents",
+            "description": "Prepare admission, financial, insurance and identity documents."
+          },
+          {
+            "step": 3,
+            "title": "Submit application",
+            "description": "Apply for the residence permit through the official Finnish immigration process."
+          },
+          {
+            "step": 4,
+            "title": "Prove identity",
+            "description": "Visit an applicable service point to prove your identity and provide biometrics."
+          },
+          {
+            "step": 5,
+            "title": "Wait for decision",
+            "description": "The application is processed by the Finnish Immigration Service."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Applicants generally need to demonstrate sufficient funds to cover living expenses."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Finnish Immigration Service",
+            "url": "https://migri.fi/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "denmark",
+    "country": "Denmark",
+    "countryCode": "DK",
+    "flag": "🇩🇰",
+    "region": "europe",
+    "visaTypes": [
+      {
+        "id": "student-residence-permit",
+        "name": "Student Residence Permit",
+        "shortDescription": "For international students admitted to eligible educational programmes in Denmark.",
+        "description": "Non-EU/EEA students generally require a residence permit to study in Denmark.",
+        "eligibility": [
+          "Admission to an approved Danish educational programme",
+          "Valid passport",
+          "Evidence of financial support",
+          "Meet residence requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Financial evidence",
+          "Academic documents",
+          "Application documentation",
+          "Additional documents when requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive admission to an eligible Danish programme."
+          },
+          {
+            "step": 2,
+            "title": "Create application",
+            "description": "Start the student residence permit application."
+          },
+          {
+            "step": 3,
+            "title": "Submit documents",
+            "description": "Provide identity, admission and financial documentation."
+          },
+          {
+            "step": 4,
+            "title": "Provide biometrics",
+            "description": "Complete biometric requirements within the applicable timeframe."
+          },
+          {
+            "step": 5,
+            "title": "Wait for decision",
+            "description": "The application is reviewed by the relevant Danish authority."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Students generally need to demonstrate sufficient financial resources."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Danish Agency for International Recruitment and Integration",
+            "url": "https://www.nyidanmark.dk/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "norway",
+    "country": "Norway",
+    "countryCode": "NO",
+    "flag": "🇳🇴",
+    "region": "europe",
+    "visaTypes": [
+      {
+        "id": "study-permit",
+        "name": "Study Permit",
+        "shortDescription": "For international students admitted to eligible educational programmes in Norway.",
+        "description": "Students from outside the EU/EEA who intend to study in Norway generally need a study permit.",
+        "eligibility": [
+          "Admission to an approved educational institution",
+          "Full-time study where required",
+          "Evidence of sufficient financial support",
+          "Valid passport",
+          "Meet applicable immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Financial evidence",
+          "Academic documents",
+          "Housing documentation when required",
+          "Additional documents if requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive admission to an eligible Norwegian institution."
+          },
+          {
+            "step": 2,
+            "title": "Prepare documents",
+            "description": "Collect admission, financial, identity and supporting documents."
+          },
+          {
+            "step": 3,
+            "title": "Submit application",
+            "description": "Apply for the study permit through the Norwegian immigration system."
+          },
+          {
+            "step": 4,
+            "title": "Attend appointment",
+            "description": "Complete identity and biometric requirements when applicable."
+          },
+          {
+            "step": 5,
+            "title": "Wait for decision",
+            "description": "The application is assessed by the Norwegian immigration authorities."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Applicants generally need to demonstrate sufficient funds to support themselves."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Norwegian Directorate of Immigration",
+            "url": "https://www.udi.no/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "switzerland",
+    "country": "Switzerland",
+    "countryCode": "CH",
+    "flag": "🇨🇭",
+    "region": "europe",
+    "visaTypes": [
+      {
+        "id": "student-visa",
+        "name": "Student Visa",
+        "shortDescription": "For international students admitted to eligible Swiss educational institutions.",
+        "description": "Students who require a visa can apply for the appropriate Swiss visa to undertake studies in Switzerland.",
+        "eligibility": [
+          "Admission to a recognized Swiss educational institution",
+          "Valid passport",
+          "Proof of financial resources",
+          "Evidence of accommodation when required",
+          "Meet applicable immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Financial evidence",
+          "Accommodation evidence",
+          "Academic documents",
+          "Visa application forms",
+          "Additional documents if requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive admission from a Swiss educational institution."
+          },
+          {
+            "step": 2,
+            "title": "Prepare documents",
+            "description": "Collect the required identity, academic and financial documents."
+          },
+          {
+            "step": 3,
+            "title": "Submit visa application",
+            "description": "Apply through the appropriate Swiss representation."
+          },
+          {
+            "step": 4,
+            "title": "Attend appointment",
+            "description": "Complete the required appointment and identity procedures."
+          },
+          {
+            "step": 5,
+            "title": "Wait for decision",
+            "description": "The application is assessed by the relevant authorities."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Applicants may need to demonstrate sufficient funds to support themselves during their studies."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Swiss State Secretariat for Migration",
+            "url": "https://www.sem.admin.ch/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "austria",
+    "country": "Austria",
+    "countryCode": "AT",
+    "flag": "🇦🇹",
+    "region": "europe",
+    "visaTypes": [
+      {
+        "id": "student-residence-permit",
+        "name": "Residence Permit - Student",
+        "shortDescription": "For international students undertaking higher education in Austria.",
+        "description": "Students from outside the EU/EEA may need an Austrian residence permit to undertake longer-term studies.",
+        "eligibility": [
+          "Admission to an Austrian higher education institution",
+          "Valid passport",
+          "Proof of sufficient financial resources",
+          "Accommodation evidence",
+          "Health insurance",
+          "Meet applicable residence requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission confirmation",
+          "Financial evidence",
+          "Accommodation evidence",
+          "Health insurance evidence",
+          "Academic documents",
+          "Additional documents if requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive admission from an Austrian higher education institution."
+          },
+          {
+            "step": 2,
+            "title": "Prepare documents",
+            "description": "Prepare financial, accommodation, insurance and identity documents."
+          },
+          {
+            "step": 3,
+            "title": "Apply for residence permit",
+            "description": "Submit the residence permit application through the responsible authority."
+          },
+          {
+            "step": 4,
+            "title": "Apply for entry visa",
+            "description": "Obtain an entry visa when one is required."
+          },
+          {
+            "step": 5,
+            "title": "Enter Austria",
+            "description": "Travel to Austria after the required authorization is granted."
+          },
+          {
+            "step": 6,
+            "title": "Collect permit",
+            "description": "Complete the residence registration and collect the residence permit."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Students generally need to demonstrate sufficient funds for their stay."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Austrian Government",
+            "url": "https://www.oesterreich.gv.at/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "italy",
+    "country": "Italy",
+    "countryCode": "IT",
+    "flag": "🇮🇹",
+    "region": "europe",
+    "visaTypes": [
+      {
+        "id": "student-visa",
+        "name": "National Student Visa",
+        "shortDescription": "For international students undertaking longer-term studies in Italy.",
+        "description": "Students who require a visa for longer-term study in Italy can apply for the appropriate national study visa.",
+        "eligibility": [
+          "Admission to an eligible Italian institution",
+          "Valid passport",
+          "Proof of financial means",
+          "Accommodation arrangements",
+          "Health insurance where required",
+          "Meet applicable visa requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission or enrolment documentation",
+          "Financial evidence",
+          "Accommodation evidence",
+          "Insurance evidence",
+          "Academic documents",
+          "Visa application documents",
+          "Additional documents when requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive admission from an Italian educational institution."
+          },
+          {
+            "step": 2,
+            "title": "Complete pre-enrolment",
+            "description": "Complete the applicable university and immigration pre-enrolment process."
+          },
+          {
+            "step": 3,
+            "title": "Prepare documents",
+            "description": "Prepare financial, accommodation, academic and identity documents."
+          },
+          {
+            "step": 4,
+            "title": "Apply for visa",
+            "description": "Submit the application through the relevant Italian consular process."
+          },
+          {
+            "step": 5,
+            "title": "Enter Italy",
+            "description": "Travel to Italy after the visa is granted."
+          },
+          {
+            "step": 6,
+            "title": "Complete residence formalities",
+            "description": "Complete applicable residence permit procedures after arrival."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Applicants generally need to demonstrate sufficient financial means for their stay."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Italian Ministry of Foreign Affairs",
+            "url": "https://www.esteri.it/"
+          },
+          {
+            "title": "Universitaly",
+            "url": "https://www.universitaly.it/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "spain",
+    "country": "Spain",
+    "countryCode": "ES",
+    "flag": "🇪🇸",
+    "region": "europe",
+    "visaTypes": [
+      {
+        "id": "student-visa",
+        "name": "Student Visa",
+        "shortDescription": "For international students undertaking eligible studies in Spain.",
+        "description": "Students from outside the EU/EEA may need a student visa and, for longer stays, additional residence documentation.",
+        "eligibility": [
+          "Admission to an eligible educational institution",
+          "Valid passport",
+          "Proof of sufficient financial resources",
+          "Health insurance",
+          "Evidence of accommodation or study arrangements when required",
+          "Meet applicable immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Financial evidence",
+          "Health insurance",
+          "Academic documents",
+          "Accommodation evidence when applicable",
+          "Medical or police documents when required"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive acceptance from an eligible Spanish institution."
+          },
+          {
+            "step": 2,
+            "title": "Prepare documents",
+            "description": "Collect academic, financial, insurance and identity documents."
+          },
+          {
+            "step": 3,
+            "title": "Submit application",
+            "description": "Apply through the applicable Spanish consular process."
+          },
+          {
+            "step": 4,
+            "title": "Complete checks",
+            "description": "Complete any required appointment, biometrics or supporting checks."
+          },
+          {
+            "step": 5,
+            "title": "Enter Spain",
+            "description": "Travel to Spain after receiving the appropriate visa."
+          },
+          {
+            "step": 6,
+            "title": "Complete residence formalities",
+            "description": "Complete applicable residence documentation after arrival for longer stays."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Applicants generally need to demonstrate sufficient financial resources for their stay."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Spanish Ministry of Foreign Affairs",
+            "url": "https://www.exteriores.gob.es/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "portugal",
+    "country": "Portugal",
+    "countryCode": "PT",
+    "flag": "🇵🇹",
+    "region": "europe",
+    "visaTypes": [
+      {
+        "id": "study-residence-visa",
+        "name": "Study Residence Visa",
+        "shortDescription": "For international students undertaking longer-term studies in Portugal.",
+        "description": "Students who require authorization for longer-term study can apply for the applicable Portuguese study residence visa.",
+        "eligibility": [
+          "Admission to an eligible Portuguese institution",
+          "Valid passport",
+          "Proof of financial means",
+          "Accommodation arrangements",
+          "Health insurance where required",
+          "Meet immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Financial evidence",
+          "Accommodation evidence",
+          "Insurance evidence",
+          "Academic documents",
+          "Visa application documents",
+          "Additional documents when requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive admission from an eligible Portuguese institution."
+          },
+          {
+            "step": 2,
+            "title": "Prepare documents",
+            "description": "Collect identity, financial, academic and accommodation documents."
+          },
+          {
+            "step": 3,
+            "title": "Apply for visa",
+            "description": "Submit the study visa application through the applicable Portuguese process."
+          },
+          {
+            "step": 4,
+            "title": "Attend appointment",
+            "description": "Complete the required appointment and identity procedures."
+          },
+          {
+            "step": 5,
+            "title": "Enter Portugal",
+            "description": "Travel to Portugal after the visa is approved."
+          },
+          {
+            "step": 6,
+            "title": "Apply for residence documentation",
+            "description": "Complete the applicable residence formalities after arrival."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Students generally need to demonstrate sufficient financial resources."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Portuguese Ministry of Foreign Affairs",
+            "url": "https://www.gov.pt/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "belgium",
+    "country": "Belgium",
+    "countryCode": "BE",
+    "flag": "🇧🇪",
+    "region": "europe",
+    "visaTypes": [
+      {
+        "id": "student-visa",
+        "name": "Long-Stay Student Visa",
+        "shortDescription": "For international students undertaking long-term studies in Belgium.",
+        "description": "Students from outside the EU/EEA generally require authorization to undertake longer-term studies in Belgium.",
+        "eligibility": [
+          "Admission to a recognized Belgian institution",
+          "Valid passport",
+          "Proof of sufficient financial means",
+          "Health insurance where required",
+          "Meet applicable immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Financial evidence",
+          "Academic documents",
+          "Health insurance evidence",
+          "Medical certificate when required",
+          "Additional documents if requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Receive admission",
+            "description": "Obtain admission from a recognized Belgian educational institution."
+          },
+          {
+            "step": 2,
+            "title": "Prepare application",
+            "description": "Prepare the required visa and supporting documents."
+          },
+          {
+            "step": 3,
+            "title": "Submit application",
+            "description": "Apply through the responsible Belgian diplomatic mission or applicable process."
+          },
+          {
+            "step": 4,
+            "title": "Complete checks",
+            "description": "Provide biometrics and other required information."
+          },
+          {
+            "step": 5,
+            "title": "Enter Belgium",
+            "description": "Travel to Belgium after receiving the appropriate authorization."
+          },
+          {
+            "step": 6,
+            "title": "Register locally",
+            "description": "Complete applicable municipal registration after arrival."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Applicants generally need to demonstrate sufficient means of support."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Belgian Immigration Office",
+            "url": "https://dofi.ibz.be/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "japan",
+    "country": "Japan",
+    "countryCode": "JP",
+    "flag": "🇯🇵",
+    "region": "asia",
+    "visaTypes": [
+      {
+        "id": "student-visa",
+        "name": "Student Visa",
+        "shortDescription": "For international students studying at eligible educational institutions in Japan.",
+        "description": "The Japanese Student status of residence is used by eligible international students studying at recognized educational institutions.",
+        "eligibility": [
+          "Admission to an eligible Japanese educational institution",
+          "Certificate of Eligibility where required",
+          "Valid passport",
+          "Evidence of financial support",
+          "Meet applicable immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Visa application form",
+          "Photograph",
+          "Certificate of Eligibility",
+          "Admission documents",
+          "Financial evidence",
+          "Academic documents",
+          "Additional documents if requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive admission from an eligible Japanese institution."
+          },
+          {
+            "step": 2,
+            "title": "Obtain COE",
+            "description": "Complete the Certificate of Eligibility process when applicable."
+          },
+          {
+            "step": 3,
+            "title": "Prepare documents",
+            "description": "Prepare passport, COE, admission and financial documents."
+          },
+          {
+            "step": 4,
+            "title": "Apply for visa",
+            "description": "Submit the visa application through the Japanese embassy or consulate."
+          },
+          {
+            "step": 5,
+            "title": "Travel to Japan",
+            "description": "Enter Japan after the appropriate visa is issued."
+          },
+          {
+            "step": 6,
+            "title": "Complete residence procedures",
+            "description": "Complete applicable residence registration after arrival."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Students may need to demonstrate that sufficient financial resources are available for their studies and stay."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Ministry of Foreign Affairs of Japan",
+            "url": "https://www.mofa.go.jp/"
+          },
+          {
+            "title": "Immigration Services Agency of Japan",
+            "url": "https://www.moj.go.jp/isa/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "south-korea",
+    "country": "South Korea",
+    "countryCode": "KR",
+    "flag": "🇰🇷",
+    "region": "asia",
+    "visaTypes": [
+      {
+        "id": "d-2-student-visa",
+        "name": "D-2 Student Visa",
+        "shortDescription": "For international students enrolled in eligible degree and higher-education programmes in South Korea.",
+        "description": "The D-2 status is used by international students studying at eligible Korean universities and higher education institutions.",
+        "eligibility": [
+          "Admission to an eligible Korean institution",
+          "Valid passport",
+          "Proof of financial ability",
+          "Admission documentation",
+          "Meet applicable immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Visa application form",
+          "Admission certificate",
+          "Proof of financial resources",
+          "Academic documents",
+          "Photograph",
+          "Additional documents if requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive admission from an eligible Korean university or institution."
+          },
+          {
+            "step": 2,
+            "title": "Prepare documents",
+            "description": "Prepare admission, financial, academic and identity documents."
+          },
+          {
+            "step": 3,
+            "title": "Apply for visa",
+            "description": "Submit the application through the applicable Korean visa process."
+          },
+          {
+            "step": 4,
+            "title": "Complete checks",
+            "description": "Complete any required verification or additional procedures."
+          },
+          {
+            "step": 5,
+            "title": "Enter South Korea",
+            "description": "Travel after receiving the appropriate visa."
+          },
+          {
+            "step": 6,
+            "title": "Register residence",
+            "description": "Complete applicable foreign resident registration after arrival."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Applicants may need to demonstrate sufficient funds for tuition and living expenses."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Korea Visa Portal",
+            "url": "https://www.visa.go.kr/"
+          },
+          {
+            "title": "HiKorea",
+            "url": "https://www.hikorea.go.kr/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "singapore",
+    "country": "Singapore",
+    "countryCode": "SG",
+    "flag": "🇸🇬",
+    "region": "asia",
+    "visaTypes": [
+      {
+        "id": "student-pass",
+        "name": "Student's Pass",
+        "shortDescription": "For international students accepted into eligible full-time programmes in Singapore.",
+        "description": "International students who are accepted for eligible full-time study in Singapore generally require a Student's Pass.",
+        "eligibility": [
+          "Acceptance into an approved educational institution",
+          "Full-time eligible course",
+          "Valid passport",
+          "Meet immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "School admission information",
+          "Student's Pass application information",
+          "Academic documents",
+          "Financial information when applicable",
+          "Photograph",
+          "Additional documents if requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive acceptance from an eligible Singapore institution."
+          },
+          {
+            "step": 2,
+            "title": "Submit Student's Pass application",
+            "description": "Apply through the applicable Singapore immigration system."
+          },
+          {
+            "step": 3,
+            "title": "Prepare documents",
+            "description": "Provide the required identity, academic and supporting information."
+          },
+          {
+            "step": 4,
+            "title": "Receive approval",
+            "description": "Receive the applicable approval documentation when the application is approved."
+          },
+          {
+            "step": 5,
+            "title": "Enter Singapore",
+            "description": "Travel to Singapore according to the applicable entry requirements."
+          },
+          {
+            "step": 6,
+            "title": "Complete formalities",
+            "description": "Complete required immigration and Student's Pass issuance procedures."
+          }
+        ],
+        "financialRequirement": {
+          "required": false,
+          "description": "Financial evidence may be requested depending on the circumstances and applicable requirements."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Immigration and Checkpoints Authority of Singapore",
+            "url": "https://www.ica.gov.sg/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "malaysia",
+    "country": "Malaysia",
+    "countryCode": "MY",
+    "flag": "🇲🇾",
+    "region": "asia",
+    "visaTypes": [
+      {
+        "id": "student-pass",
+        "name": "Student Pass",
+        "shortDescription": "For international students accepted by eligible Malaysian educational institutions.",
+        "description": "International students studying at approved Malaysian institutions generally require a Student Pass.",
+        "eligibility": [
+          "Acceptance from an approved Malaysian institution",
+          "Valid passport",
+          "Approval through the applicable student immigration process",
+          "Meet health and immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Offer letter",
+          "Academic documents",
+          "Student Pass application documents",
+          "Financial documents when applicable",
+          "Medical documentation when required",
+          "Photographs"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive an offer from an eligible Malaysian institution."
+          },
+          {
+            "step": 2,
+            "title": "Student Pass application",
+            "description": "Complete the applicable student immigration process."
+          },
+          {
+            "step": 3,
+            "title": "Receive approval",
+            "description": "Obtain the required approval for student entry."
+          },
+          {
+            "step": 4,
+            "title": "Enter Malaysia",
+            "description": "Travel to Malaysia under the applicable entry authorization."
+          },
+          {
+            "step": 5,
+            "title": "Complete medical checks",
+            "description": "Complete required medical and immigration procedures."
+          },
+          {
+            "step": 6,
+            "title": "Receive Student Pass",
+            "description": "Complete issuance of the Student Pass."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Financial requirements may apply depending on the institution and immigration process."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Education Malaysia",
+            "url": "https://educationmalaysia.gov.my/"
+          },
+          {
+            "title": "Malaysia Immigration Department",
+            "url": "https://www.imi.gov.my/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "china",
+    "country": "China",
+    "countryCode": "CN",
+    "flag": "🇨🇳",
+    "region": "asia",
+    "visaTypes": [
+      {
+        "id": "x1-student-visa",
+        "name": "X1 Student Visa",
+        "shortDescription": "For international students undertaking long-term studies in China.",
+        "description": "The X1 visa is generally used for international students undertaking long-term study in China.",
+        "eligibility": [
+          "Admission to an eligible Chinese institution",
+          "Valid passport",
+          "Admission documentation",
+          "Required visa supporting documents",
+          "Meet applicable immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission Letter",
+          "JW201 or JW202 where applicable",
+          "Visa application form",
+          "Photograph",
+          "Academic documents",
+          "Financial documents when required",
+          "Additional documents if requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive admission from a Chinese educational institution."
+          },
+          {
+            "step": 2,
+            "title": "Receive supporting documents",
+            "description": "Obtain the admission letter and applicable study authorization documents."
+          },
+          {
+            "step": 3,
+            "title": "Prepare visa application",
+            "description": "Prepare the passport and required supporting documents."
+          },
+          {
+            "step": 4,
+            "title": "Submit application",
+            "description": "Apply through the applicable Chinese visa application process."
+          },
+          {
+            "step": 5,
+            "title": "Enter China",
+            "description": "Travel to China after the visa is issued."
+          },
+          {
+            "step": 6,
+            "title": "Complete residence procedures",
+            "description": "Complete applicable residence permit procedures after arrival."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Applicants may need to provide evidence of financial support depending on the circumstances."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Ministry of Foreign Affairs of China",
+            "url": "https://www.mfa.gov.cn/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "united-arab-emirates",
+    "country": "United Arab Emirates",
+    "countryCode": "AE",
+    "flag": "🇦🇪",
+    "region": "middle-east",
+    "visaTypes": [
+      {
+        "id": "student-residence-visa",
+        "name": "Student Residence Visa",
+        "shortDescription": "For international students studying at eligible UAE educational institutions.",
+        "description": "International students studying in the UAE generally require residence authorization sponsored through an eligible university, institution or other approved sponsor.",
+        "eligibility": [
+          "Admission to an eligible UAE educational institution",
+          "Valid passport",
+          "Institutional sponsorship or applicable sponsorship",
+          "Medical fitness requirements",
+          "Meet UAE immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Institution sponsorship documents",
+          "Photographs",
+          "Medical fitness documentation",
+          "Academic documents",
+          "Additional immigration documents"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive admission from an eligible UAE institution."
+          },
+          {
+            "step": 2,
+            "title": "Institution sponsorship",
+            "description": "Complete the applicable sponsorship and residence application process."
+          },
+          {
+            "step": 3,
+            "title": "Prepare documents",
+            "description": "Provide passport, admission and required immigration documents."
+          },
+          {
+            "step": 4,
+            "title": "Complete medical checks",
+            "description": "Complete required medical fitness procedures."
+          },
+          {
+            "step": 5,
+            "title": "Complete residence process",
+            "description": "Complete applicable residence and identity procedures."
+          }
+        ],
+        "financialRequirement": {
+          "required": false,
+          "description": "Financial requirements can depend on the sponsoring institution and applicable immigration rules."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "UAE Government",
+            "url": "https://u.ae/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "south-africa",
+    "country": "South Africa",
+    "countryCode": "ZA",
+    "flag": "🇿🇦",
+    "region": "africa",
+    "visaTypes": [
+      {
+        "id": "study-visa",
+        "name": "Study Visa",
+        "shortDescription": "For international students studying at recognized South African educational institutions.",
+        "description": "International students who intend to study in South Africa generally require a study visa.",
+        "eligibility": [
+          "Acceptance from a recognized South African institution",
+          "Valid passport",
+          "Proof of financial support",
+          "Medical documentation",
+          "Proof of accommodation where required",
+          "Meet immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Financial evidence",
+          "Medical documentation",
+          "Radiological report when applicable",
+          "Accommodation evidence",
+          "Academic documents",
+          "Additional documents if requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive acceptance from a recognized South African institution."
+          },
+          {
+            "step": 2,
+            "title": "Prepare documents",
+            "description": "Collect financial, academic, medical and identity documents."
+          },
+          {
+            "step": 3,
+            "title": "Submit application",
+            "description": "Apply through the appropriate South African visa process."
+          },
+          {
+            "step": 4,
+            "title": "Complete medical requirements",
+            "description": "Provide required medical documentation."
+          },
+          {
+            "step": 5,
+            "title": "Wait for decision",
+            "description": "The application is assessed by the relevant authority."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Applicants generally need to demonstrate sufficient financial support for their stay."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "South African Department of Home Affairs",
+            "url": "https://www.dha.gov.za/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "israel",
+    "country": "Israel",
+    "countryCode": "IL",
+    "flag": "🇮🇱",
+    "region": "middle-east",
+    "visaTypes": [
+      {
+        "id": "a2-student-visa",
+        "name": "A/2 Student Visa",
+        "shortDescription": "For international students studying at eligible educational institutions in Israel.",
+        "description": "The A/2 visa is generally used for eligible foreign students studying in Israel.",
+        "eligibility": [
+          "Admission to an eligible Israeli institution",
+          "Valid passport",
+          "Required admission documentation",
+          "Proof of financial support when required",
+          "Meet applicable immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Visa application form",
+          "Photographs",
+          "Financial evidence when required",
+          "Academic documents",
+          "Additional documents if requested"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive admission from an eligible Israeli educational institution."
+          },
+          {
+            "step": 2,
+            "title": "Prepare documents",
+            "description": "Prepare admission, identity and supporting documents."
+          },
+          {
+            "step": 3,
+            "title": "Submit application",
+            "description": "Apply through the applicable Israeli consular process."
+          },
+          {
+            "step": 4,
+            "title": "Complete checks",
+            "description": "Complete any required interview or verification procedures."
+          },
+          {
+            "step": 5,
+            "title": "Enter Israel",
+            "description": "Travel to Israel after receiving the applicable visa."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Financial evidence may be required to demonstrate ability to support the student during the study period."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Israel Population and Immigration Authority",
+            "url": "https://www.gov.il/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "hungary",
+    "country": "Hungary",
+    "countryCode": "HU",
+    "flag": "🇭🇺",
+    "region": "europe",
+    "visaTypes": [
+      {
+        "id": "study-residence-permit",
+        "name": "Residence Permit for Study",
+        "shortDescription": "For international students admitted to eligible Hungarian educational institutions.",
+        "description": "Students from outside the EU/EEA can apply for the appropriate residence authorization to undertake eligible studies in Hungary.",
+        "eligibility": [
+          "Admission to an eligible Hungarian institution",
+          "Valid passport",
+          "Proof of financial resources",
+          "Health insurance or healthcare coverage",
+          "Accommodation evidence",
+          "Meet immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission certificate",
+          "Financial evidence",
+          "Accommodation evidence",
+          "Health insurance evidence",
+          "Academic documents",
+          "Application documents"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive admission from an eligible Hungarian institution."
+          },
+          {
+            "step": 2,
+            "title": "Prepare documents",
+            "description": "Prepare admission, financial, accommodation and insurance documents."
+          },
+          {
+            "step": 3,
+            "title": "Submit application",
+            "description": "Apply for the study residence permit through the applicable process."
+          },
+          {
+            "step": 4,
+            "title": "Complete biometrics",
+            "description": "Provide biometric information and complete required checks."
+          },
+          {
+            "step": 5,
+            "title": "Receive decision",
+            "description": "Wait for the residence permit decision."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Students generally need to demonstrate sufficient financial resources."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "National Directorate-General for Aliens Policing",
+            "url": "https://oif.gov.hu/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  {
+    "id": "czech-republic",
+    "country": "Czech Republic",
+    "countryCode": "CZ",
+    "flag": "🇨🇿",
+    "region": "europe",
+    "visaTypes": [
+      {
+        "id": "long-term-study-visa",
+        "name": "Long-Term Study Visa",
+        "shortDescription": "For international students undertaking eligible long-term studies in the Czech Republic.",
+        "description": "Students from outside the EU may require a long-term visa or residence permit for longer-term study in the Czech Republic.",
+        "eligibility": [
+          "Admission to an eligible Czech institution",
+          "Valid passport",
+          "Proof of accommodation",
+          "Proof of financial resources",
+          "Health insurance",
+          "Meet immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission confirmation",
+          "Accommodation evidence",
+          "Financial evidence",
+          "Health insurance",
+          "Academic documents",
+          "Photographs",
+          "Additional documents when required"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "title": "Get admission",
+            "description": "Receive admission from a Czech educational institution."
+          },
+          {
+            "step": 2,
+            "title": "Prepare documents",
+            "description": "Prepare financial, accommodation, insurance and academic documentation."
+          },
+          {
+            "step": 3,
+            "title": "Submit application",
+            "description": "Submit the applicable long-term visa or residence application."
+          },
+          {
+            "step": 4,
+            "title": "Attend appointment",
+            "description": "Complete the required appointment and biometric procedures."
+          },
+          {
+            "step": 5,
+            "title": "Wait for decision",
+            "description": "The application is reviewed by the Czech authorities."
+          }
+        ],
+        "financialRequirement": {
+          "required": true,
+          "description": "Applicants generally need to demonstrate sufficient financial resources."
+        },
+        "processingTime": "Varies",
+        "officialSources": [
+          {
+            "title": "Ministry of the Interior of the Czech Republic",
+            "url": "https://mv.gov.cz/"
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+
+  
+
+  {
+    "id": "pl",
+    "country": "Poland",
+    "countryCode": "PL",
+    "flag": "🇵🇱",
+    "region": "Europe",
+    "visaTypes": [
+      {
+        "id": "pl-d-study",
+        "name": "National D-Type Study Visa",
+        "shortDescription": "Long-stay visa for students undertaking studies in Poland.",
+        "description": "The Polish national study visa is used by non-EU students undertaking eligible long-term studies in Poland.",
+        "eligibility": [
+          "Admission to an eligible Polish educational institution",
+          "Valid passport",
+          "Proof of sufficient financial means",
+          "Required health insurance",
+          "Compliance with Polish visa requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Visa application form",
+          "University admission letter",
+          "Proof of accommodation",
+          "Proof of financial means",
+          "Health insurance",
+          "Educational documents",
+          "Photographs",
+          "Any documents required by the Polish consular authority"
+        ],
+        "steps": [
+          "Obtain admission from a Polish institution",
+          "Prepare the required documents",
+          "Register the study visa application",
+          "Submit the application and biometrics",
+          "Attend an interview if requested",
+          "Wait for the visa decision",
+          "Travel to Poland after approval"
+        ],
+        "financialRequirement": "Varies; verify current amount with the Polish authorities.",
+        "processingTime": "Generally 15 days; may be extended to 30 days in justified cases.",
+        "officialSources": [
+          "Polish Ministry of Foreign Affairs",
+          "Poland in India"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "gr",
+    "country": "Greece",
+    "countryCode": "GR",
+    "flag": "🇬🇷",
+    "region": "Europe",
+    "visaTypes": [
+      {
+        "id": "gr-study",
+        "name": "Student National Visa",
+        "shortDescription": "Long-stay visa for eligible international students studying in Greece.",
+        "description": "International students requiring a visa can apply for the appropriate national visa for studies and complete any required residence procedures after arrival.",
+        "eligibility": [
+          "Admission to a recognised educational institution",
+          "Valid travel document",
+          "Sufficient financial resources",
+          "Health insurance",
+          "Compliance with Greek immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission or enrollment confirmation",
+          "Proof of financial means",
+          "Health insurance",
+          "Accommodation evidence",
+          "Visa application",
+          "Photographs",
+          "Additional documents requested by the consulate"
+        ],
+        "steps": [
+          "Receive admission",
+          "Prepare visa documents",
+          "Submit the national visa application",
+          "Provide biometrics where required",
+          "Receive the visa decision",
+          "Complete residence formalities if applicable"
+        ],
+        "financialRequirement": "Varies; verify current requirement.",
+        "processingTime": "Varies by application and consular authority.",
+        "officialSources": [
+          "Greek Ministry of Foreign Affairs",
+          "Greek immigration authorities"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "ro",
+    "country": "Romania",
+    "countryCode": "RO",
+    "flag": "🇷🇴",
+    "region": "Europe",
+    "visaTypes": [
+      {
+        "id": "ro-study",
+        "name": "Long-Stay Study Visa",
+        "shortDescription": "Long-stay visa for international students accepted by Romanian institutions.",
+        "description": "Non-EU students generally use the Romanian long-stay study visa for longer academic programs.",
+        "eligibility": [
+          "Acceptance by a recognised Romanian institution",
+          "Valid passport",
+          "Proof of financial support",
+          "Health insurance",
+          "Required academic documentation"
+        ],
+        "documents": [
+          "Passport",
+          "Acceptance letter",
+          "Proof of tuition payment where applicable",
+          "Proof of financial means",
+          "Health insurance",
+          "Accommodation documents",
+          "Visa application",
+          "Photographs"
+        ],
+        "steps": [
+          "Obtain university acceptance",
+          "Prepare documents",
+          "Submit the long-stay visa application",
+          "Provide biometrics if required",
+          "Await decision",
+          "Travel and complete residence formalities"
+        ],
+        "financialRequirement": "Varies; verify current requirement.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Romanian Ministry of Foreign Affairs",
+          "Romanian immigration authorities"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "hr",
+    "country": "Croatia",
+    "countryCode": "HR",
+    "flag": "🇭🇷",
+    "region": "Europe",
+    "visaTypes": [
+      {
+        "id": "hr-study",
+        "name": "Study Visa / Temporary Stay for Studies",
+        "shortDescription": "Immigration route for international students studying in Croatia.",
+        "description": "Students from outside the EU may need a visa and/or temporary residence permission depending on nationality and study duration.",
+        "eligibility": [
+          "Admission to a recognised Croatian institution",
+          "Valid passport",
+          "Proof of accommodation",
+          "Proof of financial resources",
+          "Health insurance"
+        ],
+        "documents": [
+          "Passport",
+          "Admission confirmation",
+          "Proof of accommodation",
+          "Financial evidence",
+          "Health insurance",
+          "Photographs",
+          "Application forms"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Determine visa requirement based on nationality",
+          "Submit the appropriate application",
+          "Provide supporting documents and biometrics where required",
+          "Receive approval",
+          "Complete residence registration if applicable"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Croatian Ministry of Foreign and European Affairs",
+          "Croatian Ministry of the Interior"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "sk",
+    "country": "Slovakia",
+    "countryCode": "SK",
+    "flag": "🇸🇰",
+    "region": "Europe",
+    "visaTypes": [
+      {
+        "id": "sk-study",
+        "name": "National Visa / Temporary Residence for Study",
+        "shortDescription": "Study immigration route for international students in Slovakia.",
+        "description": "Students may require a national visa and/or temporary residence depending on nationality and duration of study.",
+        "eligibility": [
+          "Admission to a recognised Slovak institution",
+          "Valid passport",
+          "Proof of financial resources",
+          "Accommodation",
+          "Health insurance where required"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Proof of accommodation",
+          "Financial documents",
+          "Health insurance",
+          "Application forms",
+          "Photographs",
+          "Additional supporting documents"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Identify the appropriate immigration route",
+          "Prepare supporting documents",
+          "Submit application",
+          "Complete biometric requirements",
+          "Await decision",
+          "Register after arrival if required"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Ministry of Foreign and European Affairs of the Slovak Republic",
+          "Ministry of Interior of the Slovak Republic"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "si",
+    "country": "Slovenia",
+    "countryCode": "SI",
+    "flag": "🇸🇮",
+    "region": "Europe",
+    "visaTypes": [
+      {
+        "id": "si-study",
+        "name": "Long-Stay Visa / Temporary Residence for Study",
+        "shortDescription": "Immigration route for international students studying in Slovenia.",
+        "description": "Students may need a long-stay visa and/or temporary residence permit depending on their nationality and program duration.",
+        "eligibility": [
+          "Admission to an educational institution",
+          "Valid passport",
+          "Adequate financial resources",
+          "Accommodation",
+          "Health insurance where applicable"
+        ],
+        "documents": [
+          "Passport",
+          "Admission certificate",
+          "Proof of accommodation",
+          "Proof of financial means",
+          "Health insurance",
+          "Application",
+          "Photographs"
+        ],
+        "steps": [
+          "Receive admission",
+          "Prepare documents",
+          "Apply through the appropriate Slovenian authority",
+          "Complete biometrics if required",
+          "Receive decision",
+          "Complete registration after arrival"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Government of Slovenia",
+          "Ministry of Foreign and European Affairs of Slovenia"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "ee",
+    "country": "Estonia",
+    "countryCode": "EE",
+    "flag": "🇪🇪",
+    "region": "Europe",
+    "visaTypes": [
+      {
+        "id": "ee-study",
+        "name": "Study Visa / Temporary Residence Permit for Study",
+        "shortDescription": "Study immigration route for international students in Estonia.",
+        "description": "Students may use a visa and, depending on the circumstances, a temporary residence permit for studying in Estonia.",
+        "eligibility": [
+          "Admission to an Estonian educational institution",
+          "Valid passport",
+          "Sufficient financial resources",
+          "Required health insurance",
+          "Compliance with immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission confirmation",
+          "Proof of funds",
+          "Insurance",
+          "Accommodation information",
+          "Application",
+          "Photographs"
+        ],
+        "steps": [
+          "Receive admission",
+          "Determine required visa or residence status",
+          "Prepare documents",
+          "Submit application",
+          "Provide biometrics where required",
+          "Receive decision",
+          "Travel and register as required"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Estonian Ministry of Foreign Affairs",
+          "Police and Border Guard Board of Estonia"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "lv",
+    "country": "Latvia",
+    "countryCode": "LV",
+    "flag": "🇱🇻",
+    "region": "Europe",
+    "visaTypes": [
+      {
+        "id": "lv-study",
+        "name": "Long-Stay Study Visa",
+        "shortDescription": "Long-stay visa route for international students studying in Latvia.",
+        "description": "Students from outside the EU enrolled at accredited Latvian educational institutions can apply for the appropriate long-stay visa and residence permission.",
+        "eligibility": [
+          "Enrollment in an accredited Latvian educational institution",
+          "Valid passport",
+          "Financial support",
+          "Required insurance",
+          "Required immigration documents"
+        ],
+        "documents": [
+          "Passport",
+          "Admission or enrollment confirmation",
+          "Proof of financial means",
+          "Health insurance",
+          "Accommodation information",
+          "Visa application",
+          "Photographs",
+          "Additional documents requested by authorities"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare supporting documents",
+          "Complete any required document verification",
+          "Submit the long-stay visa application",
+          "Attend interview if required",
+          "Travel to Latvia",
+          "Apply for residence permission where required"
+        ],
+        "financialRequirement": "Varies; verify current amount.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Embassy of Latvia",
+          "Office of Citizenship and Migration Affairs of Latvia"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "lt",
+    "country": "Lithuania",
+    "countryCode": "LT",
+    "flag": "🇱🇹",
+    "region": "Europe",
+    "visaTypes": [
+      {
+        "id": "lt-study",
+        "name": "Study Visa / Temporary Residence Permit",
+        "shortDescription": "Immigration route for international students in Lithuania.",
+        "description": "International students may require a national visa or temporary residence permit depending on study duration and nationality.",
+        "eligibility": [
+          "Admission to a Lithuanian educational institution",
+          "Valid passport",
+          "Proof of sufficient resources",
+          "Health insurance",
+          "Accommodation information"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Proof of funds",
+          "Health insurance",
+          "Accommodation documents",
+          "Application",
+          "Photographs"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Determine required immigration document",
+          "Prepare application",
+          "Submit documents",
+          "Provide biometrics if required",
+          "Receive decision",
+          "Travel and complete required registration"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Migration Department of Lithuania",
+          "Lithuanian Ministry of Foreign Affairs"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "is",
+    "country": "Iceland",
+    "countryCode": "IS",
+    "flag": "🇮🇸",
+    "region": "Europe",
+    "visaTypes": [
+      {
+        "id": "is-student",
+        "name": "Student Residence Permit",
+        "shortDescription": "Residence permit for eligible international students studying in Iceland.",
+        "description": "Iceland grants student residence permits for eligible full-time university studies and certain other recognised study arrangements.",
+        "eligibility": [
+          "Admission to recognised full-time studies",
+          "Valid passport",
+          "Secure financial support",
+          "Health insurance",
+          "Criminal record certificate"
+        ],
+        "documents": [
+          "Passport copy",
+          "Passport photograph",
+          "Admission confirmation",
+          "Criminal record certificate",
+          "Health insurance confirmation",
+          "Proof of financial support",
+          "Application",
+          "Processing-fee receipt"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare supporting documents",
+          "Pay the application fee",
+          "Submit the residence permit application",
+          "Provide additional information if requested",
+          "Receive the residence permit decision",
+          "Complete residence-card requirements"
+        ],
+        "financialRequirement": "Secure means of financial support must be demonstrated; current amount should be verified with Icelandic authorities.",
+        "processingTime": "Varies depending on application volume and completeness.",
+        "officialSources": [
+          "Directorate of Immigration of Iceland",
+          "Ísland.is"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "lu",
+    "country": "Luxembourg",
+    "countryCode": "LU",
+    "flag": "🇱🇺",
+    "region": "Europe",
+    "visaTypes": [
+      {
+        "id": "lu-student",
+        "name": "Student Visa / Temporary Authorisation to Stay",
+        "shortDescription": "Immigration route for third-country students studying in Luxembourg.",
+        "description": "Non-EU students generally need the appropriate authorisation and, where applicable, a long-stay visa before studying in Luxembourg.",
+        "eligibility": [
+          "Admission to a recognised Luxembourg educational institution",
+          "Valid travel document",
+          "Sufficient financial resources",
+          "Health insurance",
+          "Required immigration documentation"
+        ],
+        "documents": [
+          "Passport",
+          "Admission certificate",
+          "Proof of financial resources",
+          "Health insurance",
+          "Accommodation information",
+          "Application documents",
+          "Photographs where required"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Apply for temporary authorisation to stay where required",
+          "Apply for a long-stay visa if required",
+          "Travel to Luxembourg",
+          "Complete arrival and residence formalities"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Guichet.lu",
+          "Luxembourg Ministry of Foreign and European Affairs"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "mt",
+    "country": "Malta",
+    "countryCode": "MT",
+    "flag": "🇲🇹",
+    "region": "Europe",
+    "visaTypes": [
+      {
+        "id": "mt-study-d",
+        "name": "Study D-Visa",
+        "shortDescription": "National visa for eligible non-EU students undertaking longer courses in Malta.",
+        "description": "Non-EU students studying courses of the applicable long duration may need a Maltese national study visa before travelling.",
+        "eligibility": [
+          "Acceptance by an eligible educational institution",
+          "Valid passport",
+          "Required financial resources",
+          "Health insurance",
+          "Accommodation arrangements",
+          "Compliance with Maltese immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Letter of acceptance",
+          "Proof of accommodation",
+          "Financial evidence",
+          "Health insurance",
+          "Visa application",
+          "Photographs",
+          "Other documents requested by Identità"
+        ],
+        "steps": [
+          "Receive acceptance",
+          "Prepare documents",
+          "Book the appropriate visa appointment",
+          "Submit the study visa application",
+          "Provide biometrics",
+          "Await decision",
+          "Travel to Malta",
+          "Complete residence formalities where required"
+        ],
+        "financialRequirement": "Varies; verify the current requirement.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Identità Malta",
+          "Central Visa Unit Malta"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "cy",
+    "country": "Cyprus",
+    "countryCode": "CY",
+    "flag": "🇨🇾",
+    "region": "Europe",
+    "visaTypes": [
+      {
+        "id": "cy-student",
+        "name": "Student Visa / Temporary Residence",
+        "shortDescription": "Study immigration route for international students in Cyprus.",
+        "description": "International students may require an entry visa and temporary residence permission depending on nationality and study duration.",
+        "eligibility": [
+          "Admission to a recognised institution",
+          "Valid passport",
+          "Proof of financial resources",
+          "Health insurance",
+          "Required academic documentation"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Proof of financial support",
+          "Health insurance",
+          "Accommodation evidence",
+          "Academic documents",
+          "Application forms"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare documents",
+          "Apply for the appropriate entry visa",
+          "Travel to Cyprus",
+          "Complete residence procedures",
+          "Maintain student status"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Civil Registry and Migration Department of Cyprus",
+          "Ministry of Foreign Affairs of Cyprus"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "tr",
+    "country": "Türkiye",
+    "countryCode": "TR",
+    "flag": "🇹🇷",
+    "region": "Europe/Asia",
+    "visaTypes": [
+      {
+        "id": "tr-education",
+        "name": "Student–Education Visa",
+        "shortDescription": "Visa category for foreigners travelling to Türkiye for education.",
+        "description": "Türkiye has a dedicated Student–Education Visa category for eligible education-related travel.",
+        "eligibility": [
+          "Acceptance or appropriate educational documentation",
+          "Valid passport",
+          "Compliance with Turkish visa requirements",
+          "Any additional requirements applicable to the applicant's nationality"
+        ],
+        "documents": [
+          "Passport",
+          "Education or admission documentation",
+          "Visa application",
+          "Photographs",
+          "Financial documents where required",
+          "Additional documents requested by the Turkish representation"
+        ],
+        "steps": [
+          "Obtain educational acceptance",
+          "Check visa requirements",
+          "Prepare documents",
+          "Apply through the Turkish representation where required",
+          "Attend appointment or interview if requested",
+          "Receive visa decision"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Ministry of Foreign Affairs of Türkiye"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "th",
+    "country": "Thailand",
+    "countryCode": "TH",
+    "flag": "🇹🇭",
+    "region": "Asia",
+    "visaTypes": [
+      {
+        "id": "th-ed",
+        "name": "Non-Immigrant ED Visa",
+        "shortDescription": "Education visa route for eligible international students in Thailand.",
+        "description": "The Non-Immigrant ED category is used for eligible education and study purposes.",
+        "eligibility": [
+          "Acceptance from an eligible educational institution",
+          "Valid passport",
+          "Required supporting documents",
+          "Compliance with Thai immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "School or university acceptance documentation",
+          "Visa application",
+          "Photographs",
+          "Financial evidence where required",
+          "Additional documents requested by the embassy"
+        ],
+        "steps": [
+          "Receive admission",
+          "Prepare documents",
+          "Submit visa application",
+          "Provide biometrics or attend an appointment if required",
+          "Receive visa",
+          "Complete immigration requirements after arrival"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Ministry of Foreign Affairs of Thailand",
+          "Thai Immigration Bureau"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "id",
+    "country": "Indonesia",
+    "countryCode": "ID",
+    "flag": "🇮🇩",
+    "region": "Asia",
+    "visaTypes": [
+      {
+        "id": "id-study",
+        "name": "Study Visa / Student Stay Permit",
+        "shortDescription": "Immigration route for international students studying in Indonesia.",
+        "description": "International students use the appropriate Indonesian education/study immigration route based on program and nationality.",
+        "eligibility": [
+          "Admission to an eligible Indonesian educational institution",
+          "Valid passport",
+          "Required sponsor or institutional documentation",
+          "Proof of financial support where required",
+          "Compliance with Indonesian immigration rules"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Institutional sponsorship documents",
+          "Financial evidence where required",
+          "Health or insurance documentation where applicable",
+          "Application forms"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Arrange required institutional sponsorship",
+          "Apply for the appropriate visa",
+          "Receive approval",
+          "Travel to Indonesia",
+          "Complete stay-permit procedures"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Directorate General of Immigration of Indonesia"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "vn",
+    "country": "Vietnam",
+    "countryCode": "VN",
+    "flag": "🇻🇳",
+    "region": "Asia",
+    "visaTypes": [
+      {
+        "id": "vn-study",
+        "name": "Study Visa",
+        "shortDescription": "Study-related immigration route for international students in Vietnam.",
+        "description": "Foreign students studying in Vietnam may require the appropriate study visa and supporting documentation.",
+        "eligibility": [
+          "Acceptance by a Vietnamese educational institution",
+          "Valid passport",
+          "Educational documentation",
+          "Compliance with Vietnamese immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission confirmation",
+          "Visa application",
+          "Photographs",
+          "Educational documents",
+          "Financial documents where required"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare required documents",
+          "Apply for the appropriate visa",
+          "Receive visa approval",
+          "Travel to Vietnam",
+          "Complete any required registration"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Vietnam Immigration Department",
+          "Ministry of Foreign Affairs of Vietnam"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "ph",
+    "country": "Philippines",
+    "countryCode": "PH",
+    "flag": "🇵🇭",
+    "region": "Asia",
+    "visaTypes": [
+      {
+        "id": "ph-9f",
+        "name": "9(F) Student Visa",
+        "shortDescription": "Student visa route for qualified foreign students in the Philippines.",
+        "description": "The 9(F) student visa is used by eligible foreign students admitted to recognised Philippine educational institutions.",
+        "eligibility": [
+          "Acceptance by an eligible Philippine educational institution",
+          "Valid passport",
+          "Required institutional documentation",
+          "Compliance with immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission documentation",
+          "School-related documents",
+          "Visa application",
+          "Photographs",
+          "Financial evidence where required"
+        ],
+        "steps": [
+          "Receive admission",
+          "Obtain required school documentation",
+          "Submit the visa application",
+          "Complete required immigration procedures",
+          "Receive student visa",
+          "Maintain valid student status"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Bureau of Immigration Philippines",
+          "Department of Foreign Affairs Philippines"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "tw",
+    "country": "Taiwan",
+    "countryCode": "TW",
+    "flag": "🇹🇼",
+    "region": "Asia",
+    "visaTypes": [
+      {
+        "id": "tw-study",
+        "name": "Resident Visa for Study",
+        "shortDescription": "Study-related resident visa route for international students in Taiwan.",
+        "description": "International students may apply for the appropriate resident visa and residence documentation for eligible study programs.",
+        "eligibility": [
+          "Admission to a recognised Taiwanese institution",
+          "Valid passport",
+          "Required admission documents",
+          "Proof of financial support where required",
+          "Health documentation where applicable"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Academic documents",
+          "Financial evidence",
+          "Health examination where required",
+          "Visa application",
+          "Photographs"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare documents",
+          "Apply for resident visa where applicable",
+          "Travel to Taiwan",
+          "Apply for the required residence certificate within the applicable period"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Bureau of Consular Affairs Taiwan",
+          "National Immigration Agency Taiwan"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "hk",
+    "country": "Hong Kong",
+    "countryCode": "HK",
+    "flag": "🇭🇰",
+    "region": "Asia",
+    "visaTypes": [
+      {
+        "id": "hk-study",
+        "name": "Student Visa / Entry Permit",
+        "shortDescription": "Student entry permission for eligible non-local students in Hong Kong.",
+        "description": "Non-local students generally require a student visa or entry permit to study in Hong Kong.",
+        "eligibility": [
+          "Admission to an approved educational institution",
+          "Valid travel document",
+          "Financial support",
+          "A suitable local sponsor where required",
+          "Compliance with immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Financial proof",
+          "Sponsorship documents where required",
+          "Accommodation information",
+          "Application forms",
+          "Photographs"
+        ],
+        "steps": [
+          "Receive admission",
+          "Arrange sponsorship where applicable",
+          "Prepare documents",
+          "Submit student visa or entry-permit application",
+          "Await approval",
+          "Travel to Hong Kong after approval"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Hong Kong Immigration Department"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "sa",
+    "country": "Saudi Arabia",
+    "countryCode": "SA",
+    "flag": "🇸🇦",
+    "region": "Middle East",
+    "visaTypes": [
+      {
+        "id": "sa-study",
+        "name": "Educational / Study Visa",
+        "shortDescription": "Student immigration route for eligible international students in Saudi Arabia.",
+        "description": "International students accepted by eligible Saudi educational institutions can use the applicable educational immigration route.",
+        "eligibility": [
+          "Admission to an eligible educational institution",
+          "Valid passport",
+          "Institutional sponsorship or approval where required",
+          "Required health and financial documentation"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Educational documents",
+          "Financial evidence where required",
+          "Medical documents where required",
+          "Visa application"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Complete institution and government requirements",
+          "Submit visa documentation",
+          "Complete required medical or biometric procedures",
+          "Receive visa approval",
+          "Travel to Saudi Arabia"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Saudi Ministry of Education",
+          "Saudi Ministry of Foreign Affairs"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "qa",
+    "country": "Qatar",
+    "countryCode": "QA",
+    "flag": "🇶🇦",
+    "region": "Middle East",
+    "visaTypes": [
+      {
+        "id": "qa-study",
+        "name": "Student Residence / Education Visa",
+        "shortDescription": "Study-related residence route for international students in Qatar.",
+        "description": "International students generally use the appropriate student or education residence process associated with their educational institution.",
+        "eligibility": [
+          "Admission to an eligible institution",
+          "Valid passport",
+          "Institutional sponsorship where required",
+          "Required medical and immigration documentation"
+        ],
+        "documents": [
+          "Passport",
+          "Admission confirmation",
+          "Educational documents",
+          "Medical documentation where required",
+          "Financial documents where required",
+          "Application forms"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Complete institution sponsorship procedures",
+          "Submit required immigration documents",
+          "Complete medical or biometric procedures",
+          "Receive residence approval",
+          "Complete Qatar residence formalities"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Government of Qatar",
+          "Qatar Ministry of Interior"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "om",
+    "country": "Oman",
+    "countryCode": "OM",
+    "flag": "🇴🇲",
+    "region": "Middle East",
+    "visaTypes": [
+      {
+        "id": "om-student",
+        "name": "Student Visa",
+        "shortDescription": "Student visa route for international students studying in Oman.",
+        "description": "Eligible international students can obtain the appropriate student visa through the required institutional and immigration process.",
+        "eligibility": [
+          "Acceptance by an eligible educational institution",
+          "Valid passport",
+          "Institutional sponsorship where required",
+          "Required financial and health documentation"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Institutional sponsorship documents",
+          "Medical documents where required",
+          "Financial evidence where required",
+          "Visa application"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Complete institutional sponsorship",
+          "Submit student visa application",
+          "Complete medical requirements if applicable",
+          "Receive visa",
+          "Complete residence procedures after arrival"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Royal Oman Police",
+          "Government of Oman"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+
+
+  {
+    "id": "rs",
+    "country": "Serbia",
+    "countryCode": "RS",
+    "flag": "🇷🇸",
+    "region": "Europe",
+    "visaTypes": [
+      {
+        "id": "rs-study",
+        "name": "Long-Stay Visa / Temporary Residence for Study",
+        "shortDescription": "Immigration route for international students studying in Serbia.",
+        "description": "International students may require a long-stay visa and temporary residence depending on nationality and duration of study.",
+        "eligibility": [
+          "Admission to a recognised Serbian educational institution",
+          "Valid passport",
+          "Proof of accommodation",
+          "Proof of financial means",
+          "Health insurance"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Proof of accommodation",
+          "Proof of financial support",
+          "Health insurance",
+          "Visa or residence application",
+          "Photographs"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare documents",
+          "Apply for the required visa or residence permit",
+          "Provide biometrics if required",
+          "Receive decision",
+          "Complete registration after arrival"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Ministry of Foreign Affairs of Serbia",
+          "Ministry of Interior of Serbia"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "bg",
+    "country": "Bulgaria",
+    "countryCode": "BG",
+    "flag": "🇧🇬",
+    "region": "Europe",
+    "visaTypes": [
+      {
+        "id": "bg-d-study",
+        "name": "Type D Student Visa",
+        "shortDescription": "Long-stay visa for international students studying in Bulgaria.",
+        "description": "Non-EU students generally require a Bulgarian Type D visa and subsequent residence permission for longer studies.",
+        "eligibility": [
+          "Admission to a recognised Bulgarian institution",
+          "Valid passport",
+          "Proof of financial support",
+          "Accommodation",
+          "Health insurance"
+        ],
+        "documents": [
+          "Passport",
+          "University acceptance certificate",
+          "Proof of accommodation",
+          "Financial documents",
+          "Health insurance",
+          "Visa application",
+          "Photographs"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare documents",
+          "Apply for Type D visa",
+          "Attend appointment if required",
+          "Receive visa",
+          "Travel to Bulgaria",
+          "Apply for residence documentation"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Ministry of Foreign Affairs of Bulgaria",
+          "Migration Directorate of Bulgaria"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "ba",
+    "country": "Bosnia and Herzegovina",
+    "countryCode": "BA",
+    "flag": "🇧🇦",
+    "region": "Europe",
+    "visaTypes": [
+      {
+        "id": "ba-study",
+        "name": "Study Visa / Temporary Residence",
+        "shortDescription": "Study immigration route for international students in Bosnia and Herzegovina.",
+        "description": "International students may need a visa and temporary residence authorization depending on nationality and duration.",
+        "eligibility": [
+          "Admission to an educational institution",
+          "Valid passport",
+          "Proof of accommodation",
+          "Financial support",
+          "Health insurance"
+        ],
+        "documents": [
+          "Passport",
+          "Admission confirmation",
+          "Accommodation evidence",
+          "Financial documents",
+          "Health insurance",
+          "Application forms",
+          "Photographs"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Check visa requirement",
+          "Submit application",
+          "Complete residence procedures",
+          "Register after arrival"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Ministry of Foreign Affairs of Bosnia and Herzegovina",
+          "Service for Foreigners' Affairs"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "al",
+    "country": "Albania",
+    "countryCode": "AL",
+    "flag": "🇦🇱",
+    "region": "Europe",
+    "visaTypes": [
+      {
+        "id": "al-study",
+        "name": "Student Visa / Residence Permit",
+        "shortDescription": "Study route for international students in Albania.",
+        "description": "International students may require the appropriate visa and residence permission for longer study programs.",
+        "eligibility": [
+          "Admission to an Albanian educational institution",
+          "Valid passport",
+          "Proof of accommodation",
+          "Financial support",
+          "Health insurance where required"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Accommodation proof",
+          "Financial evidence",
+          "Insurance",
+          "Application",
+          "Photographs"
+        ],
+        "steps": [
+          "Receive admission",
+          "Check visa requirements",
+          "Submit application",
+          "Travel after approval",
+          "Apply for residence permission if required"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Ministry for Europe and Foreign Affairs of Albania",
+          "Albanian immigration authorities"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "ge",
+    "country": "Georgia",
+    "countryCode": "GE",
+    "flag": "🇬🇪",
+    "region": "Europe/Asia",
+    "visaTypes": [
+      {
+        "id": "ge-d3",
+        "name": "D3 Study Visa",
+        "shortDescription": "Study visa category for international students in Georgia.",
+        "description": "Georgia provides a D3 immigration visa category for individuals travelling for study or educational purposes.",
+        "eligibility": [
+          "Admission to an eligible Georgian educational institution",
+          "Valid passport",
+          "Required educational documentation",
+          "Proof of financial means where required"
+        ],
+        "documents": [
+          "Passport",
+          "Admission confirmation",
+          "Visa application",
+          "Photographs",
+          "Financial documents",
+          "Accommodation information"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare documents",
+          "Submit D3 visa application",
+          "Attend appointment if required",
+          "Receive visa",
+          "Travel to Georgia",
+          "Complete residence procedures if applicable"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Ministry of Foreign Affairs of Georgia",
+          "Public Service Development Agency of Georgia"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "am",
+    "country": "Armenia",
+    "countryCode": "AM",
+    "flag": "🇦🇲",
+    "region": "Asia",
+    "visaTypes": [
+      {
+        "id": "am-study",
+        "name": "Study Residence Status",
+        "shortDescription": "Residence route for foreign students studying in Armenia.",
+        "description": "Foreign students admitted to Armenian educational institutions may apply for the appropriate residence status.",
+        "eligibility": [
+          "Admission to an Armenian institution",
+          "Valid passport",
+          "Proof of study",
+          "Required financial and accommodation documents"
+        ],
+        "documents": [
+          "Passport",
+          "Admission certificate",
+          "Application",
+          "Photographs",
+          "Accommodation documents",
+          "Financial evidence where required"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare documents",
+          "Submit residence application",
+          "Complete required procedures",
+          "Receive residence document"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Migration and Citizenship Service of Armenia",
+          "Ministry of Foreign Affairs of Armenia"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "az",
+    "country": "Azerbaijan",
+    "countryCode": "AZ",
+    "flag": "🇦🇿",
+    "region": "Asia",
+    "visaTypes": [
+      {
+        "id": "az-study",
+        "name": "Education Visa",
+        "shortDescription": "Education-related visa route for international students in Azerbaijan.",
+        "description": "International students may obtain the appropriate education visa and residence status for eligible study programs.",
+        "eligibility": [
+          "Admission to an Azerbaijani institution",
+          "Valid passport",
+          "Educational documentation",
+          "Required financial and accommodation evidence"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Visa application",
+          "Photographs",
+          "Financial documents",
+          "Accommodation documents"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare documents",
+          "Apply for the appropriate visa",
+          "Travel after approval",
+          "Complete residence registration"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "State Migration Service of Azerbaijan",
+          "Ministry of Foreign Affairs of Azerbaijan"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "kz",
+    "country": "Kazakhstan",
+    "countryCode": "KZ",
+    "flag": "🇰🇿",
+    "region": "Asia",
+    "visaTypes": [
+      {
+        "id": "kz-c9",
+        "name": "C9 Student Visa",
+        "shortDescription": "Student visa category for international students in Kazakhstan.",
+        "description": "The C9 category is associated with education and study in Kazakhstan.",
+        "eligibility": [
+          "Admission to a recognised educational institution",
+          "Valid passport",
+          "Institutional invitation or supporting documentation",
+          "Compliance with immigration requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission or invitation",
+          "Visa application",
+          "Photographs",
+          "Financial documents where required",
+          "Medical documents where applicable"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Arrange institutional invitation",
+          "Submit visa application",
+          "Receive visa",
+          "Travel to Kazakhstan",
+          "Complete migration registration"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Ministry of Foreign Affairs of Kazakhstan",
+          "Migration Service of Kazakhstan"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "uz",
+    "country": "Uzbekistan",
+    "countryCode": "UZ",
+    "flag": "🇺🇿",
+    "region": "Asia",
+    "visaTypes": [
+      {
+        "id": "uz-student",
+        "name": "Student Visa",
+        "shortDescription": "Student visa route for international students in Uzbekistan.",
+        "description": "Foreign students accepted by Uzbek educational institutions can use the applicable student visa and registration process.",
+        "eligibility": [
+          "Admission to an eligible institution",
+          "Valid passport",
+          "Institutional support",
+          "Required immigration documentation"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Visa application",
+          "Photographs",
+          "Institutional invitation",
+          "Financial documents where required"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Receive required invitation",
+          "Submit visa application",
+          "Receive approval",
+          "Travel to Uzbekistan",
+          "Complete registration"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Ministry of Foreign Affairs of Uzbekistan",
+          "Agency for External Labor Migration / relevant immigration authority"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "kg",
+    "country": "Kyrgyzstan",
+    "countryCode": "KG",
+    "flag": "🇰🇬",
+    "region": "Asia",
+    "visaTypes": [
+      {
+        "id": "kg-study",
+        "name": "Student Visa",
+        "shortDescription": "Study visa route for international students in Kyrgyzstan.",
+        "description": "Foreign students may require a student visa and appropriate registration or residence documentation.",
+        "eligibility": [
+          "Admission to a recognised institution",
+          "Valid passport",
+          "Educational invitation or confirmation",
+          "Required immigration documentation"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Visa application",
+          "Photographs",
+          "Invitation",
+          "Financial documents where required"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Obtain required invitation",
+          "Apply for visa",
+          "Travel to Kyrgyzstan",
+          "Complete registration"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Ministry of Foreign Affairs of Kyrgyz Republic",
+          "Kyrgyz immigration authorities"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "mn",
+    "country": "Mongolia",
+    "countryCode": "MN",
+    "flag": "🇲🇳",
+    "region": "Asia",
+    "visaTypes": [
+      {
+        "id": "mn-study",
+        "name": "Student Visa",
+        "shortDescription": "Student immigration route for international students in Mongolia.",
+        "description": "International students accepted by Mongolian educational institutions may apply for the applicable study visa.",
+        "eligibility": [
+          "Admission to an educational institution",
+          "Valid passport",
+          "Institutional documentation",
+          "Required financial and health documents"
+        ],
+        "documents": [
+          "Passport",
+          "Admission confirmation",
+          "Visa application",
+          "Photographs",
+          "Financial evidence where required",
+          "Health documents where required"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare documents",
+          "Apply for student visa",
+          "Receive approval",
+          "Travel to Mongolia",
+          "Complete local registration"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Immigration Agency of Mongolia",
+          "Ministry of Foreign Affairs of Mongolia"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "lk",
+    "country": "Sri Lanka",
+    "countryCode": "LK",
+    "flag": "🇱🇰",
+    "region": "Asia",
+    "visaTypes": [
+      {
+        "id": "lk-student",
+        "name": "Student Visa / Residence Visa",
+        "shortDescription": "Study-related immigration route for international students in Sri Lanka.",
+        "description": "Foreign students studying in Sri Lanka may require the appropriate visa or residence authorization.",
+        "eligibility": [
+          "Admission to an approved institution",
+          "Valid passport",
+          "Institutional sponsorship where applicable",
+          "Financial support",
+          "Required health documents"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Institutional documents",
+          "Financial proof",
+          "Health documentation where required",
+          "Visa application"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare documentation",
+          "Apply through the relevant authority",
+          "Receive approval",
+          "Travel to Sri Lanka",
+          "Complete residence formalities"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Department of Immigration and Emigration Sri Lanka",
+          "Ministry of Foreign Affairs Sri Lanka"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "np",
+    "country": "Nepal",
+    "countryCode": "NP",
+    "flag": "🇳🇵",
+    "region": "Asia",
+    "visaTypes": [
+      {
+        "id": "np-study",
+        "name": "Study Visa",
+        "shortDescription": "Study visa for foreign students enrolled in Nepal.",
+        "description": "Foreign students enrolled at eligible Nepali institutions can obtain the applicable study visa.",
+        "eligibility": [
+          "Admission to a recognised institution",
+          "Valid passport",
+          "Recommendation or supporting documentation from the educational institution",
+          "Required financial documentation"
+        ],
+        "documents": [
+          "Passport",
+          "Admission documents",
+          "Institution recommendation",
+          "Visa application",
+          "Photographs",
+          "Financial evidence"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Obtain institutional recommendation",
+          "Apply for study visa",
+          "Complete required procedures",
+          "Maintain valid student status"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Department of Immigration Nepal",
+          "Ministry of Education Nepal"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "bd",
+    "country": "Bangladesh",
+    "countryCode": "BD",
+    "flag": "🇧🇩",
+    "region": "Asia",
+    "visaTypes": [
+      {
+        "id": "bd-student",
+        "name": "Student Visa",
+        "shortDescription": "Student visa route for foreign students in Bangladesh.",
+        "description": "International students admitted to recognised Bangladeshi institutions can apply for the appropriate student visa.",
+        "eligibility": [
+          "Admission to a recognised educational institution",
+          "Valid passport",
+          "Educational documentation",
+          "Financial support where required"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Visa application",
+          "Photographs",
+          "Financial documents",
+          "Institutional documents"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare documents",
+          "Apply for student visa",
+          "Attend appointment if required",
+          "Receive visa",
+          "Travel to Bangladesh"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Bangladesh Immigration and Passports Department",
+          "Ministry of Foreign Affairs Bangladesh"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "pk",
+    "country": "Pakistan",
+    "countryCode": "PK",
+    "flag": "🇵🇰",
+    "region": "Asia",
+    "visaTypes": [
+      {
+        "id": "pk-student",
+        "name": "Student Visa",
+        "shortDescription": "Student visa route for international students in Pakistan.",
+        "description": "Foreign students accepted by recognised Pakistani educational institutions may apply for a student visa.",
+        "eligibility": [
+          "Admission to an eligible institution",
+          "Valid passport",
+          "Institutional recommendation or supporting documents",
+          "Required financial and health documents"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Institutional recommendation",
+          "Visa application",
+          "Photographs",
+          "Financial evidence"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Secure required institutional documentation",
+          "Apply for student visa",
+          "Complete verification",
+          "Receive decision",
+          "Travel to Pakistan"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Ministry of Interior Pakistan",
+          "Directorate General of Immigration and Passports Pakistan"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "ke",
+    "country": "Kenya",
+    "countryCode": "KE",
+    "flag": "🇰🇪",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "ke-student",
+        "name": "Student Pass",
+        "shortDescription": "Student immigration permission for foreign students in Kenya.",
+        "description": "Foreign students accepted by Kenyan educational institutions can apply for a student pass.",
+        "eligibility": [
+          "Admission to an approved institution",
+          "Valid passport",
+          "Proof of enrolment",
+          "Financial support",
+          "Required immigration documents"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Institutional recommendation",
+          "Financial evidence",
+          "Application",
+          "Photographs"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare student-pass documents",
+          "Submit application",
+          "Complete verification",
+          "Receive student pass",
+          "Maintain valid status"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Directorate of Immigration Services Kenya"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "ng",
+    "country": "Nigeria",
+    "countryCode": "NG",
+    "flag": "🇳🇬",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "ng-study",
+        "name": "Study Visa / Student Permit",
+        "shortDescription": "Immigration route for international students studying in Nigeria.",
+        "description": "Foreign students may require the appropriate Nigerian visa and residence documentation for study.",
+        "eligibility": [
+          "Admission to a recognised Nigerian institution",
+          "Valid passport",
+          "Proof of admission",
+          "Financial support",
+          "Required immigration documents"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Visa application",
+          "Financial documents",
+          "Photographs",
+          "Institutional documents"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare visa documentation",
+          "Submit application",
+          "Complete required verification",
+          "Receive visa",
+          "Complete residence procedures"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Nigeria Immigration Service",
+          "Ministry of Foreign Affairs Nigeria"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "gh",
+    "country": "Ghana",
+    "countryCode": "GH",
+    "flag": "🇬🇭",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "gh-student",
+        "name": "Student Residence Permit",
+        "shortDescription": "Residence route for foreign students studying in Ghana.",
+        "description": "International students admitted to Ghanaian institutions may obtain the applicable student residence permission.",
+        "eligibility": [
+          "Admission to an approved institution",
+          "Valid passport",
+          "Proof of enrolment",
+          "Financial support",
+          "Required immigration documentation"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Student documentation",
+          "Financial evidence",
+          "Medical documents where required",
+          "Application"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare documents",
+          "Apply for required visa or residence status",
+          "Complete immigration procedures",
+          "Receive permit"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Ghana Immigration Service",
+          "Ministry of Foreign Affairs Ghana"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "ma",
+    "country": "Morocco",
+    "countryCode": "MA",
+    "flag": "🇲🇦",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "ma-study",
+        "name": "Student Visa / Residence",
+        "shortDescription": "Study immigration route for international students in Morocco.",
+        "description": "International students may require the appropriate entry visa and residence documentation depending on nationality and program.",
+        "eligibility": [
+          "Admission to a recognised Moroccan institution",
+          "Valid passport",
+          "Proof of accommodation",
+          "Financial support",
+          "Required health documentation"
+        ],
+        "documents": [
+          "Passport",
+          "Admission certificate",
+          "Accommodation proof",
+          "Financial documents",
+          "Insurance where required",
+          "Visa application"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Check visa requirements",
+          "Submit application",
+          "Travel after approval",
+          "Complete residence registration if required"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Ministry of Foreign Affairs Morocco",
+          "Moroccan immigration authorities"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "tn",
+    "country": "Tunisia",
+    "countryCode": "TN",
+    "flag": "🇹🇳",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "tn-study",
+        "name": "Student Visa / Residence Permit",
+        "shortDescription": "Study route for international students in Tunisia.",
+        "description": "Foreign students may require a visa and residence authorization for longer study programs in Tunisia.",
+        "eligibility": [
+          "Admission to a recognised institution",
+          "Valid passport",
+          "Proof of study",
+          "Financial support",
+          "Required accommodation documentation"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Accommodation proof",
+          "Financial evidence",
+          "Visa application",
+          "Photographs"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare documents",
+          "Apply for visa if required",
+          "Travel to Tunisia",
+          "Complete residence procedures"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Ministry of Foreign Affairs Tunisia",
+          "Tunisian immigration authorities"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "mu",
+    "country": "Mauritius",
+    "countryCode": "MU",
+    "flag": "🇲🇺",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "mu-student",
+        "name": "Student Permit",
+        "shortDescription": "Student residence permission for eligible international students in Mauritius.",
+        "description": "International students admitted to approved institutions can apply for the relevant student permit.",
+        "eligibility": [
+          "Admission to an approved institution",
+          "Valid passport",
+          "Financial support",
+          "Health documentation",
+          "Accommodation arrangements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Financial documents",
+          "Medical certificate where required",
+          "Accommodation evidence",
+          "Application"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare student permit documents",
+          "Submit application",
+          "Complete medical or immigration requirements",
+          "Receive permit"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Passport and Immigration Office Mauritius",
+          "Government of Mauritius"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "na",
+    "country": "Namibia",
+    "countryCode": "NA",
+    "flag": "🇳🇦",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "na-study",
+        "name": "Study Permit",
+        "shortDescription": "Study permit route for international students in Namibia.",
+        "description": "International students generally require the appropriate study permission to undertake longer academic programs in Namibia.",
+        "eligibility": [
+          "Admission to a recognised institution",
+          "Valid passport",
+          "Proof of admission",
+          "Financial support",
+          "Required health documentation"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Financial evidence",
+          "Medical documentation where required",
+          "Accommodation evidence",
+          "Application forms"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare study permit application",
+          "Submit application",
+          "Complete required verification",
+          "Receive permit",
+          "Maintain valid status"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Ministry of Home Affairs, Immigration, Safety and Security Namibia"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "bw",
+    "country": "Botswana",
+    "countryCode": "BW",
+    "flag": "🇧🇼",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "bw-study",
+        "name": "Study Permit",
+        "shortDescription": "Study permit for international students in Botswana.",
+        "description": "Foreign students accepted by recognised Botswana institutions can apply for the appropriate study permission.",
+        "eligibility": [
+          "Admission to a recognised institution",
+          "Valid passport",
+          "Proof of admission",
+          "Financial support",
+          "Required medical documentation"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Financial evidence",
+          "Medical documents where required",
+          "Accommodation evidence",
+          "Application"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare documents",
+          "Submit study permit application",
+          "Complete required checks",
+          "Receive permit"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Department of Immigration and Citizenship Botswana",
+          "Government of Botswana"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "fj",
+    "country": "Fiji",
+    "countryCode": "FJ",
+    "flag": "🇫🇯",
+    "region": "Oceania",
+    "visaTypes": [
+      {
+        "id": "fj-student",
+        "name": "Student Permit",
+        "shortDescription": "Student permit for international students studying in Fiji.",
+        "description": "International students accepted by recognised Fijian institutions can apply for a student permit.",
+        "eligibility": [
+          "Admission to a recognised institution",
+          "Valid passport",
+          "Proof of enrolment",
+          "Financial support",
+          "Health requirements"
+        ],
+        "documents": [
+          "Passport",
+          "Admission letter",
+          "Financial documents",
+          "Medical documents where required",
+          "Accommodation evidence",
+          "Application"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare documents",
+          "Apply for student permit",
+          "Complete required checks",
+          "Receive permit",
+          "Travel and maintain student status"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Immigration Department Fiji",
+          "Government of Fiji"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "pg",
+    "country": "Papua New Guinea",
+    "countryCode": "PG",
+    "flag": "🇵🇬",
+    "region": "Oceania",
+    "visaTypes": [
+      {
+        "id": "pg-student",
+        "name": "Student Visa",
+        "shortDescription": "Student visa route for international students in Papua New Guinea.",
+        "description": "International students admitted to approved educational institutions may require a student visa.",
+        "eligibility": [
+          "Admission to an approved institution",
+          "Valid passport",
+          "Proof of enrolment",
+          "Financial support",
+          "Required health documentation"
+        ],
+        "documents": [
+          "Passport",
+          "Admission confirmation",
+          "Visa application",
+          "Financial evidence",
+          "Medical documents where required",
+          "Photographs"
+        ],
+        "steps": [
+          "Obtain admission",
+          "Prepare application",
+          "Submit student visa application",
+          "Complete immigration checks",
+          "Receive visa",
+          "Travel to Papua New Guinea"
+        ],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": [
+          "Papua New Guinea Immigration and Citizenship Authority",
+          "Government of Papua New Guinea"
+        ]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+
+  {
+    "id": "mx",
+    "country": "Mexico",
+    "countryCode": "MX",
+    "flag": "🇲🇽",
+    "region": "North America",
+    "visaTypes": [
+      {
+        "id": "mx-student",
+        "name": "Temporary Resident Visa for Students",
+        "shortDescription": "Residence route for international students studying in Mexico.",
+        "description": "Students undertaking longer academic programs in Mexico may require temporary resident status for study.",
+        "eligibility": ["Admission to a recognised Mexican institution", "Valid passport", "Proof of financial means", "Required immigration documents"],
+        "documents": ["Passport", "Admission letter", "Financial proof", "Visa application", "Photographs", "Additional documents requested by the consulate"],
+        "steps": ["Obtain admission", "Prepare documents", "Apply through the Mexican consular authority", "Receive visa", "Enter Mexico", "Complete residence formalities"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Government of Mexico", "National Institute of Migration Mexico"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "br",
+    "country": "Brazil",
+    "countryCode": "BR",
+    "flag": "🇧🇷",
+    "region": "South America",
+    "visaTypes": [
+      {
+        "id": "br-vitem-iv",
+        "name": "VITEM IV Student Visa",
+        "shortDescription": "Student visa for international students studying in Brazil.",
+        "description": "The VITEM IV category is used for eligible students undertaking study in Brazil.",
+        "eligibility": ["Admission to an eligible Brazilian institution", "Valid passport", "Required financial and immigration documentation"],
+        "documents": ["Passport", "Admission or enrollment document", "Visa application", "Photographs", "Financial documents where required", "Additional consular documents"],
+        "steps": ["Obtain admission", "Prepare documents", "Apply for VITEM IV", "Complete consular requirements", "Travel to Brazil", "Complete registration after arrival"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Brazilian Ministry of Foreign Affairs", "Brazil Federal Police"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "ar",
+    "country": "Argentina",
+    "countryCode": "AR",
+    "flag": "🇦🇷",
+    "region": "South America",
+    "visaTypes": [
+      {
+        "id": "ar-student",
+        "name": "Student Visa / Temporary Residence",
+        "shortDescription": "Study residence route for international students in Argentina.",
+        "description": "International students may require the appropriate entry and residence authorization depending on nationality and program.",
+        "eligibility": ["Admission to an Argentine institution", "Valid passport", "Proof of study", "Required immigration documents"],
+        "documents": ["Passport", "Admission certificate", "Academic documents", "Proof of accommodation", "Financial documents where required", "Application"],
+        "steps": ["Obtain admission", "Check nationality-specific requirements", "Submit application", "Complete immigration procedures", "Receive residence authorization"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["National Directorate of Migration Argentina", "Ministry of Foreign Affairs Argentina"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "cl",
+    "country": "Chile",
+    "countryCode": "CL",
+    "flag": "🇨🇱",
+    "region": "South America",
+    "visaTypes": [
+      {
+        "id": "cl-student",
+        "name": "Temporary Residence for Study",
+        "shortDescription": "Temporary residence route for international students in Chile.",
+        "description": "Foreign students may apply for the appropriate temporary residence status for recognised study programs.",
+        "eligibility": ["Admission to a recognised institution", "Valid passport", "Proof of sufficient means", "Required documentation"],
+        "documents": ["Passport", "Admission letter", "Financial evidence", "Application", "Photographs", "Supporting academic documents"],
+        "steps": ["Obtain admission", "Prepare documents", "Submit residence application", "Complete required verification", "Receive decision"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Servicio Nacional de Migraciones Chile", "Ministry of Foreign Affairs Chile"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "uy",
+    "country": "Uruguay",
+    "countryCode": "UY",
+    "flag": "🇺🇾",
+    "region": "South America",
+    "visaTypes": [
+      {
+        "id": "uy-study",
+        "name": "Temporary Residence for Study",
+        "shortDescription": "Residence route for international students in Uruguay.",
+        "description": "Eligible foreign students may apply for temporary residence based on study.",
+        "eligibility": ["Admission to an educational institution", "Valid passport", "Proof of study", "Required financial and immigration documents"],
+        "documents": ["Passport", "Admission confirmation", "Proof of accommodation", "Financial documents", "Application", "Required certificates"],
+        "steps": ["Obtain admission", "Prepare documentation", "Submit residence application", "Complete immigration requirements", "Receive residence status"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Ministry of Interior Uruguay", "Ministry of Foreign Affairs Uruguay"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "co",
+    "country": "Colombia",
+    "countryCode": "CO",
+    "flag": "🇨🇴",
+    "region": "South America",
+    "visaTypes": [
+      {
+        "id": "co-student",
+        "name": "Student Visa",
+        "shortDescription": "Study visa route for international students in Colombia.",
+        "description": "International students may obtain the applicable Colombian visa based on their academic program.",
+        "eligibility": ["Admission to an eligible institution", "Valid passport", "Proof of enrolment", "Required financial documentation"],
+        "documents": ["Passport", "Admission letter", "Proof of financial means", "Application", "Photographs", "Academic documents"],
+        "steps": ["Obtain admission", "Prepare documents", "Submit visa application", "Complete verification", "Receive visa"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Ministry of Foreign Affairs Colombia", "Migración Colombia"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "pe",
+    "country": "Peru",
+    "countryCode": "PE",
+    "flag": "🇵🇪",
+    "region": "South America",
+    "visaTypes": [
+      {
+        "id": "pe-student",
+        "name": "Student Residence / Visa",
+        "shortDescription": "Study immigration route for international students in Peru.",
+        "description": "Foreign students may obtain the appropriate immigration status for study in Peru.",
+        "eligibility": ["Admission to an eligible educational institution", "Valid passport", "Proof of study", "Required immigration documents"],
+        "documents": ["Passport", "Admission letter", "Academic documents", "Financial evidence where required", "Application"],
+        "steps": ["Obtain admission", "Check visa requirements", "Submit application", "Complete immigration procedures", "Receive status"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Superintendencia Nacional de Migraciones Peru", "Ministry of Foreign Affairs Peru"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "ec",
+    "country": "Ecuador",
+    "countryCode": "EC",
+    "flag": "🇪🇨",
+    "region": "South America",
+    "visaTypes": [
+      {
+        "id": "ec-student",
+        "name": "Student Temporary Residence",
+        "shortDescription": "Temporary residence route for international students in Ecuador.",
+        "description": "International students may apply for the appropriate temporary residence category based on their studies.",
+        "eligibility": ["Admission to an Ecuadorian institution", "Valid passport", "Proof of study", "Required financial documents"],
+        "documents": ["Passport", "Admission certificate", "Financial proof", "Application", "Academic documents"],
+        "steps": ["Obtain admission", "Prepare documents", "Apply for residence", "Complete verification", "Receive authorization"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Ministry of Foreign Affairs and Human Mobility Ecuador", "Ecuador immigration authorities"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "cr",
+    "country": "Costa Rica",
+    "countryCode": "CR",
+    "flag": "🇨🇷",
+    "region": "Central America",
+    "visaTypes": [
+      {
+        "id": "cr-student",
+        "name": "Student Temporary Residence",
+        "shortDescription": "Student immigration route for international students in Costa Rica.",
+        "description": "Foreign students can apply for the applicable student immigration status.",
+        "eligibility": ["Admission to a recognised institution", "Valid passport", "Proof of enrolment", "Financial support"],
+        "documents": ["Passport", "Admission letter", "Proof of funds", "Application", "Required certificates"],
+        "steps": ["Obtain admission", "Prepare documents", "Submit immigration application", "Complete required checks", "Receive authorization"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Dirección General de Migración y Extranjería Costa Rica"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "pa",
+    "country": "Panama",
+    "countryCode": "PA",
+    "flag": "🇵🇦",
+    "region": "Central America",
+    "visaTypes": [
+      {
+        "id": "pa-student",
+        "name": "Student Visa / Residence",
+        "shortDescription": "Study residence route for international students in Panama.",
+        "description": "Eligible international students may apply for the appropriate student immigration status.",
+        "eligibility": ["Admission to an educational institution", "Valid passport", "Proof of financial support", "Required immigration documentation"],
+        "documents": ["Passport", "Admission letter", "Financial evidence", "Application", "Photographs", "Academic documents"],
+        "steps": ["Obtain admission", "Prepare documents", "Submit application", "Complete immigration procedures", "Receive residence status"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["National Immigration Service Panama", "Ministry of Foreign Affairs Panama"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "jm",
+    "country": "Jamaica",
+    "countryCode": "JM",
+    "flag": "🇯🇲",
+    "region": "Caribbean",
+    "visaTypes": [
+      {
+        "id": "jm-student",
+        "name": "Student Visa / Study Permit",
+        "shortDescription": "Study immigration route for international students in Jamaica.",
+        "description": "International students may require the appropriate entry permission and student authorization.",
+        "eligibility": ["Admission to a recognised institution", "Valid passport", "Proof of enrolment", "Financial support"],
+        "documents": ["Passport", "Admission letter", "Financial proof", "Application", "Photographs", "Supporting documents"],
+        "steps": ["Obtain admission", "Check entry requirements", "Apply for required permission", "Travel after approval", "Complete local registration"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Passport, Immigration and Citizenship Agency Jamaica"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "tt",
+    "country": "Trinidad and Tobago",
+    "countryCode": "TT",
+    "flag": "🇹🇹",
+    "region": "Caribbean",
+    "visaTypes": [
+      {
+        "id": "tt-student",
+        "name": "Student Permit",
+        "shortDescription": "Student immigration permission for international students.",
+        "description": "Foreign students admitted to approved institutions may require student immigration authorization.",
+        "eligibility": ["Admission to an approved institution", "Valid passport", "Proof of enrolment", "Financial support"],
+        "documents": ["Passport", "Admission confirmation", "Financial documents", "Application", "Medical documents where required"],
+        "steps": ["Obtain admission", "Prepare documents", "Apply for student permission", "Complete required checks", "Receive approval"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Immigration Division Trinidad and Tobago"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "bb",
+    "country": "Barbados",
+    "countryCode": "BB",
+    "flag": "🇧🇧",
+    "region": "Caribbean",
+    "visaTypes": [
+      {
+        "id": "bb-student",
+        "name": "Student Visa / Permit",
+        "shortDescription": "Study route for international students in Barbados.",
+        "description": "Eligible international students may obtain the required permission to study in Barbados.",
+        "eligibility": ["Admission to an approved institution", "Valid passport", "Proof of enrolment", "Financial support"],
+        "documents": ["Passport", "Admission letter", "Financial evidence", "Application", "Medical documents where required"],
+        "steps": ["Obtain admission", "Prepare documents", "Submit application", "Complete immigration requirements", "Receive approval"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Barbados Immigration Department", "Government of Barbados"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "bs",
+    "country": "Bahamas",
+    "countryCode": "BS",
+    "flag": "🇧🇸",
+    "region": "Caribbean",
+    "visaTypes": [
+      {
+        "id": "bs-student",
+        "name": "Student Permit",
+        "shortDescription": "Student immigration permission for international students in The Bahamas.",
+        "description": "Foreign students may require a student permit or other immigration authorization.",
+        "eligibility": ["Admission to an approved institution", "Valid passport", "Proof of study", "Financial support"],
+        "documents": ["Passport", "Admission letter", "Financial evidence", "Application", "Health documents where required"],
+        "steps": ["Obtain admission", "Prepare application", "Submit student permit application", "Complete required checks", "Receive permit"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Bahamas Department of Immigration"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "bz",
+    "country": "Belize",
+    "countryCode": "BZ",
+    "flag": "🇧🇿",
+    "region": "Central America",
+    "visaTypes": [
+      {
+        "id": "bz-student",
+        "name": "Student Permit",
+        "shortDescription": "Student permit route for international students in Belize.",
+        "description": "International students may require a student permit to undertake longer studies in Belize.",
+        "eligibility": ["Admission to an educational institution", "Valid passport", "Proof of study", "Financial support"],
+        "documents": ["Passport", "Admission confirmation", "Financial evidence", "Application", "Photographs"],
+        "steps": ["Obtain admission", "Prepare documents", "Apply for student permission", "Complete immigration requirements", "Receive permit"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Belize Immigration Department", "Government of Belize"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "gt",
+    "country": "Guatemala",
+    "countryCode": "GT",
+    "flag": "🇬🇹",
+    "region": "Central America",
+    "visaTypes": [
+      {
+        "id": "gt-student",
+        "name": "Student Residence / Visa",
+        "shortDescription": "Study immigration route for international students in Guatemala.",
+        "description": "Eligible international students may apply for the appropriate study-related immigration status.",
+        "eligibility": ["Admission to an educational institution", "Valid passport", "Proof of enrolment", "Financial support"],
+        "documents": ["Passport", "Admission letter", "Financial evidence", "Application", "Academic documents"],
+        "steps": ["Obtain admission", "Check entry requirements", "Apply for the appropriate status", "Complete immigration procedures"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Guatemalan Institute of Migration", "Ministry of Foreign Affairs Guatemala"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "hn",
+    "country": "Honduras",
+    "countryCode": "HN",
+    "flag": "🇭🇳",
+    "region": "Central America",
+    "visaTypes": [
+      {
+        "id": "hn-student",
+        "name": "Student Residence",
+        "shortDescription": "Student immigration route for international students in Honduras.",
+        "description": "International students may apply for the appropriate student residence status.",
+        "eligibility": ["Admission to a recognised institution", "Valid passport", "Proof of enrolment", "Financial support"],
+        "documents": ["Passport", "Admission letter", "Financial evidence", "Application", "Supporting certificates"],
+        "steps": ["Obtain admission", "Prepare documentation", "Submit residence application", "Complete required procedures"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["National Institute of Migration Honduras"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "sv",
+    "country": "El Salvador",
+    "countryCode": "SV",
+    "flag": "🇸🇻",
+    "region": "Central America",
+    "visaTypes": [
+      {
+        "id": "sv-student",
+        "name": "Student Residence",
+        "shortDescription": "Residence route for international students in El Salvador.",
+        "description": "Foreign students may obtain the appropriate residence authorization for recognised study.",
+        "eligibility": ["Admission to an educational institution", "Valid passport", "Proof of study", "Financial support"],
+        "documents": ["Passport", "Admission confirmation", "Financial documents", "Application", "Required certificates"],
+        "steps": ["Obtain admission", "Prepare documents", "Apply for residence", "Complete immigration checks", "Receive authorization"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["General Directorate of Migration and Immigration El Salvador"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "ni",
+    "country": "Nicaragua",
+    "countryCode": "NI",
+    "flag": "🇳🇮",
+    "region": "Central America",
+    "visaTypes": [
+      {
+        "id": "ni-student",
+        "name": "Student Residence",
+        "shortDescription": "Study-related residence route for international students.",
+        "description": "Eligible foreign students may apply for the applicable student immigration status.",
+        "eligibility": ["Admission to an educational institution", "Valid passport", "Proof of study", "Required immigration documents"],
+        "documents": ["Passport", "Admission letter", "Financial evidence", "Application", "Supporting academic documents"],
+        "steps": ["Obtain admission", "Prepare documents", "Submit immigration application", "Complete required procedures"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Nicaraguan immigration authorities", "Ministry of Foreign Affairs Nicaragua"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "do",
+    "country": "Dominican Republic",
+    "countryCode": "DO",
+    "flag": "🇩🇴",
+    "region": "Caribbean",
+    "visaTypes": [
+      {
+        "id": "do-student",
+        "name": "Student Visa",
+        "shortDescription": "Student visa route for international students in the Dominican Republic.",
+        "description": "Foreign students may obtain the appropriate student visa and residence documentation.",
+        "eligibility": ["Admission to an approved institution", "Valid passport", "Proof of study", "Financial support"],
+        "documents": ["Passport", "Admission letter", "Financial documents", "Visa application", "Photographs", "Required certificates"],
+        "steps": ["Obtain admission", "Prepare documents", "Apply for student visa", "Complete consular procedures", "Travel and complete residence requirements"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Ministry of Foreign Affairs Dominican Republic", "General Directorate of Migration Dominican Republic"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "dz",
+    "country": "Algeria",
+    "countryCode": "DZ",
+    "flag": "🇩🇿",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "dz-study",
+        "name": "Student Visa",
+        "shortDescription": "Study visa route for international students in Algeria.",
+        "description": "Foreign students accepted by Algerian educational institutions may apply for the relevant study visa.",
+        "eligibility": ["Admission to an Algerian institution", "Valid passport", "Proof of admission", "Required financial and supporting documents"],
+        "documents": ["Passport", "Admission letter", "Visa application", "Photographs", "Financial evidence", "Academic documents"],
+        "steps": ["Obtain admission", "Prepare documents", "Apply through the Algerian consular authority", "Complete required checks", "Receive visa"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Ministry of Foreign Affairs Algeria", "Algerian diplomatic missions"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "eg",
+    "country": "Egypt",
+    "countryCode": "EG",
+    "flag": "🇪🇬",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "eg-study",
+        "name": "Student Visa / Residence",
+        "shortDescription": "Study immigration route for international students in Egypt.",
+        "description": "International students may require the applicable entry visa and residence permission for study.",
+        "eligibility": ["Admission to a recognised institution", "Valid passport", "Proof of study", "Required immigration documentation"],
+        "documents": ["Passport", "Admission letter", "Academic documents", "Financial evidence where required", "Application"],
+        "steps": ["Obtain admission", "Prepare documents", "Apply for the appropriate visa", "Travel after approval", "Complete residence procedures"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Egyptian Ministry of Foreign Affairs", "Egyptian immigration authorities"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "et",
+    "country": "Ethiopia",
+    "countryCode": "ET",
+    "flag": "🇪🇹",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "et-student",
+        "name": "Student Visa / Residence",
+        "shortDescription": "Study immigration route for international students in Ethiopia.",
+        "description": "Foreign students may obtain the appropriate immigration status for recognised studies in Ethiopia.",
+        "eligibility": ["Admission to an educational institution", "Valid passport", "Proof of study", "Required immigration documentation"],
+        "documents": ["Passport", "Admission confirmation", "Visa application", "Photographs", "Financial documents where required"],
+        "steps": ["Obtain admission", "Prepare documents", "Apply for appropriate visa", "Complete immigration procedures", "Receive authorization"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Ethiopian Immigration and Citizenship Service", "Ministry of Foreign Affairs Ethiopia"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "tz",
+    "country": "Tanzania",
+    "countryCode": "TZ",
+    "flag": "🇹🇿",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "tz-student",
+        "name": "Student / Residence Permit",
+        "shortDescription": "Study immigration route for international students in Tanzania.",
+        "description": "International students may require a student pass or residence permission depending on the study arrangement.",
+        "eligibility": ["Admission to a recognised institution", "Valid passport", "Proof of enrolment", "Financial support", "Required health documents"],
+        "documents": ["Passport", "Admission letter", "Financial evidence", "Medical documents where required", "Application"],
+        "steps": ["Obtain admission", "Prepare documents", "Apply for appropriate student permission", "Complete immigration requirements", "Receive permit"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Tanzania Immigration Department", "Government of Tanzania"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "ug",
+    "country": "Uganda",
+    "countryCode": "UG",
+    "flag": "🇺🇬",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "ug-student",
+        "name": "Student Pass",
+        "shortDescription": "Student pass for international students in Uganda.",
+        "description": "Foreign students accepted by recognised Ugandan institutions can apply for a student pass.",
+        "eligibility": ["Admission to a recognised institution", "Valid passport", "Proof of enrolment", "Financial support"],
+        "documents": ["Passport", "Admission letter", "Institutional documents", "Financial evidence", "Application"],
+        "steps": ["Obtain admission", "Prepare student-pass application", "Submit application", "Complete verification", "Receive student pass"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Directorate of Citizenship and Immigration Control Uganda"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "zm",
+    "country": "Zambia",
+    "countryCode": "ZM",
+    "flag": "🇿🇲",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "zm-study",
+        "name": "Student Permit",
+        "shortDescription": "Student permit route for international students in Zambia.",
+        "description": "International students admitted to recognised Zambian institutions may apply for the relevant study permit.",
+        "eligibility": ["Admission to an approved institution", "Valid passport", "Proof of enrolment", "Financial support"],
+        "documents": ["Passport", "Admission letter", "Financial documents", "Application", "Medical documents where required"],
+        "steps": ["Obtain admission", "Prepare documents", "Submit study permit application", "Complete required checks", "Receive permit"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Department of Immigration Zambia", "Government of Zambia"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "zw",
+    "country": "Zimbabwe",
+    "countryCode": "ZW",
+    "flag": "🇿🇼",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "zw-student",
+        "name": "Student Permit",
+        "shortDescription": "Student permit for international students in Zimbabwe.",
+        "description": "Foreign students may obtain the applicable student permit after admission to a recognised institution.",
+        "eligibility": ["Admission to an eligible institution", "Valid passport", "Proof of study", "Financial support"],
+        "documents": ["Passport", "Admission letter", "Financial evidence", "Application", "Medical documents where required"],
+        "steps": ["Obtain admission", "Prepare documents", "Apply for student permit", "Complete immigration requirements", "Receive permit"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Department of Immigration Zimbabwe", "Government of Zimbabwe"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "mw",
+    "country": "Malawi",
+    "countryCode": "MW",
+    "flag": "🇲🇼",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "mw-student",
+        "name": "Student Permit",
+        "shortDescription": "Study permit route for international students in Malawi.",
+        "description": "International students accepted by eligible institutions may apply for the relevant student permit.",
+        "eligibility": ["Admission to a recognised institution", "Valid passport", "Proof of enrolment", "Financial support"],
+        "documents": ["Passport", "Admission confirmation", "Financial evidence", "Application", "Supporting documents"],
+        "steps": ["Obtain admission", "Prepare application", "Submit student permit request", "Complete immigration checks", "Receive permit"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Department of Immigration and Citizenship Services Malawi"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "rw",
+    "country": "Rwanda",
+    "countryCode": "RW",
+    "flag": "🇷🇼",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "rw-student",
+        "name": "Student Permit",
+        "shortDescription": "Student permit for international students in Rwanda.",
+        "description": "Foreign students admitted to recognised Rwandan institutions can apply for the relevant student permit.",
+        "eligibility": ["Admission to a recognised institution", "Valid passport", "Proof of enrolment", "Required financial and immigration documents"],
+        "documents": ["Passport", "Admission letter", "Financial evidence", "Application", "Supporting academic documents"],
+        "steps": ["Obtain admission", "Prepare documents", "Apply for student permit", "Complete immigration procedures", "Receive permit"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Directorate General of Immigration and Emigration Rwanda"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "sn",
+    "country": "Senegal",
+    "countryCode": "SN",
+    "flag": "🇸🇳",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "sn-study",
+        "name": "Student Residence / Visa",
+        "shortDescription": "Study immigration route for international students in Senegal.",
+        "description": "International students may require the applicable entry and residence documentation for study.",
+        "eligibility": ["Admission to an educational institution", "Valid passport", "Proof of study", "Required immigration documents"],
+        "documents": ["Passport", "Admission letter", "Financial documents where required", "Application", "Photographs"],
+        "steps": ["Obtain admission", "Check visa requirements", "Submit application", "Complete immigration procedures", "Receive authorization"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Ministry of Foreign Affairs Senegal", "Senegalese immigration authorities"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "ci",
+    "country": "Côte d'Ivoire",
+    "countryCode": "CI",
+    "flag": "🇨🇮",
+    "region": "Africa",
+    "visaTypes": [
+      {
+        "id": "ci-study",
+        "name": "Student Visa / Residence",
+        "shortDescription": "Study immigration route for international students in Côte d'Ivoire.",
+        "description": "Foreign students may obtain the appropriate immigration authorization for eligible academic programs.",
+        "eligibility": ["Admission to an eligible institution", "Valid passport", "Proof of study", "Required immigration documentation"],
+        "documents": ["Passport", "Admission confirmation", "Visa application", "Financial documents where required", "Photographs"],
+        "steps": ["Obtain admission", "Prepare documents", "Apply for the appropriate visa", "Complete local registration or residence procedures"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Ministry of Foreign Affairs Côte d'Ivoire", "Ivorian immigration authorities"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  },
+  {
+    "id": "mv",
+    "country": "Maldives",
+    "countryCode": "MV",
+    "flag": "🇲🇻",
+    "region": "Asia",
+    "visaTypes": [
+      {
+        "id": "mv-student",
+        "name": "Student Visa",
+        "shortDescription": "Student visa route for international students in the Maldives.",
+        "description": "International students admitted to approved educational institutions may obtain the applicable student visa.",
+        "eligibility": ["Admission to an approved institution", "Valid passport", "Institutional sponsorship", "Required financial and health documents"],
+        "documents": ["Passport", "Admission letter", "Sponsorship documents", "Financial evidence", "Medical documents where required"],
+        "steps": ["Obtain admission", "Arrange institutional sponsorship", "Submit visa application", "Complete required checks", "Receive student permission"],
+        "financialRequirement": "Varies.",
+        "processingTime": "Varies.",
+        "officialSources": ["Maldives Immigration", "Government of Maldives"]
+      }
+    ],
+    "lastUpdated": "2026-09"
+  }
+
+]
+

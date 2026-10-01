@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniAI — Study in Australia</title>
+<meta name="description" content="Explore studying in Australia with UniAI — cities, universities, costs, student life and your application journey.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#10251d;
+  --cream:#f5f1e7;
+  --paper:#fffdf8;
+  --sand:#d9c7a1;
+  --gum:#6d8c79;
+  --coral:#e86f51;
+  --sun:#f3b94d;
+  --white:#fff;
+  --line:rgba(16,37,29,.14);
+  --muted:#647168;
+  --max:1220px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+::selection{background:var(--sun);color:var(--ink)}
+
+.nav{
+  position:fixed;z-index:100;top:0;left:0;right:0;height:78px;
+  display:flex;align-items:center;justify-content:space-between;padding:0 4vw;
+  transition:.3s;color:var(--white)
+}
+.nav.scrolled{background:rgba(16,37,29,.92);backdrop-filter:blur(15px)}
+.logo{font-family:"Space Grotesk";font-size:23px;font-weight:700;letter-spacing:-.05em}
+.logo span{font-weight:500;opacity:.55}
+.navlinks{display:flex;gap:27px;font-size:13px}
+.navlinks a{opacity:.84}
+.navlinks a:hover{opacity:1}
+.nav-cta,.btn{
+  border:0;border-radius:999px;padding:12px 18px;cursor:pointer;transition:.25s
+}
+.nav-cta{background:var(--sun);color:var(--ink);font-weight:700}
+.btn{background:var(--ink);color:white}
+.btn.light{background:var(--paper);color:var(--ink)}
+.btn.coral{background:var(--coral);color:white}
+.btn:hover,.nav-cta:hover{transform:translateY(-3px)}
+
+.hero{
+  min-height:100svh;background:
+  linear-gradient(90deg,rgba(16,37,29,.82),rgba(16,37,29,.28)),
+  url("https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=2200&q=85") center/cover;
+  display:flex;align-items:center;position:relative;overflow:hidden
+}
+.hero:after{
+  content:"";position:absolute;right:-7vw;bottom:-13vw;width:48vw;height:48vw;
+  border:1px solid rgba(255,255,255,.3);border-radius:50%;
+  box-shadow:0 0 0 70px rgba(255,255,255,.035),0 0 0 140px rgba(255,255,255,.025)
+}
+.hero-inner{width:min(var(--max),92vw);margin:auto;padding:110px 0 75px;position:relative;z-index:2}
+.kicker{display:flex;align-items:center;gap:10px;text-transform:uppercase;letter-spacing:.17em;font-size:11px;color:#f8d98b;margin-bottom:20px}
+.kicker:before{content:"";width:32px;height:2px;background:var(--coral)}
+h1{
+  font-family:"Space Grotesk";font-size:clamp(58px,9vw,125px);line-height:.86;
+  letter-spacing:-.075em;margin:0;color:white;max-width:900px
+}
+.hero-copy{max-width:560px;color:#e7eee9;font-size:18px;line-height:1.65;margin:30px 0 0}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.hero-stamp{
+  position:absolute;right:5vw;bottom:70px;border:1px solid rgba(255,255,255,.4);
+  width:125px;height:125px;border-radius:50%;display:grid;place-items:center;
+  color:white;text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:.12em;
+  transform:rotate(10deg);background:rgba(16,37,29,.18);backdrop-filter:blur(5px)
+}
+
+.ticker{background:var(--sun);overflow:hidden;padding:14px 0;border-bottom:1px solid var(--ink)}
+.ticker-track{display:flex;width:max-content;gap:38px;animation:move 25s linear infinite}
+.ticker span{font-family:"Space Grotesk";font-size:12px;text-transform:uppercase;letter-spacing:.13em}
+@keyframes move{to{transform:translateX(-50%)}}
+
+.section{padding:110px 0}
+.container{width:min(var(--max),92vw);margin:auto}
+.split{display:grid;grid-template-columns:.85fr 1.15fr;gap:80px;align-items:start}
+.label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--coral);font-weight:700}
+.title{font-family:"Space Grotesk";font-size:clamp(42px,5.8vw,76px);line-height:.94;letter-spacing:-.065em;margin:14px 0 0}
+.sub{color:var(--muted);font-size:16px;line-height:1.7;max-width:600px}
+
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-top:48px}
+.city{
+  min-height:300px;border-radius:26px;padding:25px;display:flex;flex-direction:column;
+  justify-content:flex-end;color:white;position:relative;overflow:hidden;background-size:cover;background-position:center;
+  isolation:isolate;transition:.35s
+}
+.city:before{content:"";position:absolute;inset:0;background:linear-gradient(transparent 25%,rgba(16,37,29,.9))}
+.city>*{position:relative;z-index:1}
+.city:hover{transform:translateY(-7px) rotate(-.4deg)}
+.city:nth-child(1){background-image:url("https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d4?w=1000&q=80")}
+.city:nth-child(2){background-image:url("https://images.unsplash.com/photo-1514395462725-fb4566210144?w=1000&q=80")}
+.city:nth-child(3){background-image:url("https://images.unsplash.com/photo-1526951521990-620dc14c214b?w=1000&q=80")}
+.city:nth-child(4){background-image:url("https://images.unsplash.com/photo-1524820197278-540916411e20?w=1000&q=80")}
+.city small{text-transform:uppercase;letter-spacing:.14em;color:#f7d58a}
+.city h3{font-family:"Space Grotesk";font-size:38px;margin:7px 0}
+.city p{margin:0;color:#dce6df;font-size:13px}
+
+.band{background:var(--ink);color:white;padding:90px 0}
+.band-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.band .title{color:white}
+.band .sub{color:#b9c9bf}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.13)}
+.fact{padding:28px;background:var(--ink);min-height:150px}
+.fact strong{display:block;font-family:"Space Grotesk";font-size:34px;color:var(--sun)}
+.fact span{display:block;margin-top:8px;color:#b9c9bf;font-size:13px;line-height:1.5}
+
+.uni-wrap{margin-top:50px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px}
+.uni{
+  background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:27px;
+  min-height:225px;transition:.3s
+}
+.uni:hover{transform:translateY(-5px);border-color:var(--coral)}
+.uni-num{font-size:11px;color:var(--gum);font-weight:700;letter-spacing:.12em}
+.uni h3{font-family:"Space Grotesk";font-size:28px;margin:26px 0 8px}
+.uni p{color:var(--muted);font-size:13px;line-height:1.55;margin:0}
+
+.cost-area{background:#e9e1d0}
+.cost-grid{display:grid;grid-template-columns:1fr .75fr;gap:15px;margin-top:50px}
+.cost-card{background:var(--paper);border-radius:24px;padding:30px;border:1px solid var(--line)}
+.cost-row{display:flex;justify-content:space-between;gap:20px;padding:18px 0;border-bottom:1px solid var(--line)}
+.cost-row:last-child{border:0}
+.cost-row span{color:var(--muted)}
+.cost-row strong{font-family:"Space Grotesk"}
+.budget{background:var(--coral);color:white;display:flex;flex-direction:column;justify-content:center}
+.budget .amount{font-family:"Space Grotesk";font-size:clamp(50px,6vw,85px);letter-spacing:-.08em}
+.budget p{line-height:1.65;color:#fff1ed}
+
+.life{display:grid;grid-template-columns:1.2fr .8fr;gap:15px;margin-top:50px}
+.life-main,.life-side{border-radius:26px;overflow:hidden;min-height:520px}
+.life-main{
+  background:linear-gradient(0deg,rgba(16,37,29,.9),transparent 60%),
+  url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1400&q=80") center/cover;
+  padding:35px;display:flex;align-items:flex-end;color:white
+}
+.life-main h3{font-family:"Space Grotesk";font-size:48px;line-height:.95;margin:0 0 12px;letter-spacing:-.05em}
+.life-main p{max-width:480px;color:#dce6df;line-height:1.6}
+.life-side{background:var(--sun);padding:34px;display:flex;flex-direction:column;justify-content:space-between}
+.life-side .emoji{font-size:54px}
+.life-side h3{font-family:"Space Grotesk";font-size:39px;line-height:1;margin:0}
+.life-side p{line-height:1.6;color:#4d4939}
+
+.roadmap{margin-top:55px;display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.road{
+  border-top:3px solid var(--coral);padding:22px 18px 0;background:var(--paper);min-height:210px
+}
+.road b{font-size:11px;letter-spacing:.13em;color:var(--coral)}
+.road h3{font-family:"Space Grotesk";font-size:23px;margin:17px 0 8px}
+.road p{color:var(--muted);font-size:13px;line-height:1.55}
+
+.final{
+  margin-top:20px;background:
+  linear-gradient(90deg,rgba(16,37,29,.92),rgba(16,37,29,.4)),
+  url("https://images.unsplash.com/photo-1494233892892-84542a694e72?w=1800&q=80") center/cover;
+  min-height:450px;border-radius:30px;color:white;padding:55px;display:flex;align-items:flex-end
+}
+.final h2{font-family:"Space Grotesk";font-size:clamp(45px,6vw,78px);line-height:.92;letter-spacing:-.06em;max-width:700px;margin:0 0 20px}
+.final p{max-width:550px;color:#dce6df;line-height:1.6}
+
+.footer{background:var(--ink);color:#aebdb3;padding:45px 0}
+.footer-inner{width:min(var(--max),92vw);margin:auto;display:flex;justify-content:space-between;gap:25px;flex-wrap:wrap}
+.footer-logo{font-family:"Space Grotesk";font-size:22px;color:white}
+.footer a{font-size:13px;margin-left:18px}
+
+.reveal{opacity:0;transform:translateY(25px);transition:.7s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .navlinks{display:none}
+  .split,.band-grid,.cost-grid,.life{grid-template-columns:1fr;gap:35px}
+  .uni-wrap{grid-template-columns:1fr 1fr}
+  .roadmap{grid-template-columns:1fr 1fr}
+  .hero-stamp{display:none}
+}
+@media(max-width:600px){
+  .hero-inner{padding:120px 0 60px}
+  h1{font-size:61px}
+  .hero-copy{font-size:16px}
+  .section,.band{padding:80px 0}
+  .cards,.uni-wrap,.roadmap,.facts{grid-template-columns:1fr}
+  .city{min-height:270px}
+  .life-main,.life-side{min-height:390px}
+  .final{padding:30px;min-height:480px}
+}
+</style>
+</head>
+
+<body>
+<nav class="nav" id="nav">
+  <a href="../index.html" class="logo">Uni<span>AI</span></a>
+  <div class="navlinks">
+    <a href="#cities">Cities</a>
+    <a href="#universities">Universities</a>
+    <a href="#life">Lifestyle</a>
+    <a href="#cost">Costs</a>
+    <a href="#roadmap">Roadmap</a>
+  </div>
+  <button class="nav-cta" onclick="document.querySelector('#roadmap').scrollIntoView({behavior:'smooth'})">Plan Australia →</button>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="kicker">Study destination / Australia</div>
+    <h1>Find your<br>place down under.</h1>
+    <p class="hero-copy">
+      World-class universities, cities built around the coast, and a student life that extends far beyond the lecture hall.
+    </p>
+    <div class="hero-actions">
+      <button class="btn light" onclick="document.querySelector('#cities').scrollIntoView({behavior:'smooth'})">Explore Australia</button>
+      <button class="btn coral" onclick="document.querySelector('#roadmap').scrollIntoView({behavior:'smooth'})">Build my roadmap</button>
+    </div>
+  </div>
+  <div class="hero-stamp">AU<br>student<br>life</div>
+</header>
+
+<div class="ticker">
+  <div class="ticker-track">
+    <span>Sydney</span><span>Melbourne</span><span>Brisbane</span><span>Perth</span><span>Research</span><span>Coast</span><span>Campus life</span><span>Opportunity</span>
+    <span>Sydney</span><span>Melbourne</span><span>Brisbane</span><span>Perth</span><span>Research</span><span>Coast</span><span>Campus life</span><span>Opportunity</span>
+  </div>
+</div>
+
+<section class="section" id="cities">
+  <div class="container split">
+    <div class="reveal">
+      <div class="label">01 / Choose your rhythm</div>
+      <h2 class="title">Four cities.<br>Four versions of student life.</h2>
+    </div>
+    <div class="reveal">
+      <p class="sub">Australia is less about picking a famous university and more about finding the city that fits the way you want to live, learn and spend your weekends.</p>
+      <div class="cards">
+        <article class="city"><small>New South Wales</small><h3>Sydney</h3><p>Harbour · Business · Tech · Beaches</p></article>
+        <article class="city"><small>Victoria</small><h3>Melbourne</h3><p>Culture · Design · Sport · Coffee</p></article>
+        <article class="city"><small>Queensland</small><h3>Brisbane</h3><p>Sun · Growth · River · Outdoor life</p></article>
+        <article class="city"><small>Western Australia</small><h3>Perth</h3><p>Coast · Mining · Space · Laid-back living</p></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container band-grid">
+    <div class="reveal">
+      <div class="label">02 / The Australian advantage</div>
+      <h2 class="title">Study hard.<br>Live outside.</h2>
+      <p class="sub">Australia combines research-focused institutions with a lifestyle where beaches, parks, sport and outdoor spaces are part of everyday city life.</p>
+    </div>
+    <div class="facts reveal">
+      <div class="fact"><strong>Go8</strong><span>Eight research-intensive Australian universities form the Group of Eight.</span></div>
+      <div class="fact"><strong>500</strong><span>Student visa subclass 500 is the core student visa pathway.</span></div>
+      <div class="fact"><strong>OSHC</strong><span>Overseas Student Health Cover is part of planning for international students.</span></div>
+      <div class="fact"><strong>AUD</strong><span>Build your budget in Australian dollars from the beginning.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="universities">
+  <div class="container">
+    <div class="reveal">
+      <div class="label">03 / University map</div>
+      <h2 class="title">Big campuses.<br>Different personalities.</h2>
+      <p class="sub">Use these names as a starting point for your shortlist. Always check the current course, intake, entry and fee information with the university.</p>
+    </div>
+    <div class="uni-wrap">
+      <article class="uni reveal"><div class="uni-num">01 / Victoria</div><h3>University of Melbourne</h3><p>Broad academic offerings with a major research-university environment.</p></article>
+      <article class="uni reveal"><div class="uni-num">02 / New South Wales</div><h3>University of Sydney</h3><p>A large urban campus with programs spanning many disciplines.</p></article>
+      <article class="uni reveal"><div class="uni-num">03 / New South Wales</div><h3>UNSW Sydney</h3><p>Known for strengths across engineering, technology, business and research.</p></article>
+      <article class="uni reveal"><div class="uni-num">04 / Victoria</div><h3>Monash University</h3><p>A large international university with a wide range of study areas.</p></article>
+      <article class="uni reveal"><div class="uni-num">05 / Queensland</div><h3>University of Queensland</h3><p>A research-intensive university in Brisbane with a broad academic profile.</p></article>
+      <article class="uni reveal"><div class="uni-num">06 / Australian Capital Territory</div><h3>ANU</h3><p>Research-focused university life in Australia's national capital.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section cost-area" id="cost">
+  <div class="container">
+    <div class="reveal">
+      <div class="label">04 / The money map</div>
+      <h2 class="title">Know the whole cost,<br>not just the tuition.</h2>
+      <p class="sub">Your actual budget depends on your course, city, accommodation and lifestyle. Treat these as planning buckets rather than fixed quotes.</p>
+    </div>
+    <div class="cost-grid">
+      <div class="cost-card reveal">
+        <div class="cost-row"><span>Tuition</span><strong>Course dependent</strong></div>
+        <div class="cost-row"><span>Accommodation</span><strong>City + location dependent</strong></div>
+        <div class="cost-row"><span>Food + transport</span><strong>Lifestyle dependent</strong></div>
+        <div class="cost-row"><span>OSHC</span><strong>Provider + cover dependent</strong></div>
+        <div class="cost-row"><span>Visa + setup</span><strong>Check current fees</strong></div>
+      </div>
+      <div class="cost-card budget reveal">
+        <div class="amount">A$</div>
+        <p>Start your planning in Australian dollars. Compare the full annual picture — tuition, rent, insurance, transport, food and initial setup — before choosing a course.</p>
+        <button class="btn light" onclick="alert('Connect this button to your UniAI Australia budget planner.')">Open budget planner →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="life">
+  <div class="container">
+    <div class="reveal">
+      <div class="label">05 / Life beyond campus</div>
+      <h2 class="title">Your weekends<br>matter too.</h2>
+      <p class="sub">The Australian student experience has a strong outdoor character — from beaches and parks to sport, road trips and city culture.</p>
+    </div>
+    <div class="life">
+      <div class="life-main reveal">
+        <div>
+          <h3>Make the city part of your degree.</h3>
+          <p>Choose a place where your everyday environment supports the kind of experience you want outside your classes.</p>
+        </div>
+      </div>
+      <div class="life-side reveal">
+        <div class="emoji">☀️</div>
+        <h3>Campus by day.<br>Coast by weekend.</h3>
+        <p>Explore student clubs, public spaces, local culture and the outdoors without treating them as an afterthought.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="roadmap">
+  <div class="container">
+    <div class="reveal">
+      <div class="label">06 / Your Australia roadmap</div>
+      <h2 class="title">From shortlist<br>to first semester.</h2>
+      <p class="sub">A simple planning sequence. Requirements and timelines vary, so confirm every official requirement before applying.</p>
+    </div>
+    <div class="roadmap">
+      <article class="road reveal"><b>01</b><h3>Find your course</h3><p>Choose your subject, level, intake and preferred city.</p></article>
+      <article class="road reveal"><b>02</b><h3>Check entry</h3><p>Review academic, English-language and course-specific requirements.</p></article>
+      <article class="road reveal"><b>03</b><h3>Apply</h3><p>Prepare documents, submit the application and track the outcome.</p></article>
+      <article class="road reveal"><b>04</b><h3>Visa + OSHC</h3><p>After the required steps, work through the current student-visa process and health-cover arrangements.</p></article>
+      <article class="road reveal"><b>05</b><h3>Land + settle</h3><p>Sort accommodation, arrival plans, orientation and your first-week essentials.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="final reveal">
+      <div>
+        <div class="label">07 / Make the move</div>
+        <h2>Australia is a destination.<br>Your plan makes it real.</h2>
+        <p>Build a shortlist, compare cities, estimate your complete budget and turn your preferred intake into a practical timeline.</p>
+        <div class="hero-actions">
+          <button class="btn light" onclick="alert('Connect this button to your UniAI Australia planner.')">Build my Australia plan →</button>
+          <button class="btn coral" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to top</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="footer-logo">UniAI</div><div style="margin-top:7px;font-size:13px">Study abroad, but smarter.</div></div>
+    <div>
+      <a href="../index.html">Home</a>
+      <a href="#cities">Cities</a>
+      <a href="#universities">Universities</a>
+      <a href="#cost">Costs</a>
+      <a href="#roadmap">Roadmap</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>35));
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:.1});
+
+document.querySelectorAll('.reveal').forEach((el,i)=>{
+  el.style.transitionDelay=(i%5)*65+'ms';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>

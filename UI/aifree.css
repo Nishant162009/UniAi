@@ -1,0 +1,1578 @@
+/* =========================================================
+   AI FREE JOBS
+   Tailored to the UniAI design system — uses the same tokens
+   as Visa Guide / University Finder, so it now responds to
+   the light/dark theme instead of being dark-only.
+   Everything is scoped to #aiFreeJobsPage
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   SECTION WRAPPER
+   --------------------------------------------------------- */
+
+#aiFreeJobsPage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  color: var(--text);
+}
+
+
+/* ---------------------------------------------------------
+   AMBIENT AI EFFECTS
+   These sit behind your existing page design.
+   --------------------------------------------------------- */
+
+#aiFreeJobsPage .ai-jobs-shell {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* futuristic grid */
+
+#aiFreeJobsPage .ai-grid {
+  position: absolute;
+  z-index: -2;
+  inset: -20%;
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      var(--border-soft) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      var(--border-soft) 1px,
+      transparent 1px
+    );
+
+  background-size: 55px 55px;
+
+  transform:
+    perspective(700px)
+    rotateX(58deg)
+    translateY(30%);
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      transparent,
+      black 20%,
+      black 70%,
+      transparent
+    );
+
+  opacity: .45;
+}
+
+
+/* floating glow */
+
+#aiFreeJobsPage .ai-orb {
+  position: absolute;
+  z-index: -3;
+
+  width: 320px;
+  height: 320px;
+
+  border-radius: 50%;
+  pointer-events: none;
+
+  filter: blur(110px);
+  opacity: .16;
+
+  animation:
+    aiOrbFloat 12s ease-in-out infinite alternate;
+}
+
+#aiFreeJobsPage .orb-one {
+  top: -150px;
+  left: -100px;
+  background: var(--primary);
+}
+
+#aiFreeJobsPage .orb-two {
+  right: -150px;
+  bottom: 50px;
+  background: var(--pink);
+  animation-delay: -5s;
+}
+
+@keyframes aiOrbFloat {
+  from {
+    transform: translate3d(0,0,0) scale(1);
+  }
+
+  to {
+    transform: translate3d(80px,50px,0) scale(1.15);
+  }
+}
+
+
+/* ---------------------------------------------------------
+   HERO
+   --------------------------------------------------------- */
+
+#aiFreeJobsPage .ai-jobs-hero {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 40px;
+  margin-bottom: 38px;
+}
+
+
+/* eyebrow */
+
+#aiFreeJobsPage .ai-eyebrow {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 14px;
+
+  color: var(--text-muted);
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+
+/* live dot */
+
+#aiFreeJobsPage .pulse-dot {
+  width: 7px;
+  height: 7px;
+
+  flex: 0 0 7px;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+
+  box-shadow:
+    0 0 8px #22c55e,
+    0 0 20px rgba(34,197,94,.45);
+
+  animation: aiPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes aiPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.7);
+    opacity: .45;
+  }
+}
+
+
+/* title */
+
+#aiFreeJobsPage .ai-jobs-hero h1 {
+  margin: 0;
+
+  font-family: var(--font-display);
+  font-size: clamp(38px, 6vw, 68px);
+  line-height: .98;
+
+  font-weight: 800;
+  letter-spacing: -.035em;
+
+  text-wrap: balance;
+
+  color: var(--text);
+}
+
+
+/* only the highlighted span gets AI treatment */
+
+#aiFreeJobsPage .ai-jobs-hero h1 span {
+  background:
+    linear-gradient(
+      100deg,
+      var(--primary) 0%,
+      var(--pink) 60%,
+      var(--accent) 100%
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  color: transparent;
+
+  background-size: 200% auto;
+
+  animation:
+    aiGradient 5s linear infinite;
+}
+
+@keyframes aiGradient {
+  to {
+    background-position: 200% center;
+  }
+}
+
+
+/* description */
+
+#aiFreeJobsPage .ai-jobs-hero p {
+  max-width: 560px;
+
+  margin: 20px 0 0;
+
+  color: var(--text-muted);
+
+  font-size: .92rem;
+  line-height: 1.7;
+}
+
+
+/* ---------------------------------------------------------
+   AI SCAN PANEL
+   --------------------------------------------------------- */
+
+#aiFreeJobsPage .ai-scan-card {
+  position: relative;
+
+  width: 260px;
+  min-width: 260px;
+
+  padding: 22px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+
+  background: var(--card-bg);
+
+  box-shadow: var(--shadow-sm);
+
+  transition:
+    transform .3s ease,
+    border-color .3s ease,
+    box-shadow .3s ease;
+}
+
+#aiFreeJobsPage .ai-scan-card::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      110deg,
+      transparent 30%,
+      var(--border-soft),
+      transparent 70%
+    );
+
+  transform: translateX(-100%);
+
+  animation: aiScanShimmer 5s infinite;
+  pointer-events: none;
+}
+
+@keyframes aiScanShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  45%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+#aiFreeJobsPage .ai-scan-card:hover {
+  transform: translateY(-5px);
+
+  border-color: var(--primary);
+
+  box-shadow: var(--shadow-md);
+}
+
+
+/* scan ring */
+
+#aiFreeJobsPage .scan-ring {
+  position: relative;
+
+  width: 72px;
+  height: 72px;
+
+  display: grid;
+  place-items: center;
+
+  margin-bottom: 17px;
+
+  border-radius: 50%;
+
+  color: var(--primary);
+  background: var(--violet-light);
+
+  border: 1px solid var(--primary);
+
+  box-shadow:
+    0 0 18px rgba(139,92,246,.25),
+    inset 0 0 22px rgba(139,92,246,.12);
+
+  animation:
+    aiRingSpin 8s linear infinite;
+}
+
+#aiFreeJobsPage .scan-ring::before,
+#aiFreeJobsPage .scan-ring::after {
+  content: "";
+
+  position: absolute;
+
+  border-radius: 50%;
+
+  border: 1px solid transparent;
+}
+
+#aiFreeJobsPage .scan-ring::before {
+  inset: 7px;
+
+  border-top-color: var(--pink);
+  border-right-color: var(--pink);
+}
+
+#aiFreeJobsPage .scan-ring::after {
+  inset: -7px;
+
+  border-bottom-color: rgba(139,92,246,.5);
+}
+
+#aiFreeJobsPage .scan-ring span {
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1px;
+
+  color: var(--primary);
+
+  animation:
+    aiRingCounter 8s linear infinite;
+}
+
+@keyframes aiRingSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes aiRingCounter {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+
+/* scan text */
+
+#aiFreeJobsPage .ai-scan-card strong,
+#aiFreeJobsPage .ai-scan-card small {
+  display: block;
+}
+
+#aiFreeJobsPage .ai-scan-card strong {
+  color: var(--text);
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+#aiFreeJobsPage .ai-scan-card small {
+  margin-top: 5px;
+
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+
+/* scan button */
+
+#aiFreeJobsPage .scan-btn {
+  position: relative;
+
+  width: 100%;
+
+  margin-top: 18px;
+  padding: 13px 14px;
+
+  border: 0;
+  border-radius: 10px;
+
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+  color: #fff;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  box-shadow: var(--shadow-sm);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    opacity .2s ease;
+}
+
+#aiFreeJobsPage .scan-btn:hover {
+  transform: translateY(-2px);
+
+  box-shadow: var(--shadow-md);
+}
+
+#aiFreeJobsPage .scan-btn:active {
+  transform: translateY(0) scale(.98);
+}
+
+#aiFreeJobsPage .scan-btn:disabled {
+  cursor: wait;
+  opacity: .55;
+}
+
+
+/* ---------------------------------------------------------
+   STATS
+   --------------------------------------------------------- */
+
+#aiFreeJobsPage .job-stats {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 12px;
+
+  margin-bottom: 22px;
+}
+
+#aiFreeJobsPage .stat-box {
+  position: relative;
+
+  padding: 17px 18px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+
+  background: var(--card-bg);
+
+  box-shadow: var(--shadow-sm);
+
+  transition:
+    transform .25s ease,
+    border-color .25s ease;
+}
+
+#aiFreeJobsPage .stat-box::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 2px;
+
+  background: linear-gradient(90deg, var(--primary), var(--pink));
+
+  transform: scaleX(0);
+
+  transition: transform .3s ease;
+}
+
+#aiFreeJobsPage .stat-box:hover {
+  transform: translateY(-3px);
+
+  border-color: var(--primary);
+}
+
+#aiFreeJobsPage .stat-box:hover::after {
+  transform: scaleX(1);
+}
+
+#aiFreeJobsPage .stat-box span {
+  display: block;
+
+  color: var(--text-muted);
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+#aiFreeJobsPage .stat-box strong {
+  display: block;
+
+  margin-top: 7px;
+
+  color: var(--text);
+  font-family: var(--font-display);
+
+  font-size: 25px;
+  line-height: 1;
+}
+
+
+/* ---------------------------------------------------------
+   SEARCH + FILTERS
+   --------------------------------------------------------- */
+
+#aiFreeJobsPage .job-controls {
+  margin-bottom: 18px;
+}
+
+
+/* search */
+
+#aiFreeJobsPage .job-search {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  min-height: 50px;
+
+  padding: 0 16px;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+
+  background: var(--card-bg);
+
+  transition:
+    border-color .25s ease,
+    box-shadow .25s ease;
+}
+
+#aiFreeJobsPage .job-search:focus-within {
+  border-color: var(--primary);
+
+  box-shadow: 0 0 0 3px rgba(139,92,246,.10);
+}
+
+#aiFreeJobsPage .job-search > span {
+  color: var(--text-muted);
+
+  font-size: 20px;
+  line-height: 1;
+}
+
+#aiFreeJobsPage .job-search input {
+  flex: 1;
+
+  min-width: 0;
+
+  padding: 14px 0;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+  color: var(--text);
+
+  font: inherit;
+  font-size: .85rem;
+}
+
+#aiFreeJobsPage .job-search input::placeholder {
+  color: var(--text-subtle);
+}
+
+#aiFreeJobsPage .job-search kbd {
+  padding: 4px 7px;
+
+  border: 1px solid var(--border);
+  border-radius: 6px;
+
+  color: var(--text-muted);
+  background: var(--bg);
+
+  font-size: 9px;
+}
+
+
+/* filter row */
+
+#aiFreeJobsPage .filter-row {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 10px;
+
+  flex-wrap: wrap;
+}
+
+
+/* filters */
+
+#aiFreeJobsPage .job-filter,
+#aiFreeJobsPage #jobSort {
+  min-height: 34px;
+
+  padding: 8px 12px;
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  background: var(--card-bg);
+  color: var(--text-muted);
+
+  font: inherit;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    background .2s ease,
+    color .2s ease,
+    border-color .2s ease,
+    transform .2s ease;
+}
+
+#aiFreeJobsPage .job-filter:hover {
+  transform: translateY(-1px);
+
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+#aiFreeJobsPage .job-filter.active {
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+  color: #fff;
+
+  border-color: transparent;
+}
+
+
+/* select */
+
+#aiFreeJobsPage #jobSort {
+  margin-left: auto;
+}
+
+
+/* ---------------------------------------------------------
+   JOB GRID
+   --------------------------------------------------------- */
+
+#aiFreeJobsPage .crazy-job-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+
+/* ---------------------------------------------------------
+   JOB CARD
+   --------------------------------------------------------- */
+
+#aiFreeJobsPage .crazy-job-card {
+  position: relative;
+
+  overflow: hidden;
+
+  padding: 22px;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+
+  background: var(--card-bg);
+
+  box-shadow: var(--shadow-sm);
+
+  transition:
+    transform .25s ease,
+    border-color .25s ease,
+    box-shadow .25s ease;
+
+  transform-style: preserve-3d;
+}
+
+
+/* top shine */
+
+#aiFreeJobsPage .crazy-job-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -120%;
+
+  width: 80%;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--primary),
+      transparent
+    );
+
+  opacity: .5;
+
+  transition: left .7s ease;
+}
+
+#aiFreeJobsPage .crazy-job-card:hover::before {
+  left: 130%;
+}
+
+
+/* hover */
+
+#aiFreeJobsPage .crazy-job-card:hover {
+  transform: translateY(-5px);
+
+  border-color: var(--primary);
+
+  box-shadow: var(--shadow-md);
+}
+
+
+/* glow */
+
+#aiFreeJobsPage .card-glow {
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  top: -110px;
+  right: -100px;
+
+  border-radius: 50%;
+
+  background: var(--primary);
+
+  filter: blur(80px);
+
+  opacity: .10;
+
+  pointer-events: none;
+
+  transition:
+    opacity .4s ease,
+    transform .4s ease;
+}
+
+#aiFreeJobsPage .crazy-job-card:hover .card-glow {
+  opacity: .22;
+  transform: scale(1.2);
+}
+
+
+/* card top */
+
+#aiFreeJobsPage .job-top {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#aiFreeJobsPage .job-type {
+  color: var(--text-subtle);
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+}
+
+
+/* save button */
+
+#aiFreeJobsPage .save-job {
+  width: 32px;
+  height: 32px;
+
+  display: grid;
+  place-items: center;
+
+  padding: 0;
+
+  border: 1px solid var(--border);
+  border-radius: 50%;
+
+  background: var(--bg);
+  color: var(--text-muted);
+
+  font-size: 16px;
+
+  cursor: pointer;
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    border-color .2s ease,
+    color .2s ease;
+}
+
+#aiFreeJobsPage .save-job:hover {
+  transform: scale(1.08);
+
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+#aiFreeJobsPage .save-job.saved {
+  background: linear-gradient(90deg, var(--primary), var(--pink));
+  color: #fff;
+
+  border-color: transparent;
+}
+
+
+/* ---------------------------------------------------------
+   COMPANY ICON
+   --------------------------------------------------------- */
+
+#aiFreeJobsPage .company-avatar {
+  position: relative;
+
+  width: 46px;
+  height: 46px;
+
+  display: grid;
+  place-items: center;
+
+  margin: 22px 0 15px;
+
+  border-radius: var(--radius-md);
+
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff;
+
+  font-size: 10px;
+  font-weight: 900;
+
+  box-shadow: var(--shadow-sm);
+}
+
+#aiFreeJobsPage .company-avatar::after {
+  content: "";
+
+  position: absolute;
+  inset: -1px;
+
+  border-radius: inherit;
+
+  border: 1px solid var(--border-soft);
+
+  pointer-events: none;
+}
+
+#aiFreeJobsPage .mentor {
+  background: linear-gradient(135deg, #00b8d9, var(--primary-dark));
+}
+
+#aiFreeJobsPage .open {
+  background: linear-gradient(135deg, #22c55e, var(--primary-dark));
+}
+
+#aiFreeJobsPage .design {
+  background: linear-gradient(135deg, var(--pink), var(--primary-dark));
+}
+
+
+/* ---------------------------------------------------------
+   CARD CONTENT
+   --------------------------------------------------------- */
+
+#aiFreeJobsPage .crazy-job-card h3 {
+  position: relative;
+  z-index: 1;
+
+  margin: 0 0 8px;
+
+  color: var(--text);
+  font-family: var(--font-display);
+
+  font-size: 19px;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+}
+
+#aiFreeJobsPage .crazy-job-card p {
+  margin: 0;
+
+  min-height: 48px;
+
+  color: var(--text-muted);
+
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+
+
+/* tags */
+
+#aiFreeJobsPage .job-tags {
+  display: flex;
+
+  gap: 6px;
+
+  flex-wrap: wrap;
+
+  margin: 17px 0;
+}
+
+#aiFreeJobsPage .job-tags span {
+  padding: 5px 9px;
+
+  border: 1px solid var(--border);
+  border-radius: 6px;
+
+  background: var(--bg);
+  color: var(--text-muted);
+
+  font-size: 9.5px;
+  font-weight: 600;
+}
+
+
+/* ---------------------------------------------------------
+   MATCH SCORE
+   --------------------------------------------------------- */
+
+#aiFreeJobsPage .job-match {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 12px 0;
+
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+#aiFreeJobsPage .job-match small {
+  display: block;
+
+  color: var(--text-subtle);
+
+  font-size: 7px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+#aiFreeJobsPage .job-match strong {
+  display: block;
+
+  margin-top: 3px;
+
+  color: var(--text);
+  font-size: 17px;
+}
+
+#aiFreeJobsPage .match-bar {
+  flex: 1;
+
+  height: 4px;
+
+  overflow: hidden;
+
+  border-radius: 99px;
+
+  background: var(--border);
+}
+
+#aiFreeJobsPage .match-bar i {
+  display: block;
+
+  height: 100%;
+
+  border-radius: inherit;
+
+  background: linear-gradient(90deg, var(--primary), var(--pink));
+
+  transform-origin: left;
+
+  animation:
+    matchLoad .9s ease-out both;
+}
+
+@keyframes matchLoad {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+
+/* ---------------------------------------------------------
+   CARD FOOTER
+   --------------------------------------------------------- */
+
+#aiFreeJobsPage .job-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-top: 17px;
+}
+
+#aiFreeJobsPage .job-bottom > strong {
+  color: var(--text);
+  font-size: 12px;
+}
+
+
+/* view role */
+
+#aiFreeJobsPage .interest-btn {
+  position: relative;
+
+  padding: 9px 14px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  background: transparent;
+  color: var(--text);
+
+  font: inherit;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    background .2s ease,
+    color .2s ease,
+    border-color .2s ease,
+    transform .2s ease;
+}
+
+#aiFreeJobsPage .interest-btn:hover {
+  transform: translateY(-1px);
+
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+  border-color: transparent;
+  color: #fff;
+}
+
+
+/* ---------------------------------------------------------
+   NO RESULTS
+   IMPORTANT:
+   scoped so it does NOT override your site's .hidden
+   --------------------------------------------------------- */
+
+#aiFreeJobsPage .no-jobs {
+  padding: 60px 20px;
+
+  text-align: center;
+
+  color: var(--text-muted);
+}
+
+#aiFreeJobsPage .no-jobs > div {
+  font-size: 40px;
+}
+
+#aiFreeJobsPage .no-jobs h3 {
+  margin: 10px 0 5px;
+
+  color: var(--text);
+  font-family: var(--font-display);
+
+  font-size: 14px;
+  letter-spacing: .04em;
+}
+
+#aiFreeJobsPage .no-jobs p {
+  margin: 0;
+
+  font-size: 12px;
+}
+
+
+/* ---------------------------------------------------------
+   MODAL
+   --------------------------------------------------------- */
+
+#aiFreeJobsPage .job-modal {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9999;
+
+  display: grid;
+  place-items: center;
+
+  padding: 20px;
+}
+
+#aiFreeJobsPage .job-modal.hidden {
+  display: none;
+}
+
+#aiFreeJobsPage .modal-backdrop {
+  position: absolute;
+
+  inset: 0;
+
+  background: rgba(20, 20, 40, .55);
+
+  backdrop-filter: blur(13px);
+  -webkit-backdrop-filter: blur(13px);
+}
+
+
+/* modal box */
+
+#aiFreeJobsPage .job-modal-box {
+  position: relative;
+  z-index: 2;
+
+  width: min(560px, 100%);
+
+  padding: 32px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+
+  background: var(--card-bg);
+  color: var(--text);
+
+  box-shadow: var(--shadow-lg);
+
+  animation:
+    aiModalIn .3s ease;
+}
+
+#aiFreeJobsPage .job-modal-box::before {
+  content: "";
+
+  position: absolute;
+
+  width: 220px;
+  height: 220px;
+
+  top: -140px;
+  right: -100px;
+
+  border-radius: 50%;
+
+  background: var(--primary);
+
+  filter: blur(90px);
+
+  opacity: .18;
+
+  pointer-events: none;
+}
+
+@keyframes aiModalIn {
+  from {
+    opacity: 0;
+    transform:
+      translateY(15px)
+      scale(.97);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+
+/* close */
+
+#aiFreeJobsPage .modal-close {
+  position: absolute;
+
+  top: 13px;
+  right: 13px;
+
+  width: 32px;
+  height: 32px;
+
+  border: 1px solid var(--border);
+  border-radius: 50%;
+
+  background: var(--bg);
+  color: var(--text-muted);
+
+  font-size: 20px;
+
+  cursor: pointer;
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    color .2s ease;
+}
+
+#aiFreeJobsPage .modal-close:hover {
+  transform: rotate(90deg);
+
+  color: #ef4444;
+  background: rgba(239, 68, 68, .08);
+}
+
+
+/* modal signal */
+
+#aiFreeJobsPage .modal-signal {
+  margin-bottom: 14px;
+
+  color: #22c55e;
+
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+
+/* modal title */
+
+#aiFreeJobsPage .job-modal-box h2 {
+  margin: 0 0 12px;
+
+  color: var(--text);
+  font-family: var(--font-display);
+
+  font-size: clamp(24px, 4.5vw, 34px);
+  line-height: 1.1;
+  letter-spacing: -.03em;
+}
+
+
+/* modal description */
+
+#aiFreeJobsPage .job-modal-box p {
+  margin: 0;
+
+  color: var(--text-muted);
+
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+
+/* modal stats */
+
+#aiFreeJobsPage .modal-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 10px;
+
+  margin: 24px 0;
+}
+
+#aiFreeJobsPage .modal-grid div {
+  padding: 13px;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+
+  background: var(--bg);
+}
+
+#aiFreeJobsPage .modal-grid small {
+  display: block;
+
+  color: var(--text-subtle);
+
+  font-size: 7px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+#aiFreeJobsPage .modal-grid strong {
+  display: block;
+
+  margin-top: 5px;
+
+  color: var(--text);
+  font-size: 12px;
+}
+
+
+/* modal CTA */
+
+#aiFreeJobsPage .modal-interest {
+  width: 100%;
+
+  padding: 14px;
+
+  border: 0;
+  border-radius: 10px;
+
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+  color: #fff;
+
+  font: inherit;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .7px;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  box-shadow: var(--shadow-sm);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+#aiFreeJobsPage .modal-interest:hover {
+  transform: translateY(-2px);
+
+  box-shadow: var(--shadow-md);
+}
+
+
+/* ---------------------------------------------------------
+   TOAST
+   --------------------------------------------------------- */
+
+#aiFreeJobsPage .ai-toast {
+  position: fixed;
+
+  z-index: 10001;
+
+  right: 20px;
+  bottom: 20px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 12px 15px;
+
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  background: var(--card-bg);
+  color: var(--text);
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .8px;
+
+  box-shadow: var(--shadow-lg);
+
+  animation:
+    aiToastIn .25s ease;
+}
+
+#aiFreeJobsPage .ai-toast.out {
+  animation:
+    aiToastOut .25s ease forwards;
+}
+
+#aiFreeJobsPage .toast-dot {
+  width: 6px;
+  height: 6px;
+
+  margin-right: 8px;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+
+  box-shadow: 0 0 10px rgba(34,197,94,.5);
+}
+
+@keyframes aiToastIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes aiToastOut {
+  to {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+
+/* ---------------------------------------------------------
+   CONFETTI
+   --------------------------------------------------------- */
+
+#aiFreeJobsPage .confetti-piece {
+  position: fixed;
+
+  z-index: 10002;
+
+  width: 5px;
+  height: 10px;
+
+  border-radius: 2px;
+
+  background: var(--primary);
+
+  pointer-events: none;
+
+  animation:
+    aiConfetti .8s ease-out forwards;
+}
+
+@keyframes aiConfetti {
+  to {
+    transform:
+      translate(
+        var(--x),
+        var(--y)
+      )
+      rotate(720deg);
+
+    opacity: 0;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 850px) {
+
+  #aiFreeJobsPage .ai-jobs-hero {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  #aiFreeJobsPage .ai-scan-card {
+    width: 100%;
+    min-width: 0;
+  }
+
+  #aiFreeJobsPage .job-stats {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  #aiFreeJobsPage .crazy-job-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #aiFreeJobsPage .ai-jobs-hero h1 {
+    font-size: clamp(38px, 12vw, 60px);
+  }
+
+  #aiFreeJobsPage #jobSort {
+    margin-left: 0;
+  }
+}
+
+
+@media (max-width: 520px) {
+
+  #aiFreeJobsPage .job-stats {
+    gap: 8px;
+  }
+
+  #aiFreeJobsPage .stat-box {
+    padding: 13px;
+  }
+
+  #aiFreeJobsPage .stat-box strong {
+    font-size: 21px;
+  }
+
+  #aiFreeJobsPage .job-search kbd {
+    display: none;
+  }
+
+  #aiFreeJobsPage .crazy-job-card {
+    padding: 18px;
+  }
+
+  #aiFreeJobsPage .job-bottom {
+    align-items: flex-end;
+  }
+
+  #aiFreeJobsPage .modal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #aiFreeJobsPage .job-modal-box {
+    padding: 25px;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   ACCESSIBILITY
+   --------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+  #aiFreeJobsPage *,
+  #aiFreeJobsPage *::before,
+  #aiFreeJobsPage *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}

@@ -1,0 +1,4450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UniAI — Complete Guide to Studying in the UK</title>
+
+<meta name="description"
+content="UniAI's complete guide to studying in the UK. Explore universities, cities, courses, admissions, UCAS, costs, scholarships, Student visas, accommodation, healthcare, work and your UK study journey.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+rel="stylesheet">
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="guard.js"></script>
+
+<style>
+
+/* =========================================================
+   UniAI UK — COMPLETE STUDY GUIDE
+   ========================================================= */
+
+:root{
+  --bg:#080d18;
+  --bg-2:#0b1220;
+  --card:#111a2b;
+  --card-2:#152039;
+
+  --text:#f7f8fc;
+  --muted:#a7afbf;
+  --subtle:#737d91;
+
+  --border:#202c40;
+  --border-soft:rgba(255,255,255,.08);
+
+  --blue:#2563eb;
+  --blue-2:#3b82f6;
+  --red:#dc2638;
+  --gold:#f4d35e;
+
+  --green:#4ade80;
+
+  --radius:20px;
+  --radius-sm:12px;
+
+  --display:'Plus Jakarta Sans',sans-serif;
+  --body:'Inter',sans-serif;
+
+  --shadow:
+    0 20px 60px rgba(0,0,0,.28);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:88px;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--body);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button{
+  font:inherit;
+}
+
+::selection{
+  background:rgba(37,99,235,.35);
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.uk-nav{
+  position:fixed;
+  inset:0 0 auto;
+  z-index:100;
+
+  height:76px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 28px;
+
+  border-bottom:1px solid transparent;
+
+  transition:.25s ease;
+}
+
+.uk-nav.scrolled{
+  background:rgba(8,13,24,.84);
+  backdrop-filter:blur(20px);
+  border-color:var(--border-soft);
+}
+
+.logo{
+  font-family:var(--display);
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:-.06em;
+}
+
+.logo span{
+  background:
+    linear-gradient(
+      90deg,
+      var(--blue-2),
+      var(--red)
+    );
+
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.nav-links{
+  display:flex;
+  gap:22px;
+
+  color:var(--muted);
+
+  font-size:11px;
+  font-weight:700;
+}
+
+.nav-links a:hover{
+  color:#fff;
+}
+
+.nav-btn{
+  border:1px solid rgba(59,130,246,.45);
+
+  background:#101d35;
+  color:#fff;
+
+  border-radius:999px;
+
+  padding:10px 15px;
+
+  font-size:11px;
+  font-weight:800;
+
+  cursor:pointer;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero{
+  min-height:92vh;
+
+  position:relative;
+
+  display:flex;
+  align-items:flex-end;
+
+  overflow:hidden;
+  isolation:isolate;
+}
+
+.hero-bg{
+  position:absolute;
+  inset:-4%;
+
+  z-index:-3;
+
+  background:
+    url("https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=2400&q=90")
+    center/cover;
+
+  animation:zoom 24s ease-in-out infinite alternate;
+}
+
+.hero::before{
+  content:"";
+
+  position:absolute;
+  inset:0;
+  z-index:-2;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5,9,17,.22),
+      rgba(5,9,17,.56) 48%,
+      var(--bg) 100%
+    );
+}
+
+.hero::after{
+  content:"";
+
+  position:absolute;
+  inset:0;
+  z-index:-1;
+
+  background:
+    radial-gradient(
+      circle at 76% 25%,
+      rgba(37,99,235,.30),
+      transparent 27%
+    ),
+    radial-gradient(
+      circle at 85% 60%,
+      rgba(220,38,56,.18),
+      transparent 30%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(5,9,17,.95),
+      rgba(5,9,17,.25) 72%
+    );
+}
+
+@keyframes zoom{
+  to{
+    transform:scale(1.06);
+  }
+}
+
+.hero-inner{
+  width:min(1240px,92vw);
+  margin:auto;
+
+  padding:150px 0 75px;
+}
+
+.eyebrow{
+  color:#b8cbff;
+
+  text-transform:uppercase;
+  letter-spacing:.18em;
+
+  font-size:10px;
+  font-weight:800;
+
+  margin-bottom:20px;
+}
+
+.hero h1{
+  max-width:1000px;
+
+  margin:0;
+
+  font-family:var(--display);
+
+  font-size:clamp(55px,8.5vw,120px);
+
+  line-height:.88;
+
+  letter-spacing:-.075em;
+}
+
+.gradient{
+  background:
+    linear-gradient(
+      90deg,
+      #72a2ff,
+      #2563eb 50%,
+      #dc2638
+    );
+
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.hero-copy{
+  max-width:720px;
+
+  margin:30px 0 0;
+
+  color:#d1d5df;
+
+  font-size:16px;
+  line-height:1.8;
+}
+
+.hero-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+
+  margin-top:30px;
+}
+
+.btn{
+  border:1px solid var(--border-soft);
+
+  border-radius:999px;
+
+  padding:13px 18px;
+
+  color:#fff;
+
+  background:rgba(255,255,255,.07);
+
+  cursor:pointer;
+
+  font-size:12px;
+  font-weight:800;
+
+  transition:.25s;
+}
+
+.btn.primary{
+  background:
+    linear-gradient(
+      135deg,
+      var(--blue),
+      #1948a7
+    );
+
+  border-color:transparent;
+
+  box-shadow:
+    0 12px 35px rgba(37,99,235,.25);
+}
+
+.btn:hover{
+  transform:translateY(-3px);
+}
+
+.hero-stats{
+  display:flex;
+  gap:38px;
+  flex-wrap:wrap;
+
+  margin-top:50px;
+
+  padding-top:20px;
+
+  border-top:1px solid rgba(255,255,255,.13);
+}
+
+.stat strong{
+  display:block;
+
+  font-family:var(--display);
+
+  font-size:24px;
+}
+
+.stat span{
+  display:block;
+
+  color:#9da6b7;
+
+  font-size:9px;
+
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+
+
+/* =========================================================
+   QUICK GUIDE BAR
+   ========================================================= */
+
+.quickbar{
+  border-bottom:1px solid var(--border);
+
+  background:#0b1220;
+
+  position:sticky;
+  top:76px;
+  z-index:50;
+
+  overflow:auto;
+}
+
+.quickbar-inner{
+  width:min(1240px,92vw);
+  margin:auto;
+
+  display:flex;
+  gap:4px;
+
+  padding:10px 0;
+
+  min-width:max-content;
+}
+
+.quickbar a{
+  padding:8px 12px;
+
+  border-radius:999px;
+
+  color:var(--muted);
+
+  font-size:10px;
+  font-weight:700;
+}
+
+.quickbar a:hover{
+  color:#fff;
+  background:#14213a;
+}
+
+
+/* =========================================================
+   GENERAL SECTIONS
+   ========================================================= */
+
+.section{
+  padding:100px 0;
+}
+
+.section.alt{
+  background:rgba(255,255,255,.014);
+}
+
+.container{
+  width:min(1240px,92vw);
+  margin:auto;
+}
+
+.kicker{
+  color:#8eb3ff;
+
+  font-size:10px;
+
+  font-weight:800;
+
+  letter-spacing:.18em;
+
+  text-transform:uppercase;
+
+  margin-bottom:14px;
+}
+
+.title{
+  margin:0;
+
+  max-width:900px;
+
+  font-family:var(--display);
+
+  font-size:clamp(40px,5.5vw,72px);
+
+  line-height:.95;
+
+  letter-spacing:-.065em;
+}
+
+.subtitle{
+  max-width:760px;
+
+  margin:20px 0 0;
+
+  color:var(--muted);
+
+  font-size:15px;
+
+  line-height:1.8;
+}
+
+.reveal{
+  opacity:0;
+
+  transform:translateY(28px);
+
+  transition:
+    opacity .7s ease,
+    transform .7s ease;
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+
+/* =========================================================
+   GUIDE INTRO
+   ========================================================= */
+
+.guide-grid{
+  display:grid;
+
+  grid-template-columns:1.1fr .9fr;
+
+  gap:18px;
+
+  margin-top:50px;
+}
+
+.info-card{
+  padding:28px;
+
+  border:1px solid var(--border);
+
+  background:var(--card);
+
+  border-radius:var(--radius);
+}
+
+.info-card h3{
+  font-family:var(--display);
+
+  font-size:22px;
+
+  margin:0 0 12px;
+}
+
+.info-card p{
+  color:var(--muted);
+
+  font-size:13px;
+
+  line-height:1.75;
+}
+
+.notice{
+  border-left:3px solid var(--blue);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(37,99,235,.10),
+      transparent
+    );
+
+  padding:18px 20px;
+
+  border-radius:0 12px 12px 0;
+
+  color:#cbd5e8;
+
+  font-size:12px;
+}
+
+
+/* =========================================================
+   WHY UK
+   ========================================================= */
+
+.reason-grid{
+  display:grid;
+
+  grid-template-columns:repeat(3,1fr);
+
+  gap:14px;
+
+  margin-top:50px;
+}
+
+.reason{
+  min-height:230px;
+
+  padding:25px;
+
+  border:1px solid var(--border);
+
+  background:var(--card);
+
+  border-radius:18px;
+}
+
+.reason-number{
+  color:var(--gold);
+
+  font-family:var(--display);
+
+  font-size:40px;
+
+  letter-spacing:-.06em;
+}
+
+.reason h3{
+  font-family:var(--display);
+
+  font-size:19px;
+
+  margin:22px 0 8px;
+}
+
+.reason p{
+  color:var(--muted);
+
+  font-size:11px;
+
+  line-height:1.7;
+}
+
+
+/* =========================================================
+   UK EDUCATION SYSTEM
+   ========================================================= */
+
+.education-grid{
+  display:grid;
+
+  grid-template-columns:repeat(4,1fr);
+
+  gap:12px;
+
+  margin-top:50px;
+}
+
+.education-card{
+  padding:24px;
+
+  min-height:260px;
+
+  border:1px solid var(--border);
+
+  border-radius:18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #142039,
+      #0c1321
+    );
+}
+
+.education-card .big{
+  font-family:var(--display);
+
+  color:#9bbaff;
+
+  font-size:42px;
+
+  font-weight:800;
+}
+
+.education-card h3{
+  font-family:var(--display);
+
+  font-size:18px;
+
+  margin:20px 0 8px;
+}
+
+.education-card p{
+  color:var(--muted);
+
+  font-size:11px;
+
+  line-height:1.7;
+}
+
+
+/* =========================================================
+   COUNTRIES
+   ========================================================= */
+
+.country-grid{
+  display:grid;
+
+  grid-template-columns:repeat(4,1fr);
+
+  gap:12px;
+
+  margin-top:50px;
+}
+
+.country{
+  padding:25px;
+
+  border:1px solid var(--border);
+
+  border-radius:18px;
+
+  background:var(--card);
+}
+
+.country-flag{
+  font-size:32px;
+}
+
+.country h3{
+  font-family:var(--display);
+
+  font-size:21px;
+
+  margin:18px 0 8px;
+}
+
+.country p{
+  color:var(--muted);
+
+  font-size:11px;
+
+  line-height:1.7;
+}
+
+
+/* =========================================================
+   CITIES
+   ========================================================= */
+
+.city-grid{
+  display:grid;
+
+  grid-template-columns:1.25fr 1fr 1fr;
+
+  gap:14px;
+
+  margin-top:50px;
+}
+
+.city{
+  min-height:430px;
+
+  position:relative;
+
+  overflow:hidden;
+
+  border-radius:22px;
+
+  border:1px solid var(--border);
+
+  background-size:cover;
+  background-position:center;
+
+  display:flex;
+  align-items:flex-end;
+
+  transition:.35s;
+}
+
+.city:hover{
+  transform:translateY(-5px);
+
+  border-color:rgba(59,130,246,.55);
+}
+
+.city::after{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background:
+    linear-gradient(
+      transparent 25%,
+      rgba(5,9,17,.93)
+    );
+}
+
+.city-content{
+  position:relative;
+  z-index:2;
+
+  padding:25px;
+}
+
+.city small{
+  color:#9ebaff;
+
+  font-size:9px;
+
+  text-transform:uppercase;
+  letter-spacing:.15em;
+
+  font-weight:800;
+}
+
+.city h3{
+  font-family:var(--display);
+
+  font-size:30px;
+
+  letter-spacing:-.05em;
+
+  margin:7px 0;
+}
+
+.city p{
+  color:#c1c6d0;
+
+  font-size:11px;
+
+  margin:0;
+}
+
+
+/* =========================================================
+   UNIVERSITY EXPLORER
+   ========================================================= */
+
+.uni-grid{
+  display:grid;
+
+  grid-template-columns:repeat(3,1fr);
+
+  gap:14px;
+
+  margin-top:50px;
+}
+
+.uni{
+  padding:27px;
+
+  min-height:285px;
+
+  border:1px solid var(--border);
+
+  border-radius:20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      var(--card-2),
+      var(--bg)
+    );
+
+  transition:.3s;
+
+  position:relative;
+  overflow:hidden;
+}
+
+.uni:hover{
+  transform:translateY(-5px);
+
+  border-color:rgba(59,130,246,.48);
+
+  box-shadow:var(--shadow);
+}
+
+.uni small{
+  color:#9bb9ff;
+
+  text-transform:uppercase;
+  letter-spacing:.13em;
+
+  font-size:9px;
+  font-weight:800;
+}
+
+.uni h3{
+  font-family:var(--display);
+
+  font-size:23px;
+
+  margin:22px 0 8px;
+}
+
+.uni p{
+  color:var(--muted);
+
+  font-size:11px;
+
+  line-height:1.7;
+}
+
+.tags{
+  margin-top:18px;
+}
+
+.tag{
+  display:inline-block;
+
+  padding:6px 9px;
+
+  border:1px solid var(--border);
+
+  border-radius:999px;
+
+  color:#9fa8b9;
+
+  font-size:9px;
+
+  margin:3px;
+}
+
+
+/* =========================================================
+   COURSE TYPES
+   ========================================================= */
+
+.course-grid{
+  display:grid;
+
+  grid-template-columns:repeat(4,1fr);
+
+  gap:13px;
+
+  margin-top:50px;
+}
+
+.course{
+  padding:24px;
+
+  border:1px solid var(--border);
+
+  border-radius:18px;
+
+  background:var(--card);
+
+  min-height:255px;
+}
+
+.course.highlight{
+  background:
+    linear-gradient(
+      145deg,
+      rgba(37,99,235,.18),
+      var(--card)
+    );
+}
+
+.course-num{
+  color:var(--gold);
+
+  font-family:var(--display);
+
+  font-size:40px;
+}
+
+.course h3{
+  font-family:var(--display);
+
+  font-size:18px;
+
+  margin:20px 0 8px;
+}
+
+.course p{
+  color:var(--muted);
+
+  font-size:11px;
+
+  line-height:1.7;
+}
+
+
+/* =========================================================
+   APPLICATION
+   ========================================================= */
+
+.application{
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:50px;
+
+  margin-top:50px;
+}
+
+.application-list{
+  display:grid;
+
+  gap:10px;
+}
+
+.application-item{
+  padding:20px;
+
+  border:1px solid var(--border);
+
+  border-radius:15px;
+
+  background:var(--card);
+
+  display:flex;
+
+  gap:15px;
+}
+
+.application-item strong{
+  color:#9ebaff;
+
+  font-family:var(--display);
+
+  font-size:14px;
+}
+
+.application-item p{
+  color:var(--muted);
+
+  font-size:11px;
+
+  margin:4px 0 0;
+
+  line-height:1.6;
+}
+
+.requirements{
+  border:1px solid var(--border);
+
+  border-radius:20px;
+
+  background:var(--card);
+
+  padding:28px;
+}
+
+.requirements h3{
+  font-family:var(--display);
+
+  margin-top:0;
+}
+
+.check{
+  padding:13px 0;
+
+  border-bottom:1px solid var(--border);
+
+  color:#c6ccd7;
+
+  font-size:12px;
+}
+
+.check:last-child{
+  border-bottom:0;
+}
+
+
+/* =========================================================
+   UCAS
+   ========================================================= */
+
+.ucas-box{
+  margin-top:50px;
+
+  padding:35px;
+
+  border:1px solid rgba(59,130,246,.35);
+
+  border-radius:24px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(37,99,235,.13),
+      rgba(220,38,56,.04)
+    );
+}
+
+.ucas-steps{
+  display:grid;
+
+  grid-template-columns:repeat(5,1fr);
+
+  gap:10px;
+
+  margin-top:30px;
+}
+
+.ucas-step{
+  padding:18px;
+
+  background:rgba(0,0,0,.18);
+
+  border:1px solid var(--border);
+
+  border-radius:14px;
+}
+
+.ucas-step b{
+  color:#8eb3ff;
+
+  font-family:var(--display);
+
+  font-size:11px;
+}
+
+.ucas-step h4{
+  font-size:13px;
+
+  margin:12px 0 6px;
+}
+
+.ucas-step p{
+  color:var(--muted);
+
+  font-size:10px;
+
+  line-height:1.6;
+}
+
+
+/* =========================================================
+   COSTS
+   ========================================================= */
+
+.cost-grid{
+  display:grid;
+
+  grid-template-columns:1.2fr .8fr;
+
+  gap:14px;
+
+  margin-top:50px;
+}
+
+.cost-panel{
+  padding:30px;
+
+  border:1px solid var(--border);
+
+  border-radius:21px;
+
+  background:var(--card);
+}
+
+.cost-row{
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:20px;
+
+  padding:17px 0;
+
+  border-bottom:1px solid var(--border);
+}
+
+.cost-row:last-child{
+  border-bottom:0;
+}
+
+.cost-row span{
+  color:var(--muted);
+
+  font-size:12px;
+}
+
+.cost-row strong{
+  font-family:var(--display);
+
+  font-size:12px;
+
+  text-align:right;
+}
+
+.money{
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:center;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(37,99,235,.16),
+      var(--card)
+    );
+}
+
+.money-symbol{
+  color:var(--gold);
+
+  font-family:var(--display);
+
+  font-size:90px;
+
+  line-height:1;
+}
+
+.money h3{
+  font-family:var(--display);
+
+  font-size:27px;
+
+  margin:20px 0 8px;
+}
+
+.money p{
+  color:var(--muted);
+
+  font-size:12px;
+
+  line-height:1.7;
+}
+
+
+/* =========================================================
+   SCHOLARSHIPS
+   ========================================================= */
+
+.scholar-grid{
+  display:grid;
+
+  grid-template-columns:repeat(3,1fr);
+
+  gap:14px;
+
+  margin-top:50px;
+}
+
+.scholar{
+  padding:25px;
+
+  border:1px solid var(--border);
+
+  border-radius:19px;
+
+  background:var(--card);
+}
+
+.scholar h3{
+  font-family:var(--display);
+
+  font-size:20px;
+
+  margin:0 0 8px;
+}
+
+.scholar p{
+  color:var(--muted);
+
+  font-size:11px;
+
+  line-height:1.7;
+}
+
+.scholar-type{
+  color:#9ebaff;
+
+  font-size:9px;
+
+  text-transform:uppercase;
+
+  letter-spacing:.13em;
+
+  font-weight:800;
+}
+
+
+/* =========================================================
+   VISA TIMELINE
+   ========================================================= */
+
+.timeline{
+  position:relative;
+
+  max-width:850px;
+
+  margin-top:55px;
+}
+
+.timeline::before{
+  content:"";
+
+  position:absolute;
+
+  left:17px;
+
+  top:0;
+  bottom:0;
+
+  width:1px;
+
+  background:
+    linear-gradient(
+      var(--blue),
+      var(--red),
+      var(--border)
+    );
+}
+
+.step{
+  position:relative;
+
+  padding:0 0 45px 62px;
+}
+
+.step:last-child{
+  padding-bottom:0;
+}
+
+.dot{
+  position:absolute;
+
+  left:6px;
+  top:0;
+
+  width:23px;
+  height:23px;
+
+  border-radius:50%;
+
+  border:1px solid var(--blue-2);
+
+  background:var(--bg);
+
+  box-shadow:
+    0 0 0 7px var(--bg),
+    0 0 22px rgba(37,99,235,.22);
+}
+
+.step small{
+  color:#8eb3ff;
+
+  font-size:9px;
+
+  font-weight:800;
+
+  letter-spacing:.15em;
+}
+
+.step h3{
+  font-family:var(--display);
+
+  font-size:24px;
+
+  margin:7px 0;
+}
+
+.step p{
+  max-width:720px;
+
+  color:var(--muted);
+
+  font-size:12px;
+
+  line-height:1.7;
+
+  margin:0;
+}
+
+
+/* =========================================================
+   ACCOMMODATION
+   ========================================================= */
+
+.accommodation-grid{
+  display:grid;
+
+  grid-template-columns:repeat(3,1fr);
+
+  gap:14px;
+
+  margin-top:50px;
+}
+
+.accommodation{
+  padding:26px;
+
+  border:1px solid var(--border);
+
+  border-radius:19px;
+
+  background:var(--card);
+}
+
+.accommodation h3{
+  font-family:var(--display);
+
+  font-size:19px;
+
+  margin:0 0 9px;
+}
+
+.accommodation p{
+  color:var(--muted);
+
+  font-size:11px;
+
+  line-height:1.7;
+}
+
+
+/* =========================================================
+   LIFE IN UK
+   ========================================================= */
+
+.life-grid{
+  display:grid;
+
+  grid-template-columns:repeat(2,1fr);
+
+  gap:14px;
+
+  margin-top:50px;
+}
+
+.life{
+  padding:25px;
+
+  border:1px solid var(--border);
+
+  border-radius:18px;
+
+  background:var(--card);
+}
+
+.life h3{
+  font-family:var(--display);
+
+  margin:0 0 8px;
+}
+
+.life p{
+  color:var(--muted);
+
+  font-size:11px;
+
+  line-height:1.7;
+}
+
+
+/* =========================================================
+   WORK
+   ========================================================= */
+
+.work-box{
+  margin-top:50px;
+
+  padding:30px;
+
+  border:1px solid var(--border);
+
+  border-radius:22px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(37,99,235,.11),
+      var(--card)
+    );
+}
+
+.work-columns{
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:15px;
+
+  margin-top:25px;
+}
+
+.work-card{
+  padding:20px;
+
+  border:1px solid var(--border);
+
+  border-radius:14px;
+
+  background:rgba(0,0,0,.14);
+}
+
+.work-card h4{
+  margin:0 0 7px;
+
+  font-family:var(--display);
+}
+
+.work-card p{
+  color:var(--muted);
+
+  font-size:11px;
+
+  line-height:1.65;
+}
+
+
+/* =========================================================
+   ARRIVAL CHECKLIST
+   ========================================================= */
+
+.checklist{
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:10px;
+
+  margin-top:50px;
+}
+
+.check-item{
+  padding:17px 19px;
+
+  border:1px solid var(--border);
+
+  border-radius:13px;
+
+  background:var(--card);
+
+  color:#cbd1dc;
+
+  font-size:11px;
+}
+
+.check-item::before{
+  content:"✓";
+
+  color:var(--green);
+
+  font-weight:900;
+
+  margin-right:9px;
+}
+
+
+/* =========================================================
+   MISTAKES
+   ========================================================= */
+
+.mistakes{
+  display:grid;
+
+  grid-template-columns:repeat(3,1fr);
+
+  gap:13px;
+
+  margin-top:50px;
+}
+
+.mistake{
+  padding:24px;
+
+  border:1px solid var(--border);
+
+  border-radius:18px;
+
+  background:var(--card);
+}
+
+.mistake strong{
+  color:#ff8d99;
+
+  font-family:var(--display);
+
+  font-size:14px;
+}
+
+.mistake p{
+  color:var(--muted);
+
+  font-size:11px;
+
+  line-height:1.7;
+}
+
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+
+.faq{
+  max-width:900px;
+
+  margin-top:50px;
+}
+
+.faq-item{
+  border-bottom:1px solid var(--border);
+}
+
+.faq-question{
+  width:100%;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:20px;
+
+  padding:21px 0;
+
+  background:none;
+
+  border:0;
+
+  color:#fff;
+
+  text-align:left;
+
+  cursor:pointer;
+
+  font-family:var(--display);
+
+  font-size:15px;
+}
+
+.faq-icon{
+  color:#8eb3ff;
+
+  transition:.2s;
+}
+
+.faq-answer{
+  display:none;
+
+  padding:0 0 20px;
+
+  color:var(--muted);
+
+  font-size:12px;
+
+  line-height:1.75;
+}
+
+.faq-item.open .faq-answer{
+  display:block;
+}
+
+.faq-item.open .faq-icon{
+  transform:rotate(45deg);
+}
+
+
+/* =========================================================
+   FINAL CTA
+   ========================================================= */
+
+.final{
+  padding:110px 0;
+}
+
+.final-card{
+  min-height:500px;
+
+  display:flex;
+  align-items:center;
+
+  padding:60px;
+
+  border:1px solid rgba(59,130,246,.38);
+
+  border-radius:30px;
+
+  overflow:hidden;
+
+  position:relative;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(6,11,20,.96),
+      rgba(6,11,20,.45)
+    ),
+    url("https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1900&q=85")
+    center/cover;
+}
+
+.final-card::after{
+  content:"UK";
+
+  position:absolute;
+
+  right:0;
+  top:-50px;
+
+  color:rgba(244,211,94,.06);
+
+  font-family:var(--display);
+
+  font-size:240px;
+
+  font-weight:800;
+
+  letter-spacing:-.12em;
+}
+
+.final-content{
+  position:relative;
+  z-index:2;
+
+  max-width:700px;
+}
+
+.final-content h2{
+  font-family:var(--display);
+
+  font-size:clamp(45px,6vw,80px);
+
+  line-height:.92;
+
+  letter-spacing:-.07em;
+
+  margin:0 0 20px;
+}
+
+.final-content p{
+  color:#d1d5de;
+
+  font-size:14px;
+
+  line-height:1.8;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer{
+  border-top:1px solid var(--border);
+
+  padding:45px 0;
+
+  color:var(--muted);
+}
+
+.footer-inner{
+  width:min(1240px,92vw);
+
+  margin:auto;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:20px;
+
+  flex-wrap:wrap;
+}
+
+.footer-logo{
+  font-family:var(--display);
+
+  color:#fff;
+
+  font-size:21px;
+
+  font-weight:800;
+}
+
+.footer-links a{
+  margin-right:15px;
+
+  font-size:10px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:1000px){
+
+  .nav-links{
+    display:none;
+  }
+
+  .guide-grid,
+  .application,
+  .cost-grid,
+  .work-columns{
+    grid-template-columns:1fr;
+  }
+
+  .reason-grid,
+  .scholar-grid,
+  .accommodation-grid,
+  .mistakes{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .education-grid,
+  .country-grid,
+  .course-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .city-grid{
+    grid-template-columns:1fr;
+  }
+
+  .uni-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .ucas-steps{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:640px){
+
+  .uk-nav{
+    padding:0 16px;
+  }
+
+  .hero-inner{
+    padding:130px 0 55px;
+  }
+
+  .hero h1{
+    font-size:clamp(52px,17vw,78px);
+  }
+
+  .hero-copy{
+    font-size:14px;
+  }
+
+  .section,
+  .final{
+    padding:78px 0;
+  }
+
+  .reason-grid,
+  .education-grid,
+  .country-grid,
+  .uni-grid,
+  .course-grid,
+  .scholar-grid,
+  .accommodation-grid,
+  .life-grid,
+  .mistakes,
+  .checklist{
+    grid-template-columns:1fr;
+  }
+
+  .ucas-steps{
+    grid-template-columns:1fr;
+  }
+
+  .final-card{
+    padding:30px;
+    min-height:520px;
+  }
+
+  .final-card::after{
+    font-size:130px;
+  }
+
+  .hero-stats{
+    gap:20px;
+  }
+
+  .cost-panel{
+    padding:22px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+
+  html{
+    scroll-behavior:auto;
+  }
+
+  .hero-bg{
+    animation:none;
+  }
+
+  .reveal{
+    transition:none;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- =========================================================
+     NAV
+     ========================================================= -->
+
+<nav class="uk-nav" id="nav">
+
+  <a href="../index.html" class="logo">
+    Uni<span>AI</span>
+  </a>
+
+  <div class="nav-links">
+    <a href="#overview">Overview</a>
+    <a href="#education">Education</a>
+    <a href="#universities">Universities</a>
+    <a href="#admissions">Admissions</a>
+    <a href="#costs">Costs</a>
+    <a href="#visa">Visa</a>
+    <a href="#life">Life</a>
+    <a href="#faq">FAQ</a>
+  </div>
+
+  <button
+    class="nav-btn"
+    onclick="document.querySelector('#plan').scrollIntoView({behavior:'smooth'})"
+  >
+    Build my plan →
+  </button>
+
+</nav>
+
+
+<!-- =========================================================
+     HERO
+     ========================================================= -->
+
+<header class="hero">
+
+  <div class="hero-bg"></div>
+
+  <div class="hero-inner">
+
+    <div class="eyebrow">
+      THE COMPLETE UNI GUIDE / UNITED KINGDOM 🇬🇧
+    </div>
+
+    <h1>
+      Study in the
+      <br>
+      <span class="gradient">
+        United Kingdom.
+      </span>
+    </h1>
+
+    <p class="hero-copy">
+      A practical guide to studying in England, Scotland, Wales and
+      Northern Ireland — from choosing a course and university to
+      applications, tuition, scholarships, Student visas,
+      accommodation, healthcare, work and your first weeks in the UK.
+    </p>
+
+    <div class="hero-buttons">
+
+      <button
+        class="btn primary"
+        onclick="document.querySelector('#overview').scrollIntoView({behavior:'smooth'})"
+      >
+        Start the guide ↓
+      </button>
+
+      <button
+        class="btn"
+        onclick="document.querySelector('#costs').scrollIntoView({behavior:'smooth'})"
+      >
+        Explore costs
+      </button>
+
+    </div>
+
+    <div class="hero-stats">
+
+      <div class="stat">
+        <strong>4</strong>
+        <span>UK countries</span>
+      </div>
+
+      <div class="stat">
+        <strong>160+</strong>
+        <span>universities</span>
+      </div>
+
+      <div class="stat">
+        <strong>£</strong>
+        <span>plan your budget</span>
+      </div>
+
+      <div class="stat">
+        <strong>01</strong>
+        <span>complete guide</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<!-- =========================================================
+     QUICK NAV
+     ========================================================= -->
+
+<div class="quickbar">
+
+  <div class="quickbar-inner">
+
+    <a href="#overview">Why UK?</a>
+    <a href="#education">Education system</a>
+    <a href="#countries">4 countries</a>
+    <a href="#cities">Cities</a>
+    <a href="#universities">Universities</a>
+    <a href="#courses">Courses</a>
+    <a href="#admissions">Admissions</a>
+    <a href="#ucas">UCAS</a>
+    <a href="#costs">Costs</a>
+    <a href="#scholarships">Scholarships</a>
+    <a href="#visa">Student visa</a>
+    <a href="#accommodation">Accommodation</a>
+    <a href="#life">Life</a>
+    <a href="#arrival">Arrival</a>
+    <a href="#mistakes">Mistakes</a>
+    <a href="#faq">FAQ</a>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     01 OVERVIEW
+     ========================================================= -->
+
+<section class="section" id="overview">
+
+  <div class="container">
+
+    <div class="reveal">
+
+      <div class="kicker">
+        01 / Start here
+      </div>
+
+      <h2 class="title">
+        Is the UK the right study destination for you?
+      </h2>
+
+      <p class="subtitle">
+        Studying in the UK is not simply about picking a famous
+        university. The right decision depends on your subject,
+        academic profile, budget, preferred city, course structure,
+        career plans and immigration circumstances.
+      </p>
+
+    </div>
+
+
+    <div class="guide-grid">
+
+      <div class="info-card reveal">
+
+        <h3>
+          Why students consider the UK
+        </h3>
+
+        <p>
+          The UK has a large higher-education sector with universities
+          and colleges across England, Scotland, Wales and Northern
+          Ireland. Students can choose from thousands of courses,
+          different institution types and a wide range of cities and
+          campus environments.
+        </p>
+
+        <div class="notice">
+          The UK is not one single university system. England,
+          Scotland, Wales and Northern Ireland have their own
+          characteristics, so always check the exact rules and
+          course structure for your institution.
+        </div>
+
+      </div>
+
+
+      <div class="info-card reveal">
+
+        <h3>
+          Think beyond rankings
+        </h3>
+
+        <p>
+          A university's overall reputation is only one part of the
+          decision. Compare the exact course modules, teaching format,
+          assessment style, entry requirements, placement opportunities,
+          tuition, accommodation, location and graduate outcomes.
+        </p>
+
+        <div class="notice">
+          Your course can matter just as much as the university name.
+          Start by deciding what you want to study and what kind of
+          student experience you want.
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     02 WHY UK
+     ========================================================= -->
+
+<section class="section alt">
+
+  <div class="container">
+
+    <div class="reveal">
+
+      <div class="kicker">
+        02 / Why the UK
+      </div>
+
+      <h2 class="title">
+        What makes the UK different?
+      </h2>
+
+      <p class="subtitle">
+        There are several structural differences worth understanding
+        before you compare the UK with other study destinations.
+      </p>
+
+    </div>
+
+
+    <div class="reason-grid">
+
+      <article class="reason reveal">
+
+        <div class="reason-number">
+          01
+        </div>
+
+        <h3>
+          Focused degrees
+        </h3>
+
+        <p>
+          Many UK undergraduate degrees allow students to specialise
+          in their chosen subject relatively early rather than taking
+          a broad general-education route.
+        </p>
+
+      </article>
+
+
+      <article class="reason reveal">
+
+        <div class="reason-number">
+          02
+        </div>
+
+        <h3>
+          Research culture
+        </h3>
+
+        <p>
+          UK universities include research-intensive institutions
+          alongside teaching-focused universities and specialist
+          providers.
+        </p>
+
+      </article>
+
+
+      <article class="reason reveal">
+
+        <div class="reason-number">
+          03
+        </div>
+
+        <h3>
+          International environment
+        </h3>
+
+        <p>
+          International students are a major part of university life,
+          particularly at many postgraduate institutions and large
+          metropolitan universities.
+        </p>
+
+      </article>
+
+
+      <article class="reason reveal">
+
+        <div class="reason-number">
+          04
+        </div>
+
+        <h3>
+          Different city styles
+        </h3>
+
+        <p>
+          You can choose between London, historic university cities,
+          large northern cities, smaller student towns and locations
+          across four UK nations.
+        </p>
+
+      </article>
+
+
+      <article class="reason reveal">
+
+        <div class="reason-number">
+          05
+        </div>
+
+        <h3>
+          One-year master's options
+        </h3>
+
+        <p>
+          Many full-time taught master's programmes can be completed
+          in one year, although exact duration varies by course.
+        </p>
+
+      </article>
+
+
+      <article class="reason reveal">
+
+        <div class="reason-number">
+          06
+        </div>
+
+        <h3>
+          Global career exposure
+        </h3>
+
+        <p>
+          Studying in the UK can place you in major international
+          hubs for finance, technology, research, healthcare,
+          creative industries and professional services.
+        </p>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     03 EDUCATION SYSTEM
+     ========================================================= -->
+
+<section class="section" id="education">
+
+  <div class="container">
+
+    <div class="reveal">
+
+      <div class="kicker">
+        03 / Understand the system
+      </div>
+
+      <h2 class="title">
+        UK education, explained simply.
+      </h2>
+
+      <p class="subtitle">
+        Before choosing a course, understand the qualification level,
+        typical duration and academic style you're applying for.
+      </p>
+
+    </div>
+
+
+    <div class="education-grid">
+
+      <article class="education-card reveal">
+
+        <div class="big">
+          UG
+        </div>
+
+        <h3>
+          Undergraduate
+        </h3>
+
+        <p>
+          Bachelor's degrees are commonly three years in England,
+          Wales and Northern Ireland. In Scotland, undergraduate
+          degrees commonly take four years.
+        </p>
+
+      </article>
+
+
+      <article class="education-card reveal">
+
+        <div class="big">
+          PG
+        </div>
+
+        <h3>
+          Postgraduate taught
+        </h3>
+
+        <p>
+          Master's programmes vary by subject and university.
+          Many full-time taught master's courses in the UK can
+          be completed in one year.
+        </p>
+
+      </article>
+
+
+      <article class="education-card reveal">
+
+        <div class="big">
+          PhD
+        </div>
+
+        <h3>
+          Doctoral
+        </h3>
+
+        <p>
+          Doctoral study is research-focused and normally involves
+          an original research project under academic supervision.
+        </p>
+
+      </article>
+
+
+      <article class="education-card reveal">
+
+        <div class="big">
+          PATH
+        </div>
+
+        <h3>
+          Foundation & pathway
+        </h3>
+
+        <p>
+          Some international students use foundation or pathway
+          programmes where available to prepare for degree-level
+          study or meet specific entry requirements.
+        </p>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     04 FOUR COUNTRIES
+     ========================================================= -->
+
+<section class="section alt" id="countries">
+
+  <div class="container">
+
+    <div class="reveal">
+
+      <div class="kicker">
+        04 / Four countries
+      </div>
+
+      <h2 class="title">
+        UK does not mean one single experience.
+      </h2>
+
+      <p class="subtitle">
+        England, Scotland, Wales and Northern Ireland are all part
+        of the United Kingdom, but each has its own cities, culture,
+        institutions and characteristics.
+      </p>
+
+    </div>
+
+
+    <div class="country-grid">
+
+      <article class="country reveal">
+
+        <div class="country-flag">
+          🏴
+        </div>
+
+        <h3>
+          England
+        </h3>
+
+        <p>
+          Home to London, Oxford, Cambridge, Manchester, Birmingham,
+          Bristol, Leeds and many other major university destinations.
+        </p>
+
+      </article>
+
+
+      <article class="country reveal">
+
+        <div class="country-flag">
+          🏴
+        </div>
+
+        <h3>
+          Scotland
+        </h3>
+
+        <p>
+          Known for cities such as Edinburgh and Glasgow, with a
+          distinctive higher-education structure and many historic
+          universities.
+        </p>
+
+      </article>
+
+
+      <article class="country reveal">
+
+        <div class="country-flag">
+          🏴
+        </div>
+
+        <h3>
+          Wales
+        </h3>
+
+        <p>
+          Offers universities in cities including Cardiff, Swansea
+          and other locations, with a different pace and cost profile
+          from some larger English cities.
+        </p>
+
+      </article>
+
+
+      <article class="country reveal">
+
+        <div class="country-flag">
+          🇬🇧
+        </div>
+
+        <h3>
+          Northern Ireland
+        </h3>
+
+        <p>
+          Belfast and other locations provide university options in
+          a smaller regional environment within the UK.
+        </p>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     05 CITIES
+     ========================================================= -->
+
+<section class="section" id="cities">
+
+  <div class="container">
+
+    <div class="reveal">
+
+      <div class="kicker">
+        05 / Where should you live?
+      </div>
+
+      <h2 class="title">
+        Your city can change your entire student experience.
+      </h2>
+
+      <p class="subtitle">
+        Tuition is only part of the decision. Housing, transport,
+        lifestyle, weather, part-time opportunities and distance
+        from campus all matter.
+      </p>
+
+    </div>
+
+
+    <div class="city-grid">
+
+      <article
+        class="city reveal"
+        style="
+          background-image:url(
+            'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1400&q=85'
+          )
+        "
+      >
+
+        <div class="city-content">
+
+          <small>
+            England
+          </small>
+
+          <h3>
+            London
+          </h3>
+
+          <p>
+            Global business · Finance · Technology · Arts · Culture
+          </p>
+
+        </div>
+
+      </article>
+
+
+      <article
+        class="city reveal"
+        style="
+          background-image:url(
+            'https://images.unsplash.com/photo-1506377585622-bedcbb027afc?w=1200&q=85'
+          )
+        "
+      >
+
+        <div class="city-content">
+
+          <small>
+            Scotland
+          </small>
+
+          <h3>
+            Edinburgh
+          </h3>
+
+          <p>
+            Historic city · Research · Culture · Student life
+          </p>
+
+        </div>
+
+      </article>
+
+
+      <article
+        class="city reveal"
+        style="
+          background-image:url(
+            'https://images.unsplash.com/photo-1519817650390-64a93db511aa?w=1200&q=85'
+          )
+        "
+      >
+
+        <div class="city-content">
+
+          <small>
+            England
+          </small>
+
+          <h3>
+            Manchester
+          </h3>
+
+          <p>
+            Music · Sport · Business · Large student population
+          </p>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     06 UNIVERSITIES
+     ========================================================= -->
+
+<section class="section alt" id="universities">
+
+  <div class="container">
+
+    <div class="reveal">
+
+      <div class="kicker">
+        06 / University explorer
+      </div>
+
+      <h2 class="title">
+        Look beyond the famous names.
+      </h2>
+
+      <p class="subtitle">
+        A useful shortlist should contain universities that fit your
+        course, academic profile, budget and preferred environment.
+      </p>
+
+    </div>
+
+
+    <div class="uni-grid">
+
+
+      <article class="uni reveal">
+
+        <small>
+          Oxford · England
+        </small>
+
+        <h3>
+          University of Oxford
+        </h3>
+
+        <p>
+          A historic collegiate research university with a broad
+          range of undergraduate and graduate subjects.
+        </p>
+
+        <div class="tags">
+          <span class="tag">Research</span>
+          <span class="tag">Collegiate</span>
+          <span class="tag">Historic</span>
+        </div>
+
+      </article>
+
+
+      <article class="uni reveal">
+
+        <small>
+          Cambridge · England
+        </small>
+
+        <h3>
+          University of Cambridge
+        </h3>
+
+        <p>
+          A research-intensive collegiate university offering
+          programmes across a wide range of disciplines.
+        </p>
+
+        <div class="tags">
+          <span class="tag">Research</span>
+          <span class="tag">Collegiate</span>
+        </div>
+
+      </article>
+
+
+      <article class="uni reveal">
+
+        <small>
+          London · England
+        </small>
+
+        <h3>
+          Imperial College London
+        </h3>
+
+        <p>
+          A London institution focused strongly on science,
+          engineering, medicine and related fields.
+        </p>
+
+        <div class="tags">
+          <span class="tag">STEM</span>
+          <span class="tag">London</span>
+          <span class="tag">Research</span>
+        </div>
+
+      </article>
+
+
+      <article class="uni reveal">
+
+        <small>
+          London · England
+        </small>
+
+        <h3>
+          University College London
+        </h3>
+
+        <p>
+          A large multidisciplinary university located across
+          several areas of central London.
+        </p>
+
+        <div class="tags">
+          <span class="tag">Urban</span>
+          <span class="tag">Research</span>
+        </div>
+
+      </article>
+
+
+      <article class="uni reveal">
+
+        <small>
+          Edinburgh · Scotland
+        </small>
+
+        <h3>
+          University of Edinburgh
+        </h3>
+
+        <p>
+          A major Scottish research university in the centre of
+          Edinburgh with broad subject offerings.
+        </p>
+
+        <div class="tags">
+          <span class="tag">Scotland</span>
+          <span class="tag">Research</span>
+        </div>
+
+      </article>
+
+
+      <article class="uni reveal">
+
+        <small>
+          Manchester · England
+        </small>
+
+        <h3>
+          University of Manchester
+        </h3>
+
+        <p>
+          A large research university located in one of the UK's
+          major student and cultural cities.
+        </p>
+
+        <div class="tags">
+          <span class="tag">Public</span>
+          <span class="tag">Research</span>
+          <span class="tag">Manchester</span>
+        </div>
+
+      </article>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     07 COURSES
+     ========================================================= -->
+
+<section class="section" id="courses">
+
+  <div class="container">
+
+    <div class="reveal">
+
+      <div class="kicker">
+        07 / Choose your route
+      </div>
+
+      <h2 class="title">
+        Your course determines a lot more than your timetable.
+      </h2>
+
+      <p class="subtitle">
+        Compare the actual course before comparing university names.
+        Look at modules, assessment methods, placements, accreditation,
+        duration and progression options.
+      </p>
+
+    </div>
+
+
+    <div class="course-grid">
+
+
+      <article class="course highlight reveal">
+
+        <div class="course-num">
+          01
+        </div>
+
+        <h3>
+          Bachelor's
+        </h3>
+
+        <p>
+          Undergraduate degrees typically provide concentrated
+          study in a chosen academic field.
+        </p>
+
+      </article>
+
+
+      <article class="course reveal">
+
+        <div class="course-num">
+          02
+        </div>
+
+        <h3>
+          Master's
+        </h3>
+
+        <p>
+          Taught and research master's programmes can deepen
+          subject knowledge or support a professional direction.
+        </p>
+
+      </article>
+
+
+      <article class="course reveal">
+
+        <div class="course-num">
+          03
+        </div>
+
+        <h3>
+          PhD
+        </h3>
+
+        <p>
+          Doctoral study centres on original research and is
+          normally supervised by academic researchers.
+        </p>
+
+      </article>
+
+
+      <article class="course reveal">
+
+        <div class="course-num">
+          04
+        </div>
+
+        <h3>
+          Foundation
+        </h3>
+
+        <p>
+          Foundation programmes can provide an academic bridge
+          for eligible students before degree-level study.
+        </p>
+
+      </article>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     08 ADMISSIONS
+     ========================================================= -->
+
+<section class="section alt" id="admissions">
+
+  <div class="container">
+
+    <div class="reveal">
+
+      <div class="kicker">
+        08 / Admissions
+      </div>
+
+      <h2 class="title">
+        What do UK universities actually look at?
+      </h2>
+
+      <p class="subtitle">
+        Requirements vary by university, course and applicant.
+        Treat every course page as the final source for its own
+        requirements.
+      </p>
+
+    </div>
+
+
+    <div class="application">
+
+      <div class="application-list">
+
+
+        <div class="application-item reveal">
+
+          <strong>
+            01
+          </strong>
+
+          <div>
+            <strong>
+              Academic qualifications
+            </strong>
+
+            <p>
+              Your school, college or previous university results
+              are assessed against the course's entry requirements.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="application-item reveal">
+
+          <strong>
+            02
+          </strong>
+
+          <div>
+            <strong>
+              English language
+            </strong>
+
+            <p>
+              Some applicants may need to demonstrate English
+              proficiency through an accepted qualification or test.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="application-item reveal">
+
+          <strong>
+            03
+          </strong>
+
+          <div>
+            <strong>
+              Personal statement / supporting information
+            </strong>
+
+            <p>
+              Depending on the application route and course,
+              universities may ask about your motivation,
+              preparation and experience.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="application-item reveal">
+
+          <strong>
+            04
+          </strong>
+
+          <div>
+            <strong>
+              References
+            </strong>
+
+            <p>
+              Academic or professional references can be part of
+              an application, particularly for postgraduate study.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="application-item reveal">
+
+          <strong>
+            05
+          </strong>
+
+          <div>
+            <strong>
+              Portfolio / interview
+            </strong>
+
+            <p>
+              Certain subjects may require interviews, auditions,
+              portfolios, admissions tests or other evidence.
+            </p>
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+      <div class="requirements reveal">
+
+        <h3>
+          Build your application file
+        </h3>
+
+        <div class="check">
+          Passport / identity document
+        </div>
+
+        <div class="check">
+          Academic transcripts
+        </div>
+
+        <div class="check">
+          Graduation / school certificates
+        </div>
+
+        <div class="check">
+          English-language evidence where required
+        </div>
+
+        <div class="check">
+          Personal statement or supporting statement where required
+        </div>
+
+        <div class="check">
+          References where required
+        </div>
+
+        <div class="check">
+          Portfolio / test / interview preparation where applicable
+        </div>
+
+        <div class="check">
+          Financial planning documents
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     09 UCAS
+     ========================================================= -->
+
+<section class="section" id="ucas">
+
+  <div class="container">
+
+    <div class="reveal">
+
+      <div class="kicker">
+        09 / UCAS
+      </div>
+
+      <h2 class="title">
+        Undergraduate applications have their own system.
+      </h2>
+
+      <p class="subtitle">
+        UCAS is the central application service used for many UK
+        undergraduate applications. Individual course and university
+        requirements still matter, so always verify the details.
+      </p>
+
+    </div>
+
+
+    <div class="ucas-box reveal">
+
+      <h3>
+        A simplified undergraduate application journey
+      </h3>
+
+      <div class="ucas-steps">
+
+        <div class="ucas-step">
+          <b>01</b>
+          <h4>Research</h4>
+          <p>
+            Compare subjects, courses and universities.
+          </p>
+        </div>
+
+        <div class="ucas-step">
+          <b>02</b>
+          <h4>Prepare</h4>
+          <p>
+            Gather qualifications, references and supporting material.
+          </p>
+        </div>
+
+        <div class="ucas-step">
+          <b>03</b>
+          <h4>Apply</h4>
+          <p>
+            Complete the applicable UCAS application.
+          </p>
+        </div>
+
+        <div class="ucas-step">
+          <b>04</b>
+          <h4>Offers</h4>
+          <p>
+            Track decisions and respond according to the process.
+          </p>
+        </div>
+
+        <div class="ucas-step">
+          <b>05</b>
+          <h4>Prepare</h4>
+          <p>
+            Arrange funding, visa, accommodation and travel.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     10 COSTS
+     ========================================================= -->
+
+<section class="section alt" id="costs">
+
+  <div class="container">
+
+    <div class="reveal">
+
+      <div class="kicker">
+        10 / Money map
+      </div>
+
+      <h2 class="title">
+        Understand the real cost of studying in the UK.
+      </h2>
+
+      <p class="subtitle">
+        Your actual budget depends on your course, institution,
+        location and lifestyle. Use official university figures
+        wherever possible instead of relying on generic estimates.
+      </p>
+
+    </div>
+
+
+    <div class="cost-grid">
+
+      <div class="cost-panel reveal">
+
+        <div class="cost-row">
+          <span>
+            International undergraduate tuition
+          </span>
+
+          <strong>
+            Roughly £11,400–£38,000
+          </strong>
+        </div>
+
+        <div class="cost-row">
+          <span>
+            International postgraduate tuition
+          </span>
+
+          <strong>
+            Roughly £9,000–£30,000
+          </strong>
+        </div>
+
+        <div class="cost-row">
+          <span>
+            London living budget
+          </span>
+
+          <strong>
+            Often higher
+          </strong>
+        </div>
+
+        <div class="cost-row">
+          <span>
+            Outside London
+          </span>
+
+          <strong>
+            Often lower
+          </strong>
+        </div>
+
+        <div class="cost-row">
+          <span>
+            Student visa
+          </span>
+
+          <strong>
+            Check current GOV.UK fee
+          </strong>
+        </div>
+
+        <div class="cost-row">
+          <span>
+            Immigration Health Surcharge
+          </span>
+
+          <strong>
+            Current student rate applies
+          </strong>
+        </div>
+
+      </div>
+
+
+      <div class="cost-panel money reveal">
+
+        <div class="money-symbol">
+          £
+        </div>
+
+        <h3>
+          Budget in layers.
+        </h3>
+
+        <p>
+          Start with tuition. Add accommodation. Then estimate
+          food, transport, phone, study materials, travel,
+          visa-related expenses and an emergency buffer.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     11 SCHOLARSHIPS
+     ========================================================= -->
+
+<section class="section" id="scholarships">
+
+  <div class="container">
+
+    <div class="reveal">
+
+      <div class="kicker">
+        11 / Scholarships
+      </div>
+
+      <h2 class="title">
+        Funding exists — but don't build your plan around one award.
+      </h2>
+
+      <p class="subtitle">
+        Scholarships can come from universities, governments,
+        charities and external organisations. Eligibility and
+        deadlines vary substantially.
+      </p>
+
+    </div>
+
+
+    <div class="scholar-grid">
+
+
+      <article class="scholar reveal">
+
+        <div class="scholar-type">
+          UK government / British Council
+        </div>
+
+        <h3>
+          GREAT Scholarships
+        </h3>
+
+        <p>
+          GREAT Scholarships support eligible students from
+          participating countries for selected one-year taught
+          postgraduate courses. Awards and participating universities
+          vary by academic year and country.
+        </p>
+
+      </article>
+
+
+      <article class="scholar reveal">
+
+        <div class="scholar-type">
+          Government scholarship
+        </div>
+
+        <h3>
+          Chevening
+        </h3>
+
+        <p>
+          A major UK government scholarship programme for eligible
+          international students pursuing master's study. Check the
+          current eligibility and application cycle.
+        </p>
+
+      </article>
+
+
+      <article class="scholar reveal">
+
+        <div class="scholar-type">
+          University funding
+        </div>
+
+        <h3>
+          University scholarships
+        </h3>
+
+        <p>
+          Many universities offer their own awards based on academic
+          achievement, subject, nationality, leadership, financial
+          circumstances or other criteria.
+        </p>
+
+      </article>
+
+
+      <article class="scholar reveal">
+
+        <div class="scholar-type">
+          Research funding
+        </div>
+
+        <h3>
+          PhD studentships
+        </h3>
+
+        <p>
+          Doctoral funding can include tuition support, research
+          costs and a stipend depending on the programme and funding
+          source.
+        </p>
+
+      </article>
+
+
+      <article class="scholar reveal">
+
+        <div class="scholar-type">
+          External
+        </div>
+
+        <h3>
+          Charities & organisations
+        </h3>
+
+        <p>
+          External organisations may provide funding for particular
+          nationalities, subjects, regions or professional groups.
+        </p>
+
+      </article>
+
+
+      <article class="scholar reveal">
+
+        <div class="scholar-type">
+          Your strategy
+        </div>
+
+        <h3>
+          Apply broadly
+        </h3>
+
+        <p>
+          Build a funding list alongside your university shortlist
+          and record eligibility, deadline, award amount and required
+          documents.
+        </p>
+
+      </article>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     12 VISA
+     ========================================================= -->
+
+<section class="section alt" id="visa">
+
+  <div class="container">
+
+    <div class="reveal">
+
+      <div class="kicker">
+        12 / Student visa
+      </div>
+
+      <h2 class="title">
+        The UK Student visa, step by step.
+      </h2>
+
+      <p class="subtitle">
+        Immigration rules can change. Treat GOV.UK and your university's
+        international office as the final authority for your application.
+      </p>
+
+    </div>
+
+
+    <div class="timeline">
+
+
+      <div class="step reveal">
+
+        <div class="dot"></div>
+
+        <small>
+          STEP 01
+        </small>
+
+        <h3>
+          Receive your offer
+        </h3>
+
+        <p>
+          You normally need an offer from a licensed student sponsor
+          and must meet the conditions attached to the course.
+        </p>
+
+      </div>
+
+
+      <div class="step reveal">
+
+        <div class="dot"></div>
+
+        <small>
+          STEP 02
+        </small>
+
+        <h3>
+          Receive your CAS
+        </h3>
+
+        <p>
+          Your education provider issues a Confirmation of Acceptance
+          for Studies (CAS) when you are ready for the visa stage.
+          The CAS contains information needed for your application.
+        </p>
+
+      </div>
+
+
+      <div class="step reveal">
+
+        <div class="dot"></div>
+
+        <small>
+          STEP 03
+        </small>
+
+        <h3>
+          Check your financial requirement
+        </h3>
+
+        <p>
+          Depending on your circumstances, you may need to show money
+          for tuition and living costs. Current GOV.UK maintenance
+          figures distinguish between London and locations outside
+          London.
+        </p>
+
+      </div>
+
+
+      <div class="step reveal">
+
+        <div class="dot"></div>
+
+        <small>
+          STEP 04
+        </small>
+
+        <h3>
+          Complete your visa application
+        </h3>
+
+        <p>
+          Follow the current UKVI application process, provide the
+          required documents and complete any identity or biometric
+          steps that apply to you.
+        </p>
+
+      </div>
+
+
+      <div class="step reveal">
+
+        <div class="dot"></div>
+
+        <small>
+          STEP 05
+        </small>
+
+        <h3>
+          Arrange travel
+        </h3>
+
+        <p>
+          Once your immigration permission is in place, organise
+          your flight, accommodation, arrival documents and university
+          enrolment plans.
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     13 ACCOMMODATION
+     ========================================================= -->
+
+<section class="section" id="accommodation">
+
+  <div class="container">
+
+    <div class="reveal">
+
+      <div class="kicker">
+        13 / Accommodation
+      </div>
+
+      <h2 class="title">
+        Where will you actually live?
+      </h2>
+
+      <p class="subtitle">
+        Accommodation can become one of the biggest parts of your
+        monthly budget, particularly in expensive cities.
+      </p>
+
+    </div>
+
+
+    <div class="accommodation-grid">
+
+
+      <article class="accommodation reveal">
+
+        <h3>
+          University halls
+        </h3>
+
+        <p>
+          Purpose-built student accommodation arranged or recommended
+          by a university. Often popular with first-year students.
+        </p>
+
+      </article>
+
+
+      <article class="accommodation reveal">
+
+        <h3>
+          Private student accommodation
+        </h3>
+
+        <p>
+          Purpose-built student housing operated by private providers,
+          usually offering rooms with shared or private facilities.
+        </p>
+
+      </article>
+
+
+      <article class="accommodation reveal">
+
+        <h3>
+          Private rental
+        </h3>
+
+        <p>
+          Renting a room or property privately can provide more
+          flexibility but requires careful attention to contracts,
+          deposits, bills and location.
+        </p>
+
+      </article>
+
+    </div>
+
+
+    <div class="notice" style="margin-top:20px">
+
+      Before paying a deposit, understand exactly what is included,
+      who manages the property, what the contract says, when the
+      tenancy begins and which bills you are responsible for.
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     14 LIFE IN UK
+     ========================================================= -->
+
+<section class="section alt" id="life">
+
+  <div class="container">
+
+    <div class="reveal">
+
+      <div class="kicker">
+        14 / Life in the UK
+      </div>
+
+      <h2 class="title">
+        Studying is only half the experience.
+      </h2>
+
+      <p class="subtitle">
+        Your day-to-day experience will depend on where you live,
+        your university community and how you manage your time
+        and budget.
+      </p>
+
+    </div>
+
+
+    <div class="life-grid">
+
+
+      <article class="life reveal">
+
+        <h3>
+          Public transport
+        </h3>
+
+        <p>
+          Major cities have extensive public transport networks.
+          Your exact transport costs depend heavily on your city,
+          commute and travel frequency.
+        </p>
+
+      </article>
+
+
+      <article class="life reveal">
+
+        <h3>
+          Healthcare
+        </h3>
+
+        <p>
+          Immigration and healthcare arrangements depend on your
+          immigration status and circumstances. Check the current
+          Immigration Health Surcharge and NHS guidance applicable
+          to your situation.
+        </p>
+
+      </article>
+
+
+      <article class="life reveal">
+
+        <h3>
+          Student societies
+        </h3>
+
+        <p>
+          Universities commonly have societies, sports clubs,
+          volunteering opportunities and student support services.
+        </p>
+
+      </article>
+
+
+      <article class="life reveal">
+
+        <h3>
+          Weather
+        </h3>
+
+        <p>
+          UK weather can be variable throughout the year. Prepare
+          for cool temperatures, rain and shorter winter daylight,
+          depending on the season and location.
+        </p>
+
+      </article>
+
+
+      <article class="life reveal">
+
+        <h3>
+          Food
+        </h3>
+
+        <p>
+          Supermarkets, university food outlets, restaurants and
+          international communities make it possible to find a
+          wide range of cuisines.
+        </p>
+
+      </article>
+
+
+      <article class="life reveal">
+
+        <h3>
+          Student support
+        </h3>
+
+        <p>
+          Many universities provide international offices, academic
+          advisers, counselling services, careers support and other
+          student services.
+        </p>
+
+      </article>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     15 WORK
+     ========================================================= -->
+
+<section class="section" id="work">
+
+  <div class="container">
+
+    <div class="reveal">
+
+      <div class="kicker">
+        15 / Work while studying
+      </div>
+
+      <h2 class="title">
+        Understand your work conditions before taking a job.
+      </h2>
+
+      <p class="subtitle">
+        Whether you can work, how much you can work and which
+        activities are permitted depends on your immigration
+        conditions and course.
+      </p>
+
+    </div>
+
+
+    <div class="work-box reveal">
+
+      <div class="work-columns">
+
+        <div class="work-card">
+
+          <h4>
+            Check your visa conditions
+          </h4>
+
+          <p>
+            Do not assume that every international student has the
+            same work rights. Your immigration permission will state
+            the conditions that apply to you.
+          </p>
+
+        </div>
+
+
+        <div class="work-card">
+
+          <h4>
+            Treat work as secondary
+          </h4>
+
+          <p>
+            Your course remains the primary reason for your Student
+            visa. Plan employment around your academic responsibilities
+            and the restrictions attached to your immigration status.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     16 ARRIVAL
+     ========================================================= -->
+
+<section class="section alt" id="arrival">
+
+  <div class="container">
+
+    <div class="reveal">
+
+      <div class="kicker">
+        16 / Before you fly
+      </div>
+
+      <h2 class="title">
+        Your UK arrival checklist.
+      </h2>
+
+      <p class="subtitle">
+        Don't leave everything until the final week. Separate
+        immigration documents, university tasks and everyday
+        setup into one checklist.
+      </p>
+
+    </div>
+
+
+    <div class="checklist">
+
+
+      <div class="check-item reveal">
+        Passport and immigration documents
+      </div>
+
+      <div class="check-item reveal">
+        University offer / CAS information
+      </div>
+
+      <div class="check-item reveal">
+        Accommodation confirmation
+      </div>
+
+      <div class="check-item reveal">
+        Flight and airport plans
+      </div>
+
+      <div class="check-item reveal">
+        Emergency contact information
+      </div>
+
+      <div class="check-item reveal">
+        Copies of important documents
+      </div>
+
+      <div class="check-item reveal">
+        Initial GBP spending plan
+      </div>
+
+      <div class="check-item reveal">
+        Phone / connectivity plan
+      </div>
+
+      <div class="check-item reveal">
+        University enrolment instructions
+      </div>
+
+      <div class="check-item reveal">
+        Travel from airport to accommodation
+      </div>
+
+      <div class="check-item reveal">
+        Weather-appropriate clothing
+      </div>
+
+      <div class="check-item reveal">
+        Medication and personal essentials
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     17 MISTAKES
+     ========================================================= -->
+
+<section class="section" id="mistakes">
+
+  <div class="container">
+
+    <div class="reveal">
+
+      <div class="kicker">
+        17 / Avoid these mistakes
+      </div>
+
+      <h2 class="title">
+        The problems usually start before the flight.
+      </h2>
+
+    </div>
+
+
+    <div class="mistakes">
+
+
+      <article class="mistake reveal">
+
+        <strong>
+          Mistake 01
+        </strong>
+
+        <p>
+          Choosing a university only because it appears high in
+          a ranking without checking the exact course.
+        </p>
+
+      </article>
+
+
+      <article class="mistake reveal">
+
+        <strong>
+          Mistake 02
+        </strong>
+
+        <p>
+          Calculating tuition but forgetting accommodation,
+          transport, visa-related costs and everyday expenses.
+        </p>
+
+      </article>
+
+
+      <article class="mistake reveal">
+
+        <strong>
+          Mistake 03
+        </strong>
+
+        <p>
+          Waiting too long to understand course requirements,
+          application timelines or scholarship deadlines.
+        </p>
+
+      </article>
+
+
+      <article class="mistake reveal">
+
+        <strong>
+          Mistake 04
+        </strong>
+
+        <p>
+          Assuming every UK university has the same entry
+          requirements or application process.
+        </p>
+
+      </article>
+
+
+      <article class="mistake reveal">
+
+        <strong>
+          Mistake 05
+        </strong>
+
+        <p>
+          Treating visa requirements as something to solve after
+          booking travel rather than planning them early.
+        </p>
+
+      </article>
+
+
+      <article class="mistake reveal">
+
+        <strong>
+          Mistake 06
+        </strong>
+
+        <p>
+          Selecting a city without researching accommodation,
+          commute time and actual monthly living expenses.
+        </p>
+
+      </article>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     18 FAQ
+     ========================================================= -->
+
+<section class="section alt" id="faq">
+
+  <div class="container">
+
+    <div class="reveal">
+
+      <div class="kicker">
+        18 / Frequently asked questions
+      </div>
+
+      <h2 class="title">
+        UK study questions, answered.
+      </h2>
+
+    </div>
+
+
+    <div class="faq">
+
+
+      <div class="faq-item">
+
+        <button class="faq-question">
+
+          How long is a UK bachelor's degree?
+
+          <span class="faq-icon">
+            +
+          </span>
+
+        </button>
+
+        <div class="faq-answer">
+
+          A full-time bachelor's degree normally takes three years
+          in England, Wales and Northern Ireland. In Scotland,
+          bachelor's degrees commonly take four years.
+
+        </div>
+
+      </div>
+
+
+      <div class="faq-item">
+
+        <button class="faq-question">
+
+          Can international students study a master's in one year?
+
+          <span class="faq-icon">
+            +
+          </span>
+
+        </button>
+
+        <div class="faq-answer">
+
+          Many UK full-time taught master's programmes can be
+          completed in one year, but duration depends on the exact
+          course and university.
+
+        </div>
+
+      </div>
+
+
+      <div class="faq-item">
+
+        <button class="faq-question">
+
+          Do I need UCAS?
+
+          <span class="faq-icon">
+            +
+          </span>
+
+        </button>
+
+        <div class="faq-answer">
+
+          Many undergraduate applications use UCAS. Postgraduate
+          applications are often handled directly by universities,
+          although specific programmes can have their own systems.
+
+        </div>
+
+      </div>
+
+
+      <div class="faq-item">
+
+        <button class="faq-question">
+
+          How much does studying in the UK cost?
+
+          <span class="faq-icon">
+            +
+          </span>
+
+        </button>
+
+        <div class="faq-answer">
+
+          There is no single UK-wide price. International tuition
+          varies substantially by course and institution, while
+          living expenses depend heavily on location. London generally
+          requires a higher living budget than many locations outside
+          London.
+
+        </div>
+
+      </div>
+
+
+      <div class="faq-item">
+
+        <button class="faq-question">
+
+          Is the Student visa automatic after university admission?
+
+          <span class="faq-icon">
+            +
+          </span>
+
+        </button>
+
+        <div class="faq-answer">
+
+          No. Admission and immigration permission are separate
+          processes. If you require a Student visa, you must meet
+          the applicable UK immigration requirements and complete
+          the visa process.
+
+        </div>
+
+      </div>
+
+
+      <div class="faq-item">
+
+        <button class="faq-question">
+
+          Can I work while studying?
+
+          <span class="faq-icon">
+            +
+          </span>
+
+        </button>
+
+        <div class="faq-answer">
+
+          Some Student visa holders can work subject to immigration
+          conditions. The permitted amount and type of work depend
+          on the circumstances and your visa conditions, so check
+          the current official rules.
+
+        </div>
+
+      </div>
+
+
+      <div class="faq-item">
+
+        <button class="faq-question">
+
+          Should I choose London?
+
+          <span class="faq-icon">
+            +
+          </span>
+
+        </button>
+
+        <div class="faq-answer">
+
+          London can offer access to a huge metropolitan environment
+          and many universities, but it can also have higher living
+          costs. Compare London with other UK cities based on your
+          course, budget and lifestyle priorities.
+
+        </div>
+
+      </div>
+
+
+      <div class="faq-item">
+
+        <button class="faq-question">
+
+          What should I compare between universities?
+
+          <span class="faq-icon">
+            +
+          </span>
+
+        </button>
+
+        <div class="faq-answer">
+
+          Compare the exact course content, entry requirements,
+          tuition, accommodation, location, teaching format,
+          assessment, accreditation, placements, student support
+          and career services.
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     FINAL CTA
+     ========================================================= -->
+
+<section class="final" id="plan">
+
+  <div class="container">
+
+    <div class="final-card reveal">
+
+      <div class="final-content">
+
+        <div class="kicker">
+          19 / Build your roadmap
+        </div>
+
+        <h2>
+          Your UK plan should be more than a university list.
+        </h2>
+
+        <p>
+          Turn the guide into a personalised journey: choose your
+          subject, shortlist universities, compare cities, estimate
+          your budget, organise documents, track deadlines and
+          prepare your visa and arrival checklist.
+        </p>
+
+        <div class="hero-buttons">
+
+          <button
+            class="btn primary"
+            onclick="alert('Connect this button to your UniAI UK study planner.')"
+          >
+            Build my UK roadmap →
+          </button>
+
+          <button
+            class="btn"
+            onclick="window.scrollTo({top:0,behavior:'smooth'})"
+          >
+            Back to top
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<footer>
+
+  <div class="footer-inner">
+
+    <div>
+
+      <div class="footer-logo">
+        UniAI
+      </div>
+
+      <div style="font-size:10px;margin-top:6px">
+        Study abroad, but smarter.
+        <span style="color:var(--gold)">✦</span>
+      </div>
+
+    </div>
+
+
+    <div class="footer-links">
+
+      <a href="../index.html">
+        Home
+      </a>
+
+      <a href="#universities">
+        Universities
+      </a>
+
+      <a href="#admissions">
+        Admissions
+      </a>
+
+      <a href="#costs">
+        Costs
+      </a>
+
+      <a href="#visa">
+        Visa
+      </a>
+
+      <a href="#faq">
+        FAQ
+      </a>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+/* NAV */
+
+const nav = document.getElementById("nav");
+
+window.addEventListener(
+  "scroll",
+  () => {
+
+    nav.classList.toggle(
+      "scrolled",
+      window.scrollY > 40
+    );
+
+  },
+  {passive:true}
+);
+
+
+/* REVEAL ANIMATION */
+
+const observer =
+  new IntersectionObserver(
+    entries => {
+
+      entries.forEach(entry => {
+
+        if(entry.isIntersecting){
+
+          entry.target.classList.add("visible");
+
+          observer.unobserve(entry.target);
+
+        }
+
+      });
+
+    },
+    {
+      threshold:.10
+    }
+  );
+
+
+document
+  .querySelectorAll(".reveal")
+  .forEach((el,i) => {
+
+    el.style.transitionDelay =
+      `${(i % 4) * 60}ms`;
+
+    observer.observe(el);
+
+  });
+
+
+/* FAQ */
+
+document
+  .querySelectorAll(".faq-question")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        const item =
+          button.closest(".faq-item");
+
+        const wasOpen =
+          item.classList.contains("open");
+
+        document
+          .querySelectorAll(".faq-item")
+          .forEach(el =>
+            el.classList.remove("open")
+          );
+
+        if(!wasOpen){
+          item.classList.add("open");
+        }
+
+      }
+    );
+
+  });
+
+</script>
+
+</body>
+</html>

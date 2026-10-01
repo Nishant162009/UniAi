@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniAI — Study in the UK</title>
+<meta name="description" content="Explore studying in the UK with UniAI — universities, cities, costs, visas, scholarships and your application journey.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#090a0d;--surface:#111319;--surface2:#171a21;--text:#f5f3ee;
+  --muted:#aaa9a4;--line:rgba(255,255,255,.12);--gold:#d8b46a;--max:1240px
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;overflow-x:hidden}
+a{text-decoration:none;color:inherit}button{font:inherit}
+::selection{background:rgba(216,180,106,.3)}
+.nav{position:fixed;z-index:100;inset:0 0 auto;height:78px;display:flex;align-items:center;justify-content:space-between;padding:0 4vw;transition:.35s}
+.nav.scrolled{background:rgba(9,10,13,.8);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.logo{font-family:"Playfair Display";font-weight:700;font-size:24px}.logo span{font-family:"DM Sans";opacity:.45}
+.navlinks{display:flex;gap:28px;font-size:13px;color:#d8d6d0}.navlinks a{opacity:.78}.navlinks a:hover{opacity:1}
+.nav-cta{border:1px solid rgba(216,180,106,.55);background:rgba(216,180,106,.1);color:#f5e6c4;padding:11px 18px;border-radius:3px;cursor:pointer}
+.hero{min-height:100svh;position:relative;display:flex;align-items:flex-end;overflow:hidden;isolation:isolate;
+background:linear-gradient(180deg,rgba(5,6,8,.15),rgba(5,6,8,.35) 45%,#090a0d 100%),url("https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=2200&q=85") center/cover}
+.hero:before{content:"";position:absolute;inset:-4%;z-index:-2;background:url("https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=2200&q=85") center/cover;animation:zoom 22s ease-in-out infinite alternate}
+.hero:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(4,5,7,.88),transparent 72%),radial-gradient(circle at 75% 25%,rgba(216,180,106,.13),transparent 30%)}
+@keyframes zoom{to{transform:scale(1.065)}}
+.hero-inner{width:min(var(--max),92vw);margin:auto;padding:160px 0 80px}
+.eyebrow{display:flex;align-items:center;gap:10px;font-size:11px;text-transform:uppercase;letter-spacing:.22em;color:#ead7ad;margin-bottom:22px}
+.eyebrow:before{content:"";width:30px;height:1px;background:var(--gold)}
+h1{font-family:"Playfair Display";font-size:clamp(64px,9vw,132px);line-height:.86;letter-spacing:-.065em;font-weight:600;margin:0 0 28px;max-width:900px}
+.hero-copy{max-width:610px;color:#d0cfca;font-size:18px;line-height:1.7}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.btn{border:1px solid var(--line);background:rgba(255,255,255,.07);color:#fff;padding:14px 20px;border-radius:3px;cursor:pointer;transition:.25s}
+.btn.primary{background:var(--gold);border-color:var(--gold);color:#17130c}.btn:hover{transform:translateY(-2px)}
+.meta{display:flex;gap:42px;flex-wrap:wrap;margin-top:62px;padding-top:20px;border-top:1px solid var(--line)}
+.meta strong{display:block;font-family:"Playfair Display";font-size:29px}.meta span{font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:.12em}
+.marquee{overflow:hidden;border-block:1px solid var(--line);padding:18px 0;white-space:nowrap}
+.track{display:inline-flex;gap:46px;animation:scroll 28s linear infinite}.track span{font-size:11px;color:#a9a69f;text-transform:uppercase;letter-spacing:.19em}
+@keyframes scroll{to{transform:translateX(-50%)}}
+.section{padding:120px 0}.container{width:min(var(--max),92vw);margin:auto}
+.kicker{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:15px}
+.title{font-family:"Playfair Display";font-size:clamp(43px,5.5vw,76px);line-height:.95;letter-spacing:-.055em;font-weight:600;margin:0;max-width:850px}
+.sub{color:var(--muted);font-size:17px;line-height:1.75;max-width:650px;margin-top:22px}
+.reveal{opacity:0;transform:translateY(35px);transition:opacity .8s ease,transform .8s ease}.reveal.visible{opacity:1;transform:none}
+.grid{display:grid;gap:16px}
+.cities{grid-template-columns:1.4fr .8fr .8fr;margin-top:56px}
+.city{min-height:500px;border:1px solid var(--line);position:relative;overflow:hidden;background-size:cover;background-position:center;display:flex;align-items:flex-end;transition:.4s}
+.city:nth-child(2),.city:nth-child(3){min-height:500px}.city:hover{transform:translateY(-6px)}
+.city:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 35%,rgba(0,0,0,.88))}
+.city-content{z-index:2;padding:28px}.city h3{font-family:"Playfair Display";font-size:37px;margin:0 0 7px}.city p{margin:0;color:#c4c2bc;font-size:13px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:75px;align-items:center}
+.quote{border-left:1px solid var(--gold);padding:8px 0 8px 28px;font-family:"Playfair Display";font-size:clamp(28px,3vw,43px);line-height:1.15;color:#e9e4d9}
+.cards{grid-template-columns:repeat(3,1fr);margin-top:55px}
+.card{background:linear-gradient(145deg,#151820,#0f1117);border:1px solid var(--line);padding:30px;min-height:250px;transition:.3s}
+.card:hover{transform:translateY(-5px);border-color:rgba(216,180,106,.45)}
+.card small{color:#a9946a;text-transform:uppercase;letter-spacing:.15em;font-size:10px}
+.card h3{font-family:"Playfair Display";font-size:29px;margin:27px 0 9px}.card p{color:var(--muted);font-size:14px;line-height:1.6}
+.tag{display:inline-block;padding:7px 10px;border:1px solid var(--line);font-size:10px;color:#c6c3bb;margin:4px 4px 0 0;border-radius:2px}
+.cost{background:#0d0f13}.cost-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:55px}
+.panel{background:var(--surface);border:1px solid var(--line);padding:35px}
+.row{display:flex;justify-content:space-between;gap:20px;padding:21px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border:0}.row span{color:var(--muted)}.row strong{font-family:"Playfair Display";font-size:18px}
+.note{display:flex;flex-direction:column;justify-content:center}.note .symbol{font-family:"Playfair Display";font-size:86px;line-height:1;color:var(--gold)}.note p{color:var(--muted);line-height:1.7}
+.timeline{position:relative;margin-top:60px}.timeline:before{content:"";position:absolute;left:24px;top:0;bottom:0;width:1px;background:var(--line)}
+.step{position:relative;padding:0 0 55px 76px}.dot{position:absolute;left:15px;top:0;width:19px;height:19px;border:1px solid var(--gold);background:var(--bg)}
+.step small{color:#a9946a;letter-spacing:.16em}.step h3{font-family:"Playfair Display";font-size:30px;margin:9px 0}.step p{color:var(--muted);line-height:1.65;max-width:670px}
+.feature{padding:120px 0}.feature-card{min-height:500px;border:1px solid var(--line);position:relative;overflow:hidden;display:flex;align-items:center;padding:60px;background:linear-gradient(90deg,rgba(5,6,8,.94),rgba(5,6,8,.35)),url("https://images.unsplash.com/photo-1520986606214-8b456906c813?w=1800&q=80") center/cover}
+.feature-card:after{content:"UK";position:absolute;right:-30px;bottom:-100px;font-family:"Playfair Display";font-size:360px;color:rgba(216,180,106,.05);font-weight:700;line-height:1}
+.feature-content{position:relative;z-index:2;max-width:650px}.feature-content h2{font-family:"Playfair Display";font-size:clamp(45px,6vw,78px);line-height:.93;letter-spacing:-.06em;margin:0 0 20px}.feature-content p{color:#d0cec7;line-height:1.7}
+.footer{border-top:1px solid var(--line);padding:55px 0;color:#999891}.footer-inner{width:min(var(--max),92vw);margin:auto;display:flex;justify-content:space-between;gap:25px;flex-wrap:wrap}.footer-logo{font-family:"Playfair Display";font-size:25px;color:white}.footer a{font-size:13px;margin-right:18px}.top{border:1px solid var(--line);background:none;color:#eee;padding:10px 15px;border-radius:3px;cursor:pointer}
+@media(max-width:900px){.navlinks{display:none}.cities,.split,.cost-grid{grid-template-columns:1fr}.cities .city{min-height:380px}.cards{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.hero-inner{padding-bottom:55px}h1{font-size:64px}.hero-copy{font-size:16px}.meta{gap:22px}.section,.feature{padding:85px 0}.cards{grid-template-columns:1fr}.feature-card{padding:30px;min-height:520px}.feature-card:after{font-size:220px}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a class="logo" href="../index.html">Uni<span>AI</span></a>
+  <div class="navlinks">
+    <a href="#cities">Cities</a><a href="#universities">Universities</a><a href="#cost">Costs</a><a href="#visa">Visa</a>
+  </div>
+  <button class="nav-cta" onclick="document.querySelector('#plan').scrollIntoView({behavior:'smooth'})">Build my plan →</button>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Study destination / United Kingdom</div>
+    <h1>Study<br>with history.</h1>
+    <p class="hero-copy">Centuries-old universities, globally connected cities and a culture of ideas that still feels unmistakably alive. Find your place in the UK.</p>
+    <div class="actions">
+      <button class="btn primary" onclick="document.querySelector('#universities').scrollIntoView({behavior:'smooth'})">Explore universities</button>
+      <button class="btn" onclick="document.querySelector('#plan').scrollIntoView({behavior:'smooth'})">Start my UK plan</button>
+    </div>
+    <div class="meta">
+      <div><strong>4 countries</strong><span>in the UK</span></div>
+      <div><strong>1–4 years</strong><span>typical degrees</span></div>
+      <div><strong>Global</strong><span>career networks</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee"><div class="track">
+  <span>London</span><span>Oxford</span><span>Cambridge</span><span>Edinburgh</span><span>Manchester</span><span>Bristol</span><span>Research</span><span>Heritage</span><span>Innovation</span>
+  <span>London</span><span>Oxford</span><span>Cambridge</span><span>Edinburgh</span><span>Manchester</span><span>Bristol</span><span>Research</span><span>Heritage</span><span>Innovation</span>
+</div></div>
+
+<section class="section" id="cities">
+<div class="container">
+  <div class="reveal"><div class="kicker">01 / Choose your chapter</div><h2 class="title">Four nations. Hundreds of ways to live.</h2><p class="sub">The UK packs radically different student experiences into a relatively small map — from London's global energy to Scotland's dramatic landscapes.</p></div>
+  <div class="grid cities">
+    <article class="city reveal" style="background-image:url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1200&q=80')"><div class="city-content"><h3>London</h3><p>Finance · Fashion · Media · Global business</p></div></article>
+    <article class="city reveal" style="background-image:url('https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=1000&q=80')"><div class="city-content"><h3>Edinburgh</h3><p>History · Culture · Research</p></div></article>
+    <article class="city reveal" style="background-image:url('https://images.unsplash.com/photo-1520095972714-909e91b038e5?w=1000&q=80')"><div class="city-content"><h3>Manchester</h3><p>Music · Business · Sport · Tech</p></div></article>
+  </div>
+</div>
+</section>
+
+<section class="section">
+<div class="container split">
+  <div class="reveal"><div class="kicker">02 / The British academic tradition</div><h2 class="title">Serious about ideas. Curious about the world.</h2><p class="sub">From focused specialist degrees to broad academic communities, UK universities offer many routes through undergraduate and postgraduate study.</p></div>
+  <div class="quote reveal">“Find a place where your questions become bigger than the answers.”</div>
+</div>
+</section>
+
+<section class="section" id="universities">
+<div class="container">
+  <div class="reveal"><div class="kicker">03 / University universe</div><h2 class="title">Names that carry centuries of ambition.</h2><p class="sub">A starting point for exploration. Check each university's current course pages, entry requirements and fees before applying.</p></div>
+  <div class="grid cards">
+    <article class="card reveal"><small>England · Oxford</small><h3>University of Oxford</h3><p>Historic collegiate university with a broad range of disciplines and research.</p><span class="tag">Collegiate</span><span class="tag">Research</span></article>
+    <article class="card reveal"><small>England · Cambridge</small><h3>University of Cambridge</h3><p>Collegiate academic environment with extensive research across disciplines.</p><span class="tag">Collegiate</span><span class="tag">Research</span></article>
+    <article class="card reveal"><small>England · London</small><h3>Imperial College London</h3><p>Science, engineering, medicine and business in a major global city.</p><span class="tag">STEM</span><span class="tag">London</span></article>
+    <article class="card reveal"><small>England · London</small><h3>UCL</h3><p>A large, diverse university with a wide academic portfolio in central London.</p><span class="tag">London</span><span class="tag">Research</span></article>
+    <article class="card reveal"><small>Scotland · Edinburgh</small><h3>University of Edinburgh</h3><p>A major research university in Scotland's historic capital.</p><span class="tag">Scotland</span><span class="tag">Research</span></article>
+    <article class="card reveal"><small>England · Manchester</small><h3>University of Manchester</h3><p>A large research university with strong connections to industry and the city.</p><span class="tag">Research</span><span class="tag">Industry</span></article>
+  </div>
+</div>
+</section>
+
+<section class="section cost" id="cost">
+<div class="container">
+  <div class="reveal"><div class="kicker">04 / The money map</div><h2 class="title">Know the numbers before the dream gets expensive.</h2><p class="sub">Your total cost depends on course, university, city and lifestyle. Use categories like these when building your personal budget.</p></div>
+  <div class="cost-grid">
+    <div class="panel reveal">
+      <div class="row"><span>Tuition</span><strong>Course dependent</strong></div>
+      <div class="row"><span>Accommodation</span><strong>City dependent</strong></div>
+      <div class="row"><span>Food + transport</span><strong>Lifestyle dependent</strong></div>
+      <div class="row"><span>Visa + health costs</span><strong>Current rules apply</strong></div>
+      <div class="row"><span>Books + setup</span><strong>Program dependent</strong></div>
+    </div>
+    <div class="panel note reveal"><div class="symbol">£</div><p>London and other major cities can have substantially different living costs from smaller university towns. Compare the full annual picture, not tuition alone.</p></div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="visa">
+<div class="container">
+  <div class="reveal"><div class="kicker">05 / Visa runway</div><h2 class="title">Your route from offer letter to UK arrival.</h2><p class="sub">Visa requirements can change. Use this as a planning flow, then verify the current process and eligibility through official UK sources.</p></div>
+  <div class="timeline">
+    <div class="step reveal"><div class="dot"></div><small>STEP 01</small><h3>Choose your course</h3><p>Compare universities, course length, intake, academic requirements and total costs.</p></div>
+    <div class="step reveal"><div class="dot"></div><small>STEP 02</small><h3>Apply + receive an offer</h3><p>Prepare your academic record, personal statement or other required materials and supporting documents.</p></div>
+    <div class="step reveal"><div class="dot"></div><small>STEP 03</small><h3>Secure your CAS</h3><p>Your sponsoring institution provides the Confirmation of Acceptance for Studies when its requirements are met.</p></div>
+    <div class="step reveal"><div class="dot"></div><small>STEP 04</small><h3>Complete the Student visa process</h3><p>Check the current application, financial evidence, identity and healthcare-related requirements that apply to you.</p></div>
+    <div class="step reveal"><div class="dot"></div><small>STEP 05</small><h3>Arrive + begin your chapter</h3><p>Plan accommodation, travel, orientation and your first weeks before you fly.</p></div>
+  </div>
+</div>
+</section>
+
+<section class="feature" id="plan">
+<div class="container">
+  <div class="feature-card reveal">
+    <div class="feature-content">
+      <div class="kicker">06 / Your next chapter</div>
+      <h2>Don't just apply. Arrive with a plan.</h2>
+      <p>Turn a UK shortlist into an organised application journey — universities, documents, deadlines, budget and visa milestones in one place.</p>
+      <div class="actions">
+        <button class="btn primary" onclick="alert('Connect this button to your UniAI application planner.')">Build my UK roadmap →</button>
+        <button class="btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to top</button>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<footer class="footer">
+<div class="footer-inner">
+  <div><div class="footer-logo">UniAI</div><div style="margin-top:8px;font-size:13px">Study abroad, but smarter.</div></div>
+  <div><a href="../index.html">Home</a><a href="#universities">Universities</a><a href="#cost">Costs</a><a href="#visa">Visa</a><button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button></div>
+</div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}
+  });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach((el,i)=>{
+  el.style.transitionDelay=(i%4)*70+'ms';observer.observe(el);
+});
+</script>
+</body>
+</html>

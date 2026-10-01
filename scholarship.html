@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Scholarship Profile | UniAI</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="/UI/main.css">
+  <link rel="stylesheet" href="/UI/scholarshipdetails.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+
+<body>
+
+<main class="scholarship-page">
+
+  <!-- =====================================================
+       TOP BAR
+       ===================================================== -->
+
+  <header class="sch-topbar">
+
+    <a
+      href="#"
+      class="sch-back"
+      onclick="showPage('scholarships', event)"
+    >
+      <span>←</span>
+      <span>Back to Scholarship Finder</span>
+    </a>
+
+    <div class="sch-brand">
+      <span class="sch-brand-dot"></span>
+      <span>UniAI</span>
+      <span class="sch-brand-divider"></span>
+      <span>Scholarship Profile</span>
+    </div>
+
+  </header>
+
+
+  <!-- =====================================================
+       LOADING
+       ===================================================== -->
+
+  <section id="loading-state" class="sch-state">
+
+    <div class="sch-state-card">
+
+      <div class="sch-loader"></div>
+
+      <h1>Loading scholarship</h1>
+
+      <p>
+        Fetching the latest scholarship information...
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       ERROR
+       ===================================================== -->
+
+  <section
+    id="error-state"
+    class="sch-state"
+    hidden
+  >
+
+    <div class="sch-state-card">
+
+      <div class="sch-error-icon">
+        !
+      </div>
+
+      <h1>Scholarship not found</h1>
+
+      <p id="error-message">
+        We couldn't load this scholarship.
+      </p>
+
+      <a
+        href="/#scholarships"
+        class="sch-primary-btn"
+      >
+        ← Return to Scholarship Finder
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       PROFILE
+       ===================================================== -->
+
+  <div id="profile-content" hidden>
+
+
+    <!-- ===================================================
+         HERO
+         =================================================== -->
+
+    <section class="sch-hero">
+
+      <div class="sch-hero-glow sch-glow-one"></div>
+      <div class="sch-hero-glow sch-glow-two"></div>
+
+      <div class="sch-hero-grid"></div>
+
+      <div class="sch-hero-content">
+
+
+        <!-- LEFT -->
+        <div class="sch-hero-copy">
+
+          <div
+            id="hero-kicker"
+            class="sch-kicker"
+          >
+            INTERNATIONAL SCHOLARSHIP
+          </div>
+
+
+          <h1
+            id="scholarship-name"
+            class="sch-title loading"
+          >
+            Loading Scholarship...
+          </h1>
+
+
+          <p
+            id="scholarship-provider"
+            class="sch-provider"
+          >
+          </p>
+
+
+          <p
+            id="hero-summary"
+            class="sch-summary"
+          >
+          </p>
+
+
+          <div
+            id="hero-tags"
+            class="sch-tags"
+          >
+          </div>
+
+
+          <div class="sch-hero-actions">
+
+            <div
+              id="application-actions"
+              class="sch-actions"
+            >
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- RIGHT FUNDING PANEL -->
+        <aside class="sch-funding-hero">
+
+          <div class="funding-label">
+            TOTAL FUNDING
+          </div>
+
+          <div
+            id="hero-amount"
+            class="funding-amount"
+          >
+            —
+          </div>
+
+          <div
+            id="hero-funding"
+            class="funding-description"
+          >
+            Scholarship support
+          </div>
+
+
+          <div class="funding-divider"></div>
+
+
+          <div class="funding-mini-grid">
+
+            <div class="funding-mini">
+              <span class="funding-mini-icon">💰</span>
+
+              <div>
+                <small>Support</small>
+                <strong>Financial Aid</strong>
+              </div>
+            </div>
+
+
+            <div class="funding-mini">
+              <span class="funding-mini-icon">🌍</span>
+
+              <div>
+                <small>Students</small>
+                <strong>International</strong>
+              </div>
+            </div>
+
+          </div>
+
+        </aside>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         QUICK HIGHLIGHTS
+         =================================================== -->
+
+    <section class="sch-highlights">
+
+      <div class="highlight-card">
+
+        <span class="highlight-icon">💵</span>
+
+        <div>
+          <span class="highlight-label">
+            Funding
+          </span>
+
+          <strong id="highlight-funding">
+            —
+          </strong>
+        </div>
+
+      </div>
+
+
+      <div class="highlight-card">
+
+        <span class="highlight-icon">📅</span>
+
+        <div>
+          <span class="highlight-label">
+            Deadline
+          </span>
+
+          <strong id="highlight-deadline">
+            —
+          </strong>
+        </div>
+
+      </div>
+
+
+      <div class="highlight-card">
+
+        <span class="highlight-icon">🎓</span>
+
+        <div>
+          <span class="highlight-label">
+            Study Level
+          </span>
+
+          <strong id="highlight-level">
+            —
+          </strong>
+        </div>
+
+      </div>
+
+
+      <div class="highlight-card">
+
+        <span class="highlight-icon">🌎</span>
+
+        <div>
+          <span class="highlight-label">
+            Destination
+          </span>
+
+          <strong id="highlight-country">
+            —
+          </strong>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         CONTENT GRID
+         =================================================== -->
+
+    <div class="sch-content-grid">
+
+
+      <!-- =================================================
+           MAIN COLUMN
+           ================================================= -->
+
+      <div class="sch-main-column">
+
+
+        <!-- OVERVIEW -->
+
+        <section class="sch-card sch-overview">
+
+          <div class="sch-card-header">
+
+            <div class="section-icon purple">
+              ✦
+            </div>
+
+            <div>
+
+              <h2>
+                Scholarship Overview
+              </h2>
+
+              <p>
+                Understand the opportunity before you apply
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div
+            id="description"
+            class="sch-description"
+          >
+            —
+          </div>
+
+        </section>
+
+
+
+        <!-- ELIGIBILITY -->
+
+        <section class="sch-card">
+
+          <div class="sch-card-header">
+
+            <div class="section-icon green">
+              ✓
+            </div>
+
+            <div>
+
+              <h2>
+                Eligibility
+              </h2>
+
+              <p>
+                Check whether you meet the requirements
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div
+            id="eligibility-details"
+            class="eligibility-content"
+          >
+          </div>
+
+        </section>
+
+
+
+        <!-- FUNDING -->
+
+        <section class="sch-card">
+
+          <div class="sch-card-header">
+
+            <div class="section-icon gold">
+              $
+            </div>
+
+            <div>
+
+              <h2>
+                Funding & Timeline
+              </h2>
+
+              <p>
+                Financial coverage and important dates
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div
+            id="funding-details"
+            class="funding-content"
+          >
+          </div>
+
+        </section>
+
+
+      </div>
+
+
+
+      <!-- =================================================
+           SIDEBAR
+           ================================================= -->
+
+      <aside class="sch-sidebar">
+
+
+        <!-- QUICK FACTS -->
+
+        <section class="sch-card facts-card">
+
+          <div class="sch-card-header compact">
+
+            <div class="section-icon blue">
+              i
+            </div>
+
+            <div>
+
+              <h2>
+                Quick Facts
+              </h2>
+
+              <p>
+                At a glance
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div
+            id="quick-facts"
+            class="quick-facts"
+          >
+          </div>
+
+        </section>
+
+
+
+        <!-- APPLICATION -->
+
+        <section class="sch-card application-card">
+
+          <div class="application-top">
+
+            <div class="application-icon">
+              ↗
+            </div>
+
+            <div>
+
+              <h2>
+                Ready to apply?
+              </h2>
+
+              <p>
+                Use the official scholarship application.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div
+            id="application-actions-bottom"
+            class="application-actions"
+          >
+          </div>
+
+        </section>
+
+
+      </aside>
+
+    </div>
+
+
+    <!-- ===================================================
+         APPLICATION TIMELINE
+         =================================================== -->
+
+    <section class="sch-card timeline-card">
+
+      <div class="sch-card-header">
+
+        <div class="section-icon pink">
+          →
+        </div>
+
+        <div>
+
+          <h2>
+            Application Timeline
+          </h2>
+
+          <p>
+            Keep track of the important stages
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div
+        id="timeline-details"
+        class="timeline"
+      >
+
+        <div class="timeline-empty">
+          Application dates will appear here.
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         BOTTOM CTA
+         =================================================== -->
+
+    <section class="sch-cta">
+
+      <div class="sch-cta-decoration"></div>
+
+      <div class="sch-cta-content">
+
+        <span class="sch-cta-eyebrow">
+          YOUR NEXT OPPORTUNITY
+        </span>
+
+        <h2>
+          Find scholarships that fit your goals.
+        </h2>
+
+        <p>
+          Explore more funding opportunities and discover
+          scholarships that can help make your study-abroad
+          plans possible.
+        </p>
+
+      </div>
+
+
+      <a
+        href="#"
+        class="sch-cta-button"
+        onclick="showPage('scholarships', event)"
+      >
+        Explore Scholarships
+        <span>→</span>
+      </a>
+
+    </section>
+
+
+  </div>
+
+</main>
+
+
+<script src="JS/scholarship.js"></script>
+<script src="JS/script.js"></script>
+
+</body>
+</html>

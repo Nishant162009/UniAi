@@ -1,0 +1,645 @@
+Create a complete, polished, standalone HTML study-abroad guide for **[COUNTRY]** for the brand **UniAI**.
+
+The goal is NOT to create a simple country landing page or promotional webpage. Create a **full-fledged, information-rich study-abroad guide** that a student can actually use to understand the process of studying in [COUNTRY].
+
+## 1. DESIGN DIRECTION
+
+Create a premium, modern, student-friendly visual design inspired by **[COUNTRY] and its cultural identity**.
+
+Use:
+
+* Primary color: [PRIMARY COLOR]
+* Secondary color: [SECONDARY COLOR]
+* Accent color: [ACCENT COLOR]
+* Background: soft cream / warm off-white
+* Cards: white or slightly tinted surfaces
+* Subtle gradients
+* Rounded cards
+* Elegant typography
+* Strong visual hierarchy
+* Plenty of whitespace
+* Professional but youthful appearance
+
+The design should feel like a **premium international education guide**, not a generic corporate website.
+
+Do NOT use:
+
+* Black/dark full-page backgrounds
+* Excessive neon colors
+* Generic SaaS aesthetics
+* Huge empty hero sections
+* Overly promotional language
+* Excessive animations
+* Scroll-reveal animations
+* Page-up/floating scroll animations
+* Marquees
+* Distracting effects
+
+The page should remain fast, readable and practical.
+
+## 2. COUNTRY VISUAL IDENTITY
+
+Make the visual identity clearly connected to [COUNTRY].
+
+Use subtle visual motifs such as:
+
+* [CULTURAL MOTIF 1]
+* [CULTURAL MOTIF 2]
+* [CULTURAL MOTIF 3]
+* [NATIONAL/CULTURAL COLOR REFERENCES]
+
+Do this tastefully. Avoid making the page look like a tourism advertisement.
+
+For example:
+
+* Japan → sakura, soft pink, indigo/plum, subtle Japanese-inspired patterns
+* Germany → deep red, gold, charcoal accents
+* France → navy, cream, red
+* Australia → ocean blue, eucalyptus green, warm sand
+* Canada → maple/red/cream
+* South Korea → soft blue, red, white
+* Italy → green, cream, red
+
+## 3. HERO SECTION
+
+Create a strong but informative hero.
+
+Headline format:
+
+"Study in [COUNTRY]. [SHORT INFORMATIVE TAGLINE]."
+
+Example:
+
+"Study in Japan. Find your path, prepare with confidence."
+
+Under the headline include a short explanation that communicates that this is a practical guide covering:
+
+* universities
+* admissions
+* costs
+* scholarships
+* visa/immigration
+* housing
+* student life
+* preparation timeline
+
+Include a clear primary CTA such as:
+
+"Explore the Guide"
+
+Do NOT make the hero purely promotional.
+
+## 4. USE REAL IMAGES
+
+Images are important because they make the guide more engaging for students.
+
+Include multiple high-quality photographs related to [COUNTRY].
+
+Use image URLs from reliable image/CDN sources when possible.
+
+Include approximately 4–8 meaningful images covering things such as:
+
+1. Major city
+2. University/campus environment
+3. Famous cultural/natural scenery
+4. Students/student life
+5. Local architecture
+6. Country-specific seasonal scenery
+7. Transportation or everyday life
+8. Optional landmark
+
+Use images inside elegant cards rather than dumping a gallery onto the page.
+
+Every image must have:
+
+* descriptive alt text
+* lazy loading
+* responsive sizing
+* object-fit: cover
+
+Avoid using images purely for decoration. Each image should reinforce the information being presented.
+
+## 5. MAIN STUDY-ABROAD ROADMAP
+
+Create a visual 6-stage roadmap:
+
+1. Define your target
+2. Prepare your academic profile
+3. Build your budget
+4. Apply to institutions
+5. Choose your institution and prepare
+6. Visa/immigration, travel and arrival
+
+Each stage should contain:
+
+* number
+* title
+* short explanation
+* practical actions
+
+Make this visually prominent.
+
+## 6. "CHOOSE YOUR ROUTE" SECTION
+
+Create a section explaining the major education routes available in [COUNTRY].
+
+Adapt this to the actual country's education system.
+
+Potential categories include:
+
+* Undergraduate
+* Master's
+* PhD / Research
+* Community college or equivalent
+* Language school
+* Professional / vocational education
+* Exchange / visiting student
+* Foundation / pathway programs
+* Short-term study
+
+Do NOT blindly include categories that don't exist in the country.
+
+Each card should explain:
+
+* who it is for
+* what the pathway involves
+* important considerations
+
+## 7. EDUCATION SYSTEM
+
+Explain how higher education works in [COUNTRY].
+
+Cover relevant institution types, such as:
+
+* public universities
+* private universities
+* research universities
+* technical institutions
+* colleges
+* specialized schools
+* vocational institutions
+
+Explain meaningful differences between them.
+
+Also discuss:
+
+* city vs smaller-town campuses
+* research-focused vs career-focused institutions
+* English-taught vs local-language programs
+* public vs private where relevant
+
+## 8. ADMISSIONS
+
+Create a detailed admissions section.
+
+Cover:
+
+* academic requirements
+* previous education
+* grades/GPA or local equivalent
+* prerequisite subjects
+* language requirements
+* standardized tests
+* entrance examinations
+* portfolios
+* interviews
+* recommendation letters
+* statement of purpose/personal statement
+* transcripts
+* application deadlines
+* application fees where relevant
+* program-specific requirements
+
+Clearly state that requirements vary by institution and program.
+
+Do not invent universal requirements.
+
+## 9. TESTS & LANGUAGE
+
+Create a dedicated testing section.
+
+Include only tests relevant to [COUNTRY] and the selected programs.
+
+Potential categories:
+
+* IELTS
+* TOEFL
+* PTE
+* local-language proficiency tests
+* country-specific entrance examinations
+* SAT/ACT equivalents
+* GRE/GMAT where relevant
+* portfolio/audition requirements
+
+For every test, explain:
+
+* what it is
+* who may need it
+* when it may be required
+* whether requirements vary by institution
+
+## 10. APPLICATION PLANNING
+
+Create an application tracker UI.
+
+Include fields such as:
+
+Institution
+Program
+Degree level
+Language
+Application opening
+Application deadline
+Application fee
+Required tests
+Documents
+Recommendation letters
+Interview
+Scholarship deadline
+Application status
+
+Make the tracker visually attractive and useful.
+
+## 11. COSTS & BUDGET
+
+Create a detailed financial planning section.
+
+Cover:
+
+### Tuition
+
+Explain how tuition differs by:
+
+* institution type
+* degree level
+* program
+* location
+
+### Living expenses
+
+Include:
+
+* accommodation
+* food
+* transportation
+* utilities
+* phone/internet
+* study materials
+* insurance
+* personal expenses
+
+### One-time expenses
+
+Include:
+
+* application fees
+* visa/immigration costs
+* flight
+* deposits
+* initial accommodation
+* local setup expenses
+
+Do NOT invent exact prices unless reliable country-specific sources are available.
+
+When giving figures, clearly label:
+
+* currency
+* time period
+* whether the number is an estimate or official figure
+
+## 12. SCHOLARSHIPS & FUNDING
+
+Create a detailed funding section.
+
+Cover relevant funding categories such as:
+
+* government scholarships
+* university scholarships
+* merit scholarships
+* need-based support
+* research funding
+* assistantships
+* external foundations
+* country-specific scholarship programs
+
+Explain:
+
+* eligibility
+* typical timing
+* whether students apply directly or through institutions
+* important documents
+
+Prioritize official scholarship sources.
+
+## 13. TIMELINE
+
+Create a visual preparation timeline.
+
+Use approximately:
+
+### 12–18+ months before
+
+* research countries
+* research institutions
+* choose programs
+* understand requirements
+
+### 9–12 months before
+
+* take required tests
+* prepare documents
+* research scholarships
+
+### 6–9 months before
+
+* submit applications
+* scholarship applications
+* financial planning
+
+### 3–6 months before
+
+* compare offers
+* accept institution
+* begin visa/immigration process
+* arrange housing
+
+### 1–3 months before
+
+* book travel
+* finalize accommodation
+* prepare documents
+* arrange finances
+
+### Departure
+
+* travel documents
+* emergency contacts
+* arrival plan
+* orientation
+
+Adapt the timeline to the country's actual admission cycles.
+
+## 14. VISA / IMMIGRATION
+
+Create a dedicated immigration section specific to [COUNTRY].
+
+Explain:
+
+* relevant student visa/residence categories
+* who needs them
+* basic application process
+* institution documentation
+* financial proof
+* passport requirements
+* biometrics/interviews where relevant
+* health/insurance requirements where relevant
+* arrival procedures
+* maintaining student status
+
+Use official immigration/government sources.
+
+Do NOT provide legal advice.
+
+Include a disclaimer that immigration requirements can change and students should verify current requirements with official government sources.
+
+## 15. HOUSING
+
+Create a housing section covering:
+
+* university housing
+* private rentals
+* student residences
+* homestays where relevant
+* deposits
+* contracts
+* utilities
+* commute
+* neighborhood selection
+* temporary accommodation on arrival
+
+Include practical tips for international students.
+
+## 16. ARRIVAL & STUDENT LIFE
+
+Cover:
+
+* airport/arrival process
+* transportation
+* SIM/mobile connectivity
+* banking
+* healthcare/insurance
+* campus registration
+* orientation
+* public transport
+* local culture
+* food
+* weather
+* academic culture
+* student communities
+* international student support
+
+Make this practical rather than tourist-focused.
+
+## 17. COUNTRY-SPECIFIC STUDENT CULTURE
+
+Add a section explaining important cultural and academic considerations for international students in [COUNTRY].
+
+Examples:
+
+* classroom etiquette
+* professor/student relationships
+* punctuality
+* group work
+* communication style
+* workplace expectations
+* local language
+* social norms
+
+Be respectful and avoid stereotypes.
+
+## 18. CURRENT COUNTRY-SPECIFIC DATA
+
+Include a section such as:
+
+"[COUNTRY] TODAY"
+
+Use current, reliable data when available.
+
+Potential statistics:
+
+* number of international students
+* major study destinations
+* popular fields
+* education trends
+* scholarship participation
+* international student growth
+
+Every statistic must have:
+
+* year/date
+* source
+* clear context
+
+Do not present old statistics as current.
+
+## 19. MASTER CHECKLIST
+
+Create a large interactive-looking checklist divided into:
+
+### Research
+
+☐ Choose program
+☐ Compare institutions
+☐ Check requirements
+☐ Check language requirements
+
+### Testing
+
+☐ Take required language test
+☐ Take entrance/standardized exams if needed
+
+### Applications
+
+☐ Prepare transcripts
+☐ Prepare recommendations
+☐ Prepare personal statement
+☐ Submit applications
+☐ Track deadlines
+
+### Funding
+
+☐ Research scholarships
+☐ Prepare financial documents
+☐ Create total budget
+
+### Visa/Immigration
+
+☐ Confirm visa category
+☐ Prepare required documents
+☐ Complete application
+☐ Track approval
+
+### Departure
+
+☐ Book flight
+☐ Arrange accommodation
+☐ Prepare travel documents
+☐ Arrange insurance
+☐ Prepare emergency contacts
+
+## 20. OFFICIAL RESOURCES
+
+At the end, include a dedicated:
+
+"Official Starting Points"
+
+section.
+
+Include links to the most authoritative sources for:
+
+* official study-abroad information
+* education ministry/government
+* immigration
+* scholarships
+* language/testing
+* university search
+* tourism/travel information only where useful
+
+Prioritize government, official education agencies and official university websites.
+
+Do not rely exclusively on blogs or commercial study-abroad websites.
+
+## 21. DISCLAIMER
+
+Add a small footer disclaimer:
+
+"This guide is intended for educational planning purposes. Admissions requirements, tuition, scholarships, immigration rules and other policies can change. Always verify important information with the relevant institution and official government sources."
+
+## 22. TECHNICAL REQUIREMENTS
+
+Return a **single complete standalone HTML file**.
+
+The file must contain:
+
+* HTML5
+* CSS
+* JavaScript only where genuinely useful
+* responsive design
+* semantic HTML
+* accessible navigation
+* alt text for images
+* mobile-friendly layout
+* smooth but minimal interactions
+* no external framework dependency unless necessary
+
+Do NOT create separate CSS or JS files.
+
+## 23. NAVIGATION
+
+Create a sticky navigation bar with links to major sections.
+
+Also include a compact table of contents or section navigation.
+
+On mobile, make navigation usable without overwhelming the screen.
+
+## 24. VISUAL COMPONENTS
+
+Use a variety of components:
+
+* hero
+* roadmap
+* information cards
+* photo cards
+* comparison cards
+* timeline
+* statistics
+* checklist
+* callout boxes
+* application tracker
+* official resource cards
+* FAQ if useful
+
+Avoid making every section look identical.
+
+## 25. QUALITY STANDARD
+
+The final result should feel like:
+
+"An actual premium study-abroad handbook turned into a website."
+
+It should NOT feel like:
+
+* a landing page
+* a generic AI-generated webpage
+* a travel blog
+* a university advertisement
+* a simple template with the country name swapped
+
+The information should be useful enough that a student could use the guide as a starting point for planning their study-abroad journey.
+
+## 26. RESEARCH RULE
+
+Before generating country-specific factual information:
+
+* verify current information using reliable sources
+* prioritize official government and education sources
+* use current information where possible
+* distinguish estimates from official figures
+* never invent statistics, visa categories, scholarship amounts, deadlines or admission requirements
+
+If information cannot be reliably verified, say:
+
+"Check the institution's current requirements."
+
+## 27. FINAL OUTPUT
+
+Generate the complete HTML file for:
+
+COUNTRY: [COUNTRY]
+PRIMARY COLOR: [PRIMARY COLOR]
+SECONDARY COLOR: [SECONDARY COLOR]
+ACCENT COLOR: [ACCENT COLOR]
+CULTURAL MOTIFS: [CULTURAL MOTIFS]
+OFFICIAL SOURCES: [OFFICIAL SOURCES]
+
+Make the result visually impressive, information-rich, student-friendly and ready to open directly in a browser.

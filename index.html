@@ -1,0 +1,6372 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniAI — Plan Smarter. Go Farther.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="UI/main.css">
+
+</head>
+<body>
+    <script src="JS/intro.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<canvas id="particles"></canvas>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo"><a href="index.html"><span class="logo-mark">
+      <svg viewBox="0 0 32 32" class="logo-mark-svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="uniaiGrad" x1="0" y1="0" x2="32" y2="32">
+            <stop offset="0%" stop-color="#4f6bff"/>
+            <stop offset="100%" stop-color="#a15bff"/>
+          </linearGradient>
+        </defs>
+        <path d="M16 4 L29 10 L16 16 L3 10 Z" fill="url(#uniaiGrad)"/>
+        <path d="M8 13.5 V20 C8 23.5 11.5 26 16 26 C20.5 26 24 23.5 24 20 V13.5" fill="none" stroke="url(#uniaiGrad)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="29" cy="10" r="2.6" fill="#ec4899"/>
+        <line x1="29" y1="10" x2="29" y2="17" stroke="#ec4899" stroke-width="1.6"/>
+      </svg>
+    </span> Uni<span class="logo-accent">AI</span></a>
+  </div>  
+
+
+
+
+
+
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-btn active" onclick="showPage('home', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9z"/></svg>
+        Home
+      </a>
+      <a href="#" class="nav-btn" onclick="showPage('universityFinder', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        University Finder
+      </a>
+      <a href="#" class="nav-btn" onclick="showPage('scholarships', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M12 8v13M3 12h18M12 8c-1.5-3-5-4-5-1.5S9 8 12 8zm0 0c1.5-3 5-4 5-1.5S15 8 12 8z"/></svg>
+        Scholarships
+      </a>
+      <a href="#" class="nav-btn" onclick="showPage('studyAbroadGuide', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M4 4h9a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4z"/><path d="M20 4h-9a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h9z"/></svg>
+        Study Abroad Guide
+      </a>
+      <a href="#" class="nav-btn" onclick="showPage('ai-chat', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 3v3M12 3l4 2M12 3L8 5"/><rect x="4" y="8" width="16" height="12" rx="3"/><circle cx="9" cy="14" r="1.2"/><circle cx="15" cy="14" r="1.2"/></svg>
+        AI Assistant
+      </a>
+      <a href="#" class="nav-btn" onclick="showPage('visaGuide', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8" cy="12" r="2"/><path d="M13 10h5M13 14h5"/></svg>
+        Visa Guide
+      </a>
+      <a href="#" class="nav-btn" onclick="showPage('sopStudio', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        SOP &amp; LOR Tools
+      </a>
+      <a href="#" class="nav-btn" onclick="showPage('aiFreeJobs', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        AI Free Jobs
+      </a>
+      <a href="#" class="nav-btn" onclick="showPage('roadmap', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M4 19V5M4 5l6 4-6 4M20 19v-9M20 10l-6 4"/></svg>
+        Roadmap
+      </a>
+    </nav>
+
+    <div class="sidebar-divider"></div>
+
+    <nav class="sidebar-nav sidebar-nav-secondary">
+      <a href="#" class="nav-btn" onclick="showPage('saved', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>
+        Saved
+      </a>
+      <a href="#" class="nav-btn" onclick="showPage('profile', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>
+        Profile
+      </a>
+      <a href="#" class="nav-btn" onclick="showPage('settings', event)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 0 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 0 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.55V3a2 2 0 0 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 0 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1z"/></svg>
+        Settings
+      </a>
+    </nav>
+
+    
+  </aside>
+
+  <div class="main-col">
+
+    <header class="topbar">
+      <button class="mobile-nav" type="button" onclick="document.body.classList.toggle('nav-open')" aria-label="Open menu">☰</button>
+      <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="text" id="uni-search" placeholder="Search universities, courses, countries..." onkeydown="if(event.key==='Enter'){showPage('universityFinder', event);findUniversities();}">
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="topbar-actions">
+
+
+
+
+
+
+
+
+
+
+
+
+<button
+  class="theme-toggle-btn"
+  id="theme-toggle"
+  type="button"
+  aria-label="Switch to dark mode"
+  aria-pressed="false"
+>
+  <div class="atmosphere"></div>
+
+  <div class="stars">
+    <i class="star star-1">✦</i>
+    <i class="star star-2">✦</i>
+    <i class="star star-3">✦</i>
+    <i class="star star-4">✧</i>
+    <i class="star star-5">✦</i>
+    <i class="star star-6">·</i>
+    <i class="star star-7">✧</i>
+    <i class="star star-8">·</i>
+  </div>
+
+  <div class="sun-rays"></div>
+
+  <div class="knob">
+    <div class="sun-core"></div>
+
+    <div class="moon-surface">
+      <span class="crater crater-1"></span>
+      <span class="crater crater-2"></span>
+      <span class="crater crater-3"></span>
+      <span class="crater crater-4"></span>
+    </div>
+  </div>
+
+  <div class="cloud cloud-back"></div>
+  <div class="cloud cloud-mid"></div>
+  <div class="cloud cloud-front"></div>
+
+  <div class="particles">
+    <span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+  </div>
+
+  <div class="flash"></div>
+</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <button class="icon-btn notif-btn" type="button" onclick="toggleNotifPanel()">
+          <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+          <span class="notif-dot">3</span>
+        </button>
+        <div id="notif-panel" class="notif-panel hidden">
+          <strong>Notifications</strong>
+          <p>3 new scholarship matches for STEM applicants.</p>
+          <p>Visa timeline for Japan updated for Fall 2027.</p>
+          <p>Your SOP draft is ready for a second pass.</p>
+        </div>
+        <div id="user-profile-badge" class="user-badge" style="display:none">
+          <div class="user-avatar">N</div>
+          <div class="user-info">
+            <span id="nav-username">Nishant</span>
+            <small id="nav-profile-type">Student</small>
+          </div>
+          <button id="logout-btn" class="logout-x" title="Sign out">⎋</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="homePage" class="page-section active-page">
+  <div class="homepage-promo-banner">
+    <div class="promo-card" id="auth-promo-banner">
+      <div class="promo-left">
+        <div class="promo-icon">🎓</div>
+        <div class="promo-content">
+          <div class="promo-header">
+            <h4 class="promo-title">Dream University</h4>
+            <span class="promo-badge">Unlock Workspace</span>
+          </div>
+          <p class="promo-text">Sign in to unlock AI chat, application tracking, and personalized guidance.</p>
+        </div>
+      </div>
+      <button class="promo-btn" id="auth-nav-trigger" onclick="document.getElementById('auth-overlay').style.display='flex'">
+        Sign Up Free
+      </button>
+    </div>
+  </div>
+      <div class="home-grid">
+        <div class="hero-card">
+          <div class="hero-copy">
+            <p class="eyebrow">Study abroad, powered by UniAI</p>
+            <h1>Plan Smarter.<br><span class="grad-text">Go Farther.</span></h1>
+            <p>AI-powered tools and guidance to help you study abroad with confidence.</p>
+            <button class="cta-btn" onclick="showPage('universityFinder', event)">Start Your Journey →</button>
+          </div>
+          <div class="hero-orbit">
+            <div class="orbit-glow"></div>
+            <div class="orbit-ring"></div>
+            <div class="badge-chip chip-uk"><span class="chip-flag">🇬🇧</span><div><strong>UK</strong><small>300+ Universities</small></div></div>
+            <div class="badge-chip chip-usa"><span class="chip-flag">🇺🇸</span><div><strong>USA</strong><small>1500+ Universities</small></div></div>
+            <div class="badge-chip chip-japan"><span class="chip-flag">🇯🇵</span><div><strong>Japan</strong><small>200+ Universities</small></div></div>
+            <div class="badge-chip chip-aus"><span class="chip-flag">🇦🇺</span><div><strong>Australia</strong><small>100+ Universities</small></div></div>
+          </div>
+        </div>
+
+        <div class="stats-bar">
+          <div class="stat-item"><div class="stat-icon icon-violet">🏛️</div><div><strong>15K+</strong><small>Universities</small></div></div>
+          <div class="stat-item"><div class="stat-icon icon-blue">🌐</div><div><strong>50+</strong><small>Countries</small></div></div>
+          <div class="stat-item"><div class="stat-icon icon-pink">🎁</div><div><strong>10K+</strong><small>Scholarships</small></div></div>
+          <div class="stat-item"><div class="stat-icon icon-green">📈</div><div><strong>98%</strong><small>Success Rate</small></div></div>
+          <div class="stat-item"><div class="stat-icon icon-amber">🎧</div><div><strong>24/7</strong><small>AI Support</small></div></div>
+        </div>
+
+        <div class="destinations">
+          <div class="section-head">
+            <h2>Popular Destinations</h2>
+            <a href="#" class="view-all" onclick="showPage('universityFinder', event)">View All →</a>
+          </div>
+          <div class="dest-grid">
+            <button class="dest-card" style="background-image:url('https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800&q=70')" onclick="window.location.href='usa.html'"><span>New York, USA</span></button>
+            <button class="dest-card" style="background-image:url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&q=70')" onclick="window.location.href='uk.html'"><span>London, UK</span></button>
+            <button class="dest-card" style="background-image:url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=70')" onclick="window.location.href='japan.html'"><span>Tokyo, Japan</span></button>
+            <button class="dest-card" style="background-image:url('https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=800&q=70')" onclick="window.location.href='australia.html'"><span>Sydney, Australia</span></button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="side-col">
+        <div class="ai-panel">
+          <div class="ai-panel-head">
+            <div class="ai-avatar">🤖</div>
+            <div class="ai-head-text">
+              <div class="ai-title-row">AI Assistant <span class="beta-tag">Beta</span></div>
+              <div class="ai-status"><span class="dot-online"></span> Online</div>
+            </div>
+          </div>
+          <div class="ai-greet">Hi, <span id="user-display-name">there</span>! 👋<br><small>How can I help you today?</small></div>
+          <div class="ai-bot-illustration">
+            <div class="bot-glow"></div>
+            <span>🤖</span>
+          </div>
+          <div class="ai-suggestions">
+            <button class="ai-sugg" onclick="quickAsk('Which universities can I get into with 85%?')">🔍 Which universities can I get into with 85%?</button>
+            <button class="ai-sugg" onclick="quickAsk('How much will it cost to study in Germany?')">🌐 How much will it cost to study in Germany?</button>
+            <button class="ai-sugg" onclick="quickAsk('What are the visa requirements for Japan?')">📄 What are the visa requirements for Japan?</button>
+          </div>
+          <div class="ai-input-row">
+            <input type="text" id="ai-input-home" placeholder="Type your question..." onkeydown="if(event.key==='Enter')quickAsk(this.value)">
+            <button class="ai-send" type="button" onclick="quickAsk(document.getElementById('ai-input-home').value)">➤</button>
+          </div>
+        </div>
+
+        <div class="quick-tools">
+          <h3>Quick Tools</h3>
+          <div class="tool-grid">
+            <button class="tool-card" onclick="showPage('living', event)">
+              <div class="tool-icon icon-green">🧮</div>
+              <strong>Cost Calculator</strong>
+              <small>Estimate living and tuition costs</small>
+            </button>
+            <button class="tool-card" onclick="showPage('currency', event)">
+              <div class="tool-icon icon-pink">🔄</div>
+              <strong>Currency Converter</strong>
+              <small>Convert between currencies</small>
+            </button>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- UNIVERSITY FINDER -->
+    
+
+
+<div id="universityFinderPage" class="page-section">
+
+  <!-- Finder Intro -->
+  <div class="finder-intro">
+    <div class="finder-intro-main">
+      <span class="section-eyebrow">UNIVERSITY MATCHER</span>
+
+      <h1>Find universities that<br>fit <span>you.</span></h1>
+
+      <p>
+        Tell us about your academics, destination, and budget.
+        We'll help you discover universities worth considering.
+      </p>
+    </div>
+
+    <div class="finder-intro-side">
+      <div class="finder-stat">
+        <strong>1.2M+</strong>
+        <span>Students matched</span>
+      </div>
+
+      <div class="finder-stat">
+        <strong>640</strong>
+        <span>Universities</span>
+      </div>
+
+      <div class="finder-stat">
+        <strong>42</strong>
+        <span>Countries</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Main Finder -->
+  <div class="finder-layout">
+
+    <!-- Left: Preferences -->
+    <div class="bento-card finder-preferences">
+
+      <div class="finder-card-header">
+        <div>
+          <span class="step-number">01</span>
+          <h2>Your preferences</h2>
+          <p>Set the criteria you care about most.</p>
+        </div>
+      </div>
+
+
+      <!-- Country -->
+      <div class="finder-field">
+        <label for="country">
+          <span>Destination</span>
+          <small>Where do you want to study?</small>
+        </label>
+
+        <select id="country">
+          <option value="">🌍 All Countries</option>
+        </select>
+      </div>
+
+
+      <!-- GPA -->
+      <div class="finder-field">
+        <label for="gpa">
+          <span>Academic profile</span>
+          <small>Enter your current GPA</small>
+        </label>
+
+        <div class="finder-input-wrap">
+          <input
+            type="number"
+            id="gpa"
+            placeholder="3.5"
+            step="0.1"
+            min="0"
+            max="4"
+          >
+          <span>/ 4.0</span>
+        </div>
+      </div>
+
+
+      <!-- Budget -->
+      <div class="finder-field">
+        <label for="budget">
+          <span>Annual budget</span>
+          <small>Maximum tuition budget</small>
+        </label>
+
+        <div class="finder-input-wrap">
+          <span>$</span>
+          <input
+            type="text"
+            id="budget"
+            placeholder="40,000"
+          >
+          <span>/ year</span>
+        </div>
+      </div>
+
+
+      <button
+        class="glow-btn"
+        type="button"
+        onclick="findUniversities()"
+      >
+        Find my universities
+        <span>→</span>
+      </button>
+
+    </div>
+
+
+    <!-- Right: Quick Matches -->
+    <div class="finder-quick">
+
+      <div class="quick-header">
+        <div>
+          <span class="step-number">02</span>
+          <h2>Start with a profile</h2>
+          <p>Not sure where to begin? Try one of these.</p>
+        </div>
+      </div>
+
+
+      <div class="preset-list">
+
+        <button
+          class="preset-card"
+          type="button"
+          onclick="presetFinder('United States', 3.6, '40000')"
+        >
+          <span class="preset-icon">🇺🇸</span>
+
+          <span class="preset-info">
+            <strong>United States</strong>
+            <small>GPA 3.6 · Up to $40k</small>
+          </span>
+
+          <span class="preset-arrow">→</span>
+        </button>
+
+
+        <button
+          class="preset-card"
+          type="button"
+          onclick="presetFinder('United Kingdom', 3.4, '35000')"
+        >
+          <span class="preset-icon">🇬🇧</span>
+
+          <span class="preset-info">
+            <strong>United Kingdom</strong>
+            <small>GPA 3.4 · Up to $35k</small>
+          </span>
+
+          <span class="preset-arrow">→</span>
+        </button>
+
+
+        <button
+          class="preset-card"
+          type="button"
+          onclick="presetFinder('Germany', 3.2, '20000')"
+        >
+          <span class="preset-icon">🇩🇪</span>
+
+          <span class="preset-info">
+            <strong>Germany</strong>
+            <small>GPA 3.2 · Budget focused</small>
+          </span>
+
+          <span class="preset-arrow">→</span>
+        </button>
+
+
+        <button
+          class="preset-card"
+          type="button"
+          onclick="presetFinder('Japan', 3.5, '18000')"
+        >
+          <span class="preset-icon">🇯🇵</span>
+
+          <span class="preset-info">
+            <strong>Japan</strong>
+            <small>GPA 3.5 · STEM focused</small>
+          </span>
+
+          <span class="preset-arrow">→</span>
+        </button>
+
+      </div>
+
+
+      <div class="finder-tip">
+        <span>✦</span>
+
+        <div>
+          <strong>Tip</strong>
+          <p>
+            You don't need to choose a country.
+            Leave it open to explore matches worldwide.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Results -->
+  <div class="finder-results-section">
+
+    <div class="results-heading">
+      <div>
+        <span class="step-number">03</span>
+        <h2>Your university matches</h2>
+        <p>Universities matching your preferences will appear here.</p>
+      </div>
+
+      <div class="results-filter">
+        <span>Best matches</span>
+        <span>⌄</span>
+      </div>
+    </div>
+
+
+    <div id="results" class="results-grid">
+
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          ✦
+        </div>
+
+        <div>
+          <h3>Your shortlist starts here</h3>
+
+          <p>
+            Enter your details above or choose a profile
+            to discover your university matches.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+    <!-- SCHOLARSHIPS -->
+<div id="scholarshipsPage" class="page-section hidden">
+
+    <!-- =====================================================
+         SCHOLARSHIP HERO
+    ====================================================== -->
+
+    <section class="scholarship-hero">
+
+        <div class="scholarship-hero-glow"></div>
+
+        <div class="scholarship-hero-content">
+
+            <div class="scholarship-hero-copy">
+
+                <div class="scholarship-eyebrow">
+                    <span></span>
+                    FUNDING & OPPORTUNITIES
+                </div>
+
+                <h1>
+                    Find funding for
+                    <em>your next chapter.</em>
+                </h1>
+
+                <p>
+                    Discover high-signal scholarships for international
+                    study, filtered by destination, degree level, field,
+                    and eligibility.
+                </p>
+
+            </div>
+
+
+            <div class="scholarship-hero-mark">
+
+                <div class="scholarship-orbit orbit-a"></div>
+                <div class="scholarship-orbit orbit-b"></div>
+
+                <div class="scholarship-symbol">
+                    ✦
+                </div>
+
+                <div class="scholarship-floating-tag tag-one">
+                    🎓 Fully funded
+                </div>
+
+                <div class="scholarship-floating-tag tag-two">
+                    💰 Tuition support
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- QUICK STATS -->
+
+        <div class="scholarship-stats">
+
+            <div class="scholarship-stat">
+                <strong id="scholarshipCount">—</strong>
+                <span>Scholarships</span>
+            </div>
+
+            <div class="scholarship-stat">
+                <strong>Global</strong>
+                <span>Destinations</span>
+            </div>
+
+            <div class="scholarship-stat">
+                <strong>Multiple</strong>
+                <span>Degree levels</span>
+            </div>
+
+            <div class="scholarship-stat">
+                <strong>Curated</strong>
+                <span>Opportunities</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SCHOLARSHIP FINDER
+    ====================================================== -->
+
+    <section class="scholarship-finder">
+
+        <div class="scholarship-section-heading">
+
+            <div>
+
+                <span class="scholarship-section-kicker">
+                    SCHOLARSHIP FINDER
+                </span>
+
+                <h2>
+                    What are you looking for?
+                </h2>
+
+                <p>
+                    Search across countries, fields, scholarship names,
+                    and funding opportunities.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div class="scholarship-search-card">
+
+            <div class="scholarship-search-icon">
+                ⌕
+            </div>
+
+            <div class="scholarship-search-field">
+
+                <label for="scholarship-filter">
+                    Search scholarships
+                </label>
+
+                <input
+                    type="search"
+                    id="scholarship-filter"
+                    placeholder="Country, field, scholarship name..."
+                    oninput="filterScholarships()"
+                    autocomplete="off"
+                >
+
+            </div>
+
+            <div class="scholarship-search-hint">
+                <span>⌘</span>
+                Search
+            </div>
+
+        </div>
+
+
+        <!-- FILTER CHIPS -->
+
+        <div class="scholarship-filter-row">
+
+            <span class="scholarship-filter-label">
+                Popular searches
+            </span>
+
+            <button
+                type="button"
+                class="scholarship-chip"
+                onclick="setScholarshipFilter('Canada')"
+            >
+                🇨🇦 Canada
+            </button>
+
+            <button
+                type="button"
+                class="scholarship-chip"
+                onclick="setScholarshipFilter('UK')"
+            >
+                🇬🇧 UK
+            </button>
+
+            <button
+                type="button"
+                class="scholarship-chip"
+                onclick="setScholarshipFilter('Australia')"
+            >
+                🇦🇺 Australia
+            </button>
+
+            <button
+                type="button"
+                class="scholarship-chip"
+                onclick="setScholarshipFilter('Masters')"
+            >
+                🎓 Masters
+            </button>
+
+            <button
+                type="button"
+                class="scholarship-chip"
+                onclick="setScholarshipFilter('fully funded')"
+            >
+                ✦ Fully funded
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         RESULTS
+    ====================================================== -->
+
+    <section class="scholarship-results">
+
+        <div class="scholarship-results-header">
+
+            <div class="scholarship-results-info">
+
+                <span class="scholarship-live-dot"></span>
+
+                <span id="scholarshipResultsText">
+                    Showing scholarships
+                </span>
+
+            </div>
+
+            <div class="scholarship-results-meta">
+                Curated opportunities
+            </div>
+
+        </div>
+
+
+        <!-- CARDS -->
+
+        <div
+            class="card-grid scholarship-grid"
+            id="scholarship-grid"
+        ></div>
+
+
+        <!-- EMPTY STATE -->
+
+        <div
+            id="scholarship-empty"
+            class="scholarship-empty hidden"
+        >
+
+            <div class="scholarship-empty-icon">
+                🔎
+            </div>
+
+            <span>
+                NO MATCHES
+            </span>
+
+            <h3>
+                No scholarships found
+            </h3>
+
+            <p>
+                Try searching for a different country, field,
+                degree level, or scholarship name.
+            </p>
+
+            <button
+                type="button"
+                onclick="clearScholarshipFilter()"
+            >
+                Clear search
+                <strong>→</strong>
+            </button>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- STUDY ABROAD GUIDE -->
+
+<div id="studyAbroadGuidePage" class="page-section hidden">
+
+
+  <!-- ==========================================
+       HERO
+       ========================================== -->
+
+  <section class="guide-hero">
+
+    <div class="guide-hero-content">
+
+      <span class="guide-eyebrow">
+        YOUR STUDY ABROAD ROADMAP
+      </span>
+
+      <h1>
+        From <span>“I want to study abroad”</span>
+        to boarding the plane.
+      </h1>
+
+      <p>
+        A step-by-step roadmap covering research, tests,
+        finances, applications, visas, and everything
+        you need before departure.
+      </p>
+
+      <div class="guide-hero-actions">
+        <button class="guide-primary-btn">
+          Start the journey →
+        </button>
+
+        <span class="guide-duration">
+          <strong>6 stages</strong>
+          <small>from planning to departure</small>
+        </span>
+      </div>
+
+    </div>
+
+
+    <div class="guide-hero-visual">
+
+      <div class="orbit orbit-one"></div>
+      <div class="orbit orbit-two"></div>
+
+      <div class="guide-globe">
+        🌍
+      </div>
+
+      <div class="floating-guide-card card-country">
+        <span>📍</span>
+        <div>
+          <small>Destination</small>
+          <strong>Choose your country</strong>
+        </div>
+      </div>
+
+      <div class="floating-guide-card card-application">
+        <span>✓</span>
+        <div>
+          <small>Application</small>
+          <strong>Ready to submit</strong>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ==========================================
+       PROGRESS
+       ========================================== -->
+
+  <section class="guide-progress">
+
+    <div class="progress-heading">
+      <div>
+        <span class="guide-label">THE ROADMAP</span>
+        <h2>Your journey at a glance</h2>
+      </div>
+
+      <span class="progress-count">
+        6 steps
+      </span>
+    </div>
+
+
+    <div class="progress-line">
+
+      <div class="progress-step active">
+        <span>01</span>
+        <small>Plan</small>
+      </div>
+
+      <div class="progress-step">
+        <span>02</span>
+        <small>Prepare</small>
+      </div>
+
+      <div class="progress-step">
+        <span>03</span>
+        <small>Fund</small>
+      </div>
+
+      <div class="progress-step">
+        <span>04</span>
+        <small>Apply</small>
+      </div>
+
+      <div class="progress-step">
+        <span>05</span>
+        <small>Decide</small>
+      </div>
+
+      <div class="progress-step">
+        <span>06</span>
+        <small>Fly</small>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ==========================================
+       GUIDE LIBRARY
+       ========================================== -->
+
+  <section class="guide-library" id="guideLibrary">
+
+    <div class="guide-library-header">
+
+      <div>
+        <span class="guide-label">EXPLORE THE LIBRARY</span>
+        <h2>Guides for every part of your journey.</h2>
+        <p>
+          Pick a destination, test, application topic, or visa guide.
+          Each card opens its own dedicated guide.
+        </p>
+      </div>
+
+      <div class="guide-library-count">
+        <strong>24+</strong>
+        <span>guides planned</span>
+      </div>
+
+    </div>
+
+
+    <!-- DESTINATION GUIDES -->
+
+    <div class="guide-category">
+
+      <div class="guide-category-heading">
+        <div>
+          <span class="guide-category-kicker">DESTINATIONS</span>
+          <h3>Choose where you want to study</h3>
+        </div>
+        <span class="guide-category-count">8 guides</span>
+      </div>
+
+      <div class="guide-card-grid">
+
+        <a class="guide-card guide-card-featured" href="guides/usa.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">🇺🇸</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">DESTINATION</span>
+          <h4>USA Guide</h4>
+          <p>Universities, admissions, costs, scholarships, tests, visa and life in the USA.</p>
+          <div class="guide-card-tags">
+            <span>Universities</span>
+            <span>F-1 Visa</span>
+            <span>Costs</span>
+          </div>
+        </a>
+
+        <a class="guide-card" href="guides/japan.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">🇯🇵</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">DESTINATION</span>
+          <h4>Japan Guide</h4>
+          <p>Study options, universities, Japanese language, costs, scholarships and visa.</p>
+          <div class="guide-card-tags">
+            <span>JLPT</span>
+            <span>Universities</span>
+            <span>Visa</span>
+          </div>
+        </a>
+
+        <a class="guide-card" href="guides/uk.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">🇬🇧</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">DESTINATION</span>
+          <h4>UK Guide</h4>
+          <p>Universities, applications, tuition, scholarships, student visa and living costs.</p>
+          <div class="guide-card-tags">
+            <span>Universities</span>
+            <span>Student Visa</span>
+            <span>Costs</span>
+          </div>
+        </a>
+
+        <a class="guide-card" href="guides/germany.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">🇩🇪</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">DESTINATION</span>
+          <h4>Germany Guide</h4>
+          <p>Public universities, programs, language, funding, applications and visa planning.</p>
+          <div class="guide-card-tags">
+            <span>Universities</span>
+            <span>Language</span>
+            <span>Visa</span>
+          </div>
+        </a>
+
+        <a class="guide-card" href="guides/canada.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">🇨🇦</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">DESTINATION</span>
+          <h4>Canada Guide</h4>
+          <p>Programs, universities, tuition, scholarships, applications and study permit basics.</p>
+          <div class="guide-card-tags">
+            <span>Programs</span>
+            <span>Costs</span>
+            <span>Study Permit</span>
+          </div>
+        </a>
+
+        <a class="guide-card" href="guides/australia.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">🇦🇺</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">DESTINATION</span>
+          <h4>Australia Guide</h4>
+          <p>Universities, courses, costs, scholarships, applications and student visa planning.</p>
+          <div class="guide-card-tags">
+            <span>Universities</span>
+            <span>Scholarships</span>
+            <span>Visa</span>
+          </div>
+        </a>
+
+        <a class="guide-card" href="guides/netherlands.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">🇳🇱</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">DESTINATION</span>
+          <h4>Netherlands Guide</h4>
+          <p>English-taught programs, universities, costs, applications and student life.</p>
+          <div class="guide-card-tags">
+            <span>Programs</span>
+            <span>Costs</span>
+            <span>Student Life</span>
+          </div>
+        </a>
+
+        <a class="guide-card" href="guides/france.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">🇫🇷</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">DESTINATION</span>
+          <h4>France Guide</h4>
+          <p>Study options, universities, tuition, language, applications and visa planning.</p>
+          <div class="guide-card-tags">
+            <span>Universities</span>
+            <span>Language</span>
+            <span>Visa</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+
+    <!-- TEST & LANGUAGE GUIDES -->
+
+    <div class="guide-category">
+
+      <div class="guide-category-heading">
+        <div>
+          <span class="guide-category-kicker">TESTS &amp; LANGUAGE</span>
+          <h3>Prepare for the scores you need</h3>
+        </div>
+        <span class="guide-category-count">6 guides</span>
+      </div>
+
+      <div class="guide-card-grid">
+
+        <a class="guide-card guide-card-test" href="guides/ielts.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">📝</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">ENGLISH TEST</span>
+          <h4>IELTS Guide</h4>
+          <p>Understand the test format, sections, scoring and preparation path.</p>
+          <div class="guide-card-tags">
+            <span>Academic</span>
+            <span>Band Score</span>
+            <span>Prep</span>
+          </div>
+        </a>
+
+        <a class="guide-card guide-card-test" href="guides/toefl.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">🎧</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">ENGLISH TEST</span>
+          <h4>TOEFL Guide</h4>
+          <p>Explore the exam structure, scoring and a practical preparation roadmap.</p>
+          <div class="guide-card-tags">
+            <span>iBT</span>
+            <span>Scoring</span>
+            <span>Prep</span>
+          </div>
+        </a>
+
+        <a class="guide-card guide-card-test" href="guides/jlpt.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">🇯🇵</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">JAPANESE</span>
+          <h4>JLPT Guide</h4>
+          <p>Understand N5 to N1, preparation, sections, vocabulary and kanji.</p>
+          <div class="guide-card-tags">
+            <span>N5–N1</span>
+            <span>Kanji</span>
+            <span>Prep</span>
+          </div>
+        </a>
+
+        <a class="guide-card guide-card-test" href="guides/gre.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">📊</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">ADMISSIONS TEST</span>
+          <h4>GRE Guide</h4>
+          <p>Learn about sections, scoring, preparation and how to plan your attempt.</p>
+          <div class="guide-card-tags">
+            <span>Verbal</span>
+            <span>Quant</span>
+            <span>AWA</span>
+          </div>
+        </a>
+
+        <a class="guide-card guide-card-test" href="guides/gmat.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">📈</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">BUSINESS TEST</span>
+          <h4>GMAT Guide</h4>
+          <p>Understand the exam, scoring, preparation and business-school applications.</p>
+          <div class="guide-card-tags">
+            <span>Focus</span>
+            <span>Scoring</span>
+            <span>MBA</span>
+          </div>
+        </a>
+
+        <a class="guide-card guide-card-test" href="guides/german-language.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">🇩🇪</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">GERMAN</span>
+          <h4>German Language Guide</h4>
+          <p>Explore language levels, common exams and how German fits into study plans.</p>
+          <div class="guide-card-tags">
+            <span>A1–C1</span>
+            <span>TestDaF</span>
+            <span>DSH</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+
+    <!-- APPLICATION GUIDES -->
+
+    <div class="guide-category">
+
+      <div class="guide-category-heading">
+        <div>
+          <span class="guide-category-kicker">APPLICATION</span>
+          <h3>Build a stronger application</h3>
+        </div>
+        <span class="guide-category-count">5 guides</span>
+      </div>
+
+      <div class="guide-card-grid">
+
+        <a class="guide-card guide-card-application" href="guides/sop.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">✍️</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">APPLICATION</span>
+          <h4>SOP Guide</h4>
+          <p>Understand what makes a clear, specific and authentic statement of purpose.</p>
+          <div class="guide-card-tags">
+            <span>Structure</span>
+            <span>Story</span>
+            <span>Review</span>
+          </div>
+        </a>
+
+        <a class="guide-card guide-card-application" href="guides/lor.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">💬</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">APPLICATION</span>
+          <h4>LOR Guide</h4>
+          <p>Plan recommendation letters, choose recommenders and organize requests.</p>
+          <div class="guide-card-tags">
+            <span>Recommenders</span>
+            <span>Structure</span>
+            <span>Tips</span>
+          </div>
+        </a>
+
+        <a class="guide-card guide-card-application" href="guides/resume.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">📄</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">APPLICATION</span>
+          <h4>Resume / CV Guide</h4>
+          <p>Build an application-ready academic and professional profile.</p>
+          <div class="guide-card-tags">
+            <span>CV</span>
+            <span>Projects</span>
+            <span>Experience</span>
+          </div>
+        </a>
+
+        <a class="guide-card guide-card-application" href="guides/scholarships.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">🎓</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">FUNDING</span>
+          <h4>Scholarship Guide</h4>
+          <p>Find scholarship types, eligibility factors, timelines and application planning.</p>
+          <div class="guide-card-tags">
+            <span>Funding</span>
+            <span>Deadlines</span>
+            <span>Applications</span>
+          </div>
+        </a>
+
+        <a class="guide-card guide-card-application" href="guides/university-application.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">🏫</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">APPLICATION</span>
+          <h4>University Application Guide</h4>
+          <p>Understand applications, documents, deadlines, portals and decision tracking.</p>
+          <div class="guide-card-tags">
+            <span>Documents</span>
+            <span>Deadlines</span>
+            <span>Portals</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+
+    <!-- VISA & PRE-DEPARTURE -->
+
+    <div class="guide-category">
+
+      <div class="guide-category-heading">
+        <div>
+          <span class="guide-category-kicker">VISA &amp; ARRIVAL</span>
+          <h3>Get ready for life after admission</h3>
+        </div>
+        <span class="guide-category-count">5 guides</span>
+      </div>
+
+      <div class="guide-card-grid">
+
+        <a class="guide-card guide-card-visa" href="guides/student-visa.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">🛂</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">VISA</span>
+          <h4>Student Visa Guide</h4>
+          <p>Understand the visa journey, documents, financial planning and interview preparation.</p>
+          <div class="guide-card-tags">
+            <span>Documents</span>
+            <span>Finance</span>
+            <span>Interview</span>
+          </div>
+        </a>
+
+        <a class="guide-card guide-card-visa" href="guides/accommodation.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">🏠</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">ARRIVAL</span>
+          <h4>Accommodation Guide</h4>
+          <p>Compare housing options and prepare for your first place abroad.</p>
+          <div class="guide-card-tags">
+            <span>Housing</span>
+            <span>Budget</span>
+            <span>Safety</span>
+          </div>
+        </a>
+
+        <a class="guide-card guide-card-visa" href="guides/finance.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">💳</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">MONEY</span>
+          <h4>Finance Abroad Guide</h4>
+          <p>Plan tuition, living costs, banking, payments and your student budget.</p>
+          <div class="guide-card-tags">
+            <span>Budget</span>
+            <span>Banking</span>
+            <span>Payments</span>
+          </div>
+        </a>
+
+        <a class="guide-card guide-card-visa" href="guides/insurance.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">🩺</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">PRE-DEPARTURE</span>
+          <h4>Insurance Guide</h4>
+          <p>Understand the role of student health and travel coverage before departure.</p>
+          <div class="guide-card-tags">
+            <span>Health</span>
+            <span>Travel</span>
+            <span>Coverage</span>
+          </div>
+        </a>
+
+        <a class="guide-card guide-card-visa" href="guides/pre-departure.html">
+          <div class="guide-card-top">
+            <span class="guide-card-icon">✈️</span>
+            <span class="guide-card-arrow">↗</span>
+          </div>
+          <span class="guide-card-kicker">FINAL CHECK</span>
+          <h4>Pre-Departure Guide</h4>
+          <p>Everything to organize before you leave home and arrive at your university.</p>
+          <div class="guide-card-tags">
+            <span>Packing</span>
+            <span>Documents</span>
+            <span>Arrival</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+  </section>
+
+
+
+  <!-- ==========================================
+       JOURNEY
+       ========================================== -->
+
+  <section class="guide-journey">
+
+    <div class="journey-heading">
+
+      <span class="guide-label">
+        THE COMPLETE JOURNEY
+      </span>
+
+      <h2>
+        Six stages. One destination.
+      </h2>
+
+      <p>
+        Follow the order or jump directly to the stage
+        you're working on right now.
+      </p>
+
+    </div>
+
+
+    <!-- STEP 01 -->
+
+    <article class="guide-stage featured-stage">
+
+      <div class="stage-number">
+        01
+      </div>
+
+      <div class="stage-main">
+
+        <div class="stage-icon">
+          🎯
+        </div>
+
+        <div class="stage-content">
+
+          <span class="stage-kicker">
+            START HERE
+          </span>
+
+          <h3>
+            Define where you're going
+          </h3>
+
+          <p>
+            Before applications, figure out what you're
+            actually looking for. Choose your destination,
+            degree, intake, and realistic budget.
+          </p>
+
+          <div class="stage-checklist">
+
+            <span>✓ Choose destination</span>
+            <span>✓ Pick your degree</span>
+            <span>✓ Set your budget</span>
+            <span>✓ Build Safe / Target / Dream list</span>
+
+          </div>
+
+          <button class="stage-link">
+            Open University Finder →
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="stage-side">
+        <span>KEY QUESTION</span>
+        <strong>
+          “Where do I actually have a realistic shot?”
+        </strong>
+      </div>
+
+    </article>
+
+
+    <!-- STEP 02 -->
+
+    <article class="guide-stage">
+
+      <div class="stage-number">
+        02
+      </div>
+
+      <div class="stage-main">
+
+        <div class="stage-icon">
+          📝
+        </div>
+
+        <div class="stage-content">
+
+          <span class="stage-kicker">
+            PREPARE
+          </span>
+
+          <h3>
+            Get your scores ready
+          </h3>
+
+          <p>
+            Map every test and academic requirement
+            before deadlines start approaching.
+          </p>
+
+          <div class="stage-tags">
+            <span>IELTS</span>
+            <span>TOEFL</span>
+            <span>GRE</span>
+            <span>GMAT</span>
+            <span>GPA</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="stage-deadline">
+        <small>IDEAL TIMING</small>
+        <strong>8–12 weeks</strong>
+        <span>before first deadline</span>
+      </div>
+
+    </article>
+
+
+    <!-- STEP 03 -->
+
+    <article class="guide-stage">
+
+      <div class="stage-number">
+        03
+      </div>
+
+      <div class="stage-main">
+
+        <div class="stage-icon">
+          💰
+        </div>
+
+        <div class="stage-content">
+
+          <span class="stage-kicker">
+            FUND IT
+          </span>
+
+          <h3>
+            Build your money plan
+          </h3>
+
+          <p>
+            Don't look at tuition alone. Combine scholarships,
+            loans, savings, tuition, housing, insurance,
+            and everyday living costs.
+          </p>
+
+          <div class="stage-tags">
+            <span>Scholarships</span>
+            <span>Loans</span>
+            <span>Tuition</span>
+            <span>Living costs</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="stage-tools">
+        <small>USE THESE TOOLS</small>
+
+        <button>Cost Calculator →</button>
+        <button>Currency Converter →</button>
+
+      </div>
+
+    </article>
+
+
+    <!-- STEP 04 -->
+
+    <article class="guide-stage">
+
+      <div class="stage-number">
+        04
+      </div>
+
+      <div class="stage-main">
+
+        <div class="stage-icon">
+          ✍️
+        </div>
+
+        <div class="stage-content">
+
+          <span class="stage-kicker">
+            TELL YOUR STORY
+          </span>
+
+          <h3>
+            Build an application that sounds like you
+          </h3>
+
+          <p>
+            Your SOP, LORs, resume, portfolio, and supporting
+            documents should tell one consistent story.
+          </p>
+
+          <div class="stage-checklist">
+
+            <span>✓ Statement of Purpose</span>
+            <span>✓ Recommendation Letters</span>
+            <span>✓ Resume / CV</span>
+            <span>✓ Transcripts</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- STEP 05 -->
+
+    <article class="guide-stage">
+
+      <div class="stage-number">
+        05
+      </div>
+
+      <div class="stage-main">
+
+        <div class="stage-icon">
+          🚀
+        </div>
+
+        <div class="stage-content">
+
+          <span class="stage-kicker">
+            APPLY
+          </span>
+
+          <h3>
+            Submit, track, and wait
+          </h3>
+
+          <p>
+            Apply strategically instead of sending everything
+            at once. Track deadlines, application fees,
+            portals, interviews, and decisions.
+          </p>
+
+          <div class="application-status">
+
+            <div>
+              <span class="status-dot"></span>
+              Application tracker
+            </div>
+
+            <strong>
+              Ready
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="stage-side">
+        <span>PRO TIP</span>
+        <strong>
+          Apply in waves instead of relying on one university.
+        </strong>
+      </div>
+
+    </article>
+
+
+    <!-- STEP 06 -->
+
+    <article class="guide-stage final-stage">
+
+      <div class="stage-number">
+        06
+      </div>
+
+      <div class="stage-main">
+
+        <div class="stage-icon">
+          ✈️
+        </div>
+
+        <div class="stage-content">
+
+          <span class="stage-kicker">
+            YOU'RE GOING
+          </span>
+
+          <h3>
+            Visa, housing &amp; takeoff
+          </h3>
+
+          <p>
+            Once you've got the offer, the job changes from
+            getting accepted to getting ready to leave.
+          </p>
+
+          <div class="stage-checklist">
+
+            <span>✓ Student visa</span>
+            <span>✓ Accommodation</span>
+            <span>✓ Health insurance</span>
+            <span>✓ Flights</span>
+            <span>✓ Airport pickup</span>
+
+          </div>
+
+          <button class="stage-link">
+            Open Visa Guide →
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  </section>
+
+
+  <!-- ==========================================
+       BEFORE YOU FLY
+       ========================================== -->
+
+  <section class="before-fly">
+
+    <div class="before-fly-header">
+
+      <div>
+        <span class="guide-label">
+          FINAL CHECK
+        </span>
+
+        <h2>
+          Before you fly ✈️
+        </h2>
+
+        <p>
+          Don't let a university offer become a
+          last-minute panic.
+        </p>
+      </div>
+
+      <span class="check-progress">
+        0 / 8 complete
+      </span>
+
+    </div>
+
+
+    <div class="fly-checklist">
+
+      <label>
+        <input type="checkbox">
+        <span>Visa approved</span>
+      </label>
+
+      <label>
+        <input type="checkbox">
+        <span>Accommodation confirmed</span>
+      </label>
+
+      <label>
+        <input type="checkbox">
+        <span>Health insurance arranged</span>
+      </label>
+
+      <label>
+        <input type="checkbox">
+        <span>Flight booked</span>
+      </label>
+
+      <label>
+        <input type="checkbox">
+        <span>University documents saved</span>
+      </label>
+
+      <label>
+        <input type="checkbox">
+        <span>Emergency contacts ready</span>
+      </label>
+
+      <label>
+        <input type="checkbox">
+        <span>Money / payment plan ready</span>
+      </label>
+
+      <label>
+        <input type="checkbox">
+        <span>Airport arrival plan ready</span>
+      </label>
+
+    </div>
+
+  </section>
+
+
+  <!-- ==========================================
+       FINAL CTA
+       ========================================== -->
+
+  <section class="guide-final-cta">
+
+    <div>
+
+      <span class="guide-label">
+        READY?
+      </span>
+
+      <h2>
+        Your study abroad journey
+        starts with one decision.
+      </h2>
+
+      <p>
+        Start by finding universities that actually
+        fit your profile.
+      </p>
+
+    </div>
+
+    <button class="guide-primary-btn">
+      Find my universities →
+    </button>
+
+  </section>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- =========================
+     AI CHAT
+========================= -->
+
+<section id="ai-chatPage" class="page-section hidden">
+
+<div class="ai-page">
+
+    <!-- Header -->
+    <header class="ai-header">
+
+        <div class="ai-header-content">
+            <div class="ai-brand">
+                <div class="ai-brand-icon">
+                    ✦
+                </div>
+
+                <div>
+                    <h1>UniAI</h1>
+                    <p>Your intelligent university admissions assistant</p>
+                </div>
+            </div>
+
+            <div class="ai-header-actions">
+                <button type="button" class="ai-header-btn" id="new-chat-btn">
+                    + New Chat
+                </button>
+
+                <button type="button" class="ai-header-btn" id="chat-history-btn">
+                    Chat History
+                </button>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- Main Chat -->
+    <main class="ai-chat-container">
+
+        <!-- Welcome State -->
+        <section id="ai-welcome" class="ai-welcome">
+
+            <div class="ai-welcome-icon">
+                ✦
+            </div>
+
+            <h2>How can I help you today?</h2>
+
+            <p>
+                Ask me about universities, scholarships, admissions,
+                visas, SOPs, LORs, IELTS, TOEFL and career planning.
+            </p>
+
+
+            <!-- Suggested Prompts -->
+            <div class="ai-suggestions">
+
+                <button
+                    type="button"
+                    class="ai-suggestion"
+                    data-prompt="How do I write a strong Statement of Purpose?">
+
+                    <span class="suggestion-icon">✍️</span>
+
+                    <span class="suggestion-content">
+                        <strong>Write an SOP</strong>
+                        <small>Create a strong Statement of Purpose</small>
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="ai-suggestion"
+                    data-prompt="What are the best STEM universities in Germany?">
+
+                    <span class="suggestion-icon">🎓</span>
+
+                    <span class="suggestion-content">
+                        <strong>Find universities</strong>
+                        <small>Explore the best STEM universities</small>
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="ai-suggestion"
+                    data-prompt="What are the requirements for a US F1 student visa?">
+
+                    <span class="suggestion-icon">🛂</span>
+
+                    <span class="suggestion-content">
+                        <strong>Visa guidance</strong>
+                        <small>Understand student visa requirements</small>
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="ai-suggestion"
+                    data-prompt="Help me create a university application strategy.">
+
+                    <span class="suggestion-icon">🚀</span>
+
+                    <span class="suggestion-content">
+                        <strong>Application strategy</strong>
+                        <small>Build your application roadmap</small>
+                    </span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Conversation -->
+        <section id="ai-conversation" class="ai-conversation hidden">
+
+            <div id="ai-messages" class="ai-messages">
+
+                <!-- Messages will be inserted here by JavaScript -->
+
+            </div>
+
+        </section>
+
+
+        <!-- Response / Legacy Container -->
+        <div id="ai-response" class="ai-response-box"></div>
+
+
+        <!-- Composer -->
+        <section class="ai-composer">
+
+            <div class="ai-composer-inner">
+
+                <!-- Attachment -->
+                <button
+                    type="button"
+                    class="composer-icon-btn"
+                    id="ai-attach-btn"
+                    aria-label="Attach file">
+
+                    +
+                </button>
+
+
+                <!-- Input -->
+                <textarea
+                    id="ai-input"
+                    class="ai-input"
+                    rows="1"
+                    placeholder="Ask UniAI anything..."
+                    aria-label="Message UniAI"
+                ></textarea>
+
+
+                <!-- Voice -->
+                <button
+                    type="button"
+                    class="composer-icon-btn"
+                    id="ai-voice-btn"
+                    aria-label="Voice input">
+
+                    🎙️
+                </button>
+
+
+                <!-- Send -->
+                <button
+                    type="button"
+                    class="ai-send-btn"
+                    id="ai-send-btn"
+                    onclick="askUniAI()"
+                    aria-label="Send message">
+
+                    ↑
+                </button>
+
+            </div>
+
+
+            <!-- Composer Tools -->
+            <div class="ai-composer-tools">
+
+                <div class="composer-left">
+
+                    <button
+                        type="button"
+                        class="composer-tool"
+                        id="university-tool">
+
+                        🎓
+                        <span>University Search</span>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="composer-tool"
+                        id="scholarship-tool">
+
+                        💰
+                        <span>Scholarships</span>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="composer-tool"
+                        id="sop-tool">
+
+                        ✍️
+                        <span>SOP</span>
+
+                    </button>
+
+                </div>
+
+
+                <div class="composer-status">
+
+                    <span class="status-dot"></span>
+
+                    <span>UniAI Ready</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Disclaimer -->
+        <p class="ai-disclaimer">
+            UniAI can make mistakes. Always verify important admission,
+            visa, scholarship and university information with official sources.
+        </p>
+
+    </main>
+
+</div>
+
+</section>
+
+<!-- =========================
+     WORKSPACE
+========================= -->
+
+<section id="workspacePage" class="page-section hidden">
+
+<div class="workspace">
+
+    <!-- Workspace Header -->
+    <header class="workspace-header">
+
+        <div>
+
+            <div class="workspace-label">
+                UNIAI WORKSPACE
+            </div>
+
+            <h1>
+                Your Application Workspace
+            </h1>
+
+            <p>
+                Everything you need to plan and manage your university journey.
+            </p>
+
+        </div>
+
+
+        <div class="workspace-actions">
+
+            <button
+                type="button"
+                class="workspace-btn"
+                id="workspace-search-btn">
+
+                Search
+            </button>
+
+            <button
+                type="button"
+                class="workspace-btn primary"
+                id="workspace-new-btn">
+
+                + New Project
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- Workspace Overview -->
+    <section class="workspace-overview">
+
+        <div class="overview-card">
+
+            <span class="overview-icon">🎓</span>
+
+            <div>
+                <strong>Universities</strong>
+                <span id="workspace-university-count">0 saved</span>
+            </div>
+
+        </div>
+
+
+        <div class="overview-card">
+
+            <span class="overview-icon">📝</span>
+
+            <div>
+                <strong>Applications</strong>
+                <span id="workspace-application-count">0 active</span>
+            </div>
+
+        </div>
+
+
+        <div class="overview-card">
+
+            <span class="overview-icon">📅</span>
+
+            <div>
+                <strong>Deadlines</strong>
+                <span id="workspace-deadline-count">0 upcoming</span>
+            </div>
+
+        </div>
+
+
+        <div class="overview-card">
+
+            <span class="overview-icon">💰</span>
+
+            <div>
+                <strong>Scholarships</strong>
+                <span id="workspace-scholarship-count">0 tracked</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Workspace Grid -->
+    <section class="workspace-grid">
+
+        <!-- University Finder -->
+        <article class="workspace-card university-card">
+
+            <div class="workspace-card-top">
+
+                <div class="workspace-card-icon">
+                    🎓
+                </div>
+
+                <span class="workspace-card-badge">
+                    Explore
+                </span>
+
+            </div>
+
+            <div class="workspace-card-content">
+
+                <h2>University Finder</h2>
+
+                <p>
+                    Discover universities based on your GPA, budget,
+                    country, course and academic profile.
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                class="workspace-card-action"
+                id="launch-university-finder">
+
+                Explore Universities
+                <span>→</span>
+
+            </button>
+
+        </article>
+
+
+        <!-- SOP Studio -->
+        <article class="workspace-card sop-card">
+
+            <div class="workspace-card-top">
+
+                <div class="workspace-card-icon">
+                    ✍️
+                </div>
+
+                <span class="workspace-card-badge">
+                    AI Powered
+                </span>
+
+            </div>
+
+            <div class="workspace-card-content">
+
+                <h2>SOP Studio</h2>
+
+                <p>
+                    Draft, analyze and improve your Statement of Purpose
+                    with structured AI feedback.
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                class="workspace-card-action"
+                id="launch-sop-studio">
+
+                Open SOP Studio
+                <span>→</span>
+
+            </button>
+
+        </article>
+
+
+        <!-- AI Assistant -->
+        <article class="workspace-card ai-card">
+
+            <div class="workspace-card-top">
+
+                <div class="workspace-card-icon">
+                    ✦
+                </div>
+
+                <span class="workspace-card-badge">
+                    Online
+                </span>
+
+            </div>
+
+            <div class="workspace-card-content">
+
+                <h2>UniAI Assistant</h2>
+
+                <p>
+                    Get personalized guidance for universities,
+                    admissions, scholarships, visas and applications.
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                class="workspace-card-action"
+                id="launch-ai-chat">
+
+                Start Chat
+                <span>→</span>
+
+            </button>
+
+        </article>
+
+
+        <!-- Application Tracker -->
+        <article class="workspace-card application-card">
+
+            <div class="workspace-card-top">
+
+                <div class="workspace-card-icon">
+                    📋
+                </div>
+
+                <span class="workspace-card-badge">
+                    Track
+                </span>
+
+            </div>
+
+            <div class="workspace-card-content">
+
+                <h2>Application Tracker</h2>
+
+                <p>
+                    Keep track of universities, application status,
+                    documents and upcoming deadlines.
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                class="workspace-card-action"
+                id="launch-application-tracker">
+
+                View Applications
+                <span>→</span>
+
+            </button>
+
+        </article>
+
+
+        <!-- Scholarship Tracker -->
+        <article class="workspace-card scholarship-card">
+
+            <div class="workspace-card-top">
+
+                <div class="workspace-card-icon">
+                    💰
+                </div>
+
+                <span class="workspace-card-badge">
+                    Opportunities
+                </span>
+
+            </div>
+
+            <div class="workspace-card-content">
+
+                <h2>Scholarship Finder</h2>
+
+                <p>
+                    Find scholarship opportunities and organize the ones
+                    that match your profile.
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                class="workspace-card-action"
+                id="launch-scholarship-finder">
+
+                Find Scholarships
+                <span>→</span>
+
+            </button>
+
+        </article>
+
+
+        <!-- Visa Planner -->
+        <article class="workspace-card visa-card">
+
+            <div class="workspace-card-top">
+
+                <div class="workspace-card-icon">
+                    🛂
+                </div>
+
+                <span class="workspace-card-badge">
+                    Planning
+                </span>
+
+            </div>
+
+            <div class="workspace-card-content">
+
+                <h2>Visa Planner</h2>
+
+                <p>
+                    Organize visa requirements, documents and preparation
+                    steps for your destination country.
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                class="workspace-card-action"
+                id="launch-visa-planner">
+
+                Open Visa Planner
+                <span>→</span>
+
+            </button>
+
+        </article>
+
+    </section>
+
+
+    <!-- Recent Activity -->
+    <section class="workspace-recent">
+
+        <div class="section-heading">
+
+            <div>
+                <h2>Recent Activity</h2>
+                <p>Your latest workspace activity.</p>
+            </div>
+
+            <button
+                type="button"
+                class="text-btn"
+                id="clear-workspace-activity">
+
+                Clear
+            </button>
+
+        </div>
+
+
+        <div
+            id="workspace-activity-list"
+            class="workspace-activity-list">
+
+            <div class="empty-activity">
+
+                <span>✦</span>
+
+                <p>
+                    Your recent activity will appear here.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+</section>
+
+ <!-- =========================
+     AI CHAT END
+========================= -->
+
+
+
+
+
+
+    <!-- VISA GUIDE -->
+  
+<div id="visaGuidePage" class="page-section hidden">
+
+  <!-- =====================================================
+       VISA GUIDE — HERO
+  ====================================================== -->
+  <section class="visa-hero">
+
+    <div class="visa-hero-glow visa-glow-one"></div>
+    <div class="visa-hero-glow visa-glow-two"></div>
+
+    <div class="visa-hero-content">
+
+      <div class="visa-hero-copy">
+
+        <div class="visa-eyebrow">
+          <span class="visa-eyebrow-dot"></span>
+          VISA & IMMIGRATION
+        </div>
+
+        <h1>
+          Your journey starts
+          <span>with the right visa.</span>
+        </h1>
+
+        <p>
+          Explore student visa requirements, documents, financial
+          requirements, processing steps and important information
+          for your destination.
+        </p>
+
+        <div class="visa-hero-actions">
+
+          <a href="#visaExplorer" class="visa-primary-action">
+            <span>Explore destinations</span>
+            <span class="action-arrow">→</span>
+          </a>
+
+          <div class="visa-trust">
+            <div class="trust-icons">
+              <span>✓</span>
+              <span>✓</span>
+              <span>✓</span>
+            </div>
+
+            <div>
+              <strong>Student-focused guidance</strong>
+              <small>Simple. Clear. Organized.</small>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- HERO VISUAL / STATS -->
+      <div class="visa-hero-visual">
+
+        <div class="visa-globe-card">
+
+          <div class="globe-orbit orbit-one"></div>
+          <div class="globe-orbit orbit-two"></div>
+
+          <div class="visa-globe">
+            🌍
+          </div>
+
+          <div class="floating-visa-card card-top">
+            <span class="floating-icon">✓</span>
+            <div>
+              <strong>Documents</strong>
+              <small>Checklist ready</small>
+            </div>
+          </div>
+
+          <div class="floating-visa-card card-bottom">
+            <span class="floating-icon">₹</span>
+            <div>
+              <strong>Funds</strong>
+              <small>Financial guidance</small>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- HERO QUICK STATS -->
+    <div class="visa-hero-stats">
+
+      <div class="visa-stat">
+        <span class="stat-icon">🌎</span>
+        <div>
+          <strong id="visaCountryCount">0</strong>
+          <small>Destinations</small>
+        </div>
+      </div>
+
+      <div class="visa-stat">
+        <span class="stat-icon">🛂</span>
+        <div>
+          <strong>Multiple</strong>
+          <small>Visa pathways</small>
+        </div>
+      </div>
+
+      <div class="visa-stat">
+        <span class="stat-icon">📋</span>
+        <div>
+          <strong>Step-by-step</strong>
+          <small>Guidance</small>
+        </div>
+      </div>
+
+      <div class="visa-stat">
+        <span class="stat-icon">🎓</span>
+        <div>
+          <strong>Student</strong>
+          <small>Focused information</small>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       VISA EXPLORER
+  ====================================================== -->
+  <section
+    class="visa-explorer"
+    id="visaExplorer"
+  >
+
+    <!-- SECTION HEADING -->
+    <div class="visa-section-heading">
+
+      <div>
+        <span class="section-kicker">
+          FIND YOUR DESTINATION
+        </span>
+
+        <h2>
+          Where are you planning to study?
+        </h2>
+
+        <p>
+          Choose a country to explore its student visa requirements
+          and application information.
+        </p>
+      </div>
+
+      <div class="visa-section-badge">
+        <span>✦</span>
+        Explore visa guides
+      </div>
+
+    </div>
+
+
+    <!-- ===================================================
+         SEARCH PANEL
+    ==================================================== -->
+    <div class="visa-search-panel">
+
+      <div class="visa-search-main">
+
+        <div class="visa-search-box">
+
+          <span class="search-icon">⌕</span>
+
+          <div class="search-input-wrapper">
+
+            <label for="visaSearch">
+              Search destination
+            </label>
+
+            <input
+              type="search"
+              id="visaSearch"
+              placeholder="Try Canada, UK, Australia..."
+              autocomplete="off"
+            >
+
+          </div>
+
+          <button
+            id="clearVisaSearch"
+            type="button"
+            aria-label="Clear search"
+          >
+            ×
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- FILTERS -->
+      <div class="visa-filter-area">
+
+        <div class="visa-filter">
+
+          <label for="visaRegionFilter">
+            Region
+          </label>
+
+          <div class="select-wrapper">
+            <select id="visaRegionFilter">
+
+              <option value="all">
+                All regions
+              </option>
+
+              <option value="north-america">
+                North America
+              </option>
+
+              <option value="europe">
+                Europe
+              </option>
+
+              <option value="asia">
+                Asia
+              </option>
+
+              <option value="oceania">
+                Oceania
+              </option>
+
+              <option value="middle-east">
+                Middle East
+              </option>
+
+            </select>
+          </div>
+
+        </div>
+
+
+        <div class="visa-filter">
+
+          <label for="visaTypeFilter">
+            Visa type
+          </label>
+
+          <div class="select-wrapper">
+            <select id="visaTypeFilter">
+
+              <option value="all">
+                All visa types
+              </option>
+
+            </select>
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          id="visaResetFilters"
+          class="visa-reset-button"
+        >
+          <span>↻</span>
+          Reset
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- ===================================================
+         RESULTS HEADER
+    ==================================================== -->
+    <div class="visa-results-header">
+
+      <div class="visa-results-title">
+
+        <span class="results-indicator"></span>
+
+        <span id="visaResultsText">
+          Loading destinations...
+        </span>
+
+      </div>
+
+      <div class="visa-results-sort">
+        Student visa guides
+      </div>
+
+    </div>
+
+
+    <!-- ===================================================
+         COUNTRY GRID
+    ==================================================== -->
+    <div
+      id="visaCountryGrid"
+      class="visa-country-grid"
+    ></div>
+
+
+    <!-- ===================================================
+         LOADING STATE
+    ==================================================== -->
+    <div
+      id="visaLoading"
+      class="visa-loading"
+    >
+
+      <div class="visa-loading-card">
+
+        <div class="visa-spinner"></div>
+
+        <div>
+          <strong>Loading visa guides</strong>
+          <p>
+            Preparing destination information...
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ===================================================
+         EMPTY STATE
+    ==================================================== -->
+    <div
+      id="visaEmpty"
+      class="visa-empty hidden"
+    >
+
+      <div class="empty-icon">
+        🔎
+      </div>
+
+      <span class="empty-kicker">
+        NO MATCHES
+      </span>
+
+      <h3>
+        We couldn't find that destination
+      </h3>
+
+      <p>
+        Try searching for another country or remove one of
+        your filters to see more destinations.
+      </p>
+
+      <button
+        type="button"
+        id="visaEmptyReset"
+        class="visa-empty-button"
+      >
+        Clear all filters
+        <span>→</span>
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       VISA DETAILS MODAL
+  ====================================================== -->
+  <div
+    id="visaDetailsModal"
+    class="visa-modal hidden"
+    aria-hidden="true"
+  >
+
+    <div
+      class="visa-modal-backdrop"
+      data-close-visa-modal
+    ></div>
+
+
+    <div
+      class="visa-modal-content"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="visaModalTitle"
+    >
+
+      <div class="visa-modal-header">
+
+        <div class="visa-modal-header-label">
+          <span class="modal-status-dot"></span>
+          VISA GUIDE
+        </div>
+
+        <button
+          type="button"
+          class="visa-modal-close"
+          id="visaModalClose"
+          aria-label="Close"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <div
+        id="visaModalBody"
+        class="visa-modal-body"
+      ></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+    <!-- SOP & LOR STUDIO -->
+<div id="sopStudioPage" class="page-section hidden">
+
+  <div class="page-header">
+    <h1>SOP &amp; LOR Studio</h1>
+    <p>
+      Build, refine, and evaluate application documents using your real
+      academic and professional experiences.
+    </p>
+  </div>
+
+  <div class="bento-card sop-studio-card">
+
+    <!-- TOOL NAVIGATION -->
+    <div class="sop-tabs" role="tablist">
+
+      <button
+        class="sop-tab-btn active"
+        type="button"
+        onclick="switchSopTab('sopWriter')"
+        data-tab="sopWriter">
+        SOP Writer
+      </button>
+
+      <button
+        class="sop-tab-btn"
+        type="button"
+        onclick="switchSopTab('lorWriter')"
+        data-tab="lorWriter">
+        LOR Writer
+      </button>
+
+      <button
+        class="sop-tab-btn"
+        type="button"
+        onclick="switchSopTab('evaluator')"
+        data-tab="evaluator">
+        Evaluator
+      </button>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- SOP WRITER -->
+    <!-- ========================================================= -->
+
+    <div id="sopWriterTab" class="sop-tool-tab">
+
+      <div class="sop-workspace-header">
+        <div>
+          <span class="sop-step-label">STEP 1</span>
+          <h2>Build your SOP</h2>
+          <p>
+            Start with your background, motivation, experiences, and goals.
+          </p>
+        </div>
+
+        <div class="sop-progress">
+          <span class="progress-text">Profile</span>
+          <div class="progress-bar">
+            <div class="progress-fill" id="sopProgressFill"></div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- APPLICANT PROFILE -->
+
+      <div class="sop-section">
+
+        <div class="sop-section-heading">
+          <div>
+            <h3>Applicant profile</h3>
+            <p>Basic information about the application.</p>
+          </div>
+        </div>
+
+        <div class="sop-fields">
+
+          <div class="form-group">
+            <label for="sop-name">Full name</label>
+            <input
+              type="text"
+              id="sop-name"
+              placeholder="e.g. Aarav Sharma">
+          </div>
+
+          <div class="form-group">
+            <label for="sop-program">Target program</label>
+            <input
+              type="text"
+              id="sop-program"
+              placeholder="e.g. MS Computer Science">
+          </div>
+
+          <div class="form-group">
+            <label for="sop-university">Target university</label>
+            <input
+              type="text"
+              id="sop-university"
+              placeholder="e.g. University of Toronto">
+          </div>
+
+          <div class="form-group">
+            <label for="sop-intake">Intake</label>
+            <select id="sop-intake">
+              <option value="">Select intake</option>
+              <option value="Fall 2027">Fall 2027</option>
+              <option value="Spring 2027">Spring 2027</option>
+              <option value="Fall 2028">Fall 2028</option>
+              <option value="Spring 2028">Spring 2028</option>
+            </select>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- MOTIVATION -->
+
+      <div class="sop-section">
+
+        <div class="sop-section-heading">
+          <div>
+            <h3>Your motivation</h3>
+            <p>
+              Tell us what genuinely led you toward this field.
+            </p>
+          </div>
+        </div>
+
+        <div class="guided-question">
+          <span class="question-number">01</span>
+
+          <div class="question-content">
+            <strong>Why did you become interested in this field?</strong>
+
+            <p>
+              Think about a project, class, problem, experience, or moment
+              that influenced your academic direction.
+            </p>
+
+            <textarea
+              id="sop-motivation"
+              rows="5"
+              placeholder="Write your experience in your own words..."></textarea>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- ACADEMIC EXPERIENCE -->
+
+      <div class="sop-section">
+
+        <div class="sop-section-heading">
+          <div>
+            <h3>Academic &amp; professional experiences</h3>
+            <p>
+              Add experiences that provide evidence for your goals.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            class="secondary-btn"
+            onclick="addExperienceEntry()">
+            + Add Experience
+          </button>
+        </div>
+
+        <div id="experienceContainer">
+
+          <!-- EXPERIENCE CARDS WILL BE INSERTED HERE -->
+
+        </div>
+
+        <div id="experienceEmptyState" class="sop-empty-state">
+
+          <div class="empty-icon">+</div>
+
+          <h4>Add your first experience</h4>
+
+          <p>
+            Projects, internships, research, coursework, competitions,
+            volunteering, or professional work.
+          </p>
+
+          <button
+            type="button"
+            class="secondary-btn"
+            onclick="addExperienceEntry()">
+            Add Experience
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- GOALS -->
+
+      <div class="sop-section">
+
+        <div class="sop-section-heading">
+          <div>
+            <h3>Future goals</h3>
+            <p>
+              Explain what you want to do next and why this program matters.
+            </p>
+          </div>
+        </div>
+
+        <div class="sop-fields">
+
+          <div class="form-group full-width">
+            <label for="sop-short-term-goal">
+              Short-term goal
+            </label>
+
+            <textarea
+              id="sop-short-term-goal"
+              rows="3"
+              placeholder="What do you want to learn, research, or work on after joining the program?"></textarea>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="sop-long-term-goal">
+              Long-term goal
+            </label>
+
+            <textarea
+              id="sop-long-term-goal"
+              rows="3"
+              placeholder="Where do you see this degree taking you in the longer term?"></textarea>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- GENERATE -->
+
+      <div class="sop-action-panel">
+
+        <div>
+          <span class="action-label">READY TO DRAFT?</span>
+
+          <h3>
+            Turn your experiences into a structured SOP.
+          </h3>
+
+          <p>
+            Your experiences should drive the story — not generic statements.
+          </p>
+        </div>
+
+        <button
+          class="btn-ai-generate glow-btn"
+          type="button"
+          onclick="generateSOP()">
+
+          <span class="btn-text">
+            Generate SOP
+          </span>
+
+        </button>
+
+      </div>
+
+
+      <!-- GENERATED SOP -->
+
+      <div
+        id="generatedSopContainer"
+        class="hidden sop-output">
+
+        <div class="sop-output-header">
+
+          <div>
+            <span class="sop-step-label">DRAFT</span>
+            <h3>Your SOP</h3>
+          </div>
+
+          <div class="sop-editor-actions">
+
+            <button
+              type="button"
+              class="secondary-btn"
+              onclick="regenerateSOP()">
+              Regenerate
+            </button>
+
+            <button
+              type="button"
+              class="secondary-btn"
+              onclick="evaluateGeneratedSOP()">
+              Evaluate
+            </button>
+
+          </div>
+
+        </div>
+
+        <div
+          id="sopTextEditor"
+          class="sop-editor"
+          contenteditable="true">
+        </div>
+
+        <div class="sop-editor-footer">
+
+          <span id="sopWordCount">
+            0 words
+          </span>
+
+          <span>
+            Editable draft
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- ========================================================= -->
+    <!-- LOR WRITER -->
+    <!-- ========================================================= -->
+
+    <div id="lorWriterTab" class="sop-tool-tab hidden">
+
+      <div class="sop-workspace-header">
+
+        <div>
+          <span class="sop-step-label">LOR</span>
+
+          <h2>Recommendation Letter Writer</h2>
+
+          <p>
+            Build a recommendation letter around specific evidence,
+            achievements, and examples.
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- RECOMMENDER -->
+
+      <div class="sop-section">
+
+        <div class="sop-section-heading">
+          <div>
+            <h3>Recommender information</h3>
+            <p>
+              Establish the relationship between the recommender and applicant.
+            </p>
+          </div>
+        </div>
+
+        <div class="sop-fields">
+
+          <div class="form-group">
+            <label for="lor-recommender-name">
+              Recommender name
+            </label>
+
+            <input
+              type="text"
+              id="lor-recommender-name"
+              placeholder="e.g. Dr. Priya Mehta">
+          </div>
+
+          <div class="form-group">
+            <label for="lor-recommender-role">
+              Position / designation
+            </label>
+
+            <input
+              type="text"
+              id="lor-recommender-role"
+              placeholder="e.g. Associate Professor">
+          </div>
+
+          <div class="form-group">
+            <label for="lor-institution">
+              Institution / organization
+            </label>
+
+            <input
+              type="text"
+              id="lor-institution"
+              placeholder="e.g. ABC University">
+          </div>
+
+          <div class="form-group">
+            <label for="lor-relationship">
+              Relationship with applicant
+            </label>
+
+            <input
+              type="text"
+              id="lor-relationship"
+              placeholder="e.g. Professor for Machine Learning">
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- APPLICANT -->
+
+      <div class="sop-section">
+
+        <div class="sop-section-heading">
+          <div>
+            <h3>Applicant information</h3>
+            <p>
+              Provide the context needed for the recommendation.
+            </p>
+          </div>
+        </div>
+
+        <div class="sop-fields">
+
+          <div class="form-group">
+            <label for="lor-student-name">
+              Applicant name
+            </label>
+
+            <input
+              type="text"
+              id="lor-student-name"
+              placeholder="Applicant's full name">
+          </div>
+
+          <div class="form-group">
+            <label for="lor-program">
+              Target program
+            </label>
+
+            <input
+              type="text"
+              id="lor-program"
+              placeholder="e.g. MS Data Science">
+          </div>
+
+          <div class="form-group">
+            <label for="lor-university">
+              Target university
+            </label>
+
+            <input
+              type="text"
+              id="lor-university"
+              placeholder="Target university">
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- EVIDENCE -->
+
+      <div class="sop-section">
+
+        <div class="sop-section-heading">
+
+          <div>
+            <h3>Evidence &amp; examples</h3>
+
+            <p>
+              Strong recommendations are built around specific observations,
+              not generic adjectives.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            class="secondary-btn"
+            onclick="addLORExample()">
+            + Add Example
+          </button>
+
+        </div>
+
+        <div id="lorExamplesContainer"></div>
+
+        <div class="sop-empty-state">
+
+          <div class="empty-icon">+</div>
+
+          <h4>Add a real example</h4>
+
+          <p>
+            For example: a project, research contribution, leadership
+            situation, academic achievement, or problem the applicant solved.
+          </p>
+
+          <button
+            type="button"
+            class="secondary-btn"
+            onclick="addLORExample()">
+            Add Example
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- RECOMMENDER ASSESSMENT -->
+
+      <div class="sop-section">
+
+        <div class="sop-section-heading">
+
+          <div>
+            <h3>Recommender assessment</h3>
+
+            <p>
+              Describe qualities that are supported by your examples.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="sop-fields">
+
+          <div class="form-group full-width">
+
+            <label for="lor-strengths">
+              Key strengths
+            </label>
+
+            <textarea
+              id="lor-strengths"
+              rows="4"
+              placeholder="Which qualities does the applicant consistently demonstrate?"></textarea>
+
+          </div>
+
+          <div class="form-group full-width">
+
+            <label for="lor-comparison">
+              Relative standing
+            </label>
+
+            <textarea
+              id="lor-comparison"
+              rows="4"
+              placeholder="If appropriate, how does the applicant compare with other students or colleagues you have worked with?"></textarea>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- GENERATE LOR -->
+
+      <div class="sop-action-panel">
+
+        <div>
+
+          <span class="action-label">
+            READY TO DRAFT?
+          </span>
+
+          <h3>
+            Create an evidence-based recommendation letter.
+          </h3>
+
+          <p>
+            The strongest letters connect qualities with specific examples.
+          </p>
+
+        </div>
+
+        <button
+          class="btn-ai-generate glow-btn"
+          type="button"
+          onclick="generateLOR()">
+
+          <span class="btn-text">
+            Generate LOR
+          </span>
+
+        </button>
+
+      </div>
+
+
+      <!-- GENERATED LOR -->
+
+      <div
+        id="generatedLorContainer"
+        class="hidden sop-output">
+
+        <div class="sop-output-header">
+
+          <div>
+            <span class="sop-step-label">DRAFT</span>
+
+            <h3>
+              Recommendation Letter
+            </h3>
+          </div>
+
+          <div class="sop-editor-actions">
+
+            <button
+              type="button"
+              class="secondary-btn"
+              onclick="regenerateLOR()">
+              Regenerate
+            </button>
+
+            <button
+              type="button"
+              class="secondary-btn"
+              onclick="evaluateGeneratedLOR()">
+              Evaluate
+            </button>
+
+          </div>
+
+        </div>
+
+        <div
+          id="lorTextEditor"
+          class="sop-editor"
+          contenteditable="true">
+        </div>
+
+        <div class="sop-editor-footer">
+
+          <span id="lorWordCount">
+            0 words
+          </span>
+
+          <span>
+            Editable draft
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- ========================================================= -->
+    <!-- EVALUATOR -->
+    <!-- ========================================================= -->
+
+    <div id="evaluatorTab" class="sop-tool-tab hidden">
+
+      <div class="sop-workspace-header">
+
+        <div>
+
+          <span class="sop-step-label">
+            REVIEW
+          </span>
+
+          <h2>Application Document Evaluator</h2>
+
+          <p>
+            Review your document for clarity, specificity, evidence,
+            structure, and program alignment.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- DOCUMENT TYPE -->
+
+      <div class="sop-section">
+
+        <div class="sop-fields">
+
+          <div class="form-group">
+
+            <label for="evaluationDocumentType">
+              Document type
+            </label>
+
+            <select id="evaluationDocumentType">
+
+              <option value="sop">
+                Statement of Purpose
+              </option>
+
+              <option value="lor">
+                Letter of Recommendation
+              </option>
+
+            </select>
+
+          </div>
+
+          <div class="form-group">
+
+            <label for="evaluationProgram">
+              Target program
+            </label>
+
+            <input
+              type="text"
+              id="evaluationProgram"
+              placeholder="e.g. MS Computer Science">
+
+          </div>
+
+          <div class="form-group">
+
+            <label for="evaluationUniversity">
+              Target university
+            </label>
+
+            <input
+              type="text"
+              id="evaluationUniversity"
+              placeholder="University name">
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- DOCUMENT INPUT -->
+
+      <div class="sop-section">
+
+        <div class="sop-section-heading">
+
+          <div>
+
+            <h3>
+              Your document
+            </h3>
+
+            <p>
+              Paste your current draft below. The evaluator will identify
+              areas that need stronger evidence or clearer reasoning.
+            </p>
+
+          </div>
+
+        </div>
+
+        <textarea
+          id="sop-eval-input"
+          class="evaluation-editor"
+          rows="16"
+          placeholder="Paste your SOP or LOR here..."></textarea>
+
+        <div class="editor-meta">
+
+          <span id="evaluationWordCount">
+            0 words
+          </span>
+
+          <button
+            type="button"
+            class="secondary-btn"
+            onclick="clearEvaluationText()">
+            Clear
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- EVALUATE -->
+
+      <div class="sop-action-panel">
+
+        <div>
+
+          <span class="action-label">
+            DOCUMENT REVIEW
+          </span>
+
+          <h3>
+            Find what an evaluator would question.
+          </h3>
+
+          <p>
+            Look beyond grammar: focus on evidence, specificity, structure,
+            motivation, and fit.
+          </p>
+
+        </div>
+
+        <button
+          class="btn-ai-generate glow-btn"
+          type="button"
+          onclick="evaluateSOP()">
+
+          <span class="btn-text">
+            Evaluate Document
+          </span>
+
+        </button>
+
+      </div>
+
+
+      <!-- EVALUATION RESULTS -->
+
+      <div
+        id="evaluationResults"
+        class="hidden sop-output">
+
+        <div class="sop-output-header">
+
+          <div>
+
+            <span class="sop-step-label">
+              REVIEW RESULTS
+            </span>
+
+            <h3>
+              Document Analysis
+            </h3>
+
+          </div>
+
+          <button
+            type="button"
+            class="secondary-btn"
+            onclick="reevaluateDocument()">
+            Re-evaluate
+          </button>
+
+        </div>
+
+
+        <!-- SCORE OVERVIEW -->
+
+        <div class="evaluation-overview">
+
+          <div class="evaluation-score-card">
+
+            <span>
+              Overall
+            </span>
+
+            <strong id="evaluationOverallScore">
+              —
+            </strong>
+
+            <small>
+              / 100
+            </small>
+
+          </div>
+
+          <div class="evaluation-summary">
+
+            <h4>
+              Reviewer summary
+            </h4>
+
+            <p id="evaluationSummary">
+              Your evaluation summary will appear here.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- CRITERIA -->
+
+        <div
+          id="evaluationCriteria"
+          class="evaluation-criteria">
+
+          <!-- JS WILL INSERT CRITERIA HERE -->
+
+        </div>
+
+
+        <!-- INLINE FEEDBACK -->
+
+        <div class="evaluation-feedback">
+
+          <div class="sop-section-heading">
+
+            <div>
+
+              <h3>
+                Detailed feedback
+              </h3>
+
+              <p>
+                Specific areas to revise before submitting.
+              </p>
+
+            </div>
+
+          </div>
+
+          <div id="evaluationDetailedFeedback">
+            <!-- JS WILL INSERT FEEDBACK HERE -->
+          </div>
+
+        </div>
+
+
+        <!-- REVISION LOOP -->
+
+        <div class="revision-panel">
+
+          <div>
+
+            <span class="action-label">
+              NEXT STEP
+            </span>
+
+            <h3>
+              Revise and evaluate again
+            </h3>
+
+            <p>
+              Use the feedback to improve your draft, then run the evaluator
+              again.
+            </p>
+
+          </div>
+
+          <button
+            type="button"
+            class="secondary-btn"
+            onclick="switchSopTab('evaluator')">
+            Edit Document
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+    <!-- JOBS -->
+    
+<div id="aiFreeJobsPage" class="page-section hidden">
+
+  <div class="ai-jobs-shell">
+
+    <!-- Ambient background -->
+    <div class="ai-orb orb-one"></div>
+    <div class="ai-orb orb-two"></div>
+    <div class="ai-grid"></div>
+
+    <!-- Header -->
+    <header class="ai-jobs-hero">
+      <div>
+        <div class="ai-eyebrow">
+          <span class="pulse-dot"></span>
+          AI JOB NETWORK · LIVE
+        </div>
+
+        <h1>
+          Find work.<br>
+          <span>Skip the paywall.</span>
+        </h1>
+
+        <p>
+          Remote, campus-friendly and portfolio-first opportunities
+          that don't require a paid AI subscription.
+        </p>
+      </div>
+
+      <div class="ai-scan-card">
+        <div class="scan-ring">
+          <span>AI</span>
+        </div>
+        <div>
+          <strong id="scanStatus">READY TO SCAN</strong>
+          <small>Opportunity engine online</small>
+        </div>
+        <button onclick="runJobScan()" class="scan-btn">
+          RUN AI SCAN
+        </button>
+      </div>
+    </header>
+
+    <!-- Stats -->
+    <section class="job-stats">
+      <div class="stat-box">
+        <span>ACTIVE ROLES</span>
+        <strong id="jobCount">04</strong>
+      </div>
+
+      <div class="stat-box">
+        <span>REMOTE</span>
+        <strong>03</strong>
+      </div>
+
+      <div class="stat-box">
+        <span>NO PAID AI</span>
+        <strong>100%</strong>
+      </div>
+
+      <div class="stat-box">
+        <span>AVG. MATCH</span>
+        <strong id="avgMatch">87%</strong>
+      </div>
+    </section>
+
+    <!-- Controls -->
+    <section class="job-controls">
+
+      <div class="job-search">
+        <span>⌕</span>
+        <input
+          id="jobSearch"
+          type="text"
+          placeholder="Search roles, skills, locations..."
+          oninput="filterJobs()"
+        />
+        <kbd>⌘ K</kbd>
+      </div>
+
+      <div class="filter-row">
+        <button class="job-filter active" data-filter="all"
+          onclick="setJobFilter('all', this)">
+          ALL
+        </button>
+
+        <button class="job-filter" data-filter="remote"
+          onclick="setJobFilter('remote', this)">
+          REMOTE
+        </button>
+
+        <button class="job-filter" data-filter="campus"
+          onclick="setJobFilter('campus', this)">
+          CAMPUS
+        </button>
+
+        <button class="job-filter" data-filter="design"
+          onclick="setJobFilter('design', this)">
+          DESIGN
+        </button>
+
+        <button class="job-filter" data-filter="tech"
+          onclick="setJobFilter('tech', this)">
+          TECH
+        </button>
+
+        <select id="jobSort" onchange="sortJobs(this.value)">
+          <option value="match">Best match</option>
+          <option value="pay">Highest pay</option>
+          <option value="hours">Lowest hours</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Jobs -->
+    <section id="jobGrid" class="crazy-job-grid">
+
+      <article
+        class="crazy-job-card"
+        data-category="remote tech"
+        data-match="94"
+        data-pay="400"
+        data-hours="12"
+      >
+        <div class="card-glow"></div>
+
+        <div class="job-top">
+          <span class="job-type">REMOTE · 12 HRS/WEEK</span>
+          <button class="save-job" onclick="toggleSave(this)">♡</button>
+        </div>
+
+        <div class="company-avatar climate">CL</div>
+
+        <h3>Research assistant — climate data</h3>
+
+        <p>
+          Clean public datasets and turn messy climate information
+          into short, useful research briefs.
+        </p>
+
+        <div class="job-tags">
+          <span>Python</span>
+          <span>Research</span>
+          <span>Data</span>
+        </div>
+
+        <div class="job-match">
+          <div>
+            <small>AI MATCH</small>
+            <strong>94%</strong>
+          </div>
+          <div class="match-bar">
+            <i style="width:94%"></i>
+          </div>
+        </div>
+
+        <div class="job-bottom">
+          <strong>$400/mo</strong>
+          <button onclick="openJob(this)" class="interest-btn">
+            VIEW ROLE →
+          </button>
+        </div>
+      </article>
+
+
+      <article
+        class="crazy-job-card"
+        data-category="campus"
+        data-match="86"
+        data-pay="180"
+        data-hours="10"
+      >
+        <div class="card-glow"></div>
+
+        <div class="job-top">
+          <span class="job-type">HYBRID · CAMPUS</span>
+          <button class="save-job" onclick="toggleSave(this)">♡</button>
+        </div>
+
+        <div class="company-avatar mentor">IO</div>
+
+        <h3>International office peer mentor</h3>
+
+        <p>
+          Help incoming students navigate housing, orientation
+          and their first weeks on campus.
+        </p>
+
+        <div class="job-tags">
+          <span>Mentoring</span>
+          <span>Communication</span>
+          <span>Campus</span>
+        </div>
+
+        <div class="job-match">
+          <div>
+            <small>AI MATCH</small>
+            <strong>86%</strong>
+          </div>
+          <div class="match-bar">
+            <i style="width:86%"></i>
+          </div>
+        </div>
+
+        <div class="job-bottom">
+          <strong>$18/hr</strong>
+          <button onclick="openJob(this)" class="interest-btn">
+            VIEW ROLE →
+          </button>
+        </div>
+      </article>
+
+
+      <article
+        class="crazy-job-card"
+        data-category="remote tech"
+        data-match="91"
+        data-pay="300"
+        data-hours="15"
+      >
+        <div class="card-glow"></div>
+
+        <div class="job-top">
+          <span class="job-type">REMOTE · CONTRACT</span>
+          <button class="save-job" onclick="toggleSave(this)">♡</button>
+        </div>
+
+        <div class="company-avatar open">OS</div>
+
+        <h3>Open-source docs intern</h3>
+
+        <p>
+          Improve README quality and developer documentation
+          for a modern developer-tools organization.
+        </p>
+
+        <div class="job-tags">
+          <span>GitHub</span>
+          <span>Writing</span>
+          <span>Docs</span>
+        </div>
+
+        <div class="job-match">
+          <div>
+            <small>AI MATCH</small>
+            <strong>91%</strong>
+          </div>
+          <div class="match-bar">
+            <i style="width:91%"></i>
+          </div>
+        </div>
+
+        <div class="job-bottom">
+          <strong>Portfolio-first</strong>
+          <button onclick="openJob(this)" class="interest-btn">
+            VIEW ROLE →
+          </button>
+        </div>
+      </article>
+
+
+      <article
+        class="crazy-job-card"
+        data-category="design remote"
+        data-match="78"
+        data-pay="150"
+        data-hours="8"
+      >
+        <div class="card-glow"></div>
+
+        <div class="job-top">
+          <span class="job-type">PART-TIME · DESIGN</span>
+          <button class="save-job" onclick="toggleSave(this)">♡</button>
+        </div>
+
+        <div class="company-avatar design">SD</div>
+
+        <h3>Scholarship content designer</h3>
+
+        <p>
+          Turn complicated award criteria into simple,
+          attractive one-page explainers.
+        </p>
+
+        <div class="job-tags">
+          <span>Figma</span>
+          <span>Design</span>
+          <span>Writing</span>
+        </div>
+
+        <div class="job-match">
+          <div>
+            <small>AI MATCH</small>
+            <strong>78%</strong>
+          </div>
+          <div class="match-bar">
+            <i style="width:78%"></i>
+          </div>
+        </div>
+
+        <div class="job-bottom">
+          <strong>Per article</strong>
+          <button onclick="openJob(this)" class="interest-btn">
+            VIEW ROLE →
+          </button>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- Empty state -->
+    <div id="noJobs" class="no-jobs hidden">
+      <div>∅</div>
+      <h3>NO SIGNAL FOUND</h3>
+      <p>Try another search or filter.</p>
+    </div>
+
+  </div>
+
+  <!-- Job modal -->
+  <div id="jobModal" class="job-modal hidden">
+    <div class="modal-backdrop" onclick="closeJob()"></div>
+
+    <div class="job-modal-box">
+      <button class="modal-close" onclick="closeJob()">×</button>
+
+      <div class="modal-signal">OPPORTUNITY DETECTED</div>
+
+      <h2 id="modalTitle">Role</h2>
+      <p id="modalDescription"></p>
+
+      <div class="modal-grid">
+        <div>
+          <small>MATCH</small>
+          <strong id="modalMatch">94%</strong>
+        </div>
+
+        <div>
+          <small>TYPE</small>
+          <strong id="modalType">REMOTE</strong>
+        </div>
+
+        <div>
+          <small>PAY</small>
+          <strong id="modalPay">$400/mo</strong>
+        </div>
+      </div>
+
+      <button class="modal-interest" onclick="expressInterest()">
+        EXPRESS INTEREST ↗
+      </button>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- ROADMAP -->
+    <div id="roadmapPage" class="page-section hidden">
+
+  <div class="roadmap-shell">
+
+    <!-- HEADER -->
+    <div class="roadmap-header">
+      <div>
+        <div class="roadmap-eyebrow">
+          <span class="eyebrow-dot"></span>
+          APPLICATION COMMAND CENTER
+        </div>
+
+        <h1>Roadmap<span>.</span></h1>
+
+        <p>
+          Eight milestones. One application journey.
+          <strong>Make progress visible.</strong>
+        </p>
+      </div>
+
+      <div class="roadmap-score">
+        <div class="score-ring">
+          <svg viewBox="0 0 100 100">
+            <circle class="ring-bg" cx="50" cy="50" r="42"></circle>
+            <circle id="roadmap-ring"
+                    class="ring-progress"
+                    cx="50"
+                    cy="50"
+                    r="42"></circle>
+          </svg>
+
+          <div class="score-content">
+            <strong id="roadmap-percent">0%</strong>
+            <span>complete</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- PROGRESS CARD -->
+    <div class="roadmap-progress-card">
+
+      <div class="progress-top">
+        <div>
+          <span class="progress-kicker">YOUR PROGRESS</span>
+          <h2 id="roadmap-label">0 / 8 complete</h2>
+        </div>
+
+        <div class="progress-status" id="roadmap-status">
+          STARTING OUT
+        </div>
+      </div>
+
+      <div class="roadmap-progress">
+        <div id="roadmap-bar"></div>
+      </div>
+
+      <div class="progress-footer">
+        <span>Application journey</span>
+        <span id="roadmap-remaining">8 milestones remaining</span>
+      </div>
+
+    </div>
+
+
+    <!-- TIMELINE -->
+    <div class="roadmap-timeline">
+
+      <div class="roadmap-line">
+        <div id="roadmap-line-fill"></div>
+      </div>
+
+
+      <!-- 01 -->
+      <label class="road-step" data-step="0">
+
+        <input type="checkbox"
+               data-road="0"
+               onchange="saveRoadmap()">
+
+        <div class="step-marker">
+          <span>01</span>
+          <div class="step-check">✓</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-top">
+            <span class="step-phase">DISCOVERY</span>
+            <span class="step-state">UP NEXT</span>
+          </div>
+
+          <h3>Shortlist 8–12 universities</h3>
+          <p>
+            Build your dream, target and safety university list.
+          </p>
+
+          <div class="step-meta">
+            <span>🎯 Strategy</span>
+            <span>Universities</span>
+          </div>
+        </div>
+
+      </label>
+
+
+      <!-- 02 -->
+      <label class="road-step" data-step="1">
+
+        <input type="checkbox"
+               data-road="1"
+               onchange="saveRoadmap()">
+
+        <div class="step-marker">
+          <span>02</span>
+          <div class="step-check">✓</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-top">
+            <span class="step-phase">PREP</span>
+            <span class="step-state">LOCK IN</span>
+          </div>
+
+          <h3>Book English test</h3>
+          <p>
+            Schedule your IELTS, TOEFL or required language test.
+          </p>
+
+          <div class="step-meta">
+            <span>📝 Testing</span>
+            <span>Preparation</span>
+          </div>
+        </div>
+
+      </label>
+
+
+      <!-- 03 -->
+      <label class="road-step" data-step="2">
+
+        <input type="checkbox"
+               data-road="2"
+               onchange="saveRoadmap()">
+
+        <div class="step-marker">
+          <span>03</span>
+          <div class="step-check">✓</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-top">
+            <span class="step-phase">STORY</span>
+            <span class="step-state">CREATE</span>
+          </div>
+
+          <h3>Draft SOP v1</h3>
+          <p>
+            Turn your experiences, goals and motivation into your first draft.
+          </p>
+
+          <div class="step-meta">
+            <span>✦ Writing</span>
+            <span>Personal story</span>
+          </div>
+        </div>
+
+      </label>
+
+
+      <!-- 04 -->
+      <label class="road-step" data-step="3">
+
+        <input type="checkbox"
+               data-road="3"
+               onchange="saveRoadmap()">
+
+        <div class="step-marker">
+          <span>04</span>
+          <div class="step-check">✓</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-top">
+            <span class="step-phase">PEOPLE</span>
+            <span class="step-state">CONNECT</span>
+          </div>
+
+          <h3>Request 2–3 LORs</h3>
+          <p>
+            Reach out to the people who can genuinely speak about your work.
+          </p>
+
+          <div class="step-meta">
+            <span>👥 References</span>
+            <span>2–3 letters</span>
+          </div>
+        </div>
+
+      </label>
+
+
+      <!-- 05 -->
+      <label class="road-step" data-step="4">
+
+        <input type="checkbox"
+               data-road="4"
+               onchange="saveRoadmap()">
+
+        <div class="step-marker">
+          <span>05</span>
+          <div class="step-check">✓</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-top">
+            <span class="step-phase">APPLICATION</span>
+            <span class="step-state">GO TIME</span>
+          </div>
+
+          <h3>Apply to 3 target schools</h3>
+          <p>
+            Submit your strongest applications to your priority universities.
+          </p>
+
+          <div class="step-meta">
+            <span>🚀 Applications</span>
+            <span>3 targets</span>
+          </div>
+        </div>
+
+      </label>
+
+
+      <!-- 06 -->
+      <label class="road-step" data-step="5">
+
+        <input type="checkbox"
+               data-road="5"
+               onchange="saveRoadmap()">
+
+        <div class="step-marker">
+          <span>06</span>
+          <div class="step-check">✓</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-top">
+            <span class="step-phase">FUNDING</span>
+            <span class="step-state">SECURE IT</span>
+          </div>
+
+          <h3>Submit 2 scholarship apps</h3>
+          <p>
+            Put your funding strategy into motion with focused applications.
+          </p>
+
+          <div class="step-meta">
+            <span>💎 Scholarships</span>
+            <span>2 applications</span>
+          </div>
+        </div>
+
+      </label>
+
+
+      <!-- 07 -->
+      <label class="road-step" data-step="6">
+
+        <input type="checkbox"
+               data-road="6"
+               onchange="saveRoadmap()">
+
+        <div class="step-marker">
+          <span>07</span>
+          <div class="step-check">✓</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-top">
+            <span class="step-phase">VISA</span>
+            <span class="step-state">PREPARE</span>
+          </div>
+
+          <h3>Prepare visa file</h3>
+          <p>
+            Organize the documents and evidence you'll need for your visa process.
+          </p>
+
+          <div class="step-meta">
+            <span>✈️ Visa</span>
+            <span>Documents</span>
+          </div>
+        </div>
+
+      </label>
+
+
+      <!-- 08 -->
+      <label class="road-step" data-step="7">
+
+        <input type="checkbox"
+               data-road="7"
+               onchange="saveRoadmap()">
+
+        <div class="step-marker">
+          <span>08</span>
+          <div class="step-check">✓</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-top">
+            <span class="step-phase">LAUNCH</span>
+            <span class="step-state">FINAL STEP</span>
+          </div>
+
+          <h3>Housing + insurance</h3>
+          <p>
+            Sort out your living arrangements and required coverage.
+          </p>
+
+          <div class="step-meta">
+            <span>🏠 Logistics</span>
+            <span>Ready to go</span>
+          </div>
+        </div>
+
+      </label>
+
+    </div>
+
+
+    <!-- COMPLETION -->
+    <div class="roadmap-complete">
+
+      <div class="complete-glow"></div>
+
+      <div class="complete-icon">✦</div>
+
+      <div>
+        <span>FINAL DESTINATION</span>
+        <h2>Ready for takeoff?</h2>
+        <p>
+          Complete every milestone and finish your application journey.
+        </p>
+      </div>
+
+      <div class="complete-progress">
+        <strong id="roadmap-complete-percent">0%</strong>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- SAVED -->
+    <div id="savedPage" class="page-section hidden">
+  <div class="page-header saved-header">
+    <div>
+      <span class="eyebrow">YOUR SHORTLIST</span>
+      <h1>Saved</h1>
+      <p>Keep your favourite universities, scholarships, and opportunities in one place.</p>
+    </div>
+
+    <button class="saved-clear-btn" id="clearSavedBtn">
+      <i class="fa-solid fa-trash-can"></i>
+      Clear all
+    </button>
+  </div>
+
+  <!-- Saved Overview -->
+  <div class="saved-overview">
+    <div class="saved-stat-card">
+      <div class="saved-stat-icon university">
+        <i class="fa-solid fa-building-columns"></i>
+      </div>
+      <div>
+        <span id="savedUniversityCount">0</span>
+        <small>Universities</small>
+      </div>
+    </div>
+
+    <div class="saved-stat-card">
+      <div class="saved-stat-icon scholarship">
+        <i class="fa-solid fa-award"></i>
+      </div>
+      <div>
+        <span id="savedScholarshipCount">0</span>
+        <small>Scholarships</small>
+      </div>
+    </div>
+
+    <div class="saved-stat-card">
+      <div class="saved-stat-icon country">
+        <i class="fa-solid fa-globe"></i>
+      </div>
+      <div>
+        <span id="savedCountryCount">0</span>
+        <small>Countries</small>
+      </div>
+    </div>
+
+    <div class="saved-stat-card">
+      <div class="saved-stat-icon total">
+        <i class="fa-solid fa-bookmark"></i>
+      </div>
+      <div>
+        <span id="savedTotalCount">0</span>
+        <small>Total saved</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search + Filters -->
+  <div class="saved-toolbar">
+    <div class="saved-search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        id="savedSearch"
+        placeholder="Search your saved items..."
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="saved-filters">
+      <button class="saved-filter active" data-filter="all">
+        All
+      </button>
+
+      <button class="saved-filter" data-filter="university">
+        <i class="fa-solid fa-building-columns"></i>
+        Universities
+      </button>
+
+      <button class="saved-filter" data-filter="scholarship">
+        <i class="fa-solid fa-award"></i>
+        Scholarships
+      </button>
+
+      <button class="saved-filter" data-filter="job">💼 Jobs</button>
+
+
+    </div>
+
+    <select id="savedSort" class="saved-sort">
+      <option value="recent">Recently saved</option>
+      <option value="name">Name A–Z</option>
+      <option value="country">Country</option>
+    </select>
+  </div>
+
+  <!-- Shortlist -->
+  <div class="saved-content">
+    <div class="saved-section-heading">
+      <div>
+        <h2>Your shortlist</h2>
+        <p id="savedResultText">Showing all saved items</p>
+      </div>
+
+      <span class="saved-count-pill" id="savedCountPill">0 saved</span>
+    </div>
+
+    <ul id="shortlist-items" class="saved-grid"></ul>
+
+    <!-- Empty State -->
+    <div id="savedEmptyState" class="saved-empty hidden">
+      <div class="saved-empty-icon">
+        <i class="fa-regular fa-bookmark"></i>
+      </div>
+
+      <h3>Your shortlist is empty</h3>
+
+      <p>
+        Start exploring universities and scholarships and save the ones
+        you want to compare later.
+      </p>
+
+      <button class="primary-btn" id="exploreSavedBtn">
+        <i class="fa-solid fa-compass"></i>
+        Explore opportunities
+      </button>
+    </div>
+
+    <!-- No Search Results -->
+    <div id="savedNoResults" class="saved-empty hidden">
+      <div class="saved-empty-icon">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+
+      <h3>No matches found</h3>
+
+      <p>
+        Try a different university, scholarship, country, or keyword.
+      </p>
+
+      <button class="secondary-btn" id="clearSavedSearch">
+        Clear search
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+
+    <!-- PROFILE -->
+   <div id="profilePage" class="page-section hidden">
+  <div class="page-header profile-page-header">
+    <div>
+      <span class="profile-kicker">YOUR IDENTITY</span>
+      <h1>Profile</h1>
+      <p>Your UniAI identity, role, and personal settings — all in one place.</p>
+    </div>
+
+    <div class="profile-status-pill">
+      <span class="status-dot"></span>
+      <span>Profile Active</span>
+    </div>
+  </div>
+
+  <section class="profile-dashboard">
+
+    <!-- MAIN PROFILE CARD -->
+    <div class="profile-hero bento-card">
+
+      <div class="profile-hero-glow"></div>
+      <div class="profile-grid-pattern"></div>
+
+      <div class="profile-hero-top">
+        <div class="profile-id-label">
+          <span class="profile-id-line"></span>
+          UNI.AI / PROFILE
+        </div>
+
+        <div class="profile-menu-dot">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <div class="profile-main-content">
+
+        <div class="profile-avatar-wrapper">
+          <div class="profile-avatar-ring"></div>
+          <div class="user-avatar lg profile-main-avatar">N</div>
+          <div class="avatar-online-dot"></div>
+        </div>
+
+        <div class="profile-identity">
+          <span class="profile-role-label">UNI.AI MEMBER</span>
+
+          <h2 class="profile-name-echo">
+            Your UniAI profile
+          </h2>
+
+          <p class="profile-email-echo">
+            Connected to your Supabase account
+          </p>
+
+          <div class="profile-meta-row">
+            <div class="profile-meta-chip">
+              <span class="meta-icon">◈</span>
+              <span class="profile-role-echo">Student</span>
+            </div>
+
+            <div class="profile-meta-chip">
+              <span class="meta-icon">●</span>
+              <span>Verified account</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-hero-bottom">
+
+        <div class="profile-quote">
+          <span class="quote-mark">“</span>
+          <span>
+            Your identity. Your learning journey. Your UniAI.
+          </span>
+        </div>
+
+        <button
+          class="glow-btn profile-edit-btn"
+          type="button"
+          onclick="openEditModal()"
+        >
+          <span>Edit Profile</span>
+          <span class="btn-arrow">↗</span>
+        </button>
+
+      </div>
+    </div>
+
+
+    <!-- PROFILE STATS -->
+    <div class="profile-stats-grid">
+
+      <div class="profile-stat-card bento-card">
+        <div class="stat-card-top">
+          <span class="stat-label">ACCOUNT TYPE</span>
+          <span class="stat-icon">◉</span>
+        </div>
+
+        <div class="stat-value profile-role-stat">
+          Student
+        </div>
+
+        <div class="stat-description">
+          Your current UniAI role
+        </div>
+
+        <div class="stat-progress">
+          <span></span>
+        </div>
+      </div>
+
+
+      <div class="profile-stat-card bento-card">
+        <div class="stat-card-top">
+          <span class="stat-label">PROFILE STATUS</span>
+          <span class="stat-icon">✦</span>
+        </div>
+
+        <div class="stat-value">
+          Active
+        </div>
+
+        <div class="stat-description">
+          Your account is ready
+        </div>
+
+        <div class="stat-status">
+          <span class="status-dot"></span>
+          All systems operational
+        </div>
+      </div>
+
+
+      <div class="profile-stat-card bento-card">
+        <div class="stat-card-top">
+          <span class="stat-label">IDENTITY SYNC</span>
+          <span class="stat-icon">↻</span>
+        </div>
+
+        <div class="stat-value">
+          Synced
+        </div>
+
+        <div class="stat-description">
+          Powered by Supabase metadata
+        </div>
+
+        <div class="sync-line">
+          <span class="sync-line-fill"></span>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- PROFILE INFORMATION -->
+    <div class="profile-info-card bento-card">
+
+      <div class="info-card-header">
+        <div>
+          <span class="profile-kicker">PERSONAL DATA</span>
+          <h3>Profile Information</h3>
+        </div>
+
+        <span class="info-card-number">01</span>
+      </div>
+
+
+      <div class="profile-info-grid">
+
+        <div class="profile-info-item">
+          <span class="info-label">USERNAME</span>
+
+          <div class="info-value-row">
+            <span class="info-value profile-username-echo">
+              Your username
+            </span>
+
+            <span class="info-edit-indicator">↗</span>
+          </div>
+        </div>
+
+
+        <div class="profile-info-item">
+          <span class="info-label">ROLE</span>
+
+          <div class="info-value-row">
+            <span class="info-value profile-role-info">
+              Student
+            </span>
+
+            <span class="info-edit-indicator">↗</span>
+          </div>
+        </div>
+
+
+        <div class="profile-info-item">
+          <span class="info-label">AUTH PROVIDER</span>
+
+          <div class="info-value-row">
+            <span class="info-value">
+              Supabase
+            </span>
+
+            <span class="provider-badge">
+              AUTH
+            </span>
+          </div>
+        </div>
+
+
+        <div class="profile-info-item">
+          <span class="info-label">PROFILE SYNC</span>
+
+          <div class="info-value-row">
+            <span class="info-value">
+              Live
+            </span>
+
+            <span class="live-indicator">
+              <span></span>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- PROFILE FOOTER -->
+    <div class="profile-footer-card bento-card">
+
+      <div class="profile-footer-decoration">
+        <span>UNI</span>
+        <span>AI</span>
+      </div>
+
+      <div class="profile-footer-content">
+        <span class="profile-kicker">YOUR DIGITAL IDENTITY</span>
+
+        <h3>
+          Make your UniAI profile
+          <span>yours.</span>
+        </h3>
+
+        <p>
+          Keep your username and role up to date so UniAI can
+          personalize your experience.
+        </p>
+      </div>
+
+      <button
+        class="profile-footer-action"
+        type="button"
+        onclick="openEditModal()"
+      >
+        <span>Customize</span>
+        <span>→</span>
+      </button>
+
+    </div>
+
+  </section>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- SETTINGS -->
+    <div id="settingsPage" class="page-section hidden">
+
+
+  <!-- Settings Header -->
+  <div class="page-header settings-page-header">
+    <div>
+      <span class="eyebrow">PREFERENCES</span>
+      <h1>Settings</h1>
+      <p>Customize your experience, account, appearance, and session preferences.</p>
+    </div>
+
+    <div class="settings-status">
+      <span class="status-dot"></span>
+      <span>All changes saved</span>
+    </div>
+  </div>
+
+
+  <!-- Settings Layout -->
+  <div class="settings-layout">
+
+    <!-- LEFT: Settings Navigation -->
+    <aside class="bento-card settings-nav">
+
+      <div class="settings-nav-title">
+        <span>Settings</span>
+      </div>
+
+      <button
+        class="settings-nav-item active"
+        type="button"
+        data-settings-tab="appearance"
+      >
+        <span class="settings-nav-icon">◐</span>
+        <span>
+          <strong>Appearance</strong>
+          <small>Theme &amp; interface</small>
+        </span>
+      </button>
+
+      <button
+        class="settings-nav-item"
+        type="button"
+        data-settings-tab="account"
+      >
+        <span class="settings-nav-icon">◎</span>
+        <span>
+          <strong>Account</strong>
+          <small>Profile &amp; access</small>
+        </span>
+      </button>
+
+      <button
+        class="settings-nav-item"
+        type="button"
+        data-settings-tab="notifications"
+      >
+        <span class="settings-nav-icon">♢</span>
+        <span>
+          <strong>Notifications</strong>
+          <small>Alerts &amp; updates</small>
+        </span>
+      </button>
+
+      <button
+        class="settings-nav-item"
+        type="button"
+        data-settings-tab="preferences"
+      >
+        <span class="settings-nav-icon">⚙</span>
+        <span>
+          <strong>Preferences</strong>
+          <small>General behavior</small>
+        </span>
+      </button>
+
+      <button
+        class="settings-nav-item"
+        type="button"
+        data-settings-tab="session"
+      >
+        <span class="settings-nav-icon">⌁</span>
+        <span>
+          <strong>Session</strong>
+          <small>Security &amp; data</small>
+        </span>
+      </button>
+
+      <div class="settings-nav-footer">
+        <span class="settings-version">Version 1.0.0</span>
+      </div>
+
+    </aside>
+
+
+    <!-- RIGHT: Settings Content -->
+    <main class="settings-content">
+
+
+      <!-- =========================================
+           APPEARANCE
+      ========================================== -->
+      <section
+        class="settings-panel active"
+        data-settings-panel="appearance"
+      >
+
+        <div class="settings-panel-header">
+          <div>
+            <span class="settings-section-label">INTERFACE</span>
+            <h2>Appearance</h2>
+            <p>Make the dashboard feel exactly the way you want.</p>
+          </div>
+        </div>
+
+
+        <!-- Theme -->
+        <div class="bento-card settings-card">
+
+          <div class="settings-card-header">
+            <div class="settings-card-icon">◐</div>
+
+            <div>
+              <h3>Theme</h3>
+              <p class="muted">
+                Choose how the dashboard should look.
+              </p>
+            </div>
+          </div>
+
+          <div class="theme-options">
+
+            <button
+              class="theme-option"
+              type="button"
+              data-theme="light"
+            >
+              <span class="theme-preview theme-preview-light">
+                <span></span>
+              </span>
+
+              <span class="theme-option-info">
+                <strong>Light</strong>
+                <small>Clean &amp; bright</small>
+              </span>
+
+              <span class="theme-check">✓</span>
+            </button>
+
+
+            <button
+              class="theme-option"
+              type="button"
+              data-theme="dark"
+            >
+              <span class="theme-preview theme-preview-dark">
+                <span></span>
+              </span>
+
+              <span class="theme-option-info">
+                <strong>Dark</strong>
+                <small>Easy on the eyes</small>
+              </span>
+
+              <span class="theme-check">✓</span>
+            </button>
+
+
+            <button
+              class="theme-option"
+              type="button"
+              data-theme="system"
+            >
+              <span class="theme-preview theme-preview-system">
+                <span></span>
+              </span>
+
+              <span class="theme-option-info">
+                <strong>System</strong>
+                <small>Follow device settings</small>
+              </span>
+
+              <span class="theme-check">✓</span>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- Accent Color -->
+        <div class="bento-card settings-card">
+
+          <div class="settings-card-header">
+            <div class="settings-card-icon">✦</div>
+
+            <div>
+              <h3>Accent color</h3>
+              <p class="muted">
+                Choose the color used for highlights and actions.
+              </p>
+            </div>
+          </div>
+
+          <div class="accent-options">
+
+            <button
+              class="accent-option active"
+              type="button"
+              data-accent="default"
+              aria-label="Default accent"
+            ></button>
+
+            <button
+              class="accent-option"
+              type="button"
+              data-accent="blue"
+              aria-label="Blue accent"
+            ></button>
+
+            <button
+              class="accent-option"
+              type="button"
+              data-accent="purple"
+              aria-label="Purple accent"
+            ></button>
+
+            <button
+              class="accent-option"
+              type="button"
+              data-accent="green"
+              aria-label="Green accent"
+            ></button>
+
+            <button
+              class="accent-option"
+              type="button"
+              data-accent="orange"
+              aria-label="Orange accent"
+            ></button>
+
+          </div>
+
+        </div>
+
+
+        <!-- Interface -->
+        <div class="bento-card settings-card">
+
+          <div class="settings-card-header">
+            <div class="settings-card-icon">▦</div>
+
+            <div>
+              <h3>Interface</h3>
+              <p class="muted">
+                Control how the dashboard behaves.
+              </p>
+            </div>
+          </div>
+
+
+          <div class="setting-row">
+
+            <div class="setting-row-content">
+              <strong>Compact layout</strong>
+              <p class="muted">
+                Reduce spacing to show more content at once.
+              </p>
+            </div>
+
+            <label class="settings-switch">
+              <input
+                type="checkbox"
+                id="compactLayoutToggle"
+              >
+              <span class="settings-switch-slider"></span>
+            </label>
+
+          </div>
+
+
+          <div class="setting-row">
+
+            <div class="setting-row-content">
+              <strong>Animations</strong>
+              <p class="muted">
+                Enable interface transitions and subtle motion.
+              </p>
+            </div>
+
+            <label class="settings-switch">
+              <input
+                type="checkbox"
+                id="animationsToggle"
+                checked
+              >
+              <span class="settings-switch-slider"></span>
+            </label>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =========================================
+     ACCOUNT
+========================================== -->
+<section
+  class="settings-panel"
+  data-settings-panel="account"
+>
+
+  <div class="settings-panel-header">
+    <div>
+      <span class="settings-section-label">ACCOUNT</span>
+      <h2>Account</h2>
+      <p>Manage your account and AI access.</p>
+    </div>
+  </div>
+
+
+ <!-- Account Overview -->
+<div class="bento-card settings-card account-card">
+  <div class="account-profile">
+    <div class="account-avatar">
+      <span id="account-avatar-text">?</span>
+    </div>
+
+    <div class="account-details">
+      <span class="account-status-badge">
+        <span class="status-dot"></span>
+        <span id="account-status-text">Signed out</span>
+      </span>
+
+      <h3 id="account-title">Guest account</h3>
+
+      <p id="account-subtitle" class="muted">
+        Sign in to unlock personalized features and AI Chat.
+      </p>
+    </div>
+  </div>
+
+  <!-- Signed-out button -->
+  <button
+    id="settings-signin-btn"
+    class="primary-btn settings-account-btn"
+    type="button"
+    onclick="openAuthOverlay(false)"
+  >
+    Sign in
+  </button>
+
+  <!-- Signed-in buttons -->
+  <div
+    id="settings-account-actions"
+    class="settings-account-actions"
+    style="display: none;"
+  >
+    <button
+      id="settings-signout-btn"
+      class="secondary-btn settings-account-btn"
+      type="button"
+    >
+      Sign out
+    </button>
+
+    <button
+      id="settings-delete-btn"
+      class="danger-btn settings-account-btn"
+      type="button"
+    >
+      Delete account
+    </button>
+  </div>
+</div>
+
+
+  <!-- AI Access -->
+  <div class="bento-card settings-card">
+
+    <div class="settings-card-header">
+      <div class="settings-card-icon">✦</div>
+
+      <div>
+        <h3>AI Chat</h3>
+        <p class="muted">
+          Your AI assistant and personalized tools.
+        </p>
+      </div>
+
+      <span id="ai-chat-lock-pill" class="feature-badge locked">
+        Locked
+      </span>
+    </div>
+
+    <div id="ai-chat-lock-notice" class="feature-access">
+
+      <div class="feature-access-icon">🔒</div>
+
+      <div>
+        <strong>Sign in to access AI Chat</strong>
+        <p class="muted">
+          Your account is required before AI features can be used.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Workspace Access -->
+  <div class="bento-card settings-card">
+
+    <div class="settings-card-header">
+      <div class="settings-card-icon">🧭</div>
+
+      <div>
+        <h3>Workspace</h3>
+        <p class="muted">
+          Your personalized study and application workspace.
+        </p>
+      </div>
+
+      <span id="workspace-lock-pill" class="feature-badge locked">
+        Locked
+      </span>
+    </div>
+
+    <div id="workspace-lock-notice" class="feature-access">
+
+      <div class="feature-access-icon">🔒</div>
+
+      <div>
+        <strong>Sign in to access Workspace</strong>
+        <p class="muted">
+          Your account is required before this feature can be used.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Visa Guide Access -->
+  <div class="bento-card settings-card">
+
+    <div class="settings-card-header">
+      <div class="settings-card-icon">🛂</div>
+
+      <div>
+        <h3>Visa Guide</h3>
+        <p class="muted">
+          Access visa guidance and personalized information.
+        </p>
+      </div>
+
+      <span id="visa-guide-lock-pill" class="feature-badge locked">
+        Locked
+      </span>
+    </div>
+
+    <div id="visa-guide-lock-notice" class="feature-access">
+
+      <div class="feature-access-icon">🔒</div>
+
+      <div>
+        <strong>Sign in to access the Visa Guide</strong>
+        <p class="muted">
+          Your account is required before this feature can be used.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- SOP & LOR Tools Access -->
+  <div class="bento-card settings-card">
+
+    <div class="settings-card-header">
+      <div class="settings-card-icon">✍️</div>
+
+      <div>
+        <h3>SOP &amp; LOR Tools</h3>
+        <p class="muted">
+          Create and manage your SOP and LOR tools.
+        </p>
+      </div>
+
+      <span id="sop-studio-lock-pill" class="feature-badge locked">
+        Locked
+      </span>
+    </div>
+
+    <div id="sop-studio-lock-notice" class="feature-access">
+
+      <div class="feature-access-icon">🔒</div>
+
+      <div>
+        <strong>Sign in to access SOP &amp; LOR Tools</strong>
+        <p class="muted">
+          Your account is required before this feature can be used.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Roadmap Access -->
+  <div class="bento-card settings-card">
+
+    <div class="settings-card-header">
+      <div class="settings-card-icon">🧭</div>
+
+      <div>
+        <h3>Roadmap</h3>
+        <p class="muted">
+          Your personalized study-abroad roadmap.
+        </p>
+      </div>
+
+      <span id="roadmap-lock-pill" class="feature-badge locked">
+        Locked
+      </span>
+    </div>
+
+    <div id="roadmap-lock-notice" class="feature-access">
+
+      <div class="feature-access-icon">🔒</div>
+
+      <div>
+        <strong>Sign in to access the Roadmap</strong>
+        <p class="muted">
+          Your account is required before this feature can be used.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+      <!-- =========================================
+           NOTIFICATIONS
+      ========================================== -->
+      <section
+        class="settings-panel"
+        data-settings-panel="notifications"
+      >
+
+        <div class="settings-panel-header">
+          <div>
+            <span class="settings-section-label">NOTIFICATIONS</span>
+            <h2>Notifications</h2>
+            <p>Choose which updates you want to receive.</p>
+          </div>
+        </div>
+
+
+        <div class="bento-card settings-card">
+
+          <div class="setting-row">
+
+            <div class="setting-row-content">
+              <strong>Product updates</strong>
+              <p class="muted">
+                Get notified about new dashboard features.
+              </p>
+            </div>
+
+            <label class="settings-switch">
+              <input
+                type="checkbox"
+                id="productUpdatesToggle"
+                checked
+              >
+              <span class="settings-switch-slider"></span>
+            </label>
+
+          </div>
+
+
+          <div class="setting-row">
+
+            <div class="setting-row-content">
+              <strong>AI activity</strong>
+              <p class="muted">
+                Receive important updates about AI features.
+              </p>
+            </div>
+
+            <label class="settings-switch">
+              <input
+                type="checkbox"
+                id="aiActivityToggle"
+                checked
+              >
+              <span class="settings-switch-slider"></span>
+            </label>
+
+          </div>
+
+
+          <div class="setting-row">
+
+            <div class="setting-row-content">
+              <strong>Tips &amp; suggestions</strong>
+              <p class="muted">
+                Show useful tips while using the dashboard.
+              </p>
+            </div>
+
+            <label class="settings-switch">
+              <input
+                type="checkbox"
+                id="tipsToggle"
+                checked
+              >
+              <span class="settings-switch-slider"></span>
+            </label>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =========================================
+           PREFERENCES
+      ========================================== -->
+      <section
+        class="settings-panel"
+        data-settings-panel="preferences"
+      >
+
+        <div class="settings-panel-header">
+          <div>
+            <span class="settings-section-label">GENERAL</span>
+            <h2>Preferences</h2>
+            <p>Fine-tune your dashboard experience.</p>
+          </div>
+        </div>
+
+
+        <div class="bento-card settings-card">
+
+          <div class="setting-row">
+
+            <div class="setting-row-content">
+              <strong>Auto-save</strong>
+              <p class="muted">
+                Automatically save your dashboard preferences.
+              </p>
+            </div>
+
+            <label class="settings-switch">
+              <input
+                type="checkbox"
+                id="autoSaveToggle"
+                checked
+              >
+              <span class="settings-switch-slider"></span>
+            </label>
+
+          </div>
+
+
+          <div class="setting-row">
+
+            <div class="setting-row-content">
+              <strong>Remember last page</strong>
+              <p class="muted">
+                Reopen the dashboard where you left off.
+              </p>
+            </div>
+
+            <label class="settings-switch">
+              <input
+                type="checkbox"
+                id="rememberPageToggle"
+                checked
+              >
+              <span class="settings-switch-slider"></span>
+            </label>
+
+          </div>
+
+
+          <div class="setting-row">
+
+            <div class="setting-row-content">
+              <strong>Confirm destructive actions</strong>
+              <p class="muted">
+                Ask for confirmation before clearing data.
+              </p>
+            </div>
+
+            <label class="settings-switch">
+              <input
+                type="checkbox"
+                id="confirmActionsToggle"
+                checked
+              >
+              <span class="settings-switch-slider"></span>
+            </label>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =========================================
+           SESSION
+========================================== -->
+<section
+  class="settings-panel"
+  data-settings-panel="session"
+>
+
+  <div class="settings-panel-header">
+    <div>
+      <span class="settings-section-label">SECURITY</span>
+      <h2>Session</h2>
+      <p>Manage local session data and dashboard state.</p>
+    </div>
+  </div>
+
+
+  <!-- Current Session -->
+  <div class="bento-card settings-card">
+
+    <div class="settings-card-header">
+      <div class="settings-card-icon">⌁</div>
+
+      <div>
+        <h3>Current session</h3>
+        <p class="muted">
+          Information about your current dashboard session.
+        </p>
+      </div>
+
+      <span id="session-live-badge" class="session-live-badge">
+        <span class="status-dot"></span>
+        <span id="session-status-text">Active</span>
+      </span>
+    </div>
+
+
+    <div class="session-info-grid">
+
+      <div class="session-info-item">
+        <span>Account</span>
+        <strong id="session-account-name">Guest</strong>
+      </div>
+
+      <div class="session-info-item">
+        <span>Session</span>
+        <strong id="session-type">Local</strong>
+      </div>
+
+      <div class="session-info-item">
+        <span>Storage</span>
+        <strong id="session-storage-type">Browser</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Data -->
+  <div class="bento-card settings-card danger-card">
+
+    <div class="settings-card-header">
+
+      <div class="settings-card-icon danger-icon">
+        !
+      </div>
+
+      <div>
+        <h3>Session data</h3>
+        <p class="muted">
+          Clear locally stored preferences and session data.
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="danger-action">
+
+      <div>
+        <strong>Reset dashboard settings</strong>
+        <p class="muted">
+          Restore all settings to their default values.
+        </p>
+      </div>
+
+      <button
+        class="secondary-btn danger-btn"
+        type="button"
+        id="resetSettingsBtn"
+      >
+        Reset settings
+      </button>
+
+    </div>
+
+
+    <div class="danger-action">
+
+      <div>
+        <strong>Clear session</strong>
+        <p class="muted">
+          Clear temporary dashboard session information.
+        </p>
+      </div>
+
+      <button
+        class="secondary-btn danger-btn"
+        type="button"
+        id="clearSessionBtn"
+      >
+        Clear session
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+      <!-- Settings Footer -->
+      <div class="settings-footer">
+
+        <span>
+          Your preferences are stored locally on this device.
+        </span>
+
+        <button
+          type="button"
+          class="text-btn"
+          id="resetAllSettingsBtn"
+        >
+          Reset all settings
+        </button>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- LIVING COST -->
+    <div id="livingPage" class="page-section hidden">
+      <div class="page-header">
+        <h1>Cost Calculator</h1>
+        <p>Monthly rent and food, projected across a four-year degree.</p>
+      </div>
+      <div class="bento-card">
+        <div class="calc-inputs">
+          <div><label>Monthly Rent ($)</label><input type="number" id="rent" placeholder="800"></div>
+          <div><label>Food &amp; Lifestyle</label>
+            <select id="food">
+              <option value="250">Budget — $250/mo</option>
+              <option value="400" selected>Standard — $400/mo</option>
+              <option value="600">Comfortable — $600/mo</option>
+            </select>
+          </div>
+        </div>
+        <button class="glow-btn" type="button" onclick="calculateLivingCost()">Calculate</button>
+        <div id="costResult"></div>
+      </div>
+    </div>
+
+
+
+    <!-- CURRENCY -->
+    <div id="currencyPage" class="page-section hidden">
+      <div class="page-header">
+        <h1>Currency Converter</h1>
+        <p>Live rates plus a quick purchasing-power snapshot.</p>
+      </div>
+      <div class="bento-card">
+        <div class="currency-hero-header">
+          <h2>💱 Global Currency Exchange</h2>
+          <div class="live-status-badge"><span class="pulse-dot"></span> Live</div>
+        </div>
+        <div class="currency-selectors-grid">
+          <input type="number" id="amount" value="100">
+          <select id="fromCurrency">
+            <option>USD</option><option>EUR</option><option>GBP</option><option>INR</option>
+            <option>AUD</option><option>CAD</option><option>SGD</option><option>NZD</option>
+            <option>JPY</option><option>CNY</option><option>CHF</option><option>AED</option><option>KRW</option>
+          </select>
+          <select id="toCurrency">
+            <option>INR</option><option>USD</option><option>EUR</option><option>GBP</option>
+            <option>AUD</option><option>CAD</option><option>SGD</option><option>NZD</option>
+            <option>JPY</option><option>CNY</option><option>CHF</option><option>AED</option><option>KRW</option>
+          </select>
+        </div>
+        <div class="quick-chips-wrapper">
+          <button class="chip-btn" type="button" onclick="setCurrencyPreset('USD','INR')">USD → INR</button>
+          <button class="chip-btn" type="button" onclick="setCurrencyPreset('GBP','USD')">GBP → USD</button>
+          <button class="chip-btn" type="button" onclick="setCurrencyPreset('EUR','INR')">EUR → INR</button>
+        </div>
+        <button class="glow-btn" type="button" onclick="convertCurrency()">Convert</button>
+        <div id="currencyResult"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- =====================================================
+     UNIAI — EXPANDED FOOTER WITH GUIDES DIRECTORY
+====================================================== -->
+
+<footer class="site-footer">
+  <div class="footer-glow"></div>
+
+  <div class="footer-inner">
+
+    <!-- TOP ROW: BRAND & MAIN NAV -->
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-wordmark">Uni<span>AI</span></div>
+        <p class="footer-tagline">Plan smarter. Go farther.</p>
+        <p class="footer-desc">
+          AI-guided support for every step of studying abroad —
+          from shortlisting universities to landing on the right visa.
+        </p>
+
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M11 17v-4.5a2.5 2.5 0 0 1 5 0V17M11 10v7"/></svg>
+          </a>
+          <a href="#" aria-label="X">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4l16 16M20 4L4 20"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-links-grid">
+
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="#" onclick="showPage('universityFinder', event)">University Finder</a></li>
+            <li><a href="#" onclick="showPage('studyAbroadGuide', event)">Study Abroad Guide</a></li>
+            <li><a href="#" onclick="showPage('scholarships', event)">Scholarships</a></li>
+            <li><a href="#" onclick="showPage('aiFreeJobs', event)">Part-Time Job Guide</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="#" onclick="showPage('ai-chat', event)">AI Assistant</a></li>
+            <li><a href="#" onclick="showPage('sopStudio', event)">SOP &amp; LOR Tools</a></li>
+            <li><a href="#" onclick="showPage('visaGuide', event)">Visa Guide</a></li>
+            <li><a href="#" onclick="showPage('living', event)">Cost Calculator</a></li>
+            <li><a href="#" onclick="showPage('currency', event)">Currency Converter</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Account</h4>
+          <ul>
+            <li><a href="#" onclick="showPage('roadmap', event)">Roadmap</a></li>
+            <li><a href="#" onclick="showPage('saved', event)">Saved</a></li>
+            <li><a href="#" onclick="showPage('profile', event)">Profile</a></li>
+            <li><a href="#" onclick="showPage('settings', event)">Settings</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-col-dest">
+          <h4>Popular destinations</h4>
+          <div class="footer-dest-chips">
+            <a href="uk.html">🇬🇧 UK</a>
+            <a href="usa.html">🇺🇸 USA</a>
+            <a href="japan.html">🇯🇵 Japan</a>
+            <a href="australia.html">🇦🇺 Australia</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DIRECTORY ROW: ALL GUIDES LIBRARY -->
+    <div class="footer-guides-directory">
+      <div class="footer-directory-title">
+        <span>GUIDES DIRECTORY</span>
+        <hr />
+      </div>
+
+      <div class="footer-guides-grid">
+
+        <div class="footer-col">
+          <h4>Destinations</h4>
+          <ul>
+            <li><a href="guides/usa.html">🇺🇸 USA Guide</a></li>
+            <li><a href="guides/japan.html">🇯🇵 Japan Guide</a></li>
+            <li><a href="guides/uk.html">🇬🇧 UK Guide</a></li>
+            <li><a href="guides/germany.html">🇩🇪 Germany Guide</a></li>
+            <li><a href="guides/canada.html">🇨🇦 Canada Guide</a></li>
+            <li><a href="guides/australia.html">🇦🇺 Australia Guide</a></li>
+            <li><a href="guides/netherlands.html">🇳🇱 Netherlands Guide</a></li>
+            <li><a href="guides/france.html">🇫🇷 France Guide</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Tests &amp; Language</h4>
+          <ul>
+            <li><a href="guides/ielts.html">📝 IELTS Guide</a></li>
+            <li><a href="guides/toefl.html">🎧 TOEFL Guide</a></li>
+            <li><a href="guides/jlpt.html">🇯🇵 JLPT Guide</a></li>
+            <li><a href="guides/gre.html">📊 GRE Guide</a></li>
+            <li><a href="guides/gmat.html">📈 GMAT Guide</a></li>
+            <li><a href="guides/german-language.html">🇩🇪 German Language Guide</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Applications</h4>
+          <ul>
+            <li><a href="guides/sop.html">✍️ SOP Guide</a></li>
+            <li><a href="guides/lor.html">💬 LOR Guide</a></li>
+            <li><a href="guides/resume.html">📄 Resume / CV Guide</a></li>
+            <li><a href="guides/scholarships.html">🎓 Scholarship Guide</a></li>
+            <li><a href="guides/university-application.html">🏫 University Application Guide</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Visa &amp; Pre-Departure</h4>
+          <ul>
+            <li><a href="guides/student-visa.html">🛂 Student Visa Guide</a></li>
+            <li><a href="guides/accommodation.html">🏠 Accommodation Guide</a></li>
+            <li><a href="guides/finance.html">💳 Finance Abroad Guide</a></li>
+            <li><a href="guides/insurance.html">🩺 Health Insurance Guide</a></li>
+            <li><a href="guides/pre-departure.html">✈️ Pre-Departure Checklist</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- NEWSLETTER -->
+    <div class="footer-newsletter">
+      <div>
+        <strong>Get study-abroad updates</strong>
+        <p>Deadlines, scholarship alerts, and visa changes — sent when they matter.</p>
+      </div>
+      <form class="footer-newsletter-form" onsubmit="return false;">
+        <input type="email" placeholder="you@email.com" aria-label="Email address" required>
+        <button type="submit">Get updates</button>
+      </form>
+    </div>
+
+    <!-- BOTTOM LEGAL -->
+    <div class="footer-bottom">
+      <p>© 2026 UniAI. Built to help you plan smarter and go farther.</p>
+      <div class="footer-legal">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="sitemap.html">Sitemap</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+
+
+
+
+
+
+<div id="auth-overlay" class="overlay hidden-flex">
+  <form id="auth-form" class="auth-modal">
+    <h2 id="auth-title">Unlock UniAI</h2>
+    <p id="auth-subtitle">✨ Sign in to unlock your AI Chat University Assistant and start tracking your study abroad dreams!</p>
+    <input type="email" id="auth-email" placeholder="Email" required>
+    <input type="password" id="auth-password" placeholder="Password" required>
+    <div class="signup-only-field" style="display:none">
+      <input type="text" id="auth-username" placeholder="Username">
+    </div>
+    <div class="signup-only-field" style="display:none">
+      <select id="auth-profile-type">
+        <option value="student">Student</option>
+        <option value="counselor">Counselor</option>
+      </select>
+    </div>
+    <div id="auth-error-msg" class="error-msg"></div>
+    <button type="submit" id="auth-submit-btn" class="glow-btn full-w">Sign In</button>
+    <p id="auth-toggle-text">Don't have an account? <span id="auth-toggle-link" style="color:#8b5cf6;cursor:pointer;text-decoration:underline;">Sign Up for Free</span></p>
+    <button type="button" class="close-overlay" onclick="document.getElementById('auth-overlay').style.display='none'">✕</button>
+  </form>
+</div>
+
+<div id="edit-profile-overlay" class="overlay hidden-flex">
+  <form id="edit-profile-form" class="auth-modal">
+    <h2>Edit Profile</h2>
+    <input type="text" id="edit-username" placeholder="Username">
+    <select id="edit-profile-type">
+      <option value="student">Student</option>
+      <option value="counselor">Counselor</option>
+    </select>
+    <div id="edit-error-msg" class="error-msg"></div>
+    <button type="submit" class="glow-btn full-w">Save Changes</button>
+    <button type="button" class="close-overlay" onclick="document.getElementById('edit-profile-overlay').style.display='none'">✕</button>
+  </form>
+</div>
+
+
+
+
+
+
+<div id="confirm-overlay" class="overlay hidden-flex">
+  <div class="auth-modal">
+    <h2 id="confirm-modal-title">Are you sure?</h2>
+    <p id="confirm-modal-message" style="color:var(--text-muted,#94a3b8);margin:8px 0 24px;">
+      This action cannot be undone.
+    </p>
+    <div style="display:flex;gap:12px;">
+      <button type="button" class="secondary-btn" id="confirm-modal-cancel" style="flex:1;">Cancel</button>
+      <button type="button" class="glow-btn" id="confirm-modal-confirm" style="flex:1;">Confirm</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="JS/sync.js"></script>
+<script src="JS/script.js"></script>
+<script src="JS/save.js"></script>
+<script src="JS/sop.js"></script>
+<script src="JS/preferences.js"></script>
+<script src="JS/guide.js"></script>
+<script src="JS/scholarship.js"></script>
+<script src="JS/road.js"></script>
+<script src="JS/aifree.js"></script>
+<script src="JS/settings.js"></script>
+<script src="JS/visa.js"></script>
+</body>
+</html>

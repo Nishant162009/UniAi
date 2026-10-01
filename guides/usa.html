@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniAI — Complete USA Study Abroad Guide</title>
+<meta name="description" content="A complete guide to studying in the United States: universities, degrees, admissions, tests, applications, costs, scholarships, F-1/J-1/M-1 visas, housing, arrival and student life.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="guard.js"></script>
+<style>
+:root{
+  --bg:#f7f1e7;--surface:#fffaf3;--surface-2:#f1e7d8;--text:#182238;
+  --muted:#5f6877;--subtle:#7d8490;--border:#dfd2c0;
+  --navy:#173f7a;--blue:#245da8;--red:#b72f45;--gold:#c79828;
+  --green:#3e7356;--shadow:0 16px 45px rgba(54,40,20,.09);
+  --radius:22px;--radius-sm:14px;--max:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:auto;scroll-padding-top:86px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.65}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+::selection{background:#d9e5f5;color:var(--navy)}
+.container{width:min(var(--max),92vw);margin:auto}
+.nav{position:sticky;top:0;z-index:50;background:rgba(247,241,231,.94);border-bottom:1px solid var(--border);backdrop-filter:blur(12px)}
+.nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font:800 21px "Plus Jakarta Sans";letter-spacing:-.06em}
+.logo span{color:var(--red)}
+.nav-links{display:flex;gap:20px;align-items:center;font-size:12px;font-weight:700;color:var(--muted)}
+.nav-links a:hover{color:var(--navy)}
+.nav-btn,.btn{border:0;border-radius:999px;padding:11px 16px;font-size:12px;font-weight:800;cursor:pointer}
+.nav-btn,.btn.primary{background:var(--navy);color:white}
+.btn.secondary{background:transparent;border:1px solid var(--border);color:var(--navy)}
+.btn:hover,.nav-btn:hover{filter:brightness(1.05)}
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--border);background:
+linear-gradient(135deg,rgba(255,250,243,.96),rgba(247,241,231,.88)),
+url("https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=2200&q=85") center/cover}
+.hero:before{content:"USA";position:absolute;right:-30px;top:-65px;font:800 clamp(150px,27vw,340px)/1 "Plus Jakarta Sans";letter-spacing:-.11em;color:rgba(23,63,122,.055)}
+.hero-inner{padding:100px 0 72px;position:relative}
+.flagline{display:flex;gap:10px;align-items:center;text-transform:uppercase;letter-spacing:.17em;font-size:10px;font-weight:800;color:var(--navy)}
+.flagline:before{content:"";width:32px;height:3px;background:linear-gradient(90deg,var(--red) 0 50%,var(--navy) 50%)}
+.hero h1{font:800 clamp(52px,8vw,100px)/.93 "Plus Jakarta Sans";letter-spacing:-.075em;max-width:920px;margin:22px 0}
+.hero h1 span{color:var(--red)}
+.hero p{max-width:700px;color:#465064;font-size:17px}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.hero-facts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:48px}
+.fact{background:rgba(255,250,243,.84);border:1px solid var(--border);border-radius:16px;padding:17px}
+.fact strong{display:block;font:800 21px "Plus Jakarta Sans"}
+.fact span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.09em;margin-top:3px}
+.toc{padding:18px 0;border-bottom:1px solid var(--border);background:#fffaf3}
+.toc-inner{display:flex;gap:9px;overflow:auto;white-space:nowrap}
+.toc a{font-size:11px;font-weight:800;color:var(--muted);padding:8px 11px;border:1px solid var(--border);border-radius:999px}
+.toc a:hover{color:var(--navy);border-color:#b9c8dc}
+.section{padding:82px 0}
+.section.alt{background:rgba(255,255,255,.38);border-block:1px solid var(--border)}
+.kicker{color:var(--navy);font-size:10px;text-transform:uppercase;letter-spacing:.18em;font-weight:900}
+h2{font:800 clamp(37px,5vw,62px)/.98 "Plus Jakarta Sans";letter-spacing:-.065em;margin:9px 0 16px}
+h3{font:800 22px "Plus Jakarta Sans";letter-spacing:-.04em;margin:0 0 9px}
+h4{font:800 16px "Plus Jakarta Sans";margin:0 0 6px}
+.lead{max-width:760px;color:var(--muted);font-size:15px}
+.grid{display:grid;gap:14px}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:25px;box-shadow:0 5px 20px rgba(54,40,20,.035)}
+.card p,.card li{font-size:12px;color:var(--muted)}
+.card ul{padding-left:18px;margin-bottom:0}
+.number{font:800 42px "Plus Jakarta Sans";color:var(--navy);letter-spacing:-.07em}
+.tag{display:inline-block;padding:5px 9px;border-radius:999px;background:#edf2f8;color:var(--navy);font-size:9px;font-weight:800;margin:4px 4px 0 0}
+.notice{border-left:4px solid var(--gold);background:#fff8df;border-radius:0 14px 14px 0;padding:17px 19px;color:#625329;font-size:12px;margin-top:22px}
+.redline{border-left-color:var(--red);background:#fff0f2;color:#68353e}
+.bluebox{background:#edf3fb;border:1px solid #cad9ec;border-radius:18px;padding:20px}
+.steps{display:grid;gap:12px;margin-top:32px}
+.step{display:grid;grid-template-columns:62px 1fr 210px;gap:20px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:23px}
+.step-num{font:800 30px "Plus Jakarta Sans";color:var(--red)}
+.step aside{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--subtle);font-weight:800}
+.step aside strong{display:block;color:var(--navy);font-size:13px;letter-spacing:0;text-transform:none;margin-top:4px}
+.timeline{position:relative;margin-top:35px}
+.timeline:before{content:"";position:absolute;left:17px;top:8px;bottom:8px;width:2px;background:#ccd8e8}
+.timeline-item{position:relative;padding:0 0 32px 55px}
+.timeline-dot{position:absolute;left:9px;top:5px;width:18px;height:18px;border-radius:50%;background:var(--surface);border:4px solid var(--navy)}
+.checklist{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:20px}
+.check{background:#fbf6ed;border:1px solid var(--border);border-radius:12px;padding:12px;font-size:11px;color:#4f5968}
+.check b{color:var(--green)}
+.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:18px}
+table{width:100%;border-collapse:collapse;background:var(--surface);font-size:12px}
+th,td{text-align:left;padding:14px;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:#f0e7da;color:var(--navy);font-size:10px;text-transform:uppercase;letter-spacing:.08em}
+tr:last-child td{border-bottom:0}
+.compare{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:25px}
+.compare .card{min-height:210px}
+.icon{font-size:28px;margin-bottom:15px}
+.resource-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:25px}
+.resource{display:flex;justify-content:space-between;gap:20px;padding:15px 17px;border:1px solid var(--border);border-radius:14px;background:var(--surface);font-size:12px}
+.resource span{color:var(--muted)}
+.resource a{color:var(--navy);font-weight:800}
+.footer{padding:45px 0;border-top:1px solid var(--border);color:var(--muted)}
+.footer-inner{display:flex;justify-content:space-between;gap:25px;flex-wrap:wrap;font-size:11px}
+.small{font-size:11px;color:var(--subtle)}
+@media(max-width:900px){
+ .nav-links{display:none}.hero-facts{grid-template-columns:repeat(2,1fr)}
+ .grid-3,.grid-4,.compare{grid-template-columns:1fr 1fr}
+ .step{grid-template-columns:52px 1fr}
+ .step aside{grid-column:2}
+}
+@media(max-width:600px){
+ .hero-inner{padding:72px 0 55px}.hero h1{font-size:clamp(48px,15vw,72px)}
+ .hero-facts,.grid-2,.grid-3,.grid-4,.compare,.resource-list,.checklist{grid-template-columns:1fr}
+ .section{padding:62px 0}.card{padding:20px}
+ .step{grid-template-columns:1fr}.step aside{grid-column:auto}
+ .toc-inner{padding-bottom:2px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a class="logo" href="../index.html">Uni<span>AI</span></a>
+    <div class="nav-links">
+      <a href="#overview">Overview</a><a href="#choose">Choose</a><a href="#admissions">Admissions</a>
+      <a href="#money">Costs</a><a href="#visa">Visa</a><a href="#arrival">Arrival</a>
+    </div>
+    <a class="nav-btn" href="#checklist">My Checklist →</a>
+  </div>
+</nav>
+
+<header class="hero" id="overview">
+  <div class="container hero-inner">
+    <div class="flagline">United States · Complete Study Guide 🇺🇸</div>
+    <h1>Study in the <span>USA.</span><br>Know the path before you go.</h1>
+    <p>
+      This is a practical, end-to-end guide for an international student planning to study in the United States.
+      Use it from the first search for a university through applications, funding, admission, student-visa preparation,
+      housing, travel and your first days on campus.
+    </p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#journey">Start the roadmap →</a>
+      <a class="btn secondary" href="#universities">Explore university types</a>
+    </div>
+    <div class="hero-facts">
+      <div class="fact"><strong>50</strong><span>states</span></div>
+      <div class="fact"><strong>4,000+</strong><span>higher-ed institutions*</span></div>
+      <div class="fact"><strong>F · J · M</strong><span>common study-related categories</span></div>
+      <div class="fact"><strong>6 stages</strong><span>plan → departure</span></div>
+    </div>
+    <p class="small">*The exact number depends on how institutions are counted. Always verify current program and institutional information directly.</p>
+  </div>
+</header>
+
+<div class="toc">
+  <div class="container toc-inner">
+    <a href="#overview">01 Overview</a><a href="#choose">02 Choose your route</a><a href="#universities">03 Universities</a>
+    <a href="#admissions">04 Admissions</a><a href="#tests">05 Tests</a><a href="#applications">06 Applications</a>
+    <a href="#money">07 Costs & funding</a><a href="#timeline">08 Timeline</a><a href="#visa">09 Visa</a>
+    <a href="#arrival">10 Arrival</a><a href="#student-life">11 Student life</a><a href="#checklist">12 Checklist</a>
+  </div>
+</div>
+
+<section class="section" id="journey">
+  <div class="container">
+    <span class="kicker">THE BIG PICTURE</span>
+    <h2>Your six-stage USA journey.</h2>
+    <p class="lead">Do the work in the right order. A strong application is easier when your destination, academic target, finances and deadlines are clear before you start submitting forms.</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><div><h3>Define your target</h3><p>Choose your intended degree, subject, intake, preferred locations and realistic budget. Build a balanced university list rather than choosing only by reputation.</p></div><aside>Start with<strong>Fit + budget + academics</strong></aside></div>
+      <div class="step"><div class="step-num">02</div><div><h3>Prepare your profile</h3><p>Map academic requirements, English-language requirements, standardized tests where applicable, documents, activities, projects and recommendations.</p></div><aside>Prepare<strong>Scores + documents</strong></aside></div>
+      <div class="step"><div class="step-num">03</div><div><h3>Build the money plan</h3><p>Estimate tuition, housing, food, transport, insurance, travel and setup costs. Then identify scholarships, assistantships, savings or other permitted funding sources.</p></div><aside>Fund<strong>The whole year</strong></aside></div>
+      <div class="step"><div class="step-num">04</div><div><h3>Apply</h3><p>Prepare the correct application for every institution, meet its individual deadline, submit supporting documents and keep a tracker for fees, portals and decisions.</p></div><aside>Submit<strong>Before each deadline</strong></aside></div>
+      <div class="step"><div class="step-num">05</div><div><h3>Choose and prepare</h3><p>Compare offers, total costs, aid and program fit. After choosing a school, complete the institution's enrollment steps and immigration preparation.</p></div><aside>Decide<strong>Then document everything</strong></aside></div>
+      <div class="step"><div class="step-num">06</div><div><h3>Visa, travel and arrival</h3><p>Follow the current instructions for your visa category, arrange housing and insurance as required, plan travel and arrive with your university and immigration documents organized.</p></div><aside>Finish<strong>Ready for campus</strong></aside></div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="choose">
+  <div class="container">
+    <span class="kicker">02 / CHOOSE YOUR ROUTE</span>
+    <h2>First decide what kind of U.S. education you need.</h2>
+    <p class="lead">“Study in the USA” is not one single route. Your degree level, program type and personal goals determine the admissions process you will follow.</p>
+    <div class="grid grid-3" style="margin-top:30px">
+      <div class="card"><div class="icon">🎓</div><h3>Undergraduate</h3><p>Usually the bachelor's route. You may apply directly to a university or consider a community-college pathway and later transfer, depending on your goals.</p><span class="tag">Bachelor's</span><span class="tag">4-year route</span></div>
+      <div class="card"><div class="icon">🔬</div><h3>Graduate</h3><p>Master's, doctoral and other advanced programs have highly program-specific requirements. Research experience can matter strongly for research-focused programs.</p><span class="tag">MS</span><span class="tag">MA</span><span class="tag">PhD</span></div>
+      <div class="card"><div class="icon">🏫</div><h3>Community college</h3><p>Two-year institutions can offer associate degrees and transfer pathways. Check articulation agreements and transfer requirements before relying on a pathway.</p><span class="tag">2-year</span><span class="tag">Transfer</span></div>
+      <div class="card"><div class="icon">🌎</div><h3>Exchange / visiting study</h3><p>Exchange and short-term programs can be different from completing a full U.S. degree. Your program sponsor determines the applicable rules and documents.</p><span class="tag">J-1 may apply</span><span class="tag">Short-term</span></div>
+      <div class="card"><div class="icon">🗣️</div><h3>English-language study</h3><p>English-language programs can serve different purposes. Check the program's level, duration, progression options and whether it supports the next stage you want.</p><span class="tag">Language</span><span class="tag">Preparation</span></div>
+      <div class="card"><div class="icon">🛠️</div><h3>Vocational / technical study</h3><p>Career-focused programs have different structures and immigration considerations. Confirm that the institution and program are appropriate for international students before applying.</p><span class="tag">Career-focused</span><span class="tag">M-1 may apply</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="universities">
+  <div class="container">
+    <span class="kicker">03 / UNIVERSITY LANDSCAPE</span>
+    <h2>Compare the institution, not just the name.</h2>
+    <p class="lead">A famous university is not automatically the right university for every student. Compare the exact program, curriculum, location, cost, support and opportunities.</p>
+    <div class="grid grid-3" style="margin-top:30px">
+      <div class="card"><h3>Public universities</h3><p>Often supported by state funding and serving large student populations. Costs and admission policies vary considerably by institution and residency status.</p></div>
+      <div class="card"><h3>Private universities</h3><p>Privately funded institutions range from small colleges to major research universities. Sticker price and actual net cost can be very different after institutional aid.</p></div>
+      <div class="card"><h3>Liberal arts colleges</h3><p>Often smaller institutions with broad undergraduate curricula and close faculty interaction. Look at majors, class sizes and graduate outcomes.</p></div>
+      <div class="card"><h3>Research universities</h3><p>Large research environments may offer extensive labs, graduate programs, research centers and interdisciplinary opportunities.</p></div>
+      <div class="card"><h3>Community colleges</h3><p>Can be useful for associate degrees and transfer plans. Confirm transfer destinations, credit rules and total cost before committing.</p></div>
+      <div class="card"><h3>Urban vs college-town</h3><p>Location affects housing, transport, internships, social life and everyday spending. Treat location as part of the academic decision.</p></div>
+    </div>
+    <div class="notice">Build a balanced list using your own profile: academic preparation, program requirements, finances, location preferences and realistic admission range. Do not treat rankings as a substitute for program research.</div>
+  </div>
+</section>
+
+<section class="section alt" id="admissions">
+  <div class="container">
+    <span class="kicker">04 / ADMISSIONS</span>
+    <h2>What universities can ask you for.</h2>
+    <p class="lead">Requirements are institution- and program-specific. Read every university's official admissions page and create a separate requirement checklist for each application.</p>
+    <div class="grid grid-2" style="margin-top:30px">
+      <div class="card"><h3>Academic record</h3><ul><li>School or university transcripts</li><li>Grades and academic history</li><li>Degree or expected-graduation information</li><li>Course prerequisites where required</li></ul></div>
+      <div class="card"><h3>Testing</h3><ul><li>English-language test where required</li><li>Program-specific standardized tests where required</li><li>Test-optional policies can vary, so verify the current rule</li></ul></div>
+      <div class="card"><h3>Application materials</h3><ul><li>Personal statement / essays</li><li>Resume or CV where appropriate</li><li>Portfolio for relevant fields</li><li>Application fee or fee-waiver process where available</li></ul></div>
+      <div class="card"><h3>Recommendations</h3><ul><li>Academic or professional recommendations depending on program</li><li>Choose people who can discuss your work specifically</li><li>Give recommenders time and accurate instructions</li></ul></div>
+      <div class="card"><h3>Program fit</h3><ul><li>Read the actual curriculum</li><li>Check faculty, labs, concentrations and electives</li><li>For graduate study, investigate research groups and supervisors where relevant</li></ul></div>
+      <div class="card"><h3>Deadlines</h3><ul><li>Early / priority deadlines may differ from regular deadlines</li><li>Scholarship deadlines can be earlier</li><li>International-document deadlines may differ from application deadlines</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tests">
+  <div class="container">
+    <span class="kicker">05 / TESTS & SCORES</span>
+    <h2>Know which tests actually apply to you.</h2>
+    <p class="lead">Never take a test just because it is common. Start from the exact requirements of the programs on your shortlist.</p>
+    <div class="table-wrap" style="margin-top:30px">
+      <table>
+        <thead><tr><th>Test / proof</th><th>What it may be used for</th><th>What to verify</th></tr></thead>
+        <tbody>
+          <tr><td>IELTS / TOEFL and other English tests</td><td>Evidence of English proficiency for programs that require it.</td><td>Accepted tests, minimum scores, section requirements and score validity.</td></tr>
+          <tr><td>SAT / ACT</td><td>Undergraduate admissions at institutions that require or consider them.</td><td>Whether the university is test-optional, test-required or has another policy.</td></tr>
+          <tr><td>GRE</td><td>Some graduate programs.</td><td>Whether your specific department requires, recommends or does not use it.</td></tr>
+          <tr><td>GMAT</td><td>Some business and management programs.</td><td>Whether the school accepts the current GMAT format and whether another test is accepted.</td></tr>
+          <tr><td>Portfolio / audition</td><td>Art, design, architecture, music and other performance or creative programs.</td><td>Format, number of pieces, technical specifications and submission deadline.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="notice">Test policies change. Save a copy or screenshot of the official requirement page you used while planning, and re-check it before submitting.</div>
+  </div>
+</section>
+
+<section class="section alt" id="applications">
+  <div class="container">
+    <span class="kicker">06 / APPLICATIONS</span>
+    <h2>Build one master application system.</h2>
+    <p class="lead">Do not manage applications from memory. Create one tracker with every university, program, deadline, document, fee and decision.</p>
+    <div class="grid grid-3" style="margin-top:30px">
+      <div class="card"><div class="number">01</div><h3>University research</h3><p>Record program name, degree, campus, tuition estimate, scholarship options, admission requirements and official deadline.</p></div>
+      <div class="card"><div class="number">02</div><h3>Documents</h3><p>Keep transcripts, passport details, test scores, essays, recommendations and financial documents organized with clear filenames.</p></div>
+      <div class="card"><div class="number">03</div><h3>Application portal</h3><p>Track account creation, fee payment, document upload, verification and any missing-item messages.</p></div>
+      <div class="card"><div class="number">04</div><h3>Essays</h3><p>Write specific answers. Explain what you did, why it mattered, what you learned and how the program connects to your next step.</p></div>
+      <div class="card"><div class="number">05</div><h3>Recommendations</h3><p>Request early, provide context, and monitor whether letters have actually been received.</p></div>
+      <div class="card"><div class="number">06</div><h3>Decision tracking</h3><p>Record admits, rejects, waitlists, scholarship offers, deposits, enrollment deadlines and next actions.</p></div>
+    </div>
+    <div class="bluebox" style="margin-top:25px"><strong>Simple application tracker columns:</strong> University · Program · Deadline · Application portal · Fee · English test · Academic test · Essay · LOR 1 · LOR 2 · Transcript · Portfolio · Financial aid · Status · Decision · Next action.</div>
+  </div>
+</section>
+
+<section class="section" id="money">
+  <div class="container">
+    <span class="kicker">07 / COSTS & FUNDING</span>
+    <h2>Budget the entire experience, not just tuition.</h2>
+    <p class="lead">There is no single “cost of studying in America.” Your total can change dramatically with institution, state, city, housing choice, insurance and lifestyle.</p>
+    <div class="grid grid-2" style="margin-top:30px">
+      <div class="card"><h3>Education costs</h3><ul><li>Tuition</li><li>Mandatory university fees</li><li>Books, supplies and course materials</li><li>Program-specific costs such as labs or equipment</li></ul></div>
+      <div class="card"><h3>Living costs</h3><ul><li>Rent or university housing</li><li>Food and groceries</li><li>Local transportation</li><li>Phone, internet and personal expenses</li></ul></div>
+      <div class="card"><h3>One-time costs</h3><ul><li>Application and testing fees</li><li>Visa-related costs</li><li>Travel to the U.S.</li><li>Initial deposits and basic setup</li></ul></div>
+      <div class="card"><h3>Funding options</h3><ul><li>University scholarships or grants</li><li>Assistantships for eligible graduate programs</li><li>External scholarships</li><li>Personal/family funding and permitted education financing</li></ul></div>
+    </div>
+    <h3 style="margin-top:40px">Ask these five questions before accepting an offer.</h3>
+    <div class="checklist">
+      <div class="check">✓ What is the <b>total annual cost</b>, not just tuition?</div>
+      <div class="check">✓ Is the scholarship <b>renewable</b>, and what conditions apply?</div>
+      <div class="check">✓ What housing options are realistic for the campus?</div>
+      <div class="check">✓ How much funding is guaranteed versus estimated?</div>
+      <div class="check">✓ What is the cost if the program takes longer than planned?</div>
+      <div class="check">✓ What financial documents will be needed for immigration or enrollment?</div>
+    </div>
+    <div class="notice redline">Do not assume a part-time job will automatically cover tuition or living costs. Work authorization and restrictions depend on your immigration status and current rules; plan primary funding before departure.</div>
+  </div>
+</section>
+
+<section class="section alt" id="timeline">
+  <div class="container">
+    <span class="kicker">08 / TIMELINE</span>
+    <h2>Give yourself enough runway.</h2>
+    <p class="lead">The exact calendar depends on your intake, university and country of residence. Use this as a planning framework, then replace it with the deadlines of your actual shortlist.</p>
+    <div class="timeline">
+      <div class="timeline-item"><div class="timeline-dot"></div><h3>12–18+ months before</h3><p>Choose field and destination. Research universities. Estimate costs. Identify tests. Start improving academic or English preparation if needed.</p></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><h3>9–12 months before</h3><p>Finalize the university list. Take required tests. Request documents. Draft essays. Identify scholarship and financial-aid deadlines.</p></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><h3>6–9 months before</h3><p>Submit applications according to each institution's deadlines. Complete financial-aid forms and monitor portals for missing materials.</p></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><h3>3–6 months before</h3><p>Review decisions and funding. Select a university. Complete enrollment requirements. Start the institution's international-student and immigration process.</p></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><h3>1–3 months before</h3><p>Prepare visa documents and interview if applicable. Arrange housing, insurance, travel, finances and arrival logistics.</p></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><h3>Departure month</h3><p>Carry your essential documents, confirm your arrival plan, know where you will stay and follow the university's instructions for international-student check-in.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="visa">
+  <div class="container">
+    <span class="kicker">09 / IMMIGRATION</span>
+    <h2>Understand the student-visa pathway.</h2>
+    <p class="lead">Your university/program and immigration category determine which documents and rules apply. Use current U.S. government and school instructions rather than relying on old social-media checklists.</p>
+    <div class="compare">
+      <div class="card"><div class="icon">🎓</div><h3>F-1</h3><p>Commonly used for academic students attending eligible schools and programs. Your school provides the relevant immigration document after the required enrollment/financial process.</p><span class="tag">Academic study</span></div>
+      <div class="card"><div class="icon">🌎</div><h3>J-1</h3><p>Used for exchange visitors in qualifying programs. The sponsor and program determine the applicable documentation and conditions.</p><span class="tag">Exchange</span></div>
+      <div class="card"><div class="icon">🛠️</div><h3>M-1</h3><p>Used for certain vocational or nonacademic study. Program and immigration requirements differ from F-1 academic study.</p><span class="tag">Vocational</span></div>
+    </div>
+    <div class="steps" style="margin-top:28px">
+      <div class="step"><div class="step-num">01</div><div><h3>Receive the school's immigration documentation</h3><p>After admission and the required enrollment/financial steps, follow your institution or program sponsor's instructions for the documents needed for your visa process.</p></div><aside>School<strong>Follow official instructions</strong></aside></div>
+      <div class="step"><div class="step-num">02</div><div><h3>Complete the required visa process</h3><p>Use the current U.S. government instructions for your category, complete required forms and fees, and schedule an appointment if your process requires one.</p></div><aside>Government<strong>Use current rules</strong></aside></div>
+      <div class="step"><div class="step-num">03</div><div><h3>Prepare your documents and interview</h3><p>Organize your passport, school/immigration documents, financial evidence and any other documents requested by the relevant authorities. Answer truthfully and consistently.</p></div><aside>Prepare<strong>Know your own application</strong></aside></div>
+      <div class="step"><div class="step-num">04</div><div><h3>After approval: prepare for travel</h3><p>Follow your school's arrival instructions, confirm your housing and arrival date, and carry your important documents in your hand luggage.</p></div><aside>Travel<strong>Keep essentials accessible</strong></aside></div>
+    </div>
+    <div class="notice">Visa rules, fees, appointment procedures and travel requirements can change. The official U.S. Department of State, DHS/Study in the States and your university should be your final sources for current requirements.</div>
+  </div>
+</section>
+
+<section class="section alt" id="arrival">
+  <div class="container">
+    <span class="kicker">10 / HOUSING & ARRIVAL</span>
+    <h2>Plan the first 72 hours before you fly.</h2>
+    <div class="grid grid-3" style="margin-top:30px">
+      <div class="card"><h3>Housing</h3><p>Compare university housing, private rentals and shared housing. Check lease terms, deposits, utilities, commute, furnishing and move-in dates.</p></div>
+      <div class="card"><h3>Money</h3><p>Know how you will pay your first expenses. Understand your bank/card access and keep emergency funds separate from your daily spending.</p></div>
+      <div class="card"><h3>Phone & internet</h3><p>Decide how you will stay connected on arrival. Check whether your university offers campus Wi-Fi and international-student support.</p></div>
+      <div class="card"><h3>Airport → campus</h3><p>Confirm the exact airport, pickup option, public transport or rideshare plan, address and after-hours instructions before departure.</p></div>
+      <div class="card"><h3>Orientation</h3><p>Save your international-student orientation date, check-in deadline and any mandatory immigration or academic appointments.</p></div>
+      <div class="card"><h3>Emergency contacts</h3><p>Keep university emergency contacts, local emergency information, insurance details and trusted family contacts accessible offline.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="student-life">
+  <div class="container">
+    <span class="kicker">11 / LIFE IN THE USA</span>
+    <h2>Studying is only part of the experience.</h2>
+    <div class="grid grid-2" style="margin-top:30px">
+      <div class="card"><h3>Campus life</h3><p>Explore clubs, student organizations, sports, cultural groups, academic societies, volunteering and campus events. These can also be useful ways to build community.</p></div>
+      <div class="card"><h3>Academic culture</h3><p>Many U.S. classrooms emphasize participation, projects, office hours, presentations and continuous assessment. Read each course syllabus carefully.</p></div>
+      <div class="card"><h3>Academic integrity</h3><p>Universities take plagiarism, unauthorized collaboration, fabrication and other academic misconduct seriously. Learn your institution's rules before submitting work.</p></div>
+      <div class="card"><h3>Health & insurance</h3><p>International students may have university-specific health-insurance requirements. Read your school's policy carefully and understand how to access care.</p></div>
+      <div class="card"><h3>Transportation</h3><p>Some campuses are walkable or transit-connected; others are car-oriented. Research transportation before choosing housing.</p></div>
+      <div class="card"><h3>Work & practical training</h3><p>Immigration rules can restrict employment and practical training. Never start work based only on advice from friends; confirm what your status and school authorize.</p></div>
+    </div>
+    <div class="notice redline">If you are unsure about immigration, employment, academic-integrity or enrollment rules, ask the university's designated international-student office and consult the relevant official government source.</div>
+  </div>
+</section>
+
+<section class="section alt" id="checklist">
+  <div class="container">
+    <span class="kicker">12 / MASTER CHECKLIST</span>
+    <h2>Before you leave home.</h2>
+    <p class="lead">Turn the guide into actions. Tick these off as you go.</p>
+    <div class="checklist" style="margin-top:28px">
+      <div class="check">✓ University offer accepted and enrollment completed</div>
+      <div class="check">✓ Immigration/visa documents organized</div>
+      <div class="check">✓ Passport and required documents checked</div>
+      <div class="check">✓ Visa process completed according to current instructions</div>
+      <div class="check">✓ Housing confirmed</div>
+      <div class="check">✓ Health-insurance requirements understood</div>
+      <div class="check">✓ Flight and arrival plan confirmed</div>
+      <div class="check">✓ Airport-to-campus route saved offline</div>
+      <div class="check">✓ University orientation/check-in date saved</div>
+      <div class="check">✓ Tuition payment/deposit plan understood</div>
+      <div class="check">✓ First-month living budget prepared</div>
+      <div class="check">✓ Banking/payment method ready</div>
+      <div class="check">✓ Emergency and university contacts saved</div>
+      <div class="check">✓ Digital copies of key documents backed up</div>
+      <div class="check">✓ Original important documents packed in hand luggage</div>
+      <div class="check">✓ Family/trusted contacts know your arrival plan</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <span class="kicker">OFFICIAL STARTING POINTS</span>
+    <h2>Use primary sources for final decisions.</h2>
+    <p class="lead">This guide is for planning and orientation. Policies and deadlines change, so verify the final details with the relevant institution or U.S. government source.</p>
+    <div class="resource-list">
+      <div class="resource"><span>EducationUSA — study planning and advising</span><a href="https://educationusa.state.gov/" target="_blank" rel="noopener">Open ↗</a></div>
+      <div class="resource"><span>U.S. Department of State — visas</span><a href="https://travel.state.gov/content/travel/en/us-visas.html" target="_blank" rel="noopener">Open ↗</a></div>
+      <div class="resource"><span>Study in the States — international students</span><a href="https://studyinthestates.dhs.gov/" target="_blank" rel="noopener">Open ↗</a></div>
+      <div class="resource"><span>USCIS — immigration information</span><a href="https://www.uscis.gov/" target="_blank" rel="noopener">Open ↗</a></div>
+      <div class="resource"><span>Common App — undergraduate applications</span><a href="https://www.commonapp.org/" target="_blank" rel="noopener">Open ↗</a></div>
+      <div class="resource"><span>College Board — undergraduate testing/tools</span><a href="https://www.collegeboard.org/" target="_blank" rel="noopener">Open ↗</a></div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div><strong>UniAI — USA Study Guide</strong><br><span>Research smarter. Apply with a plan. Arrive prepared.</span></div>
+    <div>Guide content is educational planning material, not legal, immigration, financial or admissions advice.</div>
+  </div>
+</footer>
+
+</body>
+</html>
