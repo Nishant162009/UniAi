@@ -191,6 +191,26 @@
           <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
           <span class="notif-dot">3</span>
         </button>
+
+<div class="auth-nav-actions" id="auth-nav-actions">
+  <button
+    type="button"
+    id="auth-nav-trigger"
+    class="auth-login-btn"
+  >
+    Log in
+  </button>
+
+  <button
+    type="button"
+    class="auth-signup-btn"
+    data-open-auth="signup"
+  >
+    Sign up
+  </button>
+</div>
+
+
         <div id="notif-panel" class="notif-panel hidden">
           <strong>Notifications</strong>
           <p>3 new scholarship matches for STEM applicants.</p>
@@ -210,20 +230,27 @@
 
     <main id="homePage" class="page-section active-page">
   <div class="homepage-promo-banner">
-    <div class="promo-card" id="auth-promo-banner">
-      <div class="promo-left">
-        <div class="promo-icon">🎓</div>
-        <div class="promo-content">
-          <div class="promo-header">
-            <h4 class="promo-title">Dream University</h4>
-            <span class="promo-badge">Unlock Workspace</span>
-          </div>
-          <p class="promo-text">Sign in to unlock AI chat, application tracking, and personalized guidance.</p>
+  <div class="promo-card" id="auth-promo-banner">
+    <div class="promo-left">
+      <div class="promo-icon">🎓</div>
+      <div class="promo-content">
+        <div class="promo-header">
+          <h4 class="promo-title">Dream University</h4>
+          <span class="promo-badge">Unlock Workspace</span>
         </div>
+        <p class="promo-text">
+          Sign in to unlock AI chat, application tracking, and personalized guidance.
+        </p>
       </div>
-      <button class="promo-btn" id="auth-nav-trigger" onclick="document.getElementById('auth-overlay').style.display='flex'">
-        Sign Up Free
-      </button>
+    </div>
+    <button
+      class="promo-btn"
+      id="auth-nav-trigger"
+      onclick="document.getElementById('auth-overlay').style.display='flex'"
+    >
+      Sign Up Free
+    </button>
+  
     </div>
   </div>
       <div class="home-grid">

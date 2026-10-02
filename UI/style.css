@@ -2338,3 +2338,78 @@ html[data-theme="light"] .homepage-promo-banner .promo-icon {
 }
 
 
+.auth-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-login-btn,
+.auth-signup-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 18px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.18s ease, box-shadow 0.18s ease,
+    background 0.18s ease, border-color 0.18s ease;
+}
+
+.auth-login-btn {
+  color: var(--text-color, #1e293b);
+  background: #ffffff;
+  border-color: var(--border, #dbe3f0);
+}
+
+.auth-signup-btn {
+  color: #ffffff;
+  background: var(--primary, #6d5dfb);
+  border-color: var(--primary, #6d5dfb);
+  box-shadow: 0 6px 16px rgba(109, 93, 251, 0.22);
+}
+
+.auth-login-btn:hover {
+  transform: translateY(-1px);
+  background: var(--surface-hover, rgba(109, 93, 251, 0.06));
+  border-color: rgba(109, 93, 251, 0.35);
+}
+
+.auth-signup-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(109, 93, 251, 0.32);
+  filter: brightness(0.97);
+}
+
+.auth-login-btn:active,
+.auth-signup-btn:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+  .auth-nav-actions {
+    gap: 8px;
+  }
+
+  .auth-login-btn,
+  .auth-signup-btn {
+    min-height: 38px;
+    padding: 0 14px;
+    font-size: 0.82rem;
+  }
+}
+
+
+
+
+
+
+
+
+

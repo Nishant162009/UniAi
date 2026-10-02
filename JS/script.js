@@ -2539,7 +2539,6 @@ if (document.readyState === "loading") {
   init();
 }
 
-
 /* ==========================================================================
    SETTINGS ACCOUNT ACTIONS — SIGN OUT + DELETE ACCOUNT
    ========================================================================== */
@@ -2618,8 +2617,8 @@ function setupSettingsAccountActions() {
 
       if (!secondConfirm) return;
 
-      deleteBtn.disabled = true;
-      deleteBtn.textContent = "Deleting…";
+      deleteBtn.disabled = true; 
+       deleteBtn.textContent = "Deleting…";
 
       try {
         const userId = state.session.user.id;
