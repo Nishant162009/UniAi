@@ -12,13 +12,18 @@
    05. Theme
    06. University finder
    07. University details modal
-   08. Shortlist
+   08. Shortlist (fallback — save.js takes over when loaded)
    09. Living cost calculator
    10. Currency converter
-   11. SOP studio
-   12. AI chat
-   13. Particles / scroll-to-top / boot sequence
+   11. AI chat
+   12. Particles / scroll-to-top / shortcuts
+   13. Settings account actions
    14. Global exports + single init
+
+   Owned by other files (intentionally NOT in here any more):
+     SOP / LOR studio ........ sop.js
+     Scholarship filtering ... scholarship.js
+     Saved items ............. save.js
    ========================================================================== */
 
 "use strict";
@@ -40,7 +45,8 @@ const CONFIG = {
 
   // Where a university card sends you.
   //   "route" -> /university/<slug>        (needs the server to serve that path)
-  //   "file"  -> university.html?slug=...  (works on plain static hosting)
+  //   "file"  -> university.html?slug=...  (works on plain static hosting,
+  //                                         e.g. VS Code Live Server)
   UNI_DETAIL_MODE: "route",
   UNI_DETAIL_ROUTE: "/university",
   UNI_DETAIL_FILE: "university.html",
@@ -48,6 +54,9 @@ const CONFIG = {
   // Pages that require a signed-in user. Guide pages (guides/*.html) are
   // locked separately — see setupGuideLocks() and guides/guard.js.
   PROTECTED_PAGES: ["ai-chat", "workspace", "visaGuide", "sopStudio", "roadmap"],
+
+  // Supabase's default minimum password length.
+  MIN_PASSWORD_LENGTH: 6,
 
   STORAGE: {
     theme: "uniai-theme",
@@ -66,6 +75,8 @@ const LOCK_TITLES = {
   guide: "Sign in to read the guides"
 };
 
+const PLACEHOLDER_LOGO = "https://placehold.co/100x100?text=UNI";
+
 const state = {
   session: null,
   universities: [],
@@ -73,7 +84,8 @@ const state = {
   conversation: [],
   isSending: false,
   isSignUpMode: false,
-  pendingAction: null
+  pendingAction: null,
+  pendingPrompt: null // a chat question typed before signing in
 };
 
 /* Small DOM helpers ------------------------------------------------------- */
@@ -103,6 +115,33 @@ function titleCase(str) {
 
 function api(path) {
   return `${CONFIG.API_BASE}${path}`;
+}
+
+/**
+ * Escapes text for safe use in HTML *and* inside quoted attributes.
+ * (The old version used textContent/innerHTML, which leaves quotes alone, so a
+ * name like  King's "College"  could break out of an attribute.)
+ */
+const HTML_ESCAPES = {
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': "&quot;",
+  "'": "&#39;"
+};
+
+function escapeHTML(text) {
+  return String(text ?? "").replace(/[&<>"']/g, (ch) => HTML_ESCAPES[ch]);
+}
+
+/** Only lets http(s) URLs through, so data like "javascript:..." can't land in an href/src. */
+function safeUrl(url) {
+  try {
+    const u = new URL(String(url || ""), window.location.href);
+    return u.protocol === "http:" || u.protocol === "https:" ? u.href : "";
+  } catch (err) {
+    return "";
+  }
 }
 
 /**
@@ -168,6 +207,11 @@ function writeStore(key, value) {
   } catch (err) {
     console.warn("Storage write failed:", key, err);
   }
+}
+
+/** Honors the "Confirm destructive actions" preference from Settings. */
+function shouldConfirm() {
+  return !window.UniAISettings || window.UniAISettings.is("confirmActions");
 }
 
 /* ==========================================================================
@@ -240,13 +284,28 @@ function runPendingAction() {
   if (!action) return;
   state.pendingAction = null;
 
-  if (action.type === "page") showPage(action.page);
-  else if (action.type === "url") window.location.href = action.url;
+  if (action.type === "page") {
+    showPage(action.page).then((shown) => {
+      // Hand back the question they typed on the home page before signing in.
+      if (shown && action.page === "ai-chat" && state.pendingPrompt) {
+        const prompt = state.pendingPrompt;
+        state.pendingPrompt = null;
+        setupChatComposer();
+        setUniAIInput(prompt);
+      }
+    });
+  } else if (action.type === "url") {
+    window.location.href = action.url;
+  }
 }
 
 /**
  * Single place where every piece of session-driven UI is updated.
- * Called on every auth state change, so nav + profile page never drift apart.
+ * Called on auth state changes, so nav + profile page never drift apart.
+ *
+ * Any element can opt in to auth visibility without touching this file:
+ *   <button data-auth-visible="signed-in">…</button>
+ *   <a data-auth-visible="signed-out">…</a>
  */
 function syncSessionUI(session) {
   state.session = session || null;
@@ -260,10 +319,8 @@ function syncSessionUI(session) {
   const profileBadge = $("user-profile-badge");
   const promoBanner = $("auth-promo-banner");
   const signInBtn = $("auth-nav-trigger");
+  const authNavActions = $("auth-nav-actions"); // Log in + Sign up group
   const logoutBtn = $("logout-btn");
-  const editOverlay = $("edit-profile-overlay");
-
-  hide(editOverlay);
 
   // Account card elements
   const accountAvatarText = $("account-avatar-text");
@@ -281,17 +338,28 @@ function syncSessionUI(session) {
   const sessionType = $("session-type");
   const sessionStorageType = $("session-storage-type");
 
+  // Generic opt-in elements.
+  $$('[data-auth-visible="signed-in"]').forEach((el) =>
+    session ? el.style.removeProperty("display") : hide(el)
+  );
+  $$('[data-auth-visible="signed-out"]').forEach((el) =>
+    session ? hide(el) : el.style.removeProperty("display")
+  );
+
   if (!session) {
     // --- SIGNED OUT STATE ---
+    // Close the edit-profile dialog only when the user actually leaves
+    // (it used to close on every token refresh, wiping what they were typing).
+    hide($("edit-profile-overlay"));
+
     hide(profileBadge);
     show(promoBanner, "flex");
+    show(authNavActions, "flex");
     show(signInBtn, "inline-flex");
     hide(logoutBtn);
 
-    // Reset Avatar to "?"
     if (accountAvatarText) accountAvatarText.textContent = "?";
 
-    // Reset Account Panel
     if (accountStatusText) accountStatusText.textContent = "Signed out";
     if (accountTitle) accountTitle.textContent = "Guest account";
     if (settingsSignInBtn) show(settingsSignInBtn, "inline-flex");
@@ -304,7 +372,6 @@ function syncSessionUI(session) {
     }
     if (aiChatLockNotice) show(aiChatLockNotice);
 
-    // Reset Session Panel
     if (sessionAccountName) sessionAccountName.textContent = "Guest";
     if (sessionType) sessionType.textContent = "Local";
     if (sessionStorageType) sessionStorageType.textContent = "Browser";
@@ -315,43 +382,34 @@ function syncSessionUI(session) {
 
   // --- SIGNED IN STATE ---
   hide(promoBanner);
+  hide(authNavActions);
   hide(signInBtn);
   show(logoutBtn, "inline-flex");
   show(profileBadge, "flex");
 
   const profile = getProfileFromSession(session);
 
-  // Header Nav Updates
   setText($("user-display-name"), profile.displayName);
   setText($("nav-username"), profile.displayName);
   setText($("nav-profile-type"), profile.role);
 
-  // Update Avatar with first letter of display name (e.g. "N" for "Nishant")
-  if (accountAvatarText) {
-    const initial = profile.displayName ? profile.displayName.charAt(0).toUpperCase() : "U";
-    accountAvatarText.textContent = initial;
-  }
+  // Header avatar (the first letter of the display name).
+  setText(".user-badge .user-avatar", profile.initial);
 
-  // Update Account Panel
+  if (accountAvatarText) accountAvatarText.textContent = profile.initial;
+
   if (accountStatusText) accountStatusText.textContent = "Signed in";
   if (accountTitle) accountTitle.textContent = profile.displayName;
   if (settingsSignInBtn) hide(settingsSignInBtn);
-  if (settingsAccountActions) {
-    show(settingsAccountActions, "flex");
-  }
-  if (settingsSignoutBtn) {
-    show(settingsSignoutBtn, "inline-flex");
-  }
-  if (settingsDeleteBtn) {
-    show(settingsDeleteBtn, "inline-flex");
-  }
+  if (settingsAccountActions) show(settingsAccountActions, "flex");
+  if (settingsSignoutBtn) show(settingsSignoutBtn, "inline-flex");
+  if (settingsDeleteBtn) show(settingsDeleteBtn, "inline-flex");
   if (aiChatLockPill) {
     aiChatLockPill.textContent = "Unlocked";
     aiChatLockPill.classList.remove("locked");
   }
   if (aiChatLockNotice) hide(aiChatLockNotice);
 
-  // Update Session Panel
   if (sessionAccountName) sessionAccountName.textContent = profile.displayName;
   if (sessionType) sessionType.textContent = "Authenticated";
   if (sessionStorageType) sessionStorageType.textContent = "Cloud Sync";
@@ -368,15 +426,37 @@ function watchAuthState() {
     return;
   }
 
-  supabaseApp.auth.onAuthStateChange((_event, session) => {
+  // Supabase fires SIGNED_IN again whenever the tab regains focus, and
+  // TOKEN_REFRESHED roughly hourly. Neither should repaint the UI or re-run
+  // every listener, so only real changes get through.
+  let lastUid;
+
+  const handle = (event, session) => {
+    const uid = session && session.user ? session.user.id : null;
+
+    state.session = session || null; // always keep the access token fresh
+
+    if (event === "TOKEN_REFRESHED") return;
+    if ((event === "SIGNED_IN" || event === "INITIAL_SESSION") && uid === lastUid) return;
+
+    lastUid = uid;
     syncSessionUI(session);
-  });
+  };
+
+  supabaseApp.auth.onAuthStateChange((event, session) => handle(event, session));
 
   // Covers the case where the SDK resolves the stored session late.
   supabaseApp.auth
     .getSession()
-    .then(({ data }) => syncSessionUI(data ? data.session : null))
+    .then(({ data }) => handle("INITIAL_SESSION", data ? data.session : null))
     .catch((err) => console.warn("getSession failed:", err));
+}
+
+function setAuthMessage(text = "", kind = "error") {
+  const el = $("auth-error-msg");
+  if (!el) return;
+  el.style.color = kind === "success" ? "#10b981" : "";
+  el.textContent = text;
 }
 
 function setAuthMode(signUp) {
@@ -407,7 +487,7 @@ function setAuthMode(signUp) {
     setText(submitBtn, "Sign In");
     if (toggleText) {
       toggleText.innerHTML =
-        "Don't have an account? <span id=\"auth-toggle-link\" class=\"auth-link\">Sign Up for Free</span>";
+        'Don\'t have an account? <span id="auth-toggle-link" class="auth-link">Sign Up for Free</span>';
     }
   }
 
@@ -424,10 +504,14 @@ function setupAuthForm() {
     const link = e.target.closest("#auth-toggle-link");
     if (!link) return;
     e.preventDefault();
+    setAuthMessage("");
     setAuthMode(!state.isSignUpMode);
   });
 
   $$("[data-open-auth]").forEach((btn) => {
+    if (btn.dataset.authBound) return;
+    btn.dataset.authBound = "1";
+
     btn.addEventListener("click", (e) => {
       e.preventDefault();
       openAuthOverlay(btn.dataset.openAuth === "signup");
@@ -448,23 +532,24 @@ function setupAuthForm() {
   authForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const errorMsg = $("auth-error-msg");
     const submitBtn = $("auth-submit-btn");
     const email = $("auth-email") ? $("auth-email").value.trim() : "";
     const password = $("auth-password") ? $("auth-password").value : "";
 
-    if (errorMsg) errorMsg.textContent = "";
+    setAuthMessage("");
 
     if (!supabaseApp) {
-      if (errorMsg) {
-        errorMsg.textContent =
-          "Auth service unavailable — the Supabase client failed to load.";
-      }
+      setAuthMessage("Auth service unavailable — the Supabase client failed to load.");
       return;
     }
 
     if (!email || !password) {
-      if (errorMsg) errorMsg.textContent = "Email and password are required.";
+      setAuthMessage("Email and password are required.");
+      return;
+    }
+
+    if (state.isSignUpMode && password.length < CONFIG.MIN_PASSWORD_LENGTH) {
+      setAuthMessage(`Password must be at least ${CONFIG.MIN_PASSWORD_LENGTH} characters.`);
       return;
     }
 
@@ -476,7 +561,7 @@ function setupAuthForm() {
         const roleEl = $("auth-profile-type");
         const username = usernameEl ? usernameEl.value.trim() : "";
 
-        const { error } = await supabaseApp.auth.signUp({
+        const { data, error } = await supabaseApp.auth.signUp({
           email,
           password,
           options: {
@@ -489,26 +574,35 @@ function setupAuthForm() {
 
         if (error) throw error;
 
-        if (errorMsg) {
-          errorMsg.style.color = "#10b981";
-          errorMsg.textContent =
-            "Account created. Check your inbox if email verification is on.";
+        // With email confirmation on, Supabase answers "success" for an
+        // address that already exists, but returns a user with no identities.
+        const identities = data && data.user && data.user.identities;
+        if (Array.isArray(identities) && identities.length === 0) {
+          throw new Error("An account with this email already exists. Try signing in.");
+        }
+
+        if (!(data && data.session)) {
+          // Email confirmation is required. Keep the dialog open so the
+          // message is actually seen (it used to be hidden instantly).
+          const passwordEl = $("auth-password");
+          if (passwordEl) passwordEl.value = "";
+
+          setAuthMode(false);
+          setAuthMessage(
+            "Account created. Check your inbox to confirm your email, then sign in.",
+            "success"
+          );
+          return;
         }
       } else {
-        const { error } = await supabaseApp.auth.signInWithPassword({
-          email,
-          password
-        });
+        const { error } = await supabaseApp.auth.signInWithPassword({ email, password });
         if (error) throw error;
       }
 
       authForm.reset();
       hide($("auth-overlay"));
     } catch (err) {
-      if (errorMsg) {
-        errorMsg.style.color = "";
-        errorMsg.textContent = err.message || "Authentication failed.";
-      }
+      setAuthMessage(err.message || "Authentication failed.");
     } finally {
       if (submitBtn) submitBtn.disabled = false;
     }
@@ -524,9 +618,13 @@ function setupAuthForm() {
  */
 function openAuthOverlay(signUp = false, title, pending = null) {
   setAuthMode(signUp);
+  setAuthMessage("");
   state.pendingAction = pending;
   if (title) setText($("auth-title"), title);
   show($("auth-overlay"), "flex");
+
+  const email = $("auth-email");
+  if (email) setTimeout(() => email.focus(), 50);
 }
 
 /**
@@ -593,21 +691,21 @@ function showConfirmCard(message, opts = {}) {
 
   return new Promise((resolve) => {
     const overlay = $("confirm-overlay");
+    const confirmBtn = $("confirm-modal-confirm");
+    const cancelBtn = $("confirm-modal-cancel");
 
-    if (!overlay) {
+    if (!overlay || !confirmBtn || !cancelBtn) {
       resolve(window.confirm(message));
       return;
     }
 
     const titleEl = $("confirm-modal-title");
     const messageEl = $("confirm-modal-message");
-    const confirmBtn = $("confirm-modal-confirm");
-    const cancelBtn = $("confirm-modal-cancel");
 
     if (titleEl) titleEl.textContent = title;
     if (messageEl) messageEl.textContent = message;
-    if (confirmBtn) confirmBtn.textContent = confirmText;
-    if (cancelBtn) cancelBtn.textContent = cancelText;
+    confirmBtn.textContent = confirmText;
+    cancelBtn.textContent = cancelText;
 
     const cleanup = (result) => {
       hide(overlay);
@@ -638,16 +736,11 @@ function showConfirmCard(message, opts = {}) {
 
 function setupLogout() {
   const logoutBtn = $("logout-btn");
-  if (!logoutBtn) return;
+  if (!logoutBtn || logoutBtn.dataset.bound) return;
+  logoutBtn.dataset.bound = "1";
 
   logoutBtn.addEventListener("click", async () => {
-    // Respect the "Confirm destructive actions" preference from Settings.
-    // Default to confirming if settings.js hasn't loaded yet, so the very
-    // first click of the session is still safe.
-    const confirmEnabled =
-      !window.UniAISettings || window.UniAISettings.is("confirmActions");
-
-    if (confirmEnabled) {
+    if (shouldConfirm()) {
       const confirmed = await showConfirmCard(
         "You'll need to sign back in to access your saved data and AI features.",
         {
@@ -660,11 +753,15 @@ function setupLogout() {
     }
 
     try {
-      if (supabaseApp) await supabaseApp.auth.signOut();
+      if (supabaseApp) {
+        const { error } = await supabaseApp.auth.signOut();
+        if (error) throw error;
+      }
       syncSessionUI(null);
       showPage("home");
     } catch (err) {
-      console.error("Sign out failed:", err.message);
+      console.error("Sign out failed:", err);
+      alert((err && err.message) || "Unable to sign out. Please try again.");
     }
   });
 }
@@ -673,10 +770,6 @@ function setupLogout() {
    03. PROFILE PAGE + EDIT MODAL
    ========================================================================== */
 
-/**
- * Fills the markup in the profile section. Previously none of this was wired,
- * so the page always showed placeholder copy.
- */
 function renderProfilePage(profile) {
   const page = $("profilePage");
   if (!page) return;
@@ -711,9 +804,7 @@ function renderProfilePage(profile) {
   if (dot) dot.style.background = "#10b981";
 }
 
-/**
- * Reads from the session, not from navbar text nodes.
- */
+/** Reads from the session, not from navbar text nodes. */
 function openEditModal() {
   if (!state.session) {
     openAuthOverlay(false, "Sign in to edit your profile");
@@ -747,12 +838,8 @@ function setupEditProfileForm() {
     const errorMsg = $("edit-error-msg");
     if (errorMsg) errorMsg.textContent = "";
 
-    const newUsername = $("edit-username")
-      ? $("edit-username").value.trim()
-      : "";
-    const newRole = $("edit-profile-type")
-      ? $("edit-profile-type").value
-      : "student";
+    const newUsername = $("edit-username") ? $("edit-username").value.trim() : "";
+    const newRole = $("edit-profile-type") ? $("edit-profile-type").value : "student";
 
     if (!supabaseApp) {
       if (errorMsg) errorMsg.textContent = "Auth service unavailable.";
@@ -773,17 +860,10 @@ function setupEditProfileForm() {
 
       // updateUser returns the fresh user; rebuild a session-shaped object
       // so every dependent surface refreshes through one code path.
-      const refreshed = {
-        ...(state.session || {}),
-        user: data.user
-      };
-
-      syncSessionUI(refreshed);
+      syncSessionUI({ ...(state.session || {}), user: data.user });
       closeEditModal();
     } catch (err) {
-      if (errorMsg) {
-        errorMsg.textContent = err.message || "Failed to update profile.";
-      }
+      if (errorMsg) errorMsg.textContent = err.message || "Failed to update profile.";
     }
   });
 
@@ -796,18 +876,61 @@ function setupEditProfileForm() {
    04. PAGE NAVIGATION
    ========================================================================== */
 
-async function showPage(page, event) {
-  if (event) event.preventDefault();
+/**
+ * Highlights the sidebar item for `page`, whether the navigation came from a
+ * sidebar click, a footer link, or code (e.g. after signing in).
+ */
+function setActiveNav(page, event) {
+  const navBtns = $$(".nav-btn");
+  navBtns.forEach((b) => b.classList.remove("active"));
 
-  if (CONFIG.PROTECTED_PAGES.includes(page)) {
+  let match = null;
+
+  if (event && event.target && event.target.closest) {
+    match = event.target.closest(".nav-btn");
+  }
+
+  if (!match) {
+    match = navBtns.find((b) => {
+      const handler = b.getAttribute("onclick") || "";
+      return (
+        handler.includes(`showPage('${page}'`) ||
+        handler.includes(`showPage("${page}"`)
+      );
+    });
+  }
+
+  if (match) match.classList.add("active");
+}
+
+/**
+ * Resolves to true when the page was shown, false when it was blocked (needs
+ * sign-in) or doesn't exist. Wrappers in settings.js / preferences.js pass the
+ * value straight through.
+ */
+async function showPage(page, event) {
+  if (event && typeof event.preventDefault === "function") event.preventDefault();
+
+  const key = String(page || "").replace(/Page$/, "");
+
+  if (CONFIG.PROTECTED_PAGES.includes(key)) {
     if (!(await hasSession())) {
       openAuthOverlay(
         false,
-        LOCK_TITLES[page] || "Sign in to continue",
-        { type: "page", page }
+        LOCK_TITLES[key] || "Sign in to continue",
+        { type: "page", page: key }
       );
-      return;
+      return false;
     }
+  }
+
+  const target = $(`${page}Page`) || $(page);
+
+  // Check BEFORE hiding anything — the old code blanked the whole screen
+  // when the page name didn't match an element.
+  if (!target || !target.classList.contains("page-section")) {
+    console.warn(`UniAI: no page element found for "${page}".`);
+    return false;
   }
 
   $$(".page-section").forEach((section) => {
@@ -816,45 +939,22 @@ async function showPage(page, event) {
     section.classList.add("hidden");
   });
 
-  const target = $(page + "Page") || $(page);
+  target.classList.remove("hidden");
+  target.classList.add("active-page");
 
-  if (target) {
-    // Lazy-load the SOP studio markup the first time it's opened.
-    if (
-      (page === "sopStudio" || page === "sopStudioPage") &&
-      target.innerHTML.trim() === ""
-    ) {
-      try {
-        const response = await fetch("sop.html");
-        if (response.ok) target.innerHTML = await response.text();
-      } catch (err) {
-        console.error("Failed to load sop.html:", err);
-      }
-    }
-
-    target.classList.remove("hidden");
-    target.classList.add("active-page");
-  } else {
-    console.warn(`UniAI: no page element found for "${page}".`);
-  }
-
-  $$(".nav-btn").forEach((b) => b.classList.remove("active"));
-  if (event && event.target && event.target.closest) {
-    const navBtn = event.target.closest(".nav-btn");
-    if (navBtn) navBtn.classList.add("active");
-  }
+  setActiveNav(key, event);
 
   document.body.classList.remove("nav-open");
   window.scrollTo({ top: 0, behavior: "smooth" });
+
+  return true;
 }
 
 /* ==========================================================================
    05. THEME
    ========================================================================== */
 
-/**
- * Applies the theme to <html> whether or not the toggle button exists.
- */
+/** Applies the theme to <html> whether or not the toggle button exists. */
 function applyTheme(theme, save = true) {
   const isDark = theme === "dark";
   document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
@@ -863,10 +963,7 @@ function applyTheme(theme, save = true) {
   if (btn) {
     btn.classList.toggle("dark", isDark);
     btn.setAttribute("aria-pressed", String(isDark));
-    btn.setAttribute(
-      "aria-label",
-      isDark ? "Switch to light mode" : "Switch to dark mode"
-    );
+    btn.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
   }
 
   if (save) {
@@ -879,8 +976,7 @@ function applyTheme(theme, save = true) {
 }
 
 function toggleDarkMode() {
-  const isDark =
-    document.documentElement.getAttribute("data-theme") === "dark";
+  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
 
   const btn = $("theme-toggle");
   if (btn) {
@@ -902,10 +998,12 @@ function setupTheme() {
   }
 
   const prefersDark =
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches;
+    window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-  applyTheme(saved || (prefersDark ? "dark" : "light"), false);
+  // "system" is a valid Settings choice — treat anything that isn't an
+  // explicit light/dark as "follow the device".
+  const theme = saved === "dark" || saved === "light" ? saved : prefersDark ? "dark" : "light";
+  applyTheme(theme, false);
 
   const btn = $("theme-toggle");
   if (!btn) return;
@@ -936,9 +1034,7 @@ function setupTheme() {
    06. UNIVERSITY FINDER
    ========================================================================== */
 
-/**
- * Offline sample set so the Finder still demos when the backend is down.
- */
+/** Offline sample set so the Finder still demos when the backend is down. */
 const SAMPLE_UNIVERSITIES = [
   { name: "University of Toronto", country: "Canada", qs_rank: 25, tuition_fee: 42000, ielts: 6.5, avg_gpa: 3.5, website: "https://www.utoronto.ca" },
   { name: "University of Melbourne", country: "Australia", qs_rank: 13, tuition_fee: 38000, ielts: 6.5, avg_gpa: 3.4, website: "https://www.unimelb.edu.au" },
@@ -960,7 +1056,7 @@ async function loadUniversities() {
   } catch (err) {
     state.universities = SAMPLE_UNIVERSITIES.slice();
     console.warn(
-      `UniAI: backend unreachable at ${CONFIG.API_BASE} — using the offline sample set.`
+      `UniAI: backend unreachable at "${CONFIG.API_BASE || "this origin"}" — using the offline sample set.`
     );
   }
 }
@@ -973,7 +1069,10 @@ async function loadCountries() {
 
   try {
     const res = await fetch(api("/universities/countries"));
-    if (res.ok) countries = await res.json();
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data)) countries = data;
+    }
   } catch (err) {
     /* fall through */
   }
@@ -997,6 +1096,9 @@ async function loadCountries() {
     countries = [...new Set(SAMPLE_UNIVERSITIES.map((u) => u.country))].sort();
   }
 
+  // Keep whatever the user (or a preset) already picked.
+  const previous = select.value;
+
   select.innerHTML = '<option value="">🌍 All Countries</option>';
   countries.forEach((country) => {
     const option = document.createElement("option");
@@ -1004,6 +1106,16 @@ async function loadCountries() {
     option.textContent = country;
     select.appendChild(option);
   });
+
+  if (previous) {
+    if (!countries.includes(previous)) {
+      const option = document.createElement("option");
+      option.value = previous;
+      option.textContent = previous;
+      select.appendChild(option);
+    }
+    select.value = previous;
+  }
 }
 
 function getCategory(userGPA, uniGPA) {
@@ -1030,35 +1142,39 @@ function getMatchScore(gpa, uni) {
   return Math.max(55, Math.min(98, Math.round(78 + gap * 18 + rankBonus)));
 }
 
+/** Accepts "40,000", "$40000", "40k"-less input; returns a number or 0. */
+function parseBudget(value) {
+  const n = Number(String(value || "").replace(/[^0-9.]/g, ""));
+  return Number.isFinite(n) ? n : 0;
+}
+
 function filterLocally({ country, searchQuery, budget }) {
+  const maxBudget = parseBudget(budget);
+
   return state.universities.filter((u) => {
     const name = String(u.name || "");
     const uniCountry = String(u.country || "");
 
-    if (country && uniCountry.toLowerCase() !== country.toLowerCase()) {
-      return false;
-    }
-    if (
-      searchQuery &&
-      !name.toLowerCase().includes(searchQuery.toLowerCase())
-    ) {
-      return false;
-    }
-    if (budget && Number(u.tuition_fee || 0) > Number(budget)) {
-      return false;
-    }
+    if (country && uniCountry.toLowerCase() !== country.toLowerCase()) return false;
+    if (searchQuery && !name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+    if (maxBudget && Number(u.tuition_fee || 0) > maxBudget) return false;
     return true;
   });
 }
+
+let finderRequestId = 0;
 
 async function findUniversities() {
   const results = $("results");
   if (!results) return;
 
+  // Only the newest search may paint (rapid clicks used to race).
+  const requestId = ++finderRequestId;
+
   const country = $("country") ? $("country").value : "";
   const searchQuery = $("uni-search") ? $("uni-search").value.trim() : "";
   const gpa = parseFloat($("gpa") ? $("gpa").value : "") || 0;
-  const budget = $("budget") ? $("budget").value : "";
+  const budget = parseBudget($("budget") ? $("budget").value : "");
 
   results.innerHTML = `
     <div class="finder-loading" style="grid-column:1/-1;padding:40px;text-align:center;background:rgba(0,0,0,.03);border-radius:20px;border:1px dashed rgba(109,93,251,.3);">
@@ -1071,19 +1187,23 @@ async function findUniversities() {
   let matches = [];
 
   try {
-    let url = `${api("/universities")}?country=${encodeURIComponent(country)}`;
-    if (searchQuery) url += `&search=${encodeURIComponent(searchQuery)}`;
-    if (budget) url += `&budget=${encodeURIComponent(budget)}`;
+    const params = new URLSearchParams();
+    if (country) params.set("country", country);
+    if (searchQuery) params.set("search", searchQuery);
+    if (budget) params.set("budget", String(budget));
 
-    const response = await fetch(url);
+    const query = params.toString();
+    const response = await fetch(`${api("/universities")}${query ? `?${query}` : ""}`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     matches = await response.json();
   } catch (err) {
-    // Graceful degradation instead of the old hard error state.
+    // Graceful degradation instead of a hard error state.
     if (!state.universities.length) state.universities = SAMPLE_UNIVERSITIES.slice();
     matches = filterLocally({ country, searchQuery, budget });
     console.warn("Finder: backend unavailable, filtered locally.");
   }
+
+  if (requestId !== finderRequestId) return; // a newer search took over
 
   if (!Array.isArray(matches) || !matches.length) {
     results.innerHTML = `
@@ -1093,6 +1213,7 @@ async function findUniversities() {
         <p style="color:var(--text-muted,#94a3b8);font-size:.9rem;">Try widening your budget, clearing the country filter, or checking the spelling.</p>
       </div>
     `;
+    window.__uniResults = [];
     updateAISummaryBar(null);
     return;
   }
@@ -1103,7 +1224,7 @@ async function findUniversities() {
       displayName: u.name || "University",
       displayTuition: Number(u.tuition_fee || u.Tuition_Fee || 25000),
       displayIelts: u.ielts || u.Ielts || 6.5,
-      displayLogo: u.logo || "https://placehold.co/100x100?text=UNI",
+      displayLogo: u.logo || PLACEHOLDER_LOGO,
       tag: getCategory(gpa, Number(u.avg_gpa) || 3.2),
       matchScore: getMatchScore(gpa, u)
     }))
@@ -1112,7 +1233,7 @@ async function findUniversities() {
       return (order[a.tag] || 2) - (order[b.tag] || 2) || b.matchScore - a.matchScore;
     });
 
-  // Keep the raw objects so the details modal can read them by index.
+  // Keep the processed objects so the details modal / save.js can read them.
   window.__uniResults = processed;
 
   updateAISummaryBar({
@@ -1122,28 +1243,28 @@ async function findUniversities() {
     budgetFriendly: `$${Math.min(...processed.map((u) => u.displayTuition)).toLocaleString()}/yr`
   });
 
-  // Card layout: each card is a flex column at full grid-row height, so the
-  // footer buttons always sit on the same baseline, and long names / four
-  // buttons can no longer push content past the card edge.
+  // Each card is a flex column at full grid-row height, so the footer buttons
+  // always sit on the same baseline and long names can't overflow.
   results.innerHTML = processed
     .map((u, index) => {
       const matchColor = getColor(u.tag);
       const saved = state.shortlist.includes(u.displayName);
+      const logo = safeUrl(u.displayLogo) || PLACEHOLDER_LOGO;
 
       return `
         <div class="uni-card-enhanced uni-card bento-card" data-index="${index}" style="cursor:pointer;display:flex;flex-direction:column;height:100%;min-width:0;box-sizing:border-box;">
           <div class="uni-header-row" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
             <div style="display:flex;gap:14px;align-items:center;min-width:0;flex:1;">
-              <img src="${u.displayLogo}" class="uni-logo" alt="${escapeHTML(u.displayName)}"
+              <img src="${escapeHTML(logo)}" class="uni-logo" alt="${escapeHTML(u.displayName)}"
                    style="width:48px;height:48px;flex-shrink:0;border-radius:12px;object-fit:cover;background:var(--bg,#fff);border:1px solid var(--border,#e2e8f0);"
-                   onerror="this.src='https://placehold.co/100x100?text=UNI'">
+                   onerror="this.onerror=null;this.src='${PLACEHOLDER_LOGO}'">
               <div style="min-width:0;">
                 <div class="uni-name" style="font-weight:700;overflow-wrap:anywhere;">${escapeHTML(u.displayName)}</div>
                 <div class="uni-location">📍 ${escapeHTML(u.country || "Global")}</div>
-                <div style="font-size:12px;color:var(--text-muted,#8a8aa3);margin-top:2px;">IELTS ${u.displayIelts}</div>
+                <div style="font-size:12px;color:var(--text-muted,#8a8aa3);margin-top:2px;">IELTS ${escapeHTML(u.displayIelts)}</div>
               </div>
             </div>
-            <span class="rank-badge" style="flex-shrink:0;white-space:nowrap;">🏆 #${u.qs_rank || "N/A"}</span>
+            <span class="rank-badge" style="flex-shrink:0;white-space:nowrap;">🏆 #${escapeHTML(u.qs_rank || "N/A")}</span>
           </div>
 
           <div class="uni-meta-pills" style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;">
@@ -1162,11 +1283,11 @@ async function findUniversities() {
           </div>
 
           <div class="uni-footer" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:auto;padding-top:14px;">
-            <button class="secondary-btn" data-action="save" data-name="${escapeHTML(u.displayName)}" style="width:100%;margin:0;box-sizing:border-box;justify-content:center;">
+            <button type="button" class="secondary-btn" data-action="save" style="width:100%;margin:0;box-sizing:border-box;justify-content:center;">
               ${saved ? "★ Saved" : "☆ Save"}
             </button>
-            <button class="secondary-btn" data-action="website" data-url="${escapeHTML(u.website || "")}" style="width:100%;margin:0;box-sizing:border-box;justify-content:center;">Website</button>
-            <button class="secondary-btn" data-action="peek" style="width:100%;margin:0;box-sizing:border-box;justify-content:center;">Quick view</button>
+            <button type="button" class="secondary-btn" data-action="website" data-url="${escapeHTML(safeUrl(u.website))}" style="width:100%;margin:0;box-sizing:border-box;justify-content:center;">Website</button>
+            <button type="button" class="secondary-btn" data-action="peek" style="width:100%;margin:0;box-sizing:border-box;justify-content:center;">Quick view</button>
             <a class="profile-btn glow-btn" data-action="details"
                href="${escapeHTML(uniDetailUrl(u) || "#")}"
                style="width:100%;margin:0;box-sizing:border-box;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Explore →</a>
@@ -1176,12 +1297,13 @@ async function findUniversities() {
     })
     .join("");
 
-  window.scrollTo({ top: results.offsetTop - 80, behavior: "smooth" });
+  const top = results.getBoundingClientRect().top + window.scrollY - 80;
+  window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
 }
 
 /**
- * One delegated listener for every card — replaces the inline onclick that
- * pointed at the dead /university/:slug route.
+ * One delegated listener for every card — no inline handlers, so names with
+ * quotes or apostrophes can't break anything.
  */
 function setupFinderDelegation() {
   const results = $("results");
@@ -1206,10 +1328,11 @@ function setupFinderDelegation() {
     }
 
     if (action === "save") {
-      toggleShortlist(uni.displayName);
-      actionBtn.textContent = state.shortlist.includes(uni.displayName)
-        ? "★ Saved"
-        : "☆ Save";
+      // save.js returns the new saved state; the fallback does too.
+      const result = toggleShortlist(uni.displayName);
+      const nowSaved =
+        typeof result === "boolean" ? result : state.shortlist.includes(uni.displayName);
+      actionBtn.textContent = nowSaved ? "★ Saved" : "☆ Save";
       return;
     }
 
@@ -1219,10 +1342,10 @@ function setupFinderDelegation() {
     }
 
     // "details", or a click anywhere else on the card -> the detail page.
-    // The Explore button is a real <a>, so middle-click and ctrl+click still
-    // open a new tab natively; only intercept the plain left click.
+    // The Explore button is a real <a>, so middle-click / shift-click still
+    // work natively; only intercept the plain left click.
     const isLink = actionBtn && actionBtn.tagName === "A";
-    if (isLink && (e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1)) return;
+    if (isLink && (e.shiftKey || e.button === 1)) return;
 
     e.preventDefault();
     openUniDetailPage(uni, e.ctrlKey || e.metaKey);
@@ -1255,35 +1378,30 @@ function updateAISummaryBar(data) {
   `;
 }
 
-function openDestination(country) {
+/** Makes sure `country` exists as an option, then selects it. */
+function selectCountry(country) {
   const select = $("country");
-  if (select) {
-    const exists = Array.from(select.options).some(
-      (o) => o.value === country || o.textContent === country
-    );
-    if (!exists) {
-      const option = document.createElement("option");
-      option.value = country;
-      option.textContent = country;
-      select.appendChild(option);
-    }
-    select.value = country;
+  if (!select || !country) return;
+
+  const exists = Array.from(select.options).some((o) => o.value === country);
+  if (!exists) {
+    const option = document.createElement("option");
+    option.value = country;
+    option.textContent = country;
+    select.appendChild(option);
   }
-  showPage("universityFinder").then(findUniversities);
+  select.value = country;
+}
+
+function openDestination(country) {
+  selectCountry(country);
+  showPage("universityFinder").then((shown) => {
+    if (shown) findUniversities();
+  });
 }
 
 function presetFinder(country, gpa, budget) {
-  const countryEl = $("country");
-  if (countryEl) {
-    const exists = Array.from(countryEl.options).some((o) => o.value === country);
-    if (!exists) {
-      const option = document.createElement("option");
-      option.value = country;
-      option.textContent = country;
-      countryEl.appendChild(option);
-    }
-    countryEl.value = country;
-  }
+  selectCountry(country);
   if ($("gpa")) $("gpa").value = gpa;
   if ($("budget")) $("budget").value = budget;
   findUniversities();
@@ -1301,16 +1419,34 @@ function showUniDetails(uni) {
   if (!modal) {
     modal = document.createElement("div");
     modal.id = "details-modal";
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
     modal.style.cssText =
       "position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(10px);display:flex;justify-content:center;align-items:center;z-index:9999;padding:20px;";
     document.body.appendChild(modal);
 
+    // One listener for the whole modal (replaces inline onclick handlers).
     modal.addEventListener("click", (e) => {
       if (e.target === modal || e.target.closest("[data-close-details]")) {
         modal.style.display = "none";
+        return;
+      }
+
+      const saveBtn = e.target.closest("[data-save-name]");
+      if (saveBtn) {
+        const result = toggleShortlist(saveBtn.dataset.saveName);
+        const nowSaved =
+          typeof result === "boolean"
+            ? result
+            : state.shortlist.includes(saveBtn.dataset.saveName);
+        saveBtn.textContent = nowSaved ? "★ Saved to shortlist" : "☆ Save to shortlist";
       }
     });
   }
+
+  const name = uni.name || uni.displayName || "University";
+  const logo = safeUrl(uni.logo || uni.displayLogo) || "https://placehold.co/120x120?text=UNI";
+  const nowSaved = state.shortlist.includes(name);
 
   const row = (label, value) =>
     `<div><strong>${label}</strong><p>${escapeHTML(String(value ?? "N/A"))}</p></div>`;
@@ -1318,12 +1454,12 @@ function showUniDetails(uni) {
   modal.style.display = "flex";
   modal.innerHTML = `
     <div class="bento-card" style="width:100%;max-width:750px;max-height:90vh;overflow-y:auto;position:relative;padding:35px;background:var(--card,#fff);border-radius:24px;">
-      <button data-close-details style="position:absolute;top:15px;right:15px;border:none;background:none;font-size:28px;cursor:pointer;line-height:1;">✕</button>
+      <button type="button" data-close-details aria-label="Close" style="position:absolute;top:15px;right:15px;border:none;background:none;font-size:28px;cursor:pointer;line-height:1;">✕</button>
       <div style="text-align:center;">
-        <img src="${uni.logo || uni.displayLogo || "https://placehold.co/120x120?text=UNI"}"
+        <img src="${escapeHTML(logo)}" alt=""
              style="width:110px;height:110px;object-fit:contain;background:#fff;padding:10px;border-radius:20px;"
-             onerror="this.src='https://placehold.co/120x120?text=UNI'">
-        <h1 style="margin-top:20px;">${escapeHTML(uni.name || uni.displayName || "University")}</h1>
+             onerror="this.onerror=null;this.src='https://placehold.co/120x120?text=UNI'">
+        <h1 style="margin-top:20px;">${escapeHTML(name)}</h1>
         <p>🌍 ${escapeHTML(uni.country || "Global")}</p>
       </div>
       <hr>
@@ -1342,9 +1478,9 @@ function showUniDetails(uni) {
       <hr style="margin:30px 0;">
       <p>${escapeHTML(uni.description || "A detailed profile for this institution is coming soon.")}</p>
       <div style="display:flex;gap:12px;margin-top:25px;flex-wrap:wrap;">
-        <button class="secondary-btn" style="flex:1;" onclick="toggleShortlist('${escapeHTML(uni.name || uni.displayName)}')">★ Save to shortlist</button>
+        <button type="button" class="secondary-btn" style="flex:1;" data-save-name="${escapeHTML(name)}">${nowSaved ? "★ Saved to shortlist" : "☆ Save to shortlist"}</button>
         <a href="${escapeHTML(uniDetailUrl(uni) || "#")}" class="secondary-btn" style="flex:1;text-align:center;text-decoration:none;padding:12px;">Full profile →</a>
-        <a href="${escapeHTML(uni.website || "#")}" target="_blank" rel="noopener" class="glow-btn" style="flex:1;text-align:center;text-decoration:none;padding:12px;">Official website →</a>
+        <a href="${escapeHTML(safeUrl(uni.website) || "#")}" target="_blank" rel="noopener" class="glow-btn" style="flex:1;text-align:center;text-decoration:none;padding:12px;">Official website →</a>
       </div>
     </div>
   `;
@@ -1352,30 +1488,44 @@ function showUniDetails(uni) {
 
 /* ==========================================================================
    08. SHORTLIST
+   Fallback only: when save.js is loaded it replaces toggleShortlist() and
+   updateShortlistUI() with versions that sync to the account and the Saved
+   page. These keep the Finder working if save.js ever fails to load.
    ========================================================================== */
 
+/** @returns {boolean} true if the university is now saved */
 function toggleShortlist(uniName) {
-  if (!uniName) return;
+  if (!uniName) return false;
 
-  if (state.shortlist.includes(uniName)) {
-    state.shortlist = state.shortlist.filter((n) => n !== uniName);
-  } else {
-    state.shortlist.push(uniName);
-  }
+  const wasSaved = state.shortlist.includes(uniName);
+
+  state.shortlist = wasSaved
+    ? state.shortlist.filter((n) => n !== uniName)
+    : [...state.shortlist, uniName];
 
   writeStore(CONFIG.STORAGE.shortlist, state.shortlist);
   updateShortlistUI();
+
+  return !wasSaved;
 }
 
 function updateShortlistUI() {
   const container = $("shortlist-items");
   if (!container) return;
 
+  if (!container.dataset.fallbackBound) {
+    container.dataset.fallbackBound = "1";
+    container.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-remove-name]");
+      if (btn) toggleShortlist(btn.dataset.removeName);
+    });
+  }
+
   container.innerHTML = state.shortlist.length
     ? state.shortlist
         .map(
           (name) =>
-            `<li>⭐ ${escapeHTML(name)} <button class="link-btn" onclick="toggleShortlist('${escapeHTML(name)}')">remove</button></li>`
+            `<li>⭐ ${escapeHTML(name)} <button type="button" class="link-btn" data-remove-name="${escapeHTML(name)}">remove</button></li>`
         )
         .join("")
     : `<li class="muted">Nothing saved yet. Star a university in Finder to keep it here.</li>`;
@@ -1389,9 +1539,15 @@ function updateShortlistUI() {
    ========================================================================== */
 
 function calculateLivingCost() {
-  const rentVal = parseFloat($("rent") ? $("rent").value : "") || 0;
-  const foodVal = parseFloat($("food") ? $("food").value : "") || 0;
-  const transportVal = parseFloat($("transport") ? $("transport").value : "") || 0;
+  const readAmount = (id) => {
+    const el = $(id);
+    const n = parseFloat(el ? el.value : "");
+    return Number.isFinite(n) && n > 0 ? n : 0; // blank / negative -> 0
+  };
+
+  const rentVal = readAmount("rent");
+  const foodVal = readAmount("food");
+  const transportVal = readAmount("transport"); // optional field
 
   const monthlyTotal = rentVal + foodVal + transportVal;
   const annualTotal = monthlyTotal * 12;
@@ -1573,10 +1729,12 @@ async function fetchRates(base) {
   const cached = rateCache.get(base);
   if (cached && Date.now() - cached.at < 10 * 60 * 1000) return cached.rates;
 
-  const res = await fetch(`https://api.exchangerate-api.com/v4/latest/${base}`);
+  const res = await fetch(`https://api.exchangerate-api.com/v4/latest/${encodeURIComponent(base)}`);
   if (!res.ok) throw new Error(`Rate API returned ${res.status}`);
 
   const data = await res.json();
+  if (!data || typeof data.rates !== "object") throw new Error("Rate API returned no rates.");
+
   rateCache.set(base, { rates: data.rates, at: Date.now() });
   return data.rates;
 }
@@ -1590,6 +1748,8 @@ function setCurrencyPreset(from, to) {
   convertCurrency();
 }
 
+let currencyRequestId = 0;
+
 async function convertCurrency() {
   const amountInput = $("amount");
   const fromSelect = $("fromCurrency");
@@ -1597,13 +1757,25 @@ async function convertCurrency() {
   const resultContainer = $("currencyResult");
   if (!amountInput || !fromSelect || !toSelect || !resultContainer) return;
 
-  const amount = parseFloat(amountInput.value) || 1;
+  const requestId = ++currencyRequestId; // ignore out-of-order responses
+
+  // Blank / invalid -> 1, but a real 0 stays 0 (it used to silently become 1).
+  const raw = parseFloat(amountInput.value);
+  const amount = Number.isFinite(raw) && raw >= 0 ? raw : 1;
   const from = fromSelect.value;
   const to = toSelect.value;
 
   try {
     const rates = await fetchRates(from);
-    const rate = rates[to] || 1;
+    if (requestId !== currencyRequestId) return;
+
+    const rate = from === to ? 1 : Number(rates[to]);
+
+    // The old code fell back to 1:1 here and still labelled it "Live rate".
+    if (!Number.isFinite(rate) || rate <= 0) {
+      throw new Error(`No exchange rate available for ${from} → ${to}.`);
+    }
+
     const total = amount * rate;
 
     const fromInfo = CURRENCY_MAP[from] || { flag: "🌐", symbol: "", name: from };
@@ -1611,11 +1783,12 @@ async function convertCurrency() {
 
     const travelCell = (code, flag, label) => {
       const info = CURRENCY_MAP[code] || { symbol: "" };
-      const value = amount * (rates[code] || (code === from ? 1 : 0));
+      const r = code === from ? 1 : Number(rates[code]);
+      const value = Number.isFinite(r) ? amount * r : null;
       return `
         <div class="travel-item">
           <div class="travel-flag">${flag}</div>
-          <div class="travel-val">${info.symbol}${value.toFixed(0)}</div>
+          <div class="travel-val">${value === null ? "—" : `${info.symbol}${value.toFixed(0)}`}</div>
           <div style="font-size:11px;color:var(--text-muted,#94a3b8);">${label}</div>
         </div>
       `;
@@ -1625,11 +1798,11 @@ async function convertCurrency() {
       <div class="currency-results-dashboard">
         <div class="result-primary-card">
           <div style="font-size:13px;font-weight:700;color:var(--text-muted,#94a3b8);letter-spacing:.05em;margin-bottom:8px;">
-            ${fromInfo.flag} ${amount.toLocaleString()} ${from} =
+            ${fromInfo.flag} ${amount.toLocaleString()} ${escapeHTML(from)} =
           </div>
           <div class="converted-large-text" id="converted-counter">${toInfo.symbol}0.00</div>
           <div class="conversion-rate-formula">
-            <span>1 ${from} = ${rate.toFixed(4)} ${to}</span>
+            <span>1 ${escapeHTML(from)} = ${rate.toFixed(4)} ${escapeHTML(to)}</span>
             <span style="color:#10b981;font-size:12px;font-weight:700;">● Live rate</span>
           </div>
           <div class="timestamp-pill"><span>🕒 Updated ${new Date().toLocaleTimeString()}</span></div>
@@ -1637,7 +1810,7 @@ async function convertCurrency() {
 
         <div class="travel-estimator-card">
           <div style="font-size:13px;font-weight:700;color:var(--text-muted,#94a3b8);letter-spacing:.05em;">
-            🌍 PURCHASING POWER (${amount.toLocaleString()} ${from})
+            🌍 PURCHASING POWER (${amount.toLocaleString()} ${escapeHTML(from)})
           </div>
           <div class="travel-grid">
             ${travelCell("USD", "🇺🇸", "United States")}
@@ -1656,6 +1829,9 @@ async function convertCurrency() {
 
     animateCurrencyValue("converted-counter", total, toInfo.symbol);
   } catch (err) {
+    if (requestId !== currencyRequestId) return;
+    console.warn("Currency conversion failed:", err);
+
     resultContainer.innerHTML = `
       <div style="padding:20px;border-radius:16px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);color:#ef4444;margin-top:16px;">
         ⚠️ Couldn't fetch the live exchange rate. Check your connection and try again.
@@ -1689,169 +1865,19 @@ function animateCurrencyValue(id, finalValue, symbol) {
 }
 
 /* ==========================================================================
-   11. SOP STUDIO
+   11. AI CHAT
    ========================================================================== */
-
-function switchSopTab(tabName) {
-  const genTab = $("sopGeneratorTab");
-  const evalTab = $("sopEvaluatorTab");
-  const buttons = $$(".sop-tab-btn");
-
-  buttons.forEach((btn) => btn.classList.remove("active"));
-
-  const generator = tabName === "generator";
-  if (genTab) genTab.classList.toggle("hidden", !generator);
-  if (evalTab) evalTab.classList.toggle("hidden", generator);
-  if (buttons[generator ? 0 : 1]) buttons[generator ? 0 : 1].classList.add("active");
-}
-
-function addExperienceEntry() {
-  const container = $("experienceContainer");
-  if (!container) return;
-
-  const entry = document.createElement("div");
-  entry.className = "dynamic-entry";
-  entry.innerHTML = `
-    <select class="exp-type">
-      <option value="Project">Project</option>
-      <option value="Internship">Internship</option>
-      <option value="Work Experience">Work Experience</option>
-      <option value="Research">Research</option>
-      <option value="Certification">Certification</option>
-      <option value="Publication">Publication</option>
-      <option value="Extracurricular">Extracurricular</option>
-      <option value="Volunteering">Volunteering</option>
-    </select>
-    <input type="text" class="exp-title" placeholder="Title / role">
-    <textarea class="exp-desc" rows="2" placeholder="What you did and what changed because of it…"></textarea>
-    <button type="button" class="btn-remove" onclick="removeEntry(this)">✕</button>
-  `;
-
-  container.appendChild(entry);
-}
-
-function removeEntry(button) {
-  if (button && button.parentElement) button.parentElement.remove();
-}
-
-function generateSOP() {
-  const outputContainer = $("generatedSopContainer");
-  const editor = $("sopTextEditor");
-
-  const val = (id, fallback) => {
-    const el = $(id);
-    const v = el ? el.value.trim() : "";
-    return v || fallback;
-  };
-
-  const fullName = val("sop-name", "the applicant");
-  const program = val("sop-program", "the intended graduate program");
-  const university = val("sop-university", "the target university");
-  const motivation = $("sop-motivation") ? $("sop-motivation").value.trim() : "";
-
-  const experiences = $("#experienceContainer .dynamic-entry")
-    .map((el) => {
-      const type = el.querySelector(".exp-type") ? el.querySelector(".exp-type").value : "Experience";
-      const titleEl = el.querySelector(".exp-title");
-      const descEl = el.querySelector(".exp-desc");
-      const title = titleEl ? titleEl.value.trim() : "";
-      const desc = descEl ? descEl.value.trim() : "";
-
-      if (!title) return "";
-
-      return `<p><strong>${escapeHTML(type)} — ${escapeHTML(title)}.</strong> ${escapeHTML(
-        desc || "This work sharpened my academic direction and my ability to finish under pressure."
-      )}</p>`;
-    })
-    .filter(Boolean)
-    .join("");
-
-  if (editor) {
-    editor.innerHTML = `
-      <p><strong>Statement of Purpose — draft</strong></p>
-      <p>My name is ${escapeHTML(fullName)}, and I am applying to ${escapeHTML(program)} at ${escapeHTML(university)}.</p>
-      ${motivation ? `<p>${escapeHTML(motivation)}</p>` : "<p>Across coursework, internships, and independent projects, I have learned to turn curiosity into structured inquiry — the habit this program is built on.</p>"}
-      ${experiences || "<p>My record so far forms one consistent story: I finish what I start, I learn in public, and I collaborate under pressure.</p>"}
-      <p>${escapeHTML(university)} stands out for its labs, faculty, and industry links in this field. Name a specific professor or lab here — reviewers notice when you do.</p>
-      <p>Thank you for considering my application.</p>
-      <hr>
-      <p><em>This is a scaffold, not a finished SOP. Replace every generic sentence with a specific one: a named lab, a measurable result, a moment that actually changed your direction.</em></p>
-    `;
-  }
-
-  if (outputContainer) {
-    outputContainer.classList.remove("hidden");
-    outputContainer.scrollIntoView({ behavior: "smooth" });
-  }
-}
-
-function evaluateSOP() {
-  const results = $("evaluationResults");
-  const input = $("sop-eval-input");
-  const text = input ? input.value.trim() : "";
-
-  if (!text) {
-    if (results) {
-      results.classList.remove("hidden");
-      results.innerHTML = `<p class="muted">Paste your draft above to get a structural read on it.</p>`;
-    }
-    return;
-  }
-
-  const lower = text.toLowerCase();
-  const words = text.split(/\s+/).filter(Boolean).length;
-
-  const clarity = Math.min(96, 62 + Math.min(words, 400) / 20);
-  const structure =
-    (lower.includes("university") || lower.includes("program") ? 20 : 0) +
-    (lower.includes("research") || lower.includes("lab") ? 20 : 0) +
-    (/\d/.test(text) ? 15 : 0) +
-    50;
-  const voice = words > 250 ? 84 : 68;
-  const overall = Math.round((clarity + Math.min(structure, 96) + voice) / 3);
-
-  if (!results) return;
-
-  results.classList.remove("hidden");
-  results.innerHTML = `
-    <div class="eval-grid">
-      <div class="eval-score"><strong>${overall}</strong><span>Overall</span></div>
-      <div class="eval-metric"><span>Clarity</span><b>${Math.round(clarity)}</b></div>
-      <div class="eval-metric"><span>Structure</span><b>${Math.min(structure, 96)}</b></div>
-      <div class="eval-metric"><span>Voice</span><b>${voice}</b></div>
-      <div class="eval-metric"><span>Words</span><b>${words}</b></div>
-    </div>
-    <ul class="eval-notes">
-      <li>${words < 300 ? "Too short. Expand toward 700–1000 words so a reviewer can see progression, not just intent." : "Length is competitive. Tighten repetition in the middle third."}</li>
-      <li>${structure >= 80 ? "Program fit is visible. Add one faculty or lab name to make it concrete." : "Name the program, the university, and one specific research or career outcome."}</li>
-      <li>${/\d/.test(text) ? "Good — you're using specifics." : "Add at least one number: a cohort size, a result, a duration. Numbers read as evidence."}</li>
-      <li>Close on what you will contribute to the cohort, not only what you hope to receive.</li>
-    </ul>
-    <p class="muted" style="margin-top:12px;font-size:.85rem;">This is a structural check, not an admissions verdict. Get a human read before you submit.</p>
-  `;
-
-  results.scrollIntoView({ behavior: "smooth" });
-}
-
-/* ==========================================================================
-   12. AI CHAT
-   ========================================================================== */
-
-function escapeHTML(text) {
-  const div = document.createElement("div");
-  div.textContent = String(text ?? "");
-  return div.innerHTML;
-}
 
 function formatAIResponse(text) {
   if (text == null) return "";
 
+  // Escape first, then add a small, safe subset of markdown.
   let out = escapeHTML(String(text));
 
   out = out.replace(/```([\s\S]*?)```/g, "<pre><code>$1</code></pre>");
   out = out.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-  out = out.replace(/(^|[^*])\*([^*]+)\*(?!\*)/g, "$1<em>$2</em>");
-  out = out.replace(/`([^`]+)`/g, "<code>$1</code>");
+  out = out.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, "$1<em>$2</em>");
+  out = out.replace(/`([^`\n]+)`/g, "<code>$1</code>");
   out = out.replace(/\n/g, "<br>");
 
   return out;
@@ -1975,17 +2001,13 @@ async function askUniAI(customMessage = null) {
   } catch (error) {
     console.error("UniAI chat error:", error);
 
-    const errorMessage =
+    // Shown to the user, but NOT stored in the conversation — otherwise the
+    // error text is sent back to the model as if it had said it.
+    updateAIMessage(
+      thinkingId,
       "⚠️ I couldn't reach UniAI. Check that your server is running and that " +
-      `\`${CONFIG.CHAT_ENDPOINT}\` is available.`;
-
-    updateAIMessage(thinkingId, errorMessage);
-    state.conversation.push({
-      role: "assistant",
-      content: errorMessage,
-      timestamp: new Date().toISOString()
-    });
-    saveConversation();
+        `\`${CONFIG.CHAT_ENDPOINT}\` is available.`
+    );
   } finally {
     state.isSending = false;
     if (sendBtn) {
@@ -2061,7 +2083,7 @@ function showUniAIHistory() {
     return;
   }
 
-  const userMessages = saved.filter((item) => item.role === "user");
+  const userMessages = saved.filter((item) => item && item.role === "user");
   if (!userMessages.length) {
     alert("No previous UniAI messages found.");
     return;
@@ -2105,7 +2127,8 @@ function setupChatComposer() {
   );
 
   input.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" && !event.shiftKey) {
+    // isComposing: don't send while an IME (Japanese, Chinese…) is mid-word.
+    if (event.key === "Enter" && !event.shiftKey && !event.isComposing) {
       event.preventDefault();
       askUniAI();
     }
@@ -2187,8 +2210,7 @@ function setupVoice() {
   const input = $("ai-input");
   if (!voiceBtn || !input) return;
 
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
   if (!SpeechRecognition) {
     voiceBtn.title = "Voice input isn't supported in this browser";
@@ -2199,7 +2221,7 @@ function setupVoice() {
   }
 
   const recognition = new SpeechRecognition();
-  recognition.lang = "en-US";
+  recognition.lang = navigator.language || "en-US";
   recognition.interimResults = true;
   recognition.continuous = false;
 
@@ -2246,6 +2268,7 @@ function setupVoice() {
     console.warn("Speech recognition error:", err);
     listening = false;
     voiceBtn.classList.remove("recording");
+    voiceBtn.setAttribute("aria-label", "Voice input");
   };
 }
 
@@ -2253,10 +2276,14 @@ async function quickAsk(text) {
   const value = String(text || "").replace(/^[^\w]+/, "").trim();
   if (!value) return;
 
-  await showPage("ai-chat");
+  // showPage resolves false when sign-in is required. The old code ignored
+  // that and sent the message anyway while the sign-in dialog was open.
+  const shown = await showPage("ai-chat");
 
-  // Only fires if the auth guard let us through.
-  if (!$("ai-chat") && !$("ai-chatPage")) return;
+  if (!shown) {
+    state.pendingPrompt = value; // pre-filled once they sign in
+    return;
+  }
 
   setupChatComposer();
   setUniAIInput(value);
@@ -2264,15 +2291,21 @@ async function quickAsk(text) {
 }
 
 /* ==========================================================================
-   13. PARTICLES / SCROLL-TO-TOP / MISC UI
+   12. PARTICLES / SCROLL-TO-TOP / SHORTCUTS
    ========================================================================== */
 
 function setupParticles() {
   const canvas = $("particles");
   if (!canvas || !canvas.getContext) return;
 
+  // Respect "reduce motion" — no decorative animation at all.
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    canvas.style.display = "none";
+    return;
+  }
+
   const ctx = canvas.getContext("2d");
-  let particles = [];
+  if (!ctx) return;
 
   const resize = () => {
     canvas.width = window.innerWidth;
@@ -2307,7 +2340,7 @@ function setupParticles() {
   resize();
   window.addEventListener("resize", resize);
 
-  particles = Array.from({ length: 60 }, () => new Particle());
+  const particles = Array.from({ length: 60 }, () => new Particle());
 
   const animate = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -2334,23 +2367,18 @@ function setupScrollToTop() {
   document.body.appendChild(topBtn);
 
   // addEventListener, not window.onscroll — nothing else gets clobbered.
-  window.addEventListener("scroll", () => {
-    const y = window.scrollY || document.documentElement.scrollTop;
-    topBtn.style.display = y > 500 ? "block" : "none";
-  });
+  window.addEventListener(
+    "scroll",
+    () => {
+      const y = window.scrollY || document.documentElement.scrollTop;
+      topBtn.style.display = y > 500 ? "block" : "none";
+    },
+    { passive: true }
+  );
 
   topBtn.addEventListener("click", () =>
     window.scrollTo({ top: 0, behavior: "smooth" })
   );
-}
-
-function filterScholarships() {
-  const q = ($("scholarship-filter") ? $("scholarship-filter").value : "").toLowerCase();
-
-  $$(".scholarship-card").forEach((card) => {
-    const hay = `${card.innerText} ${card.dataset.tags || ""}`.toLowerCase();
-    card.style.display = hay.includes(q) ? "" : "none";
-  });
 }
 
 function toggleNotifPanel() {
@@ -2361,14 +2389,22 @@ function toggleNotifPanel() {
 function setupGlobalShortcuts() {
   document.addEventListener("keydown", (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+      // aifree.js owns Ctrl/⌘+K on the Jobs page; don't fight it.
+      const jobs = $("aiFreeJobsPage");
+      if (jobs && jobs.classList.contains("active-page")) return;
+
       e.preventDefault();
       const search = $("uni-search");
       if (search) search.focus();
     }
+
     if (e.key === "Escape") {
       hide($("details-modal"));
       hide($("edit-profile-overlay"));
       hide($("auth-overlay"));
+
+      const panel = $("notif-panel");
+      if (panel) panel.classList.add("hidden");
     }
   });
 
@@ -2379,173 +2415,24 @@ function setupGlobalShortcuts() {
       panel.classList.add("hidden");
     }
   });
-}
 
-function setupSopButtonFeedback() {
-  $$(".btn-ai-generate").forEach((btn) => {
-    btn.addEventListener("click", function onGenerate() {
-      const btnText = this.querySelector(".btn-text");
-      if (!btnText) return;
-
-      const original = btnText.textContent;
-      btnText.textContent = "⏳ Working…";
-      this.style.opacity = "0.85";
-      this.style.pointerEvents = "none";
-
-      setTimeout(() => {
-        btnText.textContent = original;
-        this.style.opacity = "1";
-        this.style.pointerEvents = "auto";
-      }, 1200);
+  // Click on the dimmed backdrop closes the auth / edit dialogs.
+  ["auth-overlay", "edit-profile-overlay"].forEach((id) => {
+    const overlay = $(id);
+    if (!overlay) return;
+    overlay.addEventListener("mousedown", (e) => {
+      if (e.target === overlay) hide(overlay);
     });
   });
 }
 
-function runBootSequence() {
-  const status = $("system-status-text");
-  const world = document.querySelector(".world-system");
-
-  const sequence = [
-    [0, "INITIALIZING"],
-    [2200, "CONNECTING TO GLOBAL INDEX"],
-    [4500, "SCANNING THE WORLD"],
-    [6800, "MAPPING UNIVERSITIES"],
-    [8900, "INDEXING SCHOLARSHIPS"],
-    [10800, "ANALYZING POSSIBILITIES"],
-    [12800, "FINDING YOUR PATH"],
-    [15000, "INTELLIGENCE ONLINE"]
-  ];
-
-  if (status) {
-    sequence.forEach(([time, text]) => {
-      setTimeout(() => {
-        status.style.transition = "opacity .35s ease, transform .35s ease";
-        status.style.opacity = "0";
-        status.style.transform = "translateY(4px)";
-        setTimeout(() => {
-          status.textContent = text;
-          status.style.opacity = "1";
-          status.style.transform = "translateY(0)";
-        }, 350);
-      }, time);
-    });
-  }
-
-  if (world) {
-    world.style.opacity = "0";
-    world.style.transform = "translate(-50%, -50%) scale(.72)";
-    world.style.transition =
-      "opacity 2.5s ease, transform 3s cubic-bezier(.16,1,.3,1)";
-
-    setTimeout(() => {
-      world.style.opacity = ".75";
-      world.style.transform = "translate(-50%, -50%) scale(1)";
-    }, 1200);
-
-    if (window.innerWidth > 700) {
-      document.addEventListener("mousemove", (e) => {
-        const x = (e.clientX / window.innerWidth - 0.5) * 14;
-        const y = (e.clientY / window.innerHeight - 0.5) * 14;
-        world.style.marginLeft = `${x}px`;
-        world.style.marginTop = `${y}px`;
-      });
-    }
-  }
-
-  const explore = $("explore-system");
-  if (explore) {
-    explore.addEventListener("click", () => {
-      const target = document.querySelector("#explore");
-      if (target) target.scrollIntoView({ behavior: "smooth" });
-    });
-  }
-}
-
 /* ==========================================================================
-   14. GLOBAL EXPORTS + SINGLE INIT
-   ========================================================================== */
-
-// Everything the inline onclick attributes in your HTML call.
-Object.assign(window, {
-  showPage,
-  showpage: showPage,
-  toggleDarkMode,
-  openEditModal,
-  closeEditModal,
-  openAuthOverlay,
-  showConfirmCard,
-  findUniversities,
-  showUniDetails,
-  openUniDetailPage,
-  uniDetailUrl,
-  slugify,
-  toggleShortlist,
-  openDestination,
-  presetFinder,
-  calculateLivingCost,
-  convertCurrency,
-  setCurrencyPreset,
-  switchSopTab,
-  addExperienceEntry,
-  removeEntry,
-  generateSOP,
-  evaluateSOP,
-  askUniAI,
-  quickAsk,
-  startNewUniAIChat,
-  filterScholarships,
-  toggleNotifPanel
-});
-
-let booted = false;
-
-function init() {
-  if (booted) return;
-  booted = true;
-
-  setupTheme();
-
-  initSupabase();
-  watchAuthState();
-  setupAuthForm();
-  setupGuideLocks();
-  handleLoginRedirect();
-  setupEditProfileForm();
-  setupLogout();
-  setupSettingsAccountActions();
-
-  state.shortlist = readStore(CONFIG.STORAGE.shortlist, []);
-  updateShortlistUI();
-
-  setupFinderDelegation();
-  setupChatComposer();
-  setupGlobalShortcuts();
-  setupScrollToTop();
-  setupSopButtonFeedback();
-  runBootSequence();
-
-  // Network-dependent work runs after the UI is interactive.
-  loadCountries();
-  loadUniversities();
-
-  setupParticles();
-
-  setTimeout(() => hide($("intro")), 1600);
-}
-
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", init);
-} else {
-  init();
-}
-
-/* ==========================================================================
-   SETTINGS ACCOUNT ACTIONS — SIGN OUT + DELETE ACCOUNT
+   13. SETTINGS ACCOUNT ACTIONS — SIGN OUT + DELETE ACCOUNT
    ========================================================================== */
 
 function setupSettingsAccountActions() {
-  const signOutBtn = document.getElementById("settings-signout-btn");
-  const deleteBtn = document.getElementById("settings-delete-btn");
+  const signOutBtn = $("settings-signout-btn");
+  const deleteBtn = $("settings-delete-btn");
 
   if (signOutBtn && !signOutBtn.dataset.bound) {
     signOutBtn.dataset.bound = "1";
@@ -2556,25 +2443,25 @@ function setupSettingsAccountActions() {
         return;
       }
 
-      const confirmed = await showConfirmCard(
-        "You will be signed out of your UniAI account.",
-        {
-          title: "Sign out of UniAI?",
-          confirmText: "Sign out",
-          cancelText: "Cancel"
-        }
-      );
+      if (shouldConfirm()) {
+        const confirmed = await showConfirmCard(
+          "You will be signed out of your UniAI account.",
+          {
+            title: "Sign out of UniAI?",
+            confirmText: "Sign out",
+            cancelText: "Cancel"
+          }
+        );
 
-      if (!confirmed) return;
+        if (!confirmed) return;
+      }
 
       signOutBtn.disabled = true;
 
       try {
         const { error } = await supabaseApp.auth.signOut();
-
         if (error) throw error;
 
-        state.session = null;
         syncSessionUI(null);
         showPage("home");
       } catch (error) {
@@ -2589,6 +2476,7 @@ function setupSettingsAccountActions() {
   if (deleteBtn && !deleteBtn.dataset.bound) {
     deleteBtn.dataset.bound = "1";
 
+    // Deletion always asks twice, whatever the "confirm actions" preference says.
     deleteBtn.addEventListener("click", async () => {
       if (!supabaseApp || !state.session?.user) {
         alert("You must be signed in to delete your account.");
@@ -2617,52 +2505,37 @@ function setupSettingsAccountActions() {
 
       if (!secondConfirm) return;
 
-      deleteBtn.disabled = true; 
-       deleteBtn.textContent = "Deleting…";
+      deleteBtn.disabled = true;
+      deleteBtn.textContent = "Deleting…";
 
       try {
-        const userId = state.session.user.id;
-
         /*
-         * Recommended setup:
-         * Create a backend endpoint that uses the Supabase service-role key.
-         * Never expose the service-role key in browser JavaScript.
+         * Needs a backend endpoint that verifies the bearer token and uses the
+         * Supabase service-role key. Never put that key in browser JavaScript.
+         * The server should take the user from the token, not from the body.
          */
-        const response = await fetch(
-          `${CONFIG.API_BASE}/api/account/delete`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${state.session.access_token}`
-            },
-            body: JSON.stringify({
-              user_id: userId
-            })
+        const response = await fetch(`${CONFIG.API_BASE}/api/account/delete`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${state.session.access_token}`
           }
-        );
+        });
 
         const result = await response.json().catch(() => ({}));
 
         if (!response.ok) {
-          throw new Error(
-            result.error || result.message || "Account deletion failed."
-          );
+          throw new Error(result.error || result.message || "Account deletion failed.");
         }
 
         await supabaseApp.auth.signOut();
 
-        state.session = null;
         syncSessionUI(null);
-
-        alert("Your UniAI account has been deleted.");
         showPage("home");
+        alert("Your UniAI account has been deleted.");
       } catch (error) {
         console.error("Account deletion failed:", error);
-        alert(
-          error.message ||
-            "Unable to delete your account. Please try again."
-        );
+        alert(error.message || "Unable to delete your account. Please try again.");
       } finally {
         deleteBtn.disabled = false;
         deleteBtn.textContent = "Delete account";
@@ -2671,27 +2544,89 @@ function setupSettingsAccountActions() {
   }
 }
 
+/* ==========================================================================
+   14. GLOBAL EXPORTS + SINGLE INIT
+   ========================================================================== */
 
-/* ==============================
-   UNI AI — 7 SECOND INTRO
-   ============================== */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const intro = document.getElementById("intro");
-
-  if (!intro) return;
-
-  // Keep intro visible for exactly 7 seconds
-  setTimeout(() => {
-
-    intro.classList.add("intro-hidden");
-
-    // Remove it from the page after the fade animation
-    setTimeout(() => {
-      intro.remove();
-    }, 800);
-
-  }, 7000);
-
+// Everything the inline onclick attributes in your HTML (and the other
+// scripts) call by name.
+Object.assign(window, {
+  CONFIG,
+  showPage,
+  showpage: showPage,
+  hasSession,
+  escapeHTML,
+  toggleDarkMode,
+  openEditModal,
+  closeEditModal,
+  openAuthOverlay,
+  showConfirmCard,
+  findUniversities,
+  showUniDetails,
+  openUniDetailPage,
+  uniDetailUrl,
+  slugify,
+  toggleShortlist,
+  updateShortlistUI,
+  openDestination,
+  presetFinder,
+  calculateLivingCost,
+  convertCurrency,
+  setCurrencyPreset,
+  askUniAI,
+  quickAsk,
+  startNewUniAIChat,
+  toggleNotifPanel
 });
+
+let booted = false;
+
+function init() {
+  if (booted) return;
+  booted = true;
+
+  // Each step is isolated, so one failure can't stop the rest of the app
+  // from starting. Order matters: the Supabase client comes before the
+  // things that use it.
+  const steps = [
+    setupTheme,
+    initSupabase,
+    watchAuthState,
+    setupAuthForm,
+    setupGuideLocks,
+    handleLoginRedirect,
+    setupEditProfileForm,
+    setupLogout,
+    setupSettingsAccountActions,
+    () => {
+      state.shortlist = readStore(CONFIG.STORAGE.shortlist, []);
+      if (!Array.isArray(state.shortlist)) state.shortlist = [];
+      updateShortlistUI();
+    },
+    setupFinderDelegation,
+    setupChatComposer,
+    setupGlobalShortcuts,
+    setupScrollToTop,
+    // Network-dependent work runs after the UI is interactive.
+    loadCountries,
+    loadUniversities,
+    setupParticles
+  ];
+
+  steps.forEach((step) => {
+    try {
+      const result = step();
+      if (result && typeof result.catch === "function") {
+        result.catch((err) => console.error(`UniAI: ${step.name || "init step"} failed:`, err));
+      }
+    } catch (err) {
+      console.error(`UniAI: ${step.name || "init step"} failed:`, err);
+    }
+  });
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init);
+} else {
+  init();
+}
