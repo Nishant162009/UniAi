@@ -1,40 +1,60 @@
 /* ==========================================================================
-   UniAI — Logo Formation Intro
-   --------------------------------------------------------------------------
-   - Logo itself is the animation
-   - Opens / unfolds / rotates / reforms
+   UniAI — cinematic logo intro (intro.js)
+
+   Add as the FIRST script, right after <body>:
+
+     <body>
+       <script src="JS/intro.js"></script>
+
+   Features:
+   - About 2.2 seconds, then smoothly fades/exits
+   - Logo itself performs the animation
+   - Logo opens / separates / rotates / reforms
+   - Cinematic glow + rotating rings
    - No particles
-   - No unnecessary background effects
-   - ~1.6 seconds
+   - No orbiting dot
+   - Animated gradient
+   - Subtle scanline
    - Once per browser session
-   - Click / tap / Esc / Enter to skip
-   - Respects prefers-reduced-motion
-   - Light / dark theme aware
+   - Click, tap or press Esc/Enter to skip
+   - Respects "reduce motion"
+   - Follows the light/dark theme
+   - Self-contained: injects its own markup and CSS
    ========================================================================== */
 
 (function () {
   "use strict";
 
-  const SHOW_MS = 1600;
-  const FADE_MS = 450;
+  // -------------------------------------------------------------------------
+  // Settings
+  // -------------------------------------------------------------------------
+
+  const SHOW_MS = 2200;
+  const FADE_MS = 600;
   const SESSION_KEY = "uniai-intro-seen";
 
   // -------------------------------------------------------------------------
-  // Show once per browser session
+  // Skip if already seen this session
   // -------------------------------------------------------------------------
 
   try {
     if (sessionStorage.getItem(SESSION_KEY)) return;
     sessionStorage.setItem(SESSION_KEY, "1");
-  } catch (err) {}
+  } catch (err) {
+    // Storage blocked — still show intro.
+  }
 
   // -------------------------------------------------------------------------
-  // Preferences
+  // Motion preference
   // -------------------------------------------------------------------------
 
   const reduceMotion =
     window.matchMedia &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // -------------------------------------------------------------------------
+  // Theme
+  // -------------------------------------------------------------------------
 
   const savedTheme = (() => {
     try {
@@ -51,23 +71,40 @@
       window.matchMedia("(prefers-color-scheme: dark)").matches);
 
   // -------------------------------------------------------------------------
-  // Styles
+  // Inject CSS
   // -------------------------------------------------------------------------
 
   const style = document.createElement("style");
 
   style.textContent = `
+
+    /* ======================================================================
+       INTRO
+       ====================================================================== */
+
     #uniai-intro {
       position: fixed;
       inset: 0;
       z-index: 99999;
 
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
 
-      background: ${dark ? "#0b0d14" : "#ffffff"};
-      color: ${dark ? "#f8fafc" : "#0f172a"};
+      gap: 18px;
+
+      overflow: hidden;
+
+      background:
+        radial-gradient(
+          circle at 50% 43%,
+          ${dark ? "#151a2d" : "#eef2ff"} 0%,
+          ${dark ? "#070810" : "#ffffff"} 65%
+        );
+
+      color:
+        ${dark ? "#f8fafc" : "#0f172a"};
 
       font-family:
         "Plus Jakarta Sans",
@@ -75,292 +112,293 @@
         system-ui,
         sans-serif;
 
+      opacity: 1;
+
+      transition:
+        opacity ${FADE_MS}ms ease,
+        transform ${FADE_MS}ms cubic-bezier(.7, 0, .84, 0);
+
       cursor: pointer;
 
-      opacity: 1;
-      transition:
-        opacity ${FADE_MS}ms cubic-bezier(.4,0,.2,1);
-
-      overflow: hidden;
+      user-select: none;
     }
+
 
     #uniai-intro.out {
       opacity: 0;
       pointer-events: none;
+
+      transform: scale(1.08);
     }
 
 
-    /* ================================================================
-       CENTER
-       ================================================================ */
+    /* ======================================================================
+       SUBTLE BACKGROUND LIGHT
+       ====================================================================== */
 
-    #uniai-intro .ui-center {
+    #uniai-intro::before {
+      content: "";
+
+      position: absolute;
+      inset: -30%;
+
+      pointer-events: none;
+
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(79, 107, 255, .10),
+          transparent 42%
+        );
+
+      animation:
+        ui-background-breathe 3s ease-in-out infinite;
+    }
+
+
+    /* ======================================================================
+       STAGE
+       ====================================================================== */
+
+    #uniai-intro .ui-stage {
       position: relative;
 
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      width: 220px;
+      height: 220px;
 
-      transform: translateY(-3vh);
+      display: grid;
+      place-items: center;
+
+      z-index: 2;
     }
 
 
-    /* ================================================================
-       LOGO
-       ================================================================ */
+    /* ======================================================================
+       GLOW
+       ====================================================================== */
 
-    #uniai-intro .ui-logo-wrap {
+    #uniai-intro .ui-glow {
+      position: absolute;
+
+      width: 190px;
+      height: 190px;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(79,107,255,.45),
+          rgba(161,91,255,.18) 45%,
+          transparent 70%
+        );
+
+      filter: blur(18px);
+
+      animation:
+        ui-breathe 2.4s ease-in-out infinite;
+    }
+
+
+    /* ======================================================================
+       ROTATING RINGS
+       ====================================================================== */
+
+    #uniai-intro .ui-ring {
+      position: absolute;
+
+      border-radius: 50%;
+
+      border: 1px solid rgba(79,107,255,.35);
+    }
+
+
+    #uniai-intro .ui-ring.r1 {
       width: 150px;
       height: 150px;
 
-      position: relative;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      perspective: 800px;
+      border-top-color: #4f6bff;
+      border-right-color: transparent;
 
       animation:
-        logoEntrance .75s cubic-bezier(.16,1,.3,1) both;
+        ui-spin 1.8s linear infinite;
     }
+
+
+    #uniai-intro .ui-ring.r2 {
+      width: 185px;
+      height: 185px;
+
+      border-bottom-color: #a15bff;
+      border-left-color: transparent;
+
+      animation:
+        ui-spin 2.6s linear infinite reverse;
+    }
+
+
+    #uniai-intro .ui-ring.r3 {
+      width: 215px;
+      height: 215px;
+
+      border: 1px dashed rgba(236,72,153,.30);
+
+      animation:
+        ui-spin 5s linear infinite;
+    }
+
+
+    /* ======================================================================
+       LOGO
+       ====================================================================== */
 
     #uniai-intro .ui-logo {
       width: 92px;
       height: 92px;
 
+      position: relative;
+
+      z-index: 5;
+
       overflow: visible;
 
+      filter:
+        drop-shadow(
+          0 0 18px rgba(79,107,255,.45)
+        );
+
       transform-origin: center;
+
+      animation:
+        ui-logo-float 2.2s 1.15s ease-in-out infinite;
     }
 
 
-    /* ================================================================
-       THE ACTUAL LOGO PIECES
-       ================================================================ */
+    #uniai-intro .ui-logo svg {
+      width: 100%;
+      height: 100%;
+
+      overflow: visible;
+    }
+
+
+    /* ======================================================================
+       LOGO PIECES
+       ======================================================================
+
+       These are the important parts.
+
+       The logo is physically split into:
+       1. top diamond
+       2. lower body
+       3. pink dot
+       4. pink signal line
+
+       They move independently, then reform into the original logo.
+       ====================================================================== */
+
 
     #uniai-intro .logo-top {
       transform-box: fill-box;
       transform-origin: center;
 
       animation:
-        topFormation 1.55s cubic-bezier(.16,1,.3,1) both;
+        ui-top-form 1.65s cubic-bezier(.16, 1, .3, 1) both;
     }
+
 
     #uniai-intro .logo-body {
       transform-box: fill-box;
       transform-origin: center;
 
       animation:
-        bodyFormation 1.55s cubic-bezier(.16,1,.3,1) both;
+        ui-body-form 1.65s cubic-bezier(.16, 1, .3, 1) both;
     }
+
 
     #uniai-intro .logo-dot {
       transform-box: fill-box;
       transform-origin: center;
 
       animation:
-        dotFormation 1.55s cubic-bezier(.16,1,.3,1) both;
+        ui-dot-form 1.65s cubic-bezier(.16, 1, .3, 1) both;
     }
+
 
     #uniai-intro .logo-line {
       transform-box: fill-box;
       transform-origin: center;
 
       animation:
-        lineFormation 1.55s cubic-bezier(.16,1,.3,1) both;
+        ui-line-form 1.65s cubic-bezier(.16, 1, .3, 1) both;
     }
 
 
-    /* ================================================================
-       SUBTLE SHADOW / GLOW
-       ================================================================ */
-
-    #uniai-intro .logo-shadow {
-      position: absolute;
-
-      width: 80px;
-      height: 20px;
-
-      bottom: 22px;
-
-      border-radius: 50%;
-
-      background: ${dark
-        ? "rgba(79,107,255,.25)"
-        : "rgba(79,107,255,.12)"};
-
-      filter: blur(14px);
-
-      animation:
-        shadowMove 1.55s cubic-bezier(.16,1,.3,1) both;
-    }
-
-
-    /* ================================================================
-       WORDMARK
-       ================================================================ */
-
-    #uniai-intro .ui-word {
-      margin-top: -5px;
-
-      font-size: 2rem;
-      font-weight: 800;
-
-      letter-spacing: -.045em;
-
-      line-height: 1;
-
-      opacity: 0;
-
-      animation:
-        wordReveal .55s .85s cubic-bezier(.16,1,.3,1) forwards;
-    }
-
-    #uniai-intro .ui-word span {
-      background:
-        linear-gradient(
-          135deg,
-          #4f6bff,
-          #a15bff
-        );
-
-      -webkit-background-clip: text;
-      background-clip: text;
-
-      color: transparent;
-    }
-
-
-    /* ================================================================
-       TAGLINE
-       ================================================================ */
-
-    #uniai-intro .ui-tag {
-      margin-top: 11px;
-
-      font-size: .7rem;
-      font-weight: 600;
-
-      letter-spacing: .2em;
-      text-transform: uppercase;
-
-      color: ${dark ? "#94a3b8" : "#64748b"};
-
-      opacity: 0;
-
-      animation:
-        tagReveal .5s 1s cubic-bezier(.16,1,.3,1) forwards;
-    }
-
-
-    /* ================================================================
-       LOGO ENTRANCE
-       ================================================================ */
-
-    @keyframes logoEntrance {
-
-      0% {
-        opacity: 0;
-
-        transform:
-          scale(.45)
-          rotate(-18deg);
-      }
-
-      35% {
-        opacity: 1;
-
-        transform:
-          scale(1.08)
-          rotate(8deg);
-      }
-
-      60% {
-        transform:
-          scale(.96)
-          rotate(-4deg);
-      }
-
-      80% {
-        transform:
-          scale(1.025)
-          rotate(1.5deg);
-      }
-
-      100% {
-        opacity: 1;
-
-        transform:
-          scale(1)
-          rotate(0deg);
-      }
-    }
-
-
-    /* ================================================================
-       TOP PIECE
+    /* ======================================================================
+       LOGO TOP
        
-       The "cap" opens away from the center, rotates,
-       overshoots, then returns to its real position.
-       ================================================================ */
+       Opens away from the center, flips, overshoots,
+       then locks into the real position.
+       ====================================================================== */
 
-    @keyframes topFormation {
+    @keyframes ui-top-form {
 
       0% {
         opacity: 0;
 
         transform:
-          translate(-12px, 28px)
-          rotate(-38deg)
-          scale(.72);
+          translate(-17px, 27px)
+          rotate(-42deg)
+          scale(.68);
       }
 
-      16% {
+      12% {
         opacity: 1;
 
         transform:
-          translate(-22px, -2px)
-          rotate(-48deg)
-          scale(.9);
+          translate(-25px, -3px)
+          rotate(-52deg)
+          scale(.86);
       }
 
-      31% {
+      27% {
         transform:
-          translate(17px, -16px)
-          rotate(31deg)
-          scale(1.08);
+          translate(19px, -17px)
+          rotate(34deg)
+          scale(1.10);
       }
 
-      45% {
+      42% {
         transform:
-          translate(-12px, 8px)
-          rotate(-15deg)
-          scale(.96);
+          translate(-13px, 9px)
+          rotate(-18deg)
+          scale(.95);
       }
 
-      60% {
+      58% {
         transform:
-          translate(7px, -5px)
-          rotate(8deg)
-          scale(1.03);
+          translate(8px, -5px)
+          rotate(9deg)
+          scale(1.04);
       }
 
-      75% {
+      73% {
         transform:
           translate(-3px, 2px)
           rotate(-2deg)
-          scale(1.01);
+          scale(1.015);
       }
 
       88% {
         transform:
           translate(1px, -1px)
-          rotate(.8deg)
+          rotate(.7deg)
           scale(1);
       }
 
       100% {
+        opacity: 1;
+
         transform:
           translate(0, 0)
           rotate(0)
@@ -369,108 +407,118 @@
     }
 
 
-    /* ================================================================
-       BODY PIECE
+    /* ======================================================================
+       LOGO BODY
+       
+       Moves in the opposite direction to make the logo
+       feel like it is unfolding and assembling.
+       ====================================================================== */
 
-       The lower part unfolds separately and then locks into place.
-       ================================================================ */
-
-    @keyframes bodyFormation {
+    @keyframes ui-body-form {
 
       0% {
         opacity: 0;
 
         transform:
-          translate(15px, -17px)
-          rotate(34deg)
-          scale(.7);
+          translate(17px, -24px)
+          rotate(38deg)
+          scale(.70);
+      }
+
+      14% {
+        opacity: 1;
+
+        transform:
+          translate(26px, 6px)
+          rotate(47deg)
+          scale(.84);
+      }
+
+      29% {
+        transform:
+          translate(-17px, 17px)
+          rotate(-30deg)
+          scale(1.09);
+      }
+
+      44% {
+        transform:
+          translate(11px, -7px)
+          rotate(14deg)
+          scale(.95);
+      }
+
+      60% {
+        transform:
+          translate(-6px, 4px)
+          rotate(-6deg)
+          scale(1.04);
+      }
+
+      76% {
+        transform:
+          translate(3px, -2px)
+          rotate(2.5deg)
+          scale(1.01);
+      }
+
+      90% {
+        transform:
+          translate(-1px, 1px)
+          rotate(-.5deg)
+          scale(1);
+      }
+
+      100% {
+        opacity: 1;
+
+        transform:
+          translate(0, 0)
+          rotate(0)
+          scale(1);
+      }
+    }
+
+
+    /* ======================================================================
+       PINK SIGNAL LINE
+       ====================================================================== */
+
+    @keyframes ui-line-form {
+
+      0% {
+        opacity: 0;
+
+        transform:
+          translate(18px, -23px)
+          rotate(80deg)
+          scaleY(.2);
       }
 
       18% {
         opacity: 1;
 
         transform:
-          translate(24px, 5px)
-          rotate(45deg)
-          scale(.86);
-      }
-
-      34% {
-        transform:
-          translate(-15px, 16px)
-          rotate(-28deg)
-          scale(1.08);
-      }
-
-      49% {
-        transform:
-          translate(10px, -6px)
-          rotate(13deg)
-          scale(.96);
-      }
-
-      65% {
-        transform:
-          translate(-5px, 4px)
-          rotate(-5deg)
-          scale(1.03);
-      }
-
-      80% {
-        transform:
-          translate(2px, -2px)
-          rotate(2deg)
-          scale(1);
-      }
-
-      100% {
-        transform:
-          translate(0, 0)
-          rotate(0)
-          scale(1);
-      }
-    }
-
-
-    /* ================================================================
-       PINK SIGNAL LINE
-       ================================================================ */
-
-    @keyframes lineFormation {
-
-      0% {
-        opacity: 0;
-
-        transform:
-          translate(18px, -22px)
-          rotate(80deg)
-          scaleY(.2);
-      }
-
-      20% {
-        opacity: 1;
-
-        transform:
-          translate(20px, 5px)
+          translate(21px, 5px)
           rotate(115deg)
           scaleY(1.2);
       }
 
-      38% {
+      37% {
         transform:
-          translate(-13px, -5px)
-          rotate(-50deg)
-          scaleY(.8);
+          translate(-13px, -6px)
+          rotate(-52deg)
+          scaleY(.78);
       }
 
-      55% {
+      54% {
         transform:
           translate(7px, 3px)
-          rotate(20deg)
-          scaleY(1.1);
+          rotate(22deg)
+          scaleY(1.08);
       }
 
-      75% {
+      73% {
         transform:
           translate(-2px, 0)
           rotate(-3deg)
@@ -478,6 +526,8 @@
       }
 
       100% {
+        opacity: 1;
+
         transform:
           translate(0, 0)
           rotate(0)
@@ -486,11 +536,11 @@
     }
 
 
-    /* ================================================================
+    /* ======================================================================
        PINK DOT
-       ================================================================ */
+       ====================================================================== */
 
-    @keyframes dotFormation {
+    @keyframes ui-dot-form {
 
       0% {
         opacity: 0;
@@ -500,33 +550,35 @@
           scale(.1);
       }
 
-      18% {
+      17% {
         opacity: 1;
 
         transform:
-          translate(12px, -15px)
-          scale(1.35);
+          translate(13px, -16px)
+          scale(1.4);
       }
 
       34% {
         transform:
-          translate(-10px, 9px)
-          scale(.75);
+          translate(-11px, 9px)
+          scale(.72);
       }
 
       52% {
         transform:
           translate(6px, -4px)
-          scale(1.15);
+          scale(1.16);
       }
 
-      72% {
+      73% {
         transform:
           translate(-2px, 1px)
-          scale(.96);
+          scale(.97);
       }
 
       100% {
+        opacity: 1;
+
         transform:
           translate(0, 0)
           scale(1);
@@ -534,64 +586,186 @@
     }
 
 
-    /* ================================================================
-       SHADOW
-       ================================================================ */
+    /* ======================================================================
+       WORDMARK
+       ====================================================================== */
 
-    @keyframes shadowMove {
+    #uniai-intro .ui-word {
+      position: relative;
 
-      0% {
-        opacity: 0;
-        transform: scale(.4);
-      }
+      z-index: 3;
 
-      25% {
-        opacity: .5;
-        transform: scale(1.15);
-      }
+      font-size:
+        clamp(2.2rem, 7vw, 3.4rem);
 
-      45% {
-        transform: scale(.8);
-      }
+      font-weight: 900;
 
-      65% {
-        transform: scale(1.08);
-      }
+      letter-spacing: -.04em;
 
-      100% {
-        opacity: .7;
-        transform: scale(1);
+      line-height: 1;
+
+      opacity: 0;
+
+      animation:
+        ui-rise .7s .75s cubic-bezier(.16, 1, .3, 1) both;
+    }
+
+
+    #uniai-intro .ui-word span {
+      background:
+        linear-gradient(
+          135deg,
+          #4f6bff,
+          #a15bff,
+          #ec4899,
+          #4f6bff
+        );
+
+      background-size: 300% 100%;
+
+      -webkit-background-clip: text;
+      background-clip: text;
+
+      color: transparent;
+
+      animation:
+        ui-gradient 2.5s linear infinite;
+    }
+
+
+    /* ======================================================================
+       TAGLINE
+       ====================================================================== */
+
+    #uniai-intro .ui-tag {
+      position: relative;
+
+      z-index: 3;
+
+      font-size: .78rem;
+
+      letter-spacing: .22em;
+
+      text-transform: uppercase;
+
+      color:
+        ${dark ? "#94a3b8" : "#64748b"};
+
+      opacity: 0;
+
+      animation:
+        ui-rise .7s .95s cubic-bezier(.16, 1, .3, 1) both;
+    }
+
+
+    /* ======================================================================
+       SCANLINE
+       ====================================================================== */
+
+    #uniai-intro .ui-scanline {
+      position: absolute;
+
+      left: 0;
+      right: 0;
+
+      height: 90px;
+
+      background:
+        linear-gradient(
+          to bottom,
+          transparent,
+          rgba(79,107,255,.07),
+          transparent
+        );
+
+      animation:
+        ui-scan 2.2s linear infinite;
+
+      pointer-events: none;
+
+      z-index: 10;
+    }
+
+
+    /* ======================================================================
+       ANIMATIONS
+       ====================================================================== */
+
+    @keyframes ui-spin {
+      to {
+        transform: rotate(360deg);
       }
     }
 
 
-    /* ================================================================
-       WORD REVEAL
-       ================================================================ */
+    @keyframes ui-logo-float {
 
-    @keyframes wordReveal {
+      0%,
+      100% {
+        transform:
+          translateY(0)
+          rotate(0deg);
+      }
 
-      0% {
+      50% {
+        transform:
+          translateY(-8px)
+          rotate(2deg);
+      }
+    }
+
+
+    @keyframes ui-breathe {
+
+      0%,
+      100% {
+        transform: scale(.85);
+        opacity: .55;
+      }
+
+      50% {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+    }
+
+
+    @keyframes ui-background-breathe {
+
+      0%,
+      100% {
+        transform: scale(.95);
+        opacity: .6;
+      }
+
+      50% {
+        transform: scale(1.08);
+        opacity: 1;
+      }
+    }
+
+
+    @keyframes ui-gradient {
+
+      to {
+        background-position: 300% 0;
+      }
+    }
+
+
+    @keyframes ui-rise {
+
+      from {
         opacity: 0;
 
         transform:
-          translateY(16px)
-          scale(.9);
+          translateY(18px)
+          scale(.96);
 
-        filter: blur(5px);
+        filter: blur(4px);
       }
 
-      70% {
-        opacity: 1;
-
-        transform:
-          translateY(-2px)
-          scale(1.02);
-
-        filter: blur(0);
-      }
-
-      100% {
+      to {
         opacity: 1;
 
         transform:
@@ -603,60 +777,59 @@
     }
 
 
-    /* ================================================================
-       TAGLINE
-       ================================================================ */
-
-    @keyframes tagReveal {
+    @keyframes ui-scan {
 
       from {
-        opacity: 0;
-        transform: translateY(8px);
+        top: -90px;
       }
 
       to {
-        opacity: 1;
-        transform: translateY(0);
+        top: 100%;
       }
     }
 
 
-    /* ================================================================
+    /* ======================================================================
        REDUCED MOTION
-       ================================================================ */
+       ====================================================================== */
 
     ${
       reduceMotion
         ? `
-        #uniai-intro *,
-        #uniai-intro *::before,
-        #uniai-intro *::after {
-          animation: none !important;
-          transition: none !important;
-        }
+          #uniai-intro *,
+          #uniai-intro *::before,
+          #uniai-intro *::after {
+            animation: none !important;
+            transition: none !important;
+          }
 
-        #uniai-intro .ui-logo-wrap,
-        #uniai-intro .ui-word,
-        #uniai-intro .ui-tag {
-          opacity: 1;
-          transform: none;
-        }
+          #uniai-intro .ui-glow {
+            opacity: .7;
+          }
 
-        #uniai-intro .logo-top,
-        #uniai-intro .logo-body,
-        #uniai-intro .logo-dot,
-        #uniai-intro .logo-line {
-          opacity: 1;
-          transform: none;
-        }
-      `
+          #uniai-intro .ui-logo,
+          #uniai-intro .ui-word,
+          #uniai-intro .ui-tag {
+            opacity: 1;
+            transform: none;
+          }
+
+          #uniai-intro .logo-top,
+          #uniai-intro .logo-body,
+          #uniai-intro .logo-dot,
+          #uniai-intro .logo-line {
+            opacity: 1;
+            transform: none;
+          }
+        `
         : ""
     }
+
   `;
 
 
   // -------------------------------------------------------------------------
-  // Markup
+  // HTML
   // -------------------------------------------------------------------------
 
   const intro = document.createElement("div");
@@ -667,14 +840,32 @@
   intro.setAttribute("aria-label", "Loading UniAI");
 
   intro.innerHTML = `
-    <div class="ui-center">
 
-      <div class="ui-logo-wrap">
+    <!-- ================================================================
+         LOGO STAGE
+         ================================================================ -->
 
-        <div class="logo-shadow"></div>
+    <div class="ui-stage">
+
+      <div class="ui-glow"></div>
+
+      <div class="ui-ring r1"></div>
+
+      <div class="ui-ring r2"></div>
+
+      <div class="ui-ring r3"></div>
+
+
+      <!-- ============================================================
+           LOGO
+
+           Each important piece is separated so the logo can
+           physically break apart and reform.
+           ============================================================ -->
+
+      <div class="ui-logo">
 
         <svg
-          class="ui-logo"
           viewBox="0 0 32 32"
           aria-hidden="true"
         >
@@ -688,25 +879,30 @@
               x2="32"
               y2="32"
             >
+
               <stop
                 offset="0%"
                 stop-color="#4f6bff"
               />
 
               <stop
-                offset="100%"
+                offset="55%"
                 stop-color="#a15bff"
               />
+
+              <stop
+                offset="100%"
+                stop-color="#ec4899"
+              />
+
             </linearGradient>
 
           </defs>
 
 
-          <!--
-            TOP / CAP
-            This is intentionally a separate element
-            so it can physically move.
-          -->
+          <!-- ========================================================
+               TOP DIAMOND
+               ======================================================== -->
 
           <path
             class="logo-top"
@@ -721,9 +917,9 @@
           />
 
 
-          <!--
-            LOWER BODY
-          -->
+          <!-- ========================================================
+               LOWER BODY
+               ======================================================== -->
 
           <path
             class="logo-body"
@@ -745,9 +941,9 @@
           />
 
 
-          <!--
-            PINK SIGNAL
-          -->
+          <!-- ========================================================
+               PINK SIGNAL LINE
+               ======================================================== -->
 
           <line
             class="logo-line"
@@ -761,9 +957,9 @@
           />
 
 
-          <!--
-            PINK DOT
-          -->
+          <!-- ========================================================
+               PINK DOT
+               ======================================================== -->
 
           <circle
             class="logo-dot"
@@ -777,16 +973,33 @@
 
       </div>
 
-
-      <div class="ui-word">
-        Uni<span>AI</span>
-      </div>
-
-      <div class="ui-tag">
-        Plan smarter. Go farther.
-      </div>
-
     </div>
+
+
+    <!-- ================================================================
+         WORDMARK
+         ================================================================ -->
+
+    <div class="ui-word">
+      Uni<span>AI</span>
+    </div>
+
+
+    <!-- ================================================================
+         TAGLINE
+         ================================================================ -->
+
+    <div class="ui-tag">
+      Plan smarter. Go farther.
+    </div>
+
+
+    <!-- ================================================================
+         SCAN
+         ================================================================ -->
+
+    <div class="ui-scanline"></div>
+
   `;
 
 
@@ -799,6 +1012,10 @@
   (document.body || document.documentElement)
     .appendChild(intro);
 
+
+  // -------------------------------------------------------------------------
+  // Lock page scrolling
+  // -------------------------------------------------------------------------
 
   const previousOverflow =
     document.documentElement.style.overflow;
@@ -813,6 +1030,7 @@
   let done = false;
 
   function finish() {
+
     if (done) return;
 
     done = true;
@@ -823,44 +1041,56 @@
       previousOverflow;
 
     setTimeout(() => {
+
       intro.remove();
       style.remove();
-    }, FADE_MS + 50);
+
+    }, FADE_MS + 60);
   }
 
 
   // -------------------------------------------------------------------------
-  // Auto close
+  // Automatic exit
   // -------------------------------------------------------------------------
 
   const timer = setTimeout(
     finish,
-    reduceMotion ? 500 : SHOW_MS
+    reduceMotion ? 900 : SHOW_MS
   );
 
 
   // -------------------------------------------------------------------------
-  // Skip
+  // Skip intro
   // -------------------------------------------------------------------------
 
   function skip() {
+
     clearTimeout(timer);
+
     finish();
   }
 
-  intro.addEventListener("click", skip);
+
+  intro.addEventListener(
+    "click",
+    skip
+  );
+
 
   document.addEventListener(
     "keydown",
     (e) => {
+
       if (
         e.key === "Escape" ||
         e.key === "Enter"
       ) {
         skip();
       }
+
     },
     { once: true }
   );
 
 })();
+
