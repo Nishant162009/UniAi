@@ -2338,78 +2338,284 @@ html[data-theme="light"] .homepage-promo-banner .promo-icon {
 }
 
 
+
+
+
+
+
+
+
+
+
 .auth-nav-actions {
   display: flex;
   align-items: center;
   gap: 10px;
+  position: relative;
+  isolation: isolate;
 }
+
+/* ================================
+   SHARED AUTH BUTTON BASE
+   ================================ */
 
 .auth-login-btn,
 .auth-signup-btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;
-  padding: 0 18px;
-  border-radius: 10px;
+  min-height: 42px;
+  padding: 0 19px;
+
+  border-radius: 12px;
   font-family: inherit;
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1;
+  letter-spacing: -0.01em;
+
   cursor: pointer;
+  user-select: none;
+  overflow: hidden;
+
   border: 1px solid transparent;
-  transition: transform 0.18s ease, box-shadow 0.18s ease,
-    background 0.18s ease, border-color 0.18s ease;
+
+  transform: translateZ(0);
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    filter 0.25s ease;
+
+  -webkit-tap-highlight-color: transparent;
 }
+
+/* Subtle shine layer */
+.auth-login-btn::before,
+.auth-signup-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      115deg,
+      transparent 15%,
+      rgba(255, 255, 255, 0.14) 42%,
+      rgba(255, 255, 255, 0.02) 55%,
+      transparent 75%
+    );
+
+  transform: translateX(-120%);
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+
+  pointer-events: none;
+}
+
+/* Soft top highlight */
+.auth-login-btn::after,
+.auth-signup-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.65),
+    transparent
+  );
+
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.auth-login-btn:hover::before,
+.auth-signup-btn:hover::before {
+  transform: translateX(120%);
+}
+
+/* ================================
+   LOGIN BUTTON
+   ================================ */
 
 .auth-login-btn {
   color: var(--text-color, #1e293b);
-  background: #ffffff;
-  border-color: var(--border, #dbe3f0);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.98),
+      rgba(248, 250, 255, 0.94)
+    );
+
+  border-color: rgba(148, 163, 184, 0.28);
+
+  box-shadow:
+    0 2px 5px rgba(15, 23, 42, 0.05),
+    0 8px 20px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
 }
+
+/* Purple ambient glow behind login */
+.auth-login-btn:hover {
+  color: var(--primary, #6d5dfb);
+
+  transform: translateY(-2px) scale(1.015);
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      rgba(245, 243, 255, 0.98)
+    );
+
+  border-color: rgba(109, 93, 251, 0.35);
+
+  box-shadow:
+    0 4px 8px rgba(15, 23, 42, 0.06),
+    0 12px 28px rgba(109, 93, 251, 0.13),
+    0 0 0 4px rgba(109, 93, 251, 0.06);
+}
+
+.auth-login-btn:focus-visible {
+  outline: none;
+
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.95),
+    0 0 0 6px rgba(109, 93, 251, 0.35),
+    0 10px 24px rgba(109, 93, 251, 0.14);
+}
+
+/* ================================
+   SIGNUP BUTTON
+   ================================ */
 
 .auth-signup-btn {
   color: #ffffff;
-  background: var(--primary, #6d5dfb);
-  border-color: var(--primary, #6d5dfb);
-  box-shadow: 0 6px 16px rgba(109, 93, 251, 0.22);
+
+  background:
+    linear-gradient(
+      135deg,
+      #7c6cff 0%,
+      #6d5dfb 45%,
+      #8b5cf6 100%
+    );
+
+  border-color: rgba(255, 255, 255, 0.14);
+
+  box-shadow:
+    0 5px 12px rgba(109, 93, 251, 0.20),
+    0 10px 25px rgba(109, 93, 251, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+
+  text-shadow:
+    0 1px 2px rgba(48, 35, 130, 0.25);
 }
 
-.auth-login-btn:hover {
-  transform: translateY(-1px);
-  background: var(--surface-hover, rgba(109, 93, 251, 0.06));
-  border-color: rgba(109, 93, 251, 0.35);
+/* Animated glow aura */
+.auth-signup-btn {
+  isolation: isolate;
 }
 
+.auth-signup-btn::before {
+  z-index: -1;
+
+  background:
+    linear-gradient(
+      120deg,
+      transparent 15%,
+      rgba(255, 255, 255, 0.30) 45%,
+      transparent 70%
+    );
+}
+
+/* Hover */
 .auth-signup-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 22px rgba(109, 93, 251, 0.32);
-  filter: brightness(0.97);
+  transform: translateY(-3px) scale(1.025);
+
+  background:
+    linear-gradient(
+      135deg,
+      #8879ff 0%,
+      #7666ff 45%,
+      #985fff 100%
+    );
+
+  border-color: rgba(255, 255, 255, 0.28);
+
+  box-shadow:
+    0 7px 14px rgba(109, 93, 251, 0.20),
+    0 16px 34px rgba(109, 93, 251, 0.30),
+    0 0 0 4px rgba(109, 93, 251, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.30);
+
+  filter: brightness(1.04);
 }
 
+/* Active press */
 .auth-login-btn:active,
 .auth-signup-btn:active {
-  transform: translateY(0);
+  transform: translateY(0) scale(0.98);
+
+  transition-duration: 0.08s;
 }
+
+/* Keyboard focus */
+.auth-signup-btn:focus-visible {
+  outline: none;
+
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.95),
+    0 0 0 6px rgba(109, 93, 251, 0.45),
+    0 14px 32px rgba(109, 93, 251, 0.30);
+}
+
+/* ================================
+   MOBILE
+   ================================ */
 
 @media (max-width: 640px) {
   .auth-nav-actions {
-    gap: 8px;
+    gap: 7px;
   }
 
   .auth-login-btn,
   .auth-signup-btn {
     min-height: 38px;
-    padding: 0 14px;
-    font-size: 0.82rem;
+    padding: 0 13px;
+
+    border-radius: 10px;
+
+    font-size: 0.8rem;
+  }
+
+  .auth-login-btn:hover,
+  .auth-signup-btn:hover {
+    transform: translateY(-1px) scale(1.01);
   }
 }
 
+/* ================================
+   REDUCED MOTION
+   ================================ */
 
+@media (prefers-reduced-motion: reduce) {
+  .auth-login-btn,
+  .auth-signup-btn,
+  .auth-login-btn::before,
+  .auth-signup-btn::before {
+    transition: none;
+  }
 
-
-
-
-
-
-
+  .auth-login-btn:hover,
+  .auth-signup-btn:hover {
+    transform: none;
+  }
+}
