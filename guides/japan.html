@@ -3,471 +3,604 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UniAI — Complete Japan Study Abroad Guide</title>
-<meta name="description" content="A complete guide to studying in the Japan: universities, degrees, admissions, tests, applications, costs, scholarships, F-1/J-1/M-1 visas, housing, arrival and student life.">
+
+<title>UniAI — Complete Guide to Studying in Japan</title>
+
+<meta name="description"
+content="UniAI's complete guide to studying in Japan. Explore universities, cities, courses, admissions, EJU, costs, scholarships, student visas, accommodation, life and your Japan study journey.">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 
-
 <style>
 :root{
-  --bg:#fff7f9;--surface:#fffaf3;--surface-2:#f1e7d8;--text:#182238;
-  --muted:#5f6877;--subtle:#7d8490;--border:#dfd2c0;
-  --navy:#5a2948;--blue:#245da8;--red:#b83b63;--gold:#c79828;
-  --green:#3e7356;--shadow:0 16px 45px rgba(54,40,20,.09);
-  --radius:22px;--radius-sm:14px;--max:1180px;
+  --bg:#070a12;
+  --bg2:#0d1220;
+  --card:#121827;
+  --card2:#182033;
+  --text:#f8f8fb;
+  --muted:#aeb5c5;
+  --subtle:#778095;
+  --border:#242d40;
+  --border-soft:rgba(255,255,255,.08);
+
+  --sakura:#ff6f91;
+  --sakura2:#ff9ab1;
+  --sun:#e6002d;
+  --indigo:#243b80;
+  --cyan:#67d4ff;
+  --green:#55d98b;
+  --gold:#f4d35e;
+
+  --radius:20px;
+  --radius-sm:12px;
+  --display:'Plus Jakarta Sans',sans-serif;
+  --body:'Inter',sans-serif;
+  --shadow:0 24px 70px rgba(0,0,0,.32);
 }
+
 *{box-sizing:border-box}
-html{scroll-behavior:auto;scroll-padding-top:86px}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.65}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{
+  margin:0;background:
+  radial-gradient(circle at 80% 0%,rgba(230,0,45,.10),transparent 28%),
+  radial-gradient(circle at 10% 20%,rgba(255,111,145,.07),transparent 25%),
+  var(--bg);
+  color:var(--text);font-family:var(--body);line-height:1.65;overflow-x:hidden
+}
 a{color:inherit;text-decoration:none}
 button{font:inherit}
-::selection{background:#d9e5f5;color:var(--navy)}
-.container{width:min(var(--max),92vw);margin:auto}
-.nav{position:sticky;top:0;z-index:50;background:rgba(247,241,231,.94);border-bottom:1px solid var(--border);backdrop-filter:blur(12px)}
-.nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.logo{font:800 21px "Plus Jakarta Sans";letter-spacing:-.06em}
-.logo span{color:var(--red)}
-.nav-links{display:flex;gap:20px;align-items:center;font-size:12px;font-weight:700;color:var(--muted)}
-.nav-links a:hover{color:var(--navy)}
-.nav-btn,.btn{border:0;border-radius:999px;padding:11px 16px;font-size:12px;font-weight:800;cursor:pointer}
-.nav-btn,.btn.primary{background:var(--navy);color:white}
-.btn.secondary{background:transparent;border:1px solid var(--border);color:var(--navy)}
-.btn:hover,.nav-btn:hover{filter:brightness(1.05)}
-.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--border);background:
-linear-gradient(135deg,rgba(255,250,243,.96),rgba(247,241,231,.88)),
-url("https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=2200&q=85") center/cover}
-.hero:before{content:"Japan";position:absolute;right:-30px;top:-65px;font:800 clamp(150px,27vw,340px)/1 "Plus Jakarta Sans";letter-spacing:-.11em;color:rgba(23,63,122,.055)}
-.hero-inner{padding:100px 0 72px;position:relative}
-.flagline{display:flex;gap:10px;align-items:center;text-transform:uppercase;letter-spacing:.17em;font-size:10px;font-weight:800;color:var(--navy)}
-.flagline:before{content:"";width:32px;height:3px;background:linear-gradient(90deg,var(--red) 0 50%,var(--navy) 50%)}
-.hero h1{font:800 clamp(52px,8vw,100px)/.93 "Plus Jakarta Sans";letter-spacing:-.075em;max-width:920px;margin:22px 0}
-.hero h1 span{color:var(--red)}
-.hero p{max-width:700px;color:#465064;font-size:17px}
-.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
-.hero-facts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:48px}
-.fact{background:rgba(255,250,243,.84);border:1px solid var(--border);border-radius:16px;padding:17px}
-.fact strong{display:block;font:800 21px "Plus Jakarta Sans"}
-.fact span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.09em;margin-top:3px}
-.toc{padding:18px 0;border-bottom:1px solid var(--border);background:#fffaf3}
-.toc-inner{display:flex;gap:9px;overflow:auto;white-space:nowrap}
-.toc a{font-size:11px;font-weight:800;color:var(--muted);padding:8px 11px;border:1px solid var(--border);border-radius:999px}
-.toc a:hover{color:var(--navy);border-color:#b9c8dc}
-.section{padding:82px 0}
-.section.alt{background:rgba(255,255,255,.38);border-block:1px solid var(--border)}
-.kicker{color:var(--navy);font-size:10px;text-transform:uppercase;letter-spacing:.18em;font-weight:900}
-h2{font:800 clamp(37px,5vw,62px)/.98 "Plus Jakarta Sans";letter-spacing:-.065em;margin:9px 0 16px}
-h3{font:800 22px "Plus Jakarta Sans";letter-spacing:-.04em;margin:0 0 9px}
-h4{font:800 16px "Plus Jakarta Sans";margin:0 0 6px}
-.lead{max-width:760px;color:var(--muted);font-size:15px}
-.grid{display:grid;gap:14px}
-.grid-2{grid-template-columns:repeat(2,1fr)}
-.grid-3{grid-template-columns:repeat(3,1fr)}
-.grid-4{grid-template-columns:repeat(4,1fr)}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:25px;box-shadow:0 5px 20px rgba(54,40,20,.035)}
-.card p,.card li{font-size:12px;color:var(--muted)}
-.card ul{padding-left:18px;margin-bottom:0}
-.number{font:800 42px "Plus Jakarta Sans";color:var(--navy);letter-spacing:-.07em}
-.tag{display:inline-block;padding:5px 9px;border-radius:999px;background:#edf2f8;color:var(--navy);font-size:9px;font-weight:800;margin:4px 4px 0 0}
-.notice{border-left:4px solid var(--gold);background:#fff8df;border-radius:0 14px 14px 0;padding:17px 19px;color:#625329;font-size:12px;margin-top:22px}
-.redline{border-left-color:var(--red);background:#fff0f2;color:#68353e}
-.bluebox{background:#edf3fb;border:1px solid #cad9ec;border-radius:18px;padding:20px}
-.steps{display:grid;gap:12px;margin-top:32px}
-.step{display:grid;grid-template-columns:62px 1fr 210px;gap:20px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:23px}
-.step-num{font:800 30px "Plus Jakarta Sans";color:var(--red)}
-.step aside{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--subtle);font-weight:800}
-.step aside strong{display:block;color:var(--navy);font-size:13px;letter-spacing:0;text-transform:none;margin-top:4px}
-.timeline{position:relative;margin-top:35px}
-.timeline:before{content:"";position:absolute;left:17px;top:8px;bottom:8px;width:2px;background:#ccd8e8}
-.timeline-item{position:relative;padding:0 0 32px 55px}
-.timeline-dot{position:absolute;left:9px;top:5px;width:18px;height:18px;border-radius:50%;background:var(--surface);border:4px solid var(--navy)}
-.checklist{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:20px}
-.check{background:#fbf6ed;border:1px solid var(--border);border-radius:12px;padding:12px;font-size:11px;color:#4f5968}
-.check b{color:var(--green)}
-.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:18px}
-table{width:100%;border-collapse:collapse;background:var(--surface);font-size:12px}
-th,td{text-align:left;padding:14px;border-bottom:1px solid var(--border);vertical-align:top}
-th{background:#f0e7da;color:var(--navy);font-size:10px;text-transform:uppercase;letter-spacing:.08em}
-tr:last-child td{border-bottom:0}
-.compare{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:25px}
-.compare .card{min-height:210px}
-.icon{font-size:28px;margin-bottom:15px}
-.resource-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:25px}
-.resource{display:flex;justify-content:space-between;gap:20px;padding:15px 17px;border:1px solid var(--border);border-radius:14px;background:var(--surface);font-size:12px}
-.resource span{color:var(--muted)}
-.resource a{color:var(--navy);font-weight:800}
-.footer{padding:45px 0;border-top:1px solid var(--border);color:var(--muted)}
-.footer-inner{display:flex;justify-content:space-between;gap:25px;flex-wrap:wrap;font-size:11px}
-.small{font-size:11px;color:var(--subtle)}
-@media(max-width:900px){
- .nav-links{display:none}.hero-facts{grid-template-columns:repeat(2,1fr)}
- .grid-3,.grid-4,.compare{grid-template-columns:1fr 1fr}
- .step{grid-template-columns:52px 1fr}
- .step aside{grid-column:2}
-}
-@media(max-width:600px){
- .hero-inner{padding:72px 0 55px}.hero h1{font-size:clamp(48px,15vw,72px)}
- .hero-facts,.grid-2,.grid-3,.grid-4,.compare,.resource-list,.checklist{grid-template-columns:1fr}
- .section{padding:62px 0}.card{padding:20px}
- .step{grid-template-columns:1fr}.step aside{grid-column:auto}
- .toc-inner{padding-bottom:2px}
-}
+::selection{background:rgba(255,111,145,.30)}
 
-/* Japan visual guide additions */
-:root{
-  --sakura:#e8a1b3;
-  --sakura-deep:#c75b7a;
-  --ink:#4d273c;
-  --cream:#fff7f9;
-  --surface:#fffdfd;
+.nav{
+  position:fixed;inset:0 0 auto;z-index:100;height:76px;
+  display:flex;align-items:center;justify-content:space-between;padding:0 28px;
+  border-bottom:1px solid transparent;transition:.25s ease
 }
-body{
-  background:
-    radial-gradient(circle at 10% 8%, rgba(232,161,179,.18), transparent 24%),
-    radial-gradient(circle at 90% 20%, rgba(199,91,122,.10), transparent 22%),
-    var(--cream);
-}
+.nav.scrolled{background:rgba(7,10,18,.84);backdrop-filter:blur(20px);border-color:var(--border-soft)}
+.logo{font-family:var(--display);font-size:22px;font-weight:800;letter-spacing:-.06em}
+.logo span{background:linear-gradient(90deg,var(--sakura2),var(--sun));-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav-links{display:flex;gap:20px;align-items:center;font-size:13px;color:#d8dce7}
+.nav-links a{opacity:.82}.nav-links a:hover{opacity:1;color:var(--sakura2)}
+.nav-cta{padding:10px 15px;border:1px solid rgba(255,111,145,.35);border-radius:999px;background:rgba(255,111,145,.08)}
+
 .hero{
+  min-height:760px;display:flex;align-items:center;position:relative;overflow:hidden;
   background:
-    linear-gradient(120deg, rgba(90,41,72,.94), rgba(199,91,122,.78)),
-    url('https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=1800&q=85') center/cover;
+    linear-gradient(90deg,rgba(4,6,12,.95) 0%,rgba(4,6,12,.76) 48%,rgba(4,6,12,.30) 100%),
+    linear-gradient(180deg,rgba(4,6,12,.05),rgba(4,6,12,.75)),
+    url("https://intad.doshisha.ac.jp/intad/promotion-area/68/1/mainvisual01.jpg") center/cover;
 }
 .hero:after{
-  content:"";
-  position:absolute; inset:0; pointer-events:none;
-  background-image:
-    radial-gradient(circle, rgba(255,255,255,.35) 0 2px, transparent 3px);
-  background-size:44px 44px;
-  opacity:.18;
+  content:"";position:absolute;inset:auto -10% -120px;height:240px;
+  background:radial-gradient(ellipse,rgba(255,111,145,.20),transparent 65%);
+  pointer-events:none
 }
-.photo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:26px}
-.photo-card{margin:0;background:#fff;border:1px solid #efd6df;border-radius:22px;overflow:hidden;box-shadow:0 14px 40px rgba(90,41,72,.08)}
-.photo-card.wide{grid-column:span 2}
-.photo-card img{display:block;width:100%;height:260px;object-fit:cover}
-.photo-card.wide img{height:360px}
-.photo-card figcaption{padding:16px 18px 19px;display:flex;flex-direction:column;gap:5px}
-.photo-card strong{font-size:18px;color:var(--ink)}
-.photo-card span{color:#77576a;line-height:1.55}
-.source-note{font-size:13px;color:#76596a;margin-top:18px;line-height:1.65}
-.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px}
-.stat{background:#fff;border:1px solid #efd6df;border-radius:20px;padding:22px}
-.stat strong{display:block;font-size:30px;color:var(--sakura-deep);line-height:1.05;margin-bottom:8px}
-.stat span{color:#76596a;line-height:1.45;font-size:13px}
-.link-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:20px}
-.link-grid a{display:flex;flex-direction:column;gap:6px;padding:18px 20px;border-radius:18px;border:1px solid #efd6df;background:#fff;text-decoration:none;color:var(--ink);transition:.2s}
-.link-grid a:hover{transform:translateY(-2px);border-color:var(--sakura)}
-.link-grid span{font-size:13px;color:#76596a}
-.callout{margin-top:22px;padding:20px;border-radius:18px;background:linear-gradient(135deg,#fff0f4,#fffaf6);border:1px solid #efcbd7;color:#684458;line-height:1.65}
-@media (max-width:800px){
-  .photo-grid,.link-grid,.stat-grid{grid-template-columns:1fr}
-  .photo-card.wide{grid-column:span 1}
-  .photo-card img,.photo-card.wide img{height:240px}
+.hero-inner{width:min(1180px,calc(100% - 48px));margin:auto;position:relative;z-index:2}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.13em;
+  text-transform:uppercase;color:#ffd3dd;border:1px solid rgba(255,154,177,.25);
+  background:rgba(255,111,145,.08);padding:8px 11px;border-radius:999px
 }
+.eyebrow:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sun);box-shadow:0 0 18px var(--sun)}
+.hero h1{
+  max-width:820px;font-family:var(--display);font-size:clamp(48px,7vw,86px);
+  line-height:.98;letter-spacing:-.065em;margin:24px 0 22px
+}
+.hero h1 em{font-style:normal;color:var(--sakura2)}
+.hero p{max-width:720px;color:#c8cedb;font-size:17px;margin:0 0 28px}
+.buttons{display:flex;gap:12px;flex-wrap:wrap}
+.btn{
+  border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--text);
+  padding:12px 17px;border-radius:12px;cursor:pointer
+}
+.btn.primary{border-color:transparent;background:linear-gradient(135deg,var(--sakura),var(--sun));box-shadow:0 14px 35px rgba(230,0,45,.20)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:760px;margin-top:48px}
+.stat{padding:14px 15px;border:1px solid var(--border-soft);background:rgba(7,10,18,.55);backdrop-filter:blur(12px);border-radius:14px}
+.stat strong{display:block;font-family:var(--display);font-size:22px}.stat span{font-size:11px;color:var(--muted)}
 
+.quickbar{position:sticky;top:76px;z-index:80;background:rgba(7,10,18,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--border-soft);overflow:auto}
+.quickbar-inner{width:min(1180px,calc(100% - 32px));margin:auto;display:flex;gap:18px;white-space:nowrap;padding:13px 0;font-size:12px;color:var(--muted)}
+.quickbar a:hover{color:var(--sakura2)}
+
+.section{padding:100px 0}.section.alt{background:linear-gradient(180deg,rgba(255,255,255,.018),rgba(255,111,145,.018))}
+.container{width:min(1100px,calc(100% - 40px));margin:auto}
+.kicker{color:var(--sakura2);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.title{font-family:var(--display);font-size:clamp(30px,4vw,50px);line-height:1.08;letter-spacing:-.045em;margin:12px 0 14px}
+.subtitle{max-width:780px;color:var(--muted);font-size:16px}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:36px}
+.card{
+  padding:25px;border:1px solid var(--border);background:linear-gradient(145deg,var(--card),rgba(18,24,39,.72));
+  border-radius:var(--radius);box-shadow:var(--shadow)
+}
+.card h3{font-family:var(--display);margin:0 0 8px;font-size:20px}
+.card p{color:var(--muted);margin:0}
+.notice{margin-top:17px;padding:13px 15px;border-left:3px solid var(--sakura);background:rgba(255,111,145,.06);color:#dce0ea;border-radius:8px;font-size:13px}
+
+.region-grid,.city-grid,.uni-grid,.course-grid,.life-grid,.mistakes{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:35px}
+.region,.city,.uni,.course,.life,.mistake{
+  overflow:hidden;border:1px solid var(--border);background:var(--card);border-radius:18px
+}
+.region-body,.city-body,.uni-body,.course-body,.life,.mistake{padding:20px}
+.region h3,.city h3,.uni h3,.course h3{margin:0 0 7px;font-family:var(--display)}
+.region p,.city p,.uni p,.course p,.life p,.mistake p{margin:0;color:var(--muted);font-size:14px}
+.tag{display:inline-block;font-size:10px;text-transform:uppercase;letter-spacing:.10em;color:#ffd3dd;background:rgba(255,111,145,.08);border:1px solid rgba(255,111,145,.18);padding:5px 8px;border-radius:999px;margin-bottom:12px}
+.city img,.uni img{width:100%;height:180px;object-fit:cover;display:block}
+
+.timeline{margin-top:38px;position:relative;display:grid;gap:14px}
+.step{display:grid;grid-template-columns:80px 1fr;gap:18px;align-items:start;padding:20px;border:1px solid var(--border);background:var(--card);border-radius:16px}
+.step-num{font-family:var(--display);font-size:12px;color:var(--sakura2);font-weight:800}
+.step h3{margin:0 0 6px;font-family:var(--display)}.step p{margin:0;color:var(--muted);font-size:14px}
+
+.cost-box{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:35px}
+.cost-card{padding:26px;border:1px solid var(--border);border-radius:18px;background:var(--card)}
+.cost-card strong{display:block;font-family:var(--display);font-size:30px;margin-bottom:5px}
+.cost-card span{color:var(--muted);font-size:13px}
+.cost-list{margin:18px 0 0;padding:0;list-style:none;display:grid;gap:9px}
+.cost-list li{padding:9px 0;border-bottom:1px solid var(--border-soft);color:#cbd0db;font-size:13px}
+
+.image-strip{display:grid;grid-template-columns:1.4fr .8fr .8fr;gap:12px;margin-top:32px}
+.image-strip img{width:100%;height:230px;object-fit:cover;border-radius:16px;border:1px solid var(--border)}
+.image-strip img:first-child{height:300px}
+
+.check-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:30px}
+.check-item{padding:14px 16px;border:1px solid var(--border);border-radius:12px;background:var(--card);color:#d7dbe5}
+.check-item:before{content:"✓";color:var(--green);font-weight:800;margin-right:10px}
+
+.faq{margin-top:32px;border-top:1px solid var(--border)}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-question{width:100%;padding:20px 0;background:none;border:0;color:var(--text);display:flex;justify-content:space-between;text-align:left;cursor:pointer;font-weight:700}
+.faq-icon{color:var(--sakura2);font-size:22px}.faq-answer{display:none;color:var(--muted);padding:0 35px 20px 0;font-size:14px}.faq-item.open .faq-answer{display:block}
+
+.final{padding:100px 0 120px}
+.final-card{
+  padding:50px;border-radius:28px;border:1px solid rgba(255,111,145,.22);
+  background:
+    radial-gradient(circle at 80% 20%,rgba(230,0,45,.20),transparent 35%),
+    radial-gradient(circle at 20% 80%,rgba(255,111,145,.12),transparent 30%),
+    var(--card)
+}
+.final-card h2{font-family:var(--display);font-size:clamp(34px,5vw,58px);line-height:1.02;letter-spacing:-.05em;max-width:780px;margin:12px 0}
+.final-card p{max-width:760px;color:var(--muted)}
+
+footer{border-top:1px solid var(--border);padding:28px 0;color:var(--muted);font-size:12px}
+.footer-inner{width:min(1100px,calc(100% - 40px));margin:auto;display:flex;justify-content:space-between;gap:20px}
+.footer-logo{font-family:var(--display);font-weight:800;font-size:20px;color:#fff}
+.footer-links{display:flex;gap:15px;flex-wrap:wrap}
+
+@media(max-width:900px){
+  .nav-links{display:none}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .region-grid,.city-grid,.uni-grid,.course-grid,.life-grid,.mistakes{grid-template-columns:repeat(2,1fr)}
+  .image-strip{grid-template-columns:1fr 1fr}.image-strip img:first-child{grid-column:1/-1;height:260px}
+}
+@media(max-width:640px){
+  .nav{padding:0 16px}.hero{min-height:700px}.hero-inner{width:min(100% - 30px,1100px)}
+  .hero h1{font-size:52px}.hero p{font-size:15px}.stats{grid-template-columns:1fr 1fr}
+  .section{padding:75px 0}.container{width:min(100% - 30px,1100px)}
+  .grid,.region-grid,.city-grid,.uni-grid,.course-grid,.life-grid,.mistakes,.cost-box,.check-grid{grid-template-columns:1fr}
+  .image-strip{grid-template-columns:1fr}.image-strip img:first-child{grid-column:auto;height:230px}
+  .step{grid-template-columns:1fr}.final-card{padding:30px}
+}
 </style>
-
-
-
 </head>
+
 <body>
 
-<nav class="nav">
-  <div class="container nav-inner">
-    <a class="logo" href="../index.html">Uni<span>AI</span></a>
-    <div class="nav-links">
-      <a href="#overview">Overview</a><a href="#choose">Choose</a><a href="#admissions">Admissions</a>
-      <a href="#money">Costs</a><a href="#visa">Visa</a><a href="#arrival">Arrival</a>
-    </div>
-    <a class="nav-btn" href="#checklist">My Checklist →</a>
+<nav class="nav" id="nav">
+  <a class="logo" href="#"><span>Uni</span>AI Japan</a>
+  <div class="nav-links">
+    <a href="#overview">Overview</a>
+    <a href="#education">Education</a>
+    <a href="#cities">Cities</a>
+    <a href="#universities">Universities</a>
+    <a href="#admissions">Admissions</a>
+    <a href="#costs">Costs</a>
+    <a href="#visa">Visa</a>
+    <a href="#life">Life</a>
+    <a class="nav-cta" href="#plan">Build my plan</a>
   </div>
 </nav>
 
-<header class="hero" id="overview">
-  <div class="container hero-inner">
-    <div class="flagline">Japan · Complete Study Guide 🌸</div>
-    <h1>Study in the <span>Japan.</span><br>Know the path before you go.</h1>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Complete international student guide • 日本留学</div>
+    <h1>Study in <em>Japan.</em><br>Plan it smarter.</h1>
     <p>
-      This is a practical, end-to-end guide for an international student planning to study in the Japan.
-      Use it from the first search for a university through applications, funding, admission, student-visa preparation,
-      housing, travel and your first days on campus.
+      A practical guide to choosing Japanese universities, understanding
+      degrees and admissions, preparing for EJU or language requirements,
+      budgeting, scholarships, visas, accommodation and your first months in Japan.
     </p>
-    <div class="hero-actions">
-      <a class="btn primary" href="#journey">Start the roadmap →</a>
-      <a class="btn secondary" href="#universities">Explore university types</a>
+    <div class="buttons">
+      <a class="btn primary" href="#overview">Explore the guide ↓</a>
+      <a class="btn" href="#plan">Build my Japan roadmap</a>
     </div>
-    <div class="hero-facts">
-      <div class="fact"><strong>50</strong><span>states</span></div>
-      <div class="fact"><strong>4,000+</strong><span>higher-ed institutions*</span></div>
-      <div class="fact"><strong>F · J · M</strong><span>common study-related categories</span></div>
-      <div class="fact"><strong>6 stages</strong><span>plan → departure</span></div>
+
+    <div class="stats">
+      <div class="stat"><strong>47</strong><span>prefectures</span></div>
+      <div class="stat"><strong>4 yrs</strong><span>typical bachelor's</span></div>
+      <div class="stat"><strong>EJU</strong><span>key admissions exam for many applicants</span></div>
+      <div class="stat"><strong>COE</strong><span>Certificate of Eligibility process</span></div>
     </div>
-    <p class="small">*The exact number depends on how institutions are counted. Always verify current program and institutional information directly.</p>
   </div>
 </header>
 
-<div class="toc">
-  <div class="container toc-inner">
-    <a href="#overview">01 Overview</a><a href="#choose">02 Choose your route</a><a href="#universities">03 Universities</a>
-    <a href="#admissions">04 Admissions</a><a href="#tests">05 Tests</a><a href="#applications">06 Applications</a>
-    <a href="#money">07 Costs & funding</a><a href="#timeline">08 Timeline</a><a href="#visa">09 Visa</a>
-    <a href="#arrival">10 Arrival</a><a href="#student-life">11 Student life</a><a href="#checklist">12 Checklist</a>
+<div class="quickbar">
+  <div class="quickbar-inner">
+    <a href="#overview">Why Japan?</a>
+    <a href="#education">Education</a>
+    <a href="#regions">Regions</a>
+    <a href="#cities">Cities</a>
+    <a href="#universities">Universities</a>
+    <a href="#courses">Courses</a>
+    <a href="#admissions">Admissions</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#costs">Costs</a>
+    <a href="#scholarships">Scholarships</a>
+    <a href="#visa">Student visa</a>
+    <a href="#accommodation">Accommodation</a>
+    <a href="#life">Life</a>
+    <a href="#arrival">Arrival</a>
+    <a href="#mistakes">Mistakes</a>
+    <a href="#faq">FAQ</a>
   </div>
 </div>
 
-<section class="section" id="journey">
+<section class="section" id="overview">
   <div class="container">
-    <span class="kicker">THE BIG PICTURE</span>
-    <h2>Your six-stage Japan journey.</h2>
-    <p class="lead">Do the work in the right order. A strong application is easier when your destination, academic target, finances and deadlines are clear before you start submitting forms.</p>
-    <div class="steps">
-      <div class="step"><div class="step-num">01</div><div><h3>Define your Japan route</h3><p>Choose your intended degree, subject, intake, preferred locations and realistic budget. Build a balanced university list rather than choosing only by reputation.</p></div><aside>Start with<strong>Fit + budget + academics</strong></aside></div>
-      <div class="step"><div class="step-num">02</div><div><h3>Prepare your academic profile</h3><p>Map academic requirements, English-language requirements, standardized tests where applicable, documents, activities, projects and recommendations.</p></div><aside>Prepare<strong>Scores + documents</strong></aside></div>
-      <div class="step"><div class="step-num">03</div><div><h3>Build the money plan</h3><p>Estimate tuition, housing, food, transport, insurance, travel and setup costs. Then identify scholarships, assistantships, savings or other permitted funding sources.</p></div><aside>Fund<strong>The whole year</strong></aside></div>
-      <div class="step"><div class="step-num">04</div><div><h3>Apply to schools</h3><p>Prepare the correct application for every institution, meet its individual deadline, submit supporting documents and keep a tracker for fees, portals and decisions.</p></div><aside>Submit<strong>Before each deadline</strong></aside></div>
-      <div class="step"><div class="step-num">05</div><div><h3>Choose your school and prepare</h3><p>Compare offers, total costs, aid and program fit. After choosing a school, complete the institution's enrollment steps and immigration preparation.</p></div><aside>Decide<strong>Then document everything</strong></aside></div>
-      <div class="step"><div class="step-num">06</div><div><h3>Residence status, travel and arrival</h3><p>Follow the current instructions for your visa category, arrange housing and insurance as required, plan travel and arrive with your university and immigration documents organized.</p></div><aside>Finish<strong>Ready for campus</strong></aside></div>
+    <div class="kicker">01 / Start here</div>
+    <h2 class="title">Is Japan the right study destination for you?</h2>
+    <p class="subtitle">
+      Studying in Japan is about more than choosing a famous university.
+      Your decision should match your subject, language ability, academic profile,
+      budget, preferred city, course language, career goals and immigration plans.
+    </p>
+
+    <div class="grid">
+      <article class="card">
+        <h3>Why students consider Japan</h3>
+        <p>
+          Japan combines a major higher-education system with strong research,
+          engineering, technology, design, business and cultural opportunities.
+          The country also has universities offering degree programmes taught in English.
+        </p>
+        <div class="notice">The best choice depends on the exact programme, not only the university name.</div>
+      </article>
+      <article class="card">
+        <h3>Think beyond rankings</h3>
+        <p>
+          Compare course content, language of instruction, entrance requirements,
+          tuition, scholarships, location, accommodation, internships, career support
+          and the environment in which you will actually live.
+        </p>
+        <div class="notice">Japan has national, public and private universities, plus other specialist institutions.</div>
+      </article>
+    </div>
+
+    <div class="image-strip">
+      <img src="https://intad.doshisha.ac.jp/intad/promotion-area/68/1/mainvisual01.jpg" alt="International students at a Japanese university campus">
+      <img src="https://www.studyjapan.jp/schools/img/image/364" alt="Students walking at a modern Japanese university campus">
+      <img src="https://www.jmu.edu/_images/global/exchange/ritsumeikan/ristumeikan-2.png" alt="Students studying outdoors at Ritsumeikan University">
     </div>
   </div>
 </section>
 
-<section class="section alt" id="choose">
+<section class="section alt" id="education">
   <div class="container">
-    <span class="kicker">02 / CHOOSE YOUR ROUTE</span>
-    <h2>First decide what kind of Japan education you need.</h2>
-    <p class="lead">“Study in the Japan” is not one single route. Your degree level, program type and personal goals determine the admissions process you will follow.</p>
-    <div class="grid grid-3" style="margin-top:30px">
-      <div class="card"><div class="icon">🎓</div><h3>Undergraduate</h3><p>Usually the bachelor's route. You may apply directly to a university or consider a community-college pathway and later transfer, depending on your goals.</p><span class="tag">Bachelor's</span><span class="tag">4-year route</span></div>
-      <div class="card"><div class="icon">🔬</div><h3>Graduate</h3><p>Master's, doctoral and other advanced programs have highly program-specific requirements. Research experience can matter strongly for research-focused programs.</p><span class="tag">MS</span><span class="tag">MA</span><span class="tag">PhD</span></div>
-      <div class="card"><div class="icon">🏫</div><h3>Community college</h3><p>Two-year institutions can offer associate degrees and transfer pathways. Check articulation agreements and transfer requirements before relying on a pathway.</p><span class="tag">2-year</span><span class="tag">Transfer</span></div>
-      <div class="card"><div class="icon">🌎</div><h3>Exchange / visiting study</h3><p>Exchange and short-term programs can be different from completing a full Japan degree. Your program sponsor determines the applicable rules and documents.</p><span class="tag">J-1 may apply</span><span class="tag">Short-term</span></div>
-      <div class="card"><div class="icon">🗣️</div><h3>English-language study</h3><p>English-language programs can serve different purposes. Check the program's level, duration, progression options and whether it supports the next stage you want.</p><span class="tag">Language</span><span class="tag">Preparation</span></div>
-      <div class="card"><div class="icon">🛠️</div><h3>Vocational / technical study</h3><p>Career-focused programs have different structures and immigration considerations. Confirm that the institution and program are appropriate for international students before applying.</p><span class="tag">Career-focused</span><span class="tag">M-1 may apply</span></div>
+    <div class="kicker">02 / Education system</div>
+    <h2 class="title">Understand the Japanese higher-education system.</h2>
+    <p class="subtitle">Japan has several higher-education routes. Choose based on your academic level, intended career and preferred learning format.</p>
+
+    <div class="grid">
+      <article class="card"><h3>Undergraduate university</h3><p>University bachelor's programmes generally take four years. Medical, dental, veterinary and some pharmaceutical programmes generally take six years.</p></article>
+      <article class="card"><h3>Graduate school</h3><p>Master's and doctoral study is available across many fields. Research-focused preparation and supervisor requirements can be especially important for graduate applicants.</p></article>
+      <article class="card"><h3>Specialized training colleges</h3><p>Professional and vocational routes can suit students seeking practical training in specific occupations and fields.</p></article>
+      <article class="card"><h3>Japanese language institutes</h3><p>Language schools can be part of a longer study pathway, especially for students who need additional Japanese-language preparation before further study.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="regions">
+  <div class="container">
+    <div class="kicker">03 / Explore Japan</div>
+    <h2 class="title">Japan is more than Tokyo.</h2>
+    <p class="subtitle">Japan has eight major regions with distinct cultures, environments and city styles. Location can change your daily experience as much as your university choice.</p>
+
+    <div class="region-grid">
+      <article class="region"><div class="region-body"><span class="tag">Kanto</span><h3>Tokyo & surroundings</h3><p>Dense metropolitan life, major universities, extensive transport and a large concentration of companies and industries.</p></div></article>
+      <article class="region"><div class="region-body"><span class="tag">Kansai</span><h3>Osaka • Kyoto • Kobe</h3><p>A major student region combining large cities, historic Kyoto, research institutions, business and cultural life.</p></div></article>
+      <article class="region"><div class="region-body"><span class="tag">Chubu</span><h3>Nagoya & central Japan</h3><p>A strong manufacturing and engineering environment with access to central Japan's cities and mountains.</p></div></article>
+      <article class="region"><div class="region-body"><span class="tag">Tohoku</span><h3>Sendai & the north-east</h3><p>University communities, seasonal landscapes and a quieter alternative to the largest metropolitan areas.</p></div></article>
+      <article class="region"><div class="region-body"><span class="tag">Kyushu</span><h3>Fukuoka & Kyushu</h3><p>Major universities, a lively regional hub and a location with strong links across East Asia.</p></div></article>
+      <article class="region"><div class="region-body"><span class="tag">Hokkaido</span><h3>Sapporo & the north</h3><p>Large open spaces, a distinct climate and a major university city with a different pace of life.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="cities">
+  <div class="container">
+    <div class="kicker">04 / Student cities</div>
+    <h2 class="title">Choose the city that fits your life.</h2>
+
+    <div class="city-grid">
+      <article class="city">
+        <img src="https://www.studyjapan.jp/schools/img/image/364" alt="Japanese university campus">
+        <div class="city-body"><span class="tag">Metropolitan</span><h3>Tokyo</h3><p>Huge university and employer ecosystem, exceptional transport and an energetic urban lifestyle. Budget carefully because daily expenses can be substantial.</p></div>
+      </article>
+      <article class="city">
+        <img src="https://www.ryukoku.ac.jp/nc/archives/001/202012/large-998d1e99ca742e8b00635b984c99084a.jpg" alt="University campus in Kyoto">
+        <div class="city-body"><span class="tag">Culture + study</span><h3>Kyoto</h3><p>A major student city known for universities, history, traditional culture and a distinctive four-season environment.</p></div>
+      </article>
+      <article class="city">
+        <img src="https://rakutano-school.com/img/school/16005/osaka_d02.jpg" alt="Students at a Japanese university">
+        <div class="city-body"><span class="tag">Business hub</span><h3>Osaka</h3><p>A large commercial city with universities, a lively food culture and strong regional transport connections.</p></div>
+      </article>
+      <article class="city">
+        <div class="city-body"><span class="tag">Northern city</span><h3>Sapporo</h3><p>Known for its spacious environment, colder winters and a different lifestyle from Japan's southern metropolitan centres.</p></div>
+      </article>
+      <article class="city">
+        <div class="city-body"><span class="tag">Kyushu hub</span><h3>Fukuoka</h3><p>A major regional city with universities, technology and business activity, plus strong international connections.</p></div>
+      </article>
+      <article class="city">
+        <div class="city-body"><span class="tag">Central Japan</span><h3>Nagoya</h3><p>A major industrial and research centre, particularly relevant for students interested in engineering and manufacturing.</p></div>
+      </article>
     </div>
   </div>
 </section>
 
 <section class="section" id="universities">
   <div class="container">
-    <span class="kicker">03 / UNIVERSITY LANDSCAPE</span>
-    <h2>Compare the institution, not just the name.</h2>
-    <p class="lead">A famous university is not automatically the right university for every student. Compare the exact program, curriculum, location, cost, support and opportunities.</p>
-    <div class="grid grid-3" style="margin-top:30px">
-      <div class="card"><h3>Public universities</h3><p>Often supported by state funding and serving large student populations. Costs and admission policies vary considerably by institution and residency status.</p></div>
-      <div class="card"><h3>Private universities</h3><p>Privately funded institutions range from small colleges to major research universities. Sticker price and actual net cost can be very different after institutional aid.</p></div>
-      <div class="card"><h3>Liberal arts colleges</h3><p>Often smaller institutions with broad undergraduate curricula and close faculty interaction. Look at majors, class sizes and graduate outcomes.</p></div>
-      <div class="card"><h3>Research universities</h3><p>Large research environments may offer extensive labs, graduate programs, research centers and interdisciplinary opportunities.</p></div>
-      <div class="card"><h3>Community colleges</h3><p>Can be useful for associate degrees and transfer plans. Confirm transfer destinations, credit rules and total cost before committing.</p></div>
-      <div class="card"><h3>Urban vs college-town</h3><p>Location affects housing, transport, internships, social life and everyday spending. Treat location as part of the academic decision.</p></div>
-    </div>
-    <div class="notice">Build a balanced list using your own profile: academic preparation, program requirements, finances, location preferences and realistic admission range. Do not treat rankings as a substitute for program research.</div>
-  </div>
-</section>
+    <div class="kicker">05 / Universities</div>
+    <h2 class="title">Build a shortlist around your programme.</h2>
+    <p class="subtitle">Examples of major universities to research — not a ranking. Always check the current programme page and international admissions requirements.</p>
 
-<section class="section alt" id="admissions">
-  <div class="container">
-    <span class="kicker">04 / ADMISSIONS</span>
-    <h2>What universities can ask you for.</h2>
-    <p class="lead">Requirements are institution- and program-specific. Read every university's official admissions page and create a separate requirement checklist for each application.</p>
-    <div class="grid grid-2" style="margin-top:30px">
-      <div class="card"><h3>Academic record</h3><ul><li>School or university transcripts</li><li>Grades and academic history</li><li>Degree or expected-graduation information</li><li>Course prerequisites where required</li></ul></div>
-      <div class="card"><h3>Testing</h3><ul><li>English-language test where required</li><li>Program-specific standardized tests where required</li><li>Test-optional policies can vary, so verify the current rule</li></ul></div>
-      <div class="card"><h3>Application materials</h3><ul><li>Personal statement / essays</li><li>Resume or CV where appropriate</li><li>Portfolio for relevant fields</li><li>Application fee or fee-waiver process where available</li></ul></div>
-      <div class="card"><h3>Recommendations</h3><ul><li>Academic or professional recommendations depending on program</li><li>Choose people who can discuss your work specifically</li><li>Give recommenders time and accurate instructions</li></ul></div>
-      <div class="card"><h3>Program fit</h3><ul><li>Read the actual curriculum</li><li>Check faculty, labs, concentrations and electives</li><li>For graduate study, investigate research groups and supervisors where relevant</li></ul></div>
-      <div class="card"><h3>Deadlines</h3><ul><li>Early / priority deadlines may differ from regular deadlines</li><li>Scholarship deadlines can be earlier</li><li>International-document deadlines may differ from application deadlines</li></ul></div>
+    <div class="uni-grid">
+      <article class="uni"><img src="https://rakutano-school.com/img/school/16005/osaka_d02.jpg" alt="Osaka University campus"><div class="uni-body"><span class="tag">Osaka</span><h3>Osaka University</h3><p>A major national research university with a broad range of disciplines.</p></div></article>
+      <article class="uni"><img src="https://intad.doshisha.ac.jp/intad/promotion-area/68/1/mainvisual01.jpg" alt="Doshisha University campus"><div class="uni-body"><span class="tag">Kyoto</span><h3>Doshisha University</h3><p>A prominent private university with a long history and international programmes.</p></div></article>
+      <article class="uni"><div class="uni-body"><span class="tag">Tokyo</span><h3>The University of Tokyo</h3><p>One of Japan's best-known national research universities across many academic fields.</p></div></article>
+      <article class="uni"><div class="uni-body"><span class="tag">Tokyo</span><h3>Tokyo Institute of Technology / Science Tokyo</h3><p>A major science and technology-oriented institution; check its current institutional structure and programme pages.</p></div></article>
+      <article class="uni"><div class="uni-body"><span class="tag">Kyoto</span><h3>Kyoto University</h3><p>A leading national research university with extensive graduate and research activity.</p></div></article>
+      <article class="uni"><div class="uni-body"><span class="tag">Sendai</span><h3>Tohoku University</h3><p>A major national research university with strong science, engineering and international activity.</p></div></article>
     </div>
   </div>
 </section>
 
-<section class="section" id="tests">
+<section class="section alt" id="courses">
   <div class="container">
-    <span class="kicker">05 / TESTS & SCORES</span>
-    <h2>Know which tests actually apply to you.</h2>
-    <p class="lead">Never take a test just because it is common. Start from the exact requirements of the programs on your shortlist.</p>
-    <div class="table-wrap" style="margin-top:30px">
-      <table>
-        <thead><tr><th>Test / proof</th><th>What it may be used for</th><th>What to verify</th></tr></thead>
-        <tbody>
-          <tr><td>IELTS / TOEFL and other English tests</td><td>Evidence of English proficiency for programs that require it.</td><td>Accepted tests, minimum scores, section requirements and score validity.</td></tr>
-          <tr><td>SAT / ACT</td><td>Undergraduate admissions at institutions that require or consider them.</td><td>Whether the university is test-optional, test-required or has another policy.</td></tr>
-          <tr><td>GRE</td><td>Some graduate programs.</td><td>Whether your specific department requires, recommends or does not use it.</td></tr>
-          <tr><td>GMAT</td><td>Some business and management programs.</td><td>Whether the school accepts the current GMAT format and whether another test is accepted.</td></tr>
-          <tr><td>Portfolio / audition</td><td>Art, design, architecture, music and other performance or creative programs.</td><td>Format, number of pieces, technical specifications and submission deadline.</td></tr>
-        </tbody>
-      </table>
+    <div class="kicker">06 / Courses</div>
+    <h2 class="title">Start with the degree, then choose the university.</h2>
+
+    <div class="course-grid">
+      <article class="course"><div class="course-body"><span class="tag">Technology</span><h3>Computer science & AI</h3><p>Look for programme language, mathematics requirements, research groups, labs, internships and industry links.</p></div></article>
+      <article class="course"><div class="course-body"><span class="tag">Engineering</span><h3>Engineering & robotics</h3><p>Japan's manufacturing and technology ecosystem makes programme-specific laboratories and research strength especially relevant.</p></div></article>
+      <article class="course"><div class="course-body"><span class="tag">Business</span><h3>Business & economics</h3><p>Compare curriculum, language, exchange options, internships and access to companies.</p></div></article>
+      <article class="course"><div class="course-body"><span class="tag">Design</span><h3>Design & creative fields</h3><p>Portfolio requirements, studio culture and Japanese-language expectations can vary significantly by school.</p></div></article>
+      <article class="course"><div class="course-body"><span class="tag">Science</span><h3>Natural sciences</h3><p>Research facilities, laboratory opportunities and supervisor fit can matter greatly at graduate level.</p></div></article>
+      <article class="course"><div class="course-body"><span class="tag">Humanities</span><h3>Languages & social sciences</h3><p>Check teaching language, Japanese proficiency requirements and the exact academic pathway before applying.</p></div></article>
     </div>
-    <div class="notice">Test policies change. Save a copy or screenshot of the official requirement page you used while planning, and re-check it before submitting.</div>
   </div>
 </section>
 
-<section class="section alt" id="applications">
+<section class="section" id="admissions">
   <div class="container">
-    <span class="kicker">06 / APPLICATIONS</span>
-    <h2>Build one master application system.</h2>
-    <p class="lead">Do not manage applications from memory. Create one tracker with every university, program, deadline, document, fee and decision.</p>
-    <div class="grid grid-3" style="margin-top:30px">
-      <div class="card"><div class="number">01</div><h3>University research</h3><p>Record program name, degree, campus, tuition estimate, scholarship options, admission requirements and official deadline.</p></div>
-      <div class="card"><div class="number">02</div><h3>Documents</h3><p>Keep transcripts, passport details, test scores, essays, recommendations and financial documents organized with clear filenames.</p></div>
-      <div class="card"><div class="number">03</div><h3>Application portal</h3><p>Track account creation, fee payment, document upload, verification and any missing-item messages.</p></div>
-      <div class="card"><div class="number">04</div><h3>Essays</h3><p>Write specific answers. Explain what you did, why it mattered, what you learned and how the program connects to your next step.</p></div>
-      <div class="card"><div class="number">05</div><h3>Recommendations</h3><p>Request early, provide context, and monitor whether letters have actually been received.</p></div>
-      <div class="card"><div class="number">06</div><h3>Decision tracking</h3><p>Record admits, rejects, waitlists, scholarship offers, deposits, enrollment deadlines and next actions.</p></div>
-    </div>
-    <div class="bluebox" style="margin-top:25px"><strong>Simple application tracker columns:</strong> University · Program · Deadline · Application portal · Fee · English test · Academic test · Essay · LOR 1 · LOR 2 · Transcript · Portfolio · Financial aid · Status · Decision · Next action.</div>
-  </div>
-</section>
+    <div class="kicker">07 / Admissions</div>
+    <h2 class="title">Japan does not have one universal application route.</h2>
+    <p class="subtitle">Requirements vary by institution and programme. International applicants may encounter school-specific entrance exams, document screening, interviews, EJU and language tests.</p>
 
-<section class="section" id="money">
-  <div class="container">
-    <span class="kicker">07 / COSTS & FUNDING</span>
-    <h2>Budget the entire experience, not just tuition.</h2>
-    <p class="lead">There is no single “cost of studying in America.” Your total can change dramatically with institution, state, city, housing choice, insurance and lifestyle.</p>
-    <div class="grid grid-2" style="margin-top:30px">
-      <div class="card"><h3>Education costs</h3><ul><li>Tuition</li><li>Mandatory university fees</li><li>Books, supplies and course materials</li><li>Program-specific costs such as labs or equipment</li></ul></div>
-      <div class="card"><h3>Living costs</h3><ul><li>Rent or university housing</li><li>Food and groceries</li><li>Local transportation</li><li>Phone, internet and personal expenses</li></ul></div>
-      <div class="card"><h3>One-time costs</h3><ul><li>Application and testing fees</li><li>Visa-related costs</li><li>Travel to the Japan</li><li>Initial deposits and basic setup</li></ul></div>
-      <div class="card"><h3>Funding options</h3><ul><li>University scholarships or grants</li><li>Assistantships for eligible graduate programs</li><li>External scholarships</li><li>Personal/family funding and permitted education financing</li></ul></div>
+    <div class="grid">
+      <article class="card"><h3>Academic documents</h3><p>Expect documents such as graduation certificates, transcripts and other school-specific application materials.</p></article>
+      <article class="card"><h3>Language proof</h3><p>Depending on the programme, you may need Japanese or English proficiency evidence. Check the exact programme rather than assuming one test is required everywhere.</p></article>
+      <article class="card"><h3>EJU</h3><p>The Examination for Japanese University Admission for International Students is used by many institutions as part of international undergraduate admissions.</p></article>
+      <article class="card"><h3>Interview / entrance exam</h3><p>Some institutions assess applicants through interviews, subject examinations, essays, application review or combinations of these.</p></article>
     </div>
-    <h3 style="margin-top:40px">Ask these five questions before accepting an offer.</h3>
-    <div class="checklist">
-      <div class="check">✓ What is the <b>total annual cost</b>, not just tuition?</div>
-      <div class="check">✓ Is the scholarship <b>renewable</b>, and what conditions apply?</div>
-      <div class="check">✓ What housing options are realistic for the campus?</div>
-      <div class="check">✓ How much funding is guaranteed versus estimated?</div>
-      <div class="check">✓ What is the cost if the program takes longer than planned?</div>
-      <div class="check">✓ What financial documents will be needed for immigration or enrollment?</div>
-    </div>
-    <div class="notice redline">Do not assume a part-time job will automatically cover tuition or living costs. Work authorization and restrictions depend on your immigration status and current rules; plan primary funding before departure.</div>
   </div>
 </section>
 
 <section class="section alt" id="timeline">
   <div class="container">
-    <span class="kicker">08 / TIMELINE</span>
-    <h2>Give yourself enough runway.</h2>
-    <p class="lead">The exact calendar depends on your intake, university and country of residence. Use this as a planning framework, then replace it with the deadlines of your actual shortlist.</p>
+    <div class="kicker">08 / Application timeline</div>
+    <h2 class="title">Start early — Japan's application process is school-specific.</h2>
+
     <div class="timeline">
-      <div class="timeline-item"><div class="timeline-dot"></div><h3>12–18+ months before</h3><p>Choose field and destination. Research universities. Estimate costs. Identify tests. Start improving academic or English preparation if needed.</p></div>
-      <div class="timeline-item"><div class="timeline-dot"></div><h3>9–12 months before</h3><p>Finalize the university list. Take required tests. Request documents. Draft essays. Identify scholarship and financial-aid deadlines.</p></div>
-      <div class="timeline-item"><div class="timeline-dot"></div><h3>6–9 months before</h3><p>Submit applications according to each institution's deadlines. Complete financial-aid forms and monitor portals for missing materials.</p></div>
-      <div class="timeline-item"><div class="timeline-dot"></div><h3>3–6 months before</h3><p>Review decisions and funding. Select a university. Complete enrollment requirements. Start the institution's international-student and immigration process.</p></div>
-      <div class="timeline-item"><div class="timeline-dot"></div><h3>1–3 months before</h3><p>Prepare visa documents and interview if applicable. Arrange housing, insurance, travel, finances and arrival logistics.</p></div>
-      <div class="timeline-item"><div class="timeline-dot"></div><h3>Departure month</h3><p>Carry your essential documents, confirm your arrival plan, know where you will stay and follow the university's instructions for international-student check-in.</p></div>
+      <div class="step"><div class="step-num">01<br>~12 months</div><div><h3>Define your target</h3><p>Choose your subject, study level, language of instruction, preferred cities and approximate budget.</p></div></div>
+      <div class="step"><div class="step-num">02<br>~10–12 months</div><div><h3>Research schools</h3><p>Read official programme pages, international admissions guides, tuition information and scholarship conditions.</p></div></div>
+      <div class="step"><div class="step-num">03<br>~9–10 months</div><div><h3>Prepare tests</h3><p>Plan for EJU, JLPT, IELTS/TOEFL or other tests where the target institution requires them.</p></div></div>
+      <div class="step"><div class="step-num">04<br>~6–9 months</div><div><h3>Apply</h3><p>Submit the exact documents, fees, test results and forms required by each school and programme.</p></div></div>
+      <div class="step"><div class="step-num">05<br>After offer</div><div><h3>Prepare immigration</h3><p>Work with the accepting institution on the Certificate of Eligibility process and then complete the visa application steps.</p></div></div>
+      <div class="step"><div class="step-num">06<br>Before arrival</div><div><h3>Set up your life</h3><p>Arrange accommodation, insurance-related procedures, travel, finances, documents and your first-week plan.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="costs">
+  <div class="container">
+    <div class="kicker">09 / Costs</div>
+    <h2 class="title">Budget for the whole experience, not just tuition.</h2>
+    <p class="subtitle">Costs vary by institution, city and lifestyle. Use official university fee pages and current living-cost guidance for your exact plan.</p>
+
+    <div class="cost-box">
+      <div class="cost-card"><strong>Tuition</strong><span>Programme and institution dependent</span><ul class="cost-list"><li>Admission / entrance fees may apply</li><li>Annual tuition varies by school and programme</li><li>Laboratory or programme-specific costs may apply</li><li>Scholarships and tuition reductions can change the net cost</li></ul></div>
+      <div class="cost-card"><strong>Living costs</strong><span>City and lifestyle dependent</span><ul class="cost-list"><li>Accommodation</li><li>Food and daily expenses</li><li>Transport</li><li>Insurance and other personal costs</li></ul></div>
+    </div>
+
+    <div class="notice">Do not convert one internet estimate into a universal Japan budget. Tokyo, Kyoto, Osaka, Sapporo and regional cities can produce very different monthly spending patterns.</div>
+  </div>
+</section>
+
+<section class="section alt" id="scholarships">
+  <div class="container">
+    <div class="kicker">10 / Scholarships</div>
+    <h2 class="title">Look at funding before you finalise your shortlist.</h2>
+
+    <div class="grid">
+      <article class="card"><h3>MEXT</h3><p>The Japanese Government (MEXT) Scholarship supports eligible international students through different scholarship categories. Requirements and application routes vary.</p></article>
+      <article class="card"><h3>JASSO</h3><p>JASSO offers scholarship support and other programmes for eligible international students. Availability and conditions vary by programme and institution.</p></article>
+      <article class="card"><h3>University scholarships</h3><p>Universities may offer tuition reductions, exemptions or scholarships based on academic performance and other criteria.</p></article>
+      <article class="card"><h3>External funding</h3><p>Foundations, local governments and other organisations may provide scholarships for particular nationalities, fields or circumstances.</p></article>
     </div>
   </div>
 </section>
 
 <section class="section" id="visa">
   <div class="container">
-    <span class="kicker">09 / IMMIGRATION</span>
-    <h2>Understand the student-visa pathway.</h2>
-    <p class="lead">Your university/program and immigration category determine which documents and rules apply. Use current Japan government and school instructions rather than relying on old social-media checklists.</p>
-    <div class="compare">
-      <div class="card"><div class="icon">🎓</div><h3>F-1</h3><p>Commonly used for academic students attending eligible schools and programs. Your school provides the relevant immigration document after the required enrollment/financial process.</p><span class="tag">Academic study</span></div>
-      <div class="card"><div class="icon">🌎</div><h3>J-1</h3><p>Used for exchange visitors in qualifying programs. The sponsor and program determine the applicable documentation and conditions.</p><span class="tag">Exchange</span></div>
-      <div class="card"><div class="icon">🛠️</div><h3>M-1</h3><p>Used for certain vocational or nonacademic study. Program and immigration requirements differ from F-1 academic study.</p><span class="tag">Vocational</span></div>
+    <div class="kicker">11 / Student visa</div>
+    <h2 class="title">Understand the COE → visa → arrival process.</h2>
+    <p class="subtitle">Immigration rules can change. Use the Japanese government's current immigration guidance and your school's international office as the final authority.</p>
+
+    <div class="timeline">
+      <div class="step"><div class="step-num">STEP 01</div><div><h3>Get accepted</h3><p>You first need admission to a qualifying educational institution in Japan.</p></div></div>
+      <div class="step"><div class="step-num">STEP 02</div><div><h3>Certificate of Eligibility (COE)</h3><p>In many cases, the accepting school acts as your proxy to apply for the COE through the regional immigration services bureau.</p></div></div>
+      <div class="step"><div class="step-num">STEP 03</div><div><h3>Visa application</h3><p>After the COE is issued, apply through the Japanese embassy or consulate in your country or region of residence, following the current document requirements.</p></div></div>
+      <div class="step"><div class="step-num">STEP 04</div><div><h3>Enter Japan</h3><p>Carry the required travel and immigration documents and complete the relevant procedures after arrival.</p></div></div>
     </div>
-    <div class="steps" style="margin-top:28px">
-      <div class="step"><div class="step-num">01</div><div><h3>Receive the school's immigration documentation</h3><p>After admission and the required enrollment/financial steps, follow your institution or program sponsor's instructions for the documents needed for your visa process.</p></div><aside>School<strong>Follow official instructions</strong></aside></div>
-      <div class="step"><div class="step-num">02</div><div><h3>Complete the required visa process</h3><p>Use the current Japan government instructions for your category, complete required forms and fees, and schedule an appointment if your process requires one.</p></div><aside>Government<strong>Use current rules</strong></aside></div>
-      <div class="step"><div class="step-num">03</div><div><h3>Prepare your documents and interview</h3><p>Organize your passport, school/immigration documents, financial evidence and any other documents requested by the relevant authorities. Answer truthfully and consistently.</p></div><aside>Prepare<strong>Know your own application</strong></aside></div>
-      <div class="step"><div class="step-num">04</div><div><h3>After approval: prepare for travel</h3><p>Follow your school's arrival instructions, confirm your housing and arrival date, and carry your important documents in your hand luggage.</p></div><aside>Travel<strong>Keep essentials accessible</strong></aside></div>
-    </div>
-    <div class="notice">Visa rules, fees, appointment procedures and travel requirements can change. The official Japan Ministry of Foreign Affairs, DHS/Study in Japan and your university should be your final sources for current requirements.</div>
   </div>
 </section>
 
-<section class="section alt" id="arrival">
+<section class="section alt" id="accommodation">
   <div class="container">
-    <span class="kicker">10 / HOUSING & ARRIVAL</span>
-    <h2>Plan the first 72 hours before you fly.</h2>
-    <div class="grid grid-3" style="margin-top:30px">
-      <div class="card"><h3>Housing</h3><p>Compare university housing, private rentals and shared housing. Check lease terms, deposits, utilities, commute, furnishing and move-in dates.</p></div>
-      <div class="card"><h3>Money</h3><p>Know how you will pay your first expenses. Understand your bank/card access and keep emergency funds separate from your daily spending.</p></div>
-      <div class="card"><h3>Phone & internet</h3><p>Decide how you will stay connected on arrival. Check whether your university offers campus Wi-Fi and international-student support.</p></div>
-      <div class="card"><h3>Airport → campus</h3><p>Confirm the exact airport, pickup option, public transport or rideshare plan, address and after-hours instructions before departure.</p></div>
-      <div class="card"><h3>Orientation</h3><p>Save your international-student orientation date, check-in deadline and any mandatory immigration or academic appointments.</p></div>
-      <div class="card"><h3>Emergency contacts</h3><p>Keep university emergency contacts, local emergency information, insurance details and trusted family contacts accessible offline.</p></div>
+    <div class="kicker">12 / Accommodation</div>
+    <h2 class="title">Your room is part of your study plan.</h2>
+
+    <div class="grid">
+      <article class="card"><h3>University dormitory</h3><p>Often useful for first-year international students who want a structured environment and easier access to campus.</p></article>
+      <article class="card"><h3>Private apartment</h3><p>Can offer more independence, but check deposits, guarantor requirements, contract terms, utilities and commute time.</p></article>
+      <article class="card"><h3>Share house</h3><p>A possible option for students who want a more social living environment and may prefer simpler move-in arrangements.</p></article>
+      <article class="card"><h3>What to compare</h3><p>Rent, initial fees, furniture, utilities, internet, transport, distance to campus and cancellation terms.</p></article>
     </div>
   </div>
 </section>
 
-<section class="section" id="student-life">
+<section class="section" id="life">
   <div class="container">
-    <span class="kicker">11 / LIFE IN THE Japan</span>
-    <h2>Studying is only part of the experience.</h2>
-    <div class="grid grid-2" style="margin-top:30px">
-      <div class="card"><h3>Campus life</h3><p>Explore clubs, student organizations, sports, cultural groups, academic societies, volunteering and campus events. These can also be useful ways to build community.</p></div>
-      <div class="card"><h3>Academic culture</h3><p>Many Japan classrooms emphasize participation, projects, office hours, presentations and continuous assessment. Read each course syllabus carefully.</p></div>
-      <div class="card"><h3>Academic integrity</h3><p>Universities take plagiarism, unauthorized collaboration, fabrication and other academic misconduct seriously. Learn your institution's rules before submitting work.</p></div>
-      <div class="card"><h3>Health & insurance</h3><p>International students may have university-specific health-insurance requirements. Read your school's policy carefully and understand how to access care.</p></div>
-      <div class="card"><h3>Transportation</h3><p>Some campuses are walkable or transit-connected; others are car-oriented. Research transportation before choosing housing.</p></div>
-      <div class="card"><h3>Work & practical training</h3><p>Immigration rules can restrict employment and practical training. Never start work based only on advice from friends; confirm what your status and school authorize.</p></div>
+    <div class="kicker">13 / Life in Japan</div>
+    <h2 class="title">Studying is only half the experience.</h2>
+    <p class="subtitle">Your daily life will depend on your city, university community, Japanese ability, budget and how you organise your time.</p>
+
+    <div class="life-grid">
+      <article class="life"><h3>🚆 Transport</h3><p>Japan has extensive rail and public-transport networks, especially in major cities. Compare commute time as well as rent.</p></article>
+      <article class="life"><h3>🍱 Food</h3><p>Convenience stores, supermarkets, university dining and restaurants provide many options, with major cities offering especially broad international choices.</p></article>
+      <article class="life"><h3>🌸 Seasons</h3><p>Japan has pronounced seasonal variation. Prepare for the climate of your specific region rather than planning around Tokyo alone.</p></article>
+      <article class="life"><h3>🗣 Japanese</h3><p>Even when your degree is taught in English, Japanese can make everyday tasks, friendships and part-time opportunities easier.</p></article>
+      <article class="life"><h3>🏫 Campus life</h3><p>Student clubs, societies, international offices and campus events can become a major part of your experience.</p></article>
+      <article class="life"><h3>🤝 Community</h3><p>Look for international-student support, language exchanges and local community programmes to build a wider network.</p></article>
     </div>
-    <div class="notice redline">If you are unsure about immigration, employment, academic-integrity or enrollment rules, ask the university's designated international-student office and consult the relevant official government source.</div>
   </div>
 </section>
 
-<section class="section alt" id="checklist">
+<section class="section alt" id="work">
   <div class="container">
-    <span class="kicker">12 / MASTER CHECKLIST</span>
-    <h2>Before you leave home.</h2>
-    <p class="lead">Turn the guide into actions. Tick these off as you go.</p>
-    <div class="checklist" style="margin-top:28px">
-      <div class="check">✓ University offer accepted and enrollment completed</div>
-      <div class="check">✓ Immigration/visa documents organized</div>
-      <div class="check">✓ Passport and required documents checked</div>
-      <div class="check">✓ Visa process completed according to current instructions</div>
-      <div class="check">✓ Housing confirmed</div>
-      <div class="check">✓ Health-insurance requirements understood</div>
-      <div class="check">✓ Flight and arrival plan confirmed</div>
-      <div class="check">✓ Airport-to-campus route saved offline</div>
-      <div class="check">✓ University orientation/check-in date saved</div>
-      <div class="check">✓ Tuition payment/deposit plan understood</div>
-      <div class="check">✓ First-month living budget prepared</div>
-      <div class="check">✓ Banking/payment method ready</div>
-      <div class="check">✓ Emergency and university contacts saved</div>
-      <div class="check">✓ Digital copies of key documents backed up</div>
-      <div class="check">✓ Original important documents packed in hand luggage</div>
-      <div class="check">✓ Family/trusted contacts know your arrival plan</div>
+    <div class="kicker">14 / Work while studying</div>
+    <h2 class="title">Check your immigration conditions before working.</h2>
+    <div class="grid">
+      <article class="card"><h3>Permission matters</h3><p>Do not assume a Student status automatically permits every type of employment. Check the current immigration conditions and required permission.</p></article>
+      <article class="card"><h3>Keep study first</h3><p>Plan any permitted work around your academic schedule and make sure it does not interfere with your studies.</p></article>
     </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="arrival">
   <div class="container">
-    <span class="kicker">OFFICIAL STARTING POINTS</span>
-    <h2>Use primary sources for final decisions.</h2>
-    <p class="lead">This guide is for planning and orientation. Policies and deadlines change, so verify the final details with the relevant institution or Japan government source.</p>
-    <div class="resource-list">
-      <div class="resource"><span>EducationJapan — study planning and advising</span><a href="https://educationusa.state.gov/" target="_blank" rel="noopener">Open ↗</a></div>
-      <div class="resource"><span>Japan Ministry of Foreign Affairs — visas</span><a href="https://travel.state.gov/content/travel/en/us-visas.html" target="_blank" rel="noopener">Open ↗</a></div>
-      <div class="resource"><span>Study in Japan — international students</span><a href="https://studyinthestates.dhs.gov/" target="_blank" rel="noopener">Open ↗</a></div>
-      <div class="resource"><span>Immigration Services Agency — immigration information</span><a href="https://www.uscis.gov/" target="_blank" rel="noopener">Open ↗</a></div>
-      <div class="resource"><span>JASSO School Search — undergraduate applications</span><a href="https://www.commonapp.org/" target="_blank" rel="noopener">Open ↗</a></div>
-      <div class="resource"><span>JASSO — undergraduate testing/tools</span><a href="https://www.collegeboard.org/" target="_blank" rel="noopener">Open ↗</a></div>
+    <div class="kicker">15 / Arrival checklist</div>
+    <h2 class="title">Make your first week boring — in a good way.</h2>
+
+    <div class="check-grid">
+      <div class="check-item">Passport and immigration documents</div>
+      <div class="check-item">University admission / enrolment documents</div>
+      <div class="check-item">Accommodation address and check-in details</div>
+      <div class="check-item">Emergency contacts and university support contacts</div>
+      <div class="check-item">Phone / internet plan</div>
+      <div class="check-item">Banking and payment plan</div>
+      <div class="check-item">Local registration and required administrative procedures</div>
+      <div class="check-item">Health / insurance-related documents</div>
+      <div class="check-item">Campus orientation</div>
+      <div class="check-item">Basic Japanese for everyday situations</div>
     </div>
   </div>
 </section>
 
-<footer class="footer">
-  <div class="container footer-inner">
-    <div><strong>UniAI — Japan Study Guide</strong><br><span>Research smarter. Apply to schools with a plan. Arrive prepared.</span></div>
-    <div>Guide content is educational planning material, not legal, immigration, financial or admissions advice.</div>
+<section class="section alt" id="mistakes">
+  <div class="container">
+    <div class="kicker">16 / Avoid these mistakes</div>
+    <h2 class="title">The problems usually start before the flight.</h2>
+
+    <div class="mistakes">
+      <article class="mistake"><strong>Mistake 01</strong><p>Choosing a university only because it is famous without checking the exact programme.</p></article>
+      <article class="mistake"><strong>Mistake 02</strong><p>Assuming an English-taught programme means Japanese will never matter in daily life.</p></article>
+      <article class="mistake"><strong>Mistake 03</strong><p>Ignoring school-specific entrance exams, EJU or language requirements until late.</p></article>
+      <article class="mistake"><strong>Mistake 04</strong><p>Budgeting only for tuition and forgetting accommodation, transport and setup costs.</p></article>
+      <article class="mistake"><strong>Mistake 05</strong><p>Leaving the COE and visa process until the last minute.</p></article>
+      <article class="mistake"><strong>Mistake 06</strong><p>Choosing a city without researching commute, climate and actual living conditions.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="container">
+    <div class="kicker">17 / Frequently asked questions</div>
+    <h2 class="title">Japan study questions, answered.</h2>
+
+    <div class="faq">
+      <div class="faq-item"><button class="faq-question">How long is a bachelor's degree in Japan?<span class="faq-icon">+</span></button><div class="faq-answer">Japanese undergraduate university programmes generally take four years. Medicine, dentistry, veterinary medicine and some pharmaceutical programmes generally take six years.</div></div>
+      <div class="faq-item"><button class="faq-question">Do I need to know Japanese?<span class="faq-icon">+</span></button><div class="faq-answer">Not necessarily. Japan has degree programmes taught in English, but requirements differ by programme. Japanese ability can still be very useful for daily life and can be required for Japanese-taught courses.</div></div>
+      <div class="faq-item"><button class="faq-question">What is EJU?<span class="faq-icon">+</span></button><div class="faq-answer">EJU is the Examination for Japanese University Admission for International Students. Many universities use it in their international undergraduate admissions processes, but requirements vary by institution.</div></div>
+      <div class="faq-item"><button class="faq-question">What is the COE?<span class="faq-icon">+</span></button><div class="faq-answer">The Certificate of Eligibility is an immigration document used in the process for entering Japan for study. In many cases, the accepting educational institution applies for it as the student's proxy.</div></div>
+      <div class="faq-item"><button class="faq-question">Are scholarships available?<span class="faq-icon">+</span></button><div class="faq-answer">Yes. Options can include MEXT, JASSO, university scholarships and other external awards. Eligibility, amount and timing vary, so check each current programme.</div></div>
+      <div class="faq-item"><button class="faq-question">Should I choose Tokyo?<span class="faq-icon">+</span></button><div class="faq-answer">Tokyo can be an excellent fit for some students, but it is not automatically the best choice. Compare the exact programme, budget, commute, lifestyle and career opportunities with other Japanese cities.</div></div>
+      <div class="faq-item"><button class="faq-question">Can international students work while studying?<span class="faq-icon">+</span></button><div class="faq-answer">Some international students may be able to work subject to Japanese immigration rules and the required permission. Check the current official conditions before taking employment.</div></div>
+      <div class="faq-item"><button class="faq-question">What should I compare between universities?<span class="faq-icon">+</span></button><div class="faq-answer">Compare programme content, language, entry requirements, exams, tuition, scholarships, location, accommodation, research or internship opportunities, student support and career services.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="plan">
+  <div class="container">
+    <div class="final-card">
+      <div class="kicker">18 / Build your roadmap</div>
+      <h2>Your Japan plan should be more than a university list.</h2>
+      <p>
+        Turn the guide into a personalised journey: choose your field, shortlist
+        programmes, compare cities, estimate your budget, plan language tests,
+        track application deadlines, prepare scholarship documents and organise
+        your COE, visa and arrival checklist.
+      </p>
+      <div class="buttons">
+        <button class="btn primary" onclick="alert('Connect this button to your UniAI Japan study planner.')">Build my Japan roadmap →</button>
+        <button class="btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to top</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">UniAI Japan</div>
+      <div>Study abroad, but smarter. <span style="color:var(--sakura2)">✦</span></div>
+    </div>
+    <div class="footer-links">
+      <a href="#universities">Universities</a>
+      <a href="#admissions">Admissions</a>
+      <a href="#costs">Costs</a>
+      <a href="#visa">Visa</a>
+      <a href="#faq">FAQ</a>
+    </div>
   </div>
 </footer>
 
+<script>
+const nav = document.getElementById("nav");
+window.addEventListener("scroll", () => nav.classList.toggle("scrolled", window.scrollY > 20));
 
-<div class="sakura-corner" aria-hidden="true">🌸</div>
-<style>
-.sakura-corner{position:fixed;right:18px;bottom:18px;font-size:30px;opacity:.7;pointer-events:none;filter:drop-shadow(0 5px 10px rgba(90,41,72,.12))}
-</style>
-
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="guard.js"></script>
-
-
+document.querySelectorAll(".faq-question").forEach(button => {
+  button.addEventListener("click", () => {
+    const item = button.parentElement;
+    item.classList.toggle("open");
+    button.querySelector(".faq-icon").textContent = item.classList.contains("open") ? "−" : "+";
+  });
+});
+</script>
 
 </body>
 </html>
