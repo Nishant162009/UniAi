@@ -1,356 +1,2777 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Study in Germany Guide | UniAI</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study in Germany | UniAI - Complete Study Abroad Guide</title>
+    <style>
+        :root {
+            --primary: #8B1538;
+            --primary-light: #A8234A;
+            --secondary: #FFCC00;
+            --secondary-dark: #E6B800;
+            --accent: #1A1A1A;
+            --background: #FDF8F3;
+            --card-bg: #FFFFFF;
+            --card-tint: #F9F4EF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #4A4A4A;
+            --text-light: #6B6B6B;
+            --border: #E5E0D8;
+            --shadow: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-hover: 0 4px 16px rgba(0,0,0,0.12);
+            --radius: 12px;
+            --radius-lg: 16px;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            --spacing-2xl: 4rem;
+        }
 
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="guard.js"></script>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <style>
-    /* =====================================================
-       GERMAN THEME COLOR PALETTE & STYLES
-    ====================================================== */
-    :root {
-      --de-black: #121212;
-      --de-gold: #ffcc00;
-      --de-gold-dark: #d4a000;
-      --de-red: #dd0000;
-      --de-bg-dark: #1a1a1a;
-      --de-card-bg: #242424;
-      --de-border: #333333;
-      --de-text-light: #f5f5f5;
-      --de-text-muted: #aaaaaa;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--de-black);
-      color: var(--de-text-light);
-      line-height: 1.6;
-    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
+        /* Navigation */
+        .nav {
+            position: sticky;
+            top: 0;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
 
-    /* HERO SECTION */
-    .hero {
-      position: relative;
-      background: linear-gradient(180deg, rgba(18,18,18,0.7) 0%, rgba(18,18,18,0.95) 100%),
-                  url('https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcRi076PLQ-q-1aWVLb2xtAhDvvyJEofA2KySqsvWBly7Xl20shXjSEpfbRBRBLSugubc_ZiTF3FYhhRZlk') center/cover no-repeat;
-      padding: 5rem 0 3rem;
-      border-bottom: 4px solid var(--de-gold);
-      text-align: center;
-    }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm) var(--spacing-md);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-    .hero-badge {
-      display: inline-block;
-      background-color: var(--de-red);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.85rem;
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+        }
 
-    .hero h1 {
-      font-size: 2.8rem;
-      font-weight: 800;
-      margin-bottom: 1rem;
-      color: #ffffff;
-    }
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
 
-    .hero h1 span {
-      color: var(--de-gold);
-    }
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-md);
+            list-style: none;
+        }
 
-    .hero p {
-      font-size: 1.2rem;
-      color: var(--de-text-muted);
-      max-width: 700px;
-      margin: 0 auto 2rem;
-    }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
 
-    /* STATS STRIP */
-    .stats-strip {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
 
-    .stat-card {
-      background-color: var(--de-card-bg);
-      border-left: 4px solid var(--de-gold);
-      padding: 1.25rem;
-      border-radius: 8px;
-    }
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: var(--spacing-xs);
+        }
 
-    .stat-card .number {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--de-gold);
-    }
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
 
-    .stat-card .label {
-      font-size: 0.9rem;
-      color: var(--de-text-muted);
-    }
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-tint) 100%);
+            padding: var(--spacing-2xl) 0;
+            position: relative;
+            overflow: hidden;
+        }
 
-    /* MAIN CONTENT LAYOUT */
-    .content-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 2.5rem;
-      padding: 3rem 0;
-    }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%238B153810" width="100" height="100"/><path d="M0 50 L100 50 M50 0 L50 100" stroke="%238B153820" stroke-width="0.5"/></svg>');
+            opacity: 0.3;
+        }
 
-    @media (max-width: 900px) {
-      .content-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-2xl);
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
 
-    .guide-section {
-      background-color: var(--de-bg-dark);
-      border: 1px solid var(--de-border);
-      border-radius: 12px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-    }
+        .hero-text h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
 
-    .guide-section h2 {
-      font-size: 1.6rem;
-      color: var(--de-gold);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
+        .hero-text .highlight {
+            color: var(--primary);
+        }
 
-    .guide-section p {
-      margin-bottom: 1rem;
-      color: #dddddd;
-    }
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.7;
+        }
 
-    .image-frame {
-      width: 100%;
-      height: 260px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin: 1rem 0;
-      border: 1px solid var(--de-border);
-    }
+        .hero-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+        }
 
-    /* SIDEBAR */
-    .sidebar-card {
-      background-color: var(--de-card-bg);
-      border: 1px solid var(--de-border);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
+        .hero-feature {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
 
-    .sidebar-card h3 {
-      font-size: 1.2rem;
-      color: #fff;
-      margin-bottom: 1rem;
-      border-bottom: 2px solid var(--de-red);
-      padding-bottom: 0.5rem;
-    }
+        .hero-feature::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: 700;
+        }
 
-    .checklist-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      margin-bottom: 0.8rem;
-      font-size: 0.95rem;
-    }
+        .hero-image {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-hover);
+        }
 
-    .checklist-item input {
-      margin-top: 0.3rem;
-      accent-color: var(--de-gold);
-    }
+        .hero-image img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            display: block;
+        }
 
-    /* TABLE STYLES */
-    .data-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1rem 0;
-      font-size: 0.95rem;
-    }
+        .hero-cta {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(139, 21, 56, 0.3);
+        }
 
-    .data-table th, .data-table td {
-      padding: 0.75rem 1rem;
-      text-align: left;
-      border-bottom: 1px solid var(--de-border);
-    }
+        .hero-cta:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 21, 56, 0.4);
+        }
 
-    .data-table th {
-      background-color: var(--de-card-bg);
-      color: var(--de-gold);
-    }
+        /* Section Styles */
+        section {
+            padding: var(--spacing-2xl) 0;
+        }
 
-    .btn-cta {
-      display: inline-block;
-      width: 100%;
-      background-color: var(--de-gold);
-      color: #000;
-      font-weight: 700;
-      text-align: center;
-      padding: 0.8rem 1rem;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: background-color 0.2s;
-    }
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+        }
 
-    .btn-cta:hover {
-      background-color: var(--de-gold-dark);
-    }
-  </style>
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: var(--spacing-md) auto 0;
+        }
+
+        /* Roadmap */
+        .roadmap {
+            position: relative;
+        }
+
+        .roadmap-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .roadmap-step {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            position: relative;
+            transition: all 0.3s;
+            border-left: 4px solid var(--primary);
+        }
+
+        .roadmap-step:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .step-number {
+            position: absolute;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .roadmap-step h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+            padding-right: 50px;
+        }
+
+        .roadmap-step p {
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .roadmap-step ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .roadmap-step li {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            padding-left: var(--spacing-sm);
+            position: relative;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .roadmap-step li::before {
+            content: '•';
+            color: var(--secondary);
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+        }
+
+        /* Routes Section */
+        .routes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .route-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            border-top: 3px solid var(--secondary);
+        }
+
+        .route-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .route-card h3 {
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .route-card .icon {
+            font-size: 1.5rem;
+        }
+
+        .route-card p {
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.7;
+        }
+
+        .route-card .details {
+            background: var(--card-tint);
+            padding: var(--spacing-sm);
+            border-radius: var(--radius);
+            margin-top: var(--spacing-md);
+        }
+
+        .route-card .details h4 {
+            font-size: 0.95rem;
+            color: var(--primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .route-card .details p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        /* Education System */
+        .system-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .system-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .system-card-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: var(--spacing-md) var(--spacing-lg);
+        }
+
+        .system-card-header h3 {
+            font-size: 1.4rem;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .system-card-header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .system-card-body {
+            padding: var(--spacing-lg);
+        }
+
+        .system-card-body p {
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.7;
+        }
+
+        .system-card-body ul {
+            list-style: none;
+        }
+
+        .system-card-body li {
+            color: var(--text-light);
+            padding: var(--spacing-xs) 0;
+            padding-left: var(--spacing-md);
+            position: relative;
+        }
+
+        .system-card-body li::before {
+            content: '→';
+            color: var(--secondary);
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+        }
+
+        /* Image Cards */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .image-card {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            position: relative;
+            height: 280px;
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .image-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .image-card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            padding: var(--spacing-md);
+            color: white;
+        }
+
+        .image-card-overlay h4 {
+            font-size: 1.1rem;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .image-card-overlay p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Admissions */
+        .admissions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .admissions-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .admissions-card h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .admissions-card ul {
+            list-style: none;
+        }
+
+        .admissions-card li {
+            color: var(--text-secondary);
+            padding: var(--spacing-xs) 0;
+            padding-left: var(--spacing-md);
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .admissions-card li::before {
+            content: '✓';
+            color: var(--secondary);
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+        }
+
+        .admissions-note {
+            background: var(--card-tint);
+            border-left: 4px solid var(--primary);
+            padding: var(--spacing-md);
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin-top: var(--spacing-lg);
+        }
+
+        .admissions-note p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Tests Section */
+        .tests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .test-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--secondary);
+        }
+
+        .test-card h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .test-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .test-card .requirement {
+            background: var(--card-tint);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Application Tracker */
+        .tracker-container {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+        }
+
+        .tracker-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .tracker-table th {
+            background: var(--primary);
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-md);
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .tracker-table td {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .tracker-table tr:hover {
+            background: var(--card-tint);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #FFF3CD;
+            color: #856404;
+        }
+
+        .status-progress {
+            background: #D1ECF1;
+            color: #0C5460;
+        }
+
+        .status-complete {
+            background: #D4EDDA;
+            color: #155724;
+        }
+
+        /* Costs Section */
+        .costs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .cost-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .cost-card h3 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cost-item:last-child {
+            border-bottom: none;
+        }
+
+        .cost-item span:first-child {
+            color: var(--text-secondary);
+        }
+
+        .cost-item span:last-child {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .cost-total {
+            background: var(--card-tint);
+            padding: var(--spacing-md);
+            border-radius: var(--radius);
+            margin-top: var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .cost-note {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: var(--spacing-sm);
+            font-style: italic;
+        }
+
+        /* Scholarships */
+        .scholarships-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .scholarship-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--primary);
+        }
+
+        .scholarship-card h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .scholarship-card p {
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.7;
+        }
+
+        .scholarship-card ul {
+            list-style: none;
+        }
+
+        .scholarship-card li {
+            color: var(--text-light);
+            padding: var(--spacing-xs) 0;
+            font-size: 0.95rem;
+            padding-left: var(--spacing-md);
+            position: relative;
+        }
+
+        .scholarship-card li::before {
+            content: '•';
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding: var(--spacing-md) 0;
+            position: relative;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            margin-left: 50%;
+        }
+
+        .timeline-content {
+            background: var(--card-bg);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            width: 90%;
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 16px;
+            height: 16px;
+            background: var(--secondary);
+            border: 4px solid var(--card-bg);
+            border-radius: 50%;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -50px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -50px;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .timeline-content ul {
+            list-style: none;
+        }
+
+        .timeline-content li {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            padding: var(--spacing-xs) 0;
+            padding-left: var(--spacing-md);
+            position: relative;
+        }
+
+        .timeline-content li::before {
+            content: '→';
+            color: var(--secondary);
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+        }
+
+        /* Visa Section */
+        .visa-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .visa-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .visa-card h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .visa-card ol {
+            padding-left: var(--spacing-lg);
+        }
+
+        .visa-card li {
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.7;
+        }
+
+        .visa-warning {
+            background: #FFF3CD;
+            border-left: 4px solid #FFC107;
+            padding: var(--spacing-md);
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin-top: var(--spacing-lg);
+        }
+
+        .visa-warning p {
+            color: #856404;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Housing */
+        .housing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .housing-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .housing-card h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .housing-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .housing-card .price {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        /* Student Life */
+        .life-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .life-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .life-card h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .life-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Culture Section */
+        .culture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .culture-card {
+            background: var(--card-tint);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            border-left: 4px solid var(--primary);
+        }
+
+        .culture-card h3 {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .culture-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Statistics */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .stat-source {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: var(--spacing-xs);
+        }
+
+        /* Checklist */
+        .checklist-container {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .checklist-section {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .checklist-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .checklist-section h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-xs) 0;
+            cursor: pointer;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .checklist-item label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            cursor: pointer;
+            line-height: 1.5;
+        }
+
+        /* Official Resources */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .resource-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid var(--border);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+
+        .resource-card h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .resource-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .resource-card .url {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            word-break: break-all;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--accent);
+            color: white;
+            padding: var(--spacing-2xl) 0 var(--spacing-lg);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: var(--spacing-md);
+            color: var(--secondary);
+        }
+
+        .footer-section p {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .footer-section a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .footer-section a:hover {
+            color: var(--secondary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+
+        .disclaimer {
+            background: rgba(255,255,255,0.05);
+            padding: var(--spacing-md);
+            border-radius: var(--radius);
+            margin-top: var(--spacing-lg);
+        }
+
+        .disclaimer p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-features {
+                justify-content: center;
+            }
+
+            .hero-image {
+                order: -1;
+            }
+
+            .hero-image img {
+                height: 350px;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                margin-left: 0 !important;
+                padding-left: 60px;
+            }
+
+            .timeline-item:nth-child(even) {
+                justify-content: flex-start;
+            }
+
+            .timeline-content::before {
+                left: -46px !important;
+                right: auto !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--card-bg);
+                flex-direction: column;
+                padding: var(--spacing-md);
+                border-bottom: 1px solid var(--border);
+                box-shadow: var(--shadow);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .hero-features {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .roadmap-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .routes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .system-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Smooth scroll offset for sticky nav */
+        section {
+            scroll-margin-top: 80px;
+        }
+    </style>
 </head>
 <body>
-
-  <!-- HERO SECTION -->
-  <header class="hero">
-    <div class="container">
-      <span class="hero-badge">🇩🇪 Destination Guide</span>
-      <h1>Study in <span>Germany</span></h1>
-      <p>Your complete roadmap to world-class, tuition-free education in the heart of Europe.</p>
-
-      <div class="stats-strip">
-        <div class="stat-card">
-          <div class="number">€0</div>
-          <div class="label">Tuition at Public Universities</div>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" class="brand">
+                <div class="brand-icon">U</div>
+                UniAI
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="#routes">Routes</a></li>
+                <li><a href="#system">Education System</a></li>
+                <li><a href="#admissions">Admissions</a></li>
+                <li><a href="#costs">Costs</a></li>
+                <li><a href="#scholarships">Scholarships</a></li>
+                <li><a href="#visa">Visa</a></li>
+                <li><a href="#resources">Resources</a></li>
+            </ul>
+            <button class="nav-toggle" onclick="toggleNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
-        <div class="stat-card">
-          <div class="number">€11,208</div>
-          <div class="label">Blocked Account / Year</div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Study in <span class="highlight">Germany</span>.<br>Find your path, prepare with confidence.</h1>
+                    <p class="hero-subtitle">Your complete guide to studying in Germany — covering universities, admissions, costs, scholarships, visa requirements, housing, student life, and your preparation timeline.</p>
+                    <div class="hero-features">
+                        <div class="hero-feature">Universities & Programs</div>
+                        <div class="hero-feature">Admissions Process</div>
+                        <div class="hero-feature">Costs & Budget</div>
+                        <div class="hero-feature">Scholarships</div>
+                        <div class="hero-feature">Visa Requirements</div>
+                        <div class="hero-feature">Housing Options</div>
+                        <div class="hero-feature">Student Life</div>
+                        <div class="hero-feature">Preparation Timeline</div>
+                    </div>
+                    <a href="#roadmap" class="hero-cta">Explore the Guide</a>
+                </div>
+                <div class="hero-image">
+                    <img src="https://a.storyblok.com/f/266035/1416X1416/da2a6fae5f/the-brandenburg-gate_berlin-germany_stage-split.png" alt="Brandenburg Gate in Berlin, Germany - iconic landmark and symbol of the city" loading="lazy">
+                </div>
+            </div>
         </div>
-        <div class="stat-card">
-          <div class="number">18 Months</div>
-          <div class="label">Post-Study Work Visa</div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section id="roadmap">
+        <div class="container">
+            <div class="section-header">
+                <h2>Your Study Abroad Roadmap</h2>
+                <p>Six essential stages to guide your journey from initial planning to arrival in Germany</p>
+            </div>
+            <div class="roadmap-steps">
+                <div class="roadmap-step">
+                    <div class="step-number">1</div>
+                    <h3>Define Your Target</h3>
+                    <p>Clarify your academic and career goals to choose the right path.</p>
+                    <ul>
+                        <li>Identify your field of study</li>
+                        <li>Research German universities</li>
+                        <li>Understand program requirements</li>
+                        <li>Consider location preferences</li>
+                    </ul>
+                </div>
+                <div class="roadmap-step">
+                    <div class="step-number">2</div>
+                    <h3>Prepare Academic Profile</h3>
+                    <p>Build a strong foundation for your applications.</p>
+                    <ul>
+                        <li>Check credential recognition</li>
+                        <li>Improve grades if needed</li>
+                        <li>Prepare for language tests</li>
+                        <li>Gather transcripts and certificates</li>
+                    </ul>
+                </div>
+                <div class="roadmap-step">
+                    <div class="step-number">3</div>
+                    <h3>Build Your Budget</h3>
+                    <p>Plan your finances realistically.</p>
+                    <ul>
+                        <li>Research tuition fees</li>
+                        <li>Estimate living costs (€992/month required)</li>
+                        <li>Explore scholarship options</li>
+                        <li>Plan blocked account (Sperrkonto)</li>
+                    </ul>
+                </div>
+                <div class="roadmap-step">
+                    <div class="step-number">4</div>
+                    <h3>Apply to Institutions</h3>
+                    <p>Submit strong, timely applications.</p>
+                    <ul>
+                        <li>Prepare all required documents</li>
+                        <li>Submit via uni-assist or university portal</li>
+                        <li>Track application deadlines</li>
+                        <li>Pay application fees (€75 + €30 per additional)</li>
+                    </ul>
+                </div>
+                <div class="roadmap-step">
+                    <div class="step-number">5</div>
+                    <h3>Choose & Prepare</h3>
+                    <p>Make your decision and get ready.</p>
+                    <ul>
+                        <li>Compare admission offers</li>
+                        <li>Accept your place</li>
+                        <li>Arrange accommodation</li>
+                        <li>Begin visa application process</li>
+                    </ul>
+                </div>
+                <div class="roadmap-step">
+                    <div class="step-number">6</div>
+                    <h3>Visa, Travel & Arrival</h3>
+                    <p>Complete immigration and prepare for departure.</p>
+                    <ul>
+                        <li>Apply for student visa</li>
+                        <li>Book flights</li>
+                        <li>Register address (Anmeldung)</li>
+                        <li>Open bank account, get insurance</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="stat-card">
-          <div class="number">120 Days</div>
-          <div class="label">Part-Time Work Limit / Year</div>
+    </section>
+
+    <!-- Choose Your Route Section -->
+    <section id="routes" style="background: var(--card-tint);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Choose Your Route</h2>
+                <p>Germany offers multiple pathways to higher education — find the one that matches your goals and background</p>
+            </div>
+            <div class="routes-grid">
+                <div class="route-card">
+                    <h3><span class="icon">🎓</span> Undergraduate (Bachelor's)</h3>
+                    <p>For students who have completed secondary education and want to pursue a first degree. Programs typically last 3-4 years (6-8 semesters).</p>
+                    <div class="details">
+                        <h4>Key Considerations</h4>
+                        <p>Check if your school-leaving certificate is recognized as Hochschulzugangsberechtigung (HZB). Some students may need to attend Studienkolleg (foundation year).</p>
+                    </div>
+                </div>
+                <div class="route-card">
+                    <h3><span class="icon">📚</span> Master's Programs</h3>
+                    <p>For students with a bachelor's degree seeking advanced specialization. Programs typically last 1-2 years (2-4 semesters). Many English-taught options available.</p>
+                    <div class="details">
+                        <h4>Key Considerations</h4>
+                        <p>Ensure your bachelor's degree is recognized. Some programs require specific prerequisite courses or minimum grades (Numerus Clausus).</p>
+                    </div>
+                </div>
+                <div class="route-card">
+                    <h3><span class="icon">🔬</span> PhD / Research</h3>
+                    <p>For students pursuing doctoral research. Germany offers structured PhD programs and individual doctorate options, often with funding opportunities.</p>
+                    <div class="details">
+                        <h4>Key Considerations</h4>
+                        <p>Find a supervisor (Doktorvater/Doktormutter) or apply to structured programs. DAAD scholarships available for international doctoral students.</p>
+                    </div>
+                </div>
+                <div class="route-card">
+                    <h3><span class="icon">🏛️</span> Fachhochschule (University of Applied Sciences)</h3>
+                    <p>Practice-oriented institutions focusing on engineering, business, social work, and design. Programs include mandatory internships and have strong industry connections.</p>
+                    <div class="details">
+                        <h4>Key Considerations</h4>
+                        <p>More hands-on than traditional universities. Ideal if you want career-focused education with practical work experience integrated into your studies.</p>
+                    </div>
+                </div>
+                <div class="route-card">
+                    <h3><span class="icon">🎨</span> Art & Music Colleges</h3>
+                    <p>Specialized institutions (Kunst- und Musikhochschulen) for creative careers in fine arts, performing arts, music, film, and design.</p>
+                    <div class="details">
+                        <h4>Key Considerations</h4>
+                        <p>Requires portfolio or audition. Highly competitive. Focus on artistic talent and creative potential alongside academic qualifications.</p>
+                    </div>
+                </div>
+                <div class="route-card">
+                    <h3><span class="icon">🌍</span> Exchange / Visiting Student</h3>
+                    <p>Short-term study through exchange programs (Erasmus+, bilateral agreements) or as a visiting student for 1-2 semesters.</p>
+                    <div class="details">
+                        <h4>Key Considerations</h4>
+                        <p>Check if your home university has partnerships with German institutions. Credits typically transfer back to your home degree.</p>
+                    </div>
+                </div>
+                <div class="route-card">
+                    <h3><span class="icon">📖</span> Language Courses</h3>
+                    <p>Intensive German language programs for students wanting to improve language skills before or during degree studies. Courses longer than 3 months require a visa.</p>
+                    <div class="details">
+                        <h4>Key Considerations</h4>
+                        <p>Language course visas don't allow degree study. Can be converted to student visa if admitted to a program. Proof of funds: €1,091/month required.</p>
+                    </div>
+                </div>
+                <div class="route-card">
+                    <h3><span class="icon">🔧</span> Vocational Training (Ausbildung)</h3>
+                    <p>Combines classroom learning with on-the-job training in fields like healthcare, IT, engineering, and hospitality. Leads to recognized professional qualifications.</p>
+                    <div class="details">
+                        <h4>Key Considerations</h4>
+                        <p>Requires German language skills (typically B1-B2). You earn a salary during training. Excellent pathway to employment in Germany.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </header>
+    </section>
 
-  <!-- MAIN CONTENT -->
-  <main class="container">
-    <div class="content-grid">
-      
-      <!-- LEFT COLUMN: DETAILED GUIDES -->
-      <div class="main-content">
-        
-        <!-- SECTION 1 -->
-        <article class="guide-section">
-          <h2>🏛️ Why Study in Germany?</h2>
-          <p>Germany is home to some of the world's most prestigious technical and research universities. Most public universities charge zero tuition fees for both EU and non-EU international students, requiring only a nominal administrative semester fee (typically €150–€350).</p>
-          
-          <img class="image-frame" src="https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcRyslBFnmrKbbocmTq09zvSu5U3JvpKnPAlCRXqprUxtiYzaUDQr_2V4UIDKUrkoY7a2SeJ5B4pzmrjtwo" alt="Students in a German university lecture hall">
+    <!-- Education System Section -->
+    <section id="system">
+        <div class="container">
+            <div class="section-header">
+                <h2>Germany's Education System</h2>
+                <p>Understanding the different types of higher education institutions helps you choose the right fit for your goals</p>
+            </div>
+            <div class="system-grid">
+                <div class="system-card">
+                    <div class="system-card-header">
+                        <h3>Universitäten (Universities)</h3>
+                        <p>Traditional research universities</p>
+                    </div>
+                    <div class="system-card-body">
+                        <p>Universities focus on theoretical education and basic research. They offer the full range of academic disciplines and award Bachelor's, Master's, and doctoral degrees.</p>
+                        <ul>
+                            <li>Research-oriented curriculum</li>
+                            <li>Wide range of academic disciplines</li>
+                            <li>PhD programs available</li>
+                            <li>Examples: LMU Munich, Heidelberg University, Humboldt University Berlin</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="system-card">
+                    <div class="system-card-header">
+                        <h3>Technische Universitäten (TU)</h3>
+                        <p>Technical Universities</p>
+                    </div>
+                    <div class="system-card-body">
+                        <p>Specialized in engineering, natural sciences, and technology. Part of the prestigious TU9 alliance representing Germany's top technical universities.</p>
+                        <ul>
+                            <li>Focus on STEM fields</li>
+                            <li>Strong industry partnerships</li>
+                            <li>Research-intensive programs</li>
+                            <li>Examples: TU Munich, RWTH Aachen, TU Berlin</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="system-card">
+                    <div class="system-card-header">
+                        <h3>Fachhochschulen (HAW)</h3>
+                        <p>Universities of Applied Sciences</p>
+                    </div>
+                    <div class="system-card-body">
+                        <p>Practice-oriented institutions offering application-focused teaching in engineering, business, social services, and design. Programs include mandatory internships.</p>
+                        <ul>
+                            <li>Hands-on, career-focused education</li>
+                            <li>Integrated work placements</li>
+                            <li>Strong employer connections</li>
+                            <li>Smaller class sizes</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="system-card">
+                    <div class="system-card-header">
+                        <h3>Kunst- und Musikhochschulen</h3>
+                        <p>Colleges of Art and Music</p>
+                    </div>
+                    <div class="system-card-body">
+                        <p>Specialized institutions for artistic careers in fine arts, performing arts, music, film, media, and design. Admission requires portfolio or audition.</p>
+                        <ul>
+                            <li>Creative and artistic focus</li>
+                            <li>Individual mentorship</li>
+                            <li>Industry connections in arts</li>
+                            <li>Portfolio/audition required</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-          <p>Whether you study engineering at TU Munich, humanities at Humboldt University Berlin, or business in Frankfurt, you gain access to state-of-the-art research facilities and strong industry connections with global brands like BMW, Siemens, and SAP.</p>
-        </article>
-
-        <!-- SECTION 2 -->
-        <article class="guide-section">
-          <h2>📋 Admission Requirements</h2>
-          <p>Requirements vary depending on degree level and language of instruction:</p>
-          
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Requirement</th>
-                <th>Bachelor's Degree</th>
-                <th>Master's Degree</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Academic Baseline</strong></td>
-                <td>Abitur equivalent or Studienkolleg</td>
-                <td>Relevant Bachelor's degree (180–240 ECTS)</td>
-              </tr>
-              <tr>
-                <td><strong>Language Proficiency</strong></td>
-                <td>German (TestDaF / DSH) or IELTS (6.5+)</td>
-                <td>IELTS (6.5+) or TOEFL (90+) for English programs</td>
-              </tr>
-              <tr>
-                <td><strong>Aps Certificate</strong></td>
-                <td>Mandatory for selected countries</td>
-                <td>Mandatory for selected countries</td>
-              </tr>
-            </tbody>
-          </table>
-        </article>
-
-        <!-- SECTION 3 -->
-        <article class="guide-section">
-          <h2>💶 Living Costs & Blocked Account</h2>
-          <p>While public tuition is free, international students must prove financial self-sufficiency. As of 2024/2025, you must deposit <strong>€11,208</strong> into an official German Blocked Account (<em>Sperrkonto</em>), which pays out roughly €934 per month for living expenses.</p>
-          
-          <img class="image-frame" src="https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcTNHV-mHBE_cmdUuPN46kIa38c_TBiR9XoOjsMYstywHHk48qBC_CJckEVrdH05itTRqW9cJ3P2Gu1WKDU" alt="German landscape with Neuschwanstein Castle">
-        </article>
-
-      </div>
-
-      <!-- RIGHT COLUMN: SIDEBAR TOOLS -->
-      <aside class="sidebar">
-        
-        <div class="sidebar-card">
-          <h3>📌 Application Checklist</h3>
-          <div class="checklist-item">
-            <input type="checkbox" id="c1">
-            <label for="c1">Verify university eligibility (Anabin database)</label>
-          </div>
-          <div class="checklist-item">
-            <input type="checkbox" id="c2">
-            <label for="c2">Get APS Certificate (if required)</label>
-          </div>
-          <div class="checklist-item">
-            <input type="checkbox" id="c3">
-            <label for="c3">Take IELTS / TestDaF exam</label>
-          </div>
-          <div class="checklist-item">
-            <input type="checkbox" id="c4">
-            <label for="c4">Open Sperrkonto (Blocked Account)</label>
-          </div>
-          <div class="checklist-item">
-            <input type="checkbox" id="c5">
-            <label for="c5">Submit via uni-assist or direct portal</label>
-          </div>
+            <div class="admissions-note" style="margin-top: var(--spacing-xl);">
+                <p><strong>Important distinctions:</strong> Public universities are generally tuition-free (except in Bavaria for non-EU students from 2024/25). Private universities charge tuition (€5,000-€20,000/year). Universities emphasize theory and research; Fachhochschulen focus on practical application. Both types award recognized degrees.</p>
+            </div>
         </div>
+    </section>
 
-        <div class="sidebar-card">
-          <h3>🤖 Need Personal Help?</h3>
-          <p style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--de-text-muted);">
-            UniAI can match your grades to tuition-free German programs in seconds.
-          </p>
-          <a href="#" class="btn-cta" onclick="showPage('universityFinder', event)">Find German Universities</a>
+    <!-- Image Gallery Section -->
+    <section style="background: var(--card-tint);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Experience Germany</h2>
+                <p>From historic architecture to modern campuses, Germany offers diverse environments for international students</p>
+            </div>
+            <div class="image-grid">
+                <div class="image-card">
+                    <img src="https://images.unsplash.com/photo-1560969184-10fe8719e047?w=600&h=400&fit=crop" alt="Heidelberg University campus - one of Germany's oldest and most prestigious universities" loading="lazy">
+                    <div class="image-card-overlay">
+                        <h4>University Life</h4>
+                        <p>Historic campuses meet modern facilities</p>
+                    </div>
+                </div>
+                <div class="image-card">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG0Bh_O3RRTUY4ZwMmhQZSLK__GcP8WPITS3G3trn3ujmuCj6Pc2Gw9H-f&s=10" alt="Munich city center with Frauenkirche - vibrant student city in Bavaria" loading="lazy">
+                    <div class="image-card-overlay">
+                        <h4>Munich</h4>
+                        <p>Home to TU Munich and LMU</p>
+                    </div>
+                </div>
+                <div class="image-card">
+                    <img src="https://images.unsplash.com/photo-1594315299859-38897fa31b83?w=600&h=400&fit=crop" alt="Neuschwanstein Castle in Bavaria - iconic German landmark surrounded by Alpine scenery" loading="lazy">
+                    <div class="image-card-overlay">
+                        <h4>Cultural Heritage</h4>
+                        <p>Explore castles, museums, and history</p>
+                    </div>
+                </div>
+                <div class="image-card">
+                    <img src="https://images.unsplash.com/photo-1514316454349-750a7fd3da3a?w=600&h=400&fit=crop" alt="Berlin street art and urban culture - Germany's capital and creative hub" loading="lazy">
+                    <div class="image-card-overlay">
+                        <h4>Berlin</h4>
+                        <p>Capital city with diverse universities</p>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-      </aside>
+    <!-- Admissions Section -->
+    <section id="admissions">
+        <div class="container">
+            <div class="section-header">
+                <h2>Admissions Requirements</h2>
+                <p>Requirements vary by institution and program — always verify with your target universities</p>
+            </div>
+            <div class="admissions-grid">
+                <div class="admissions-card">
+                    <h3>📋 Academic Requirements</h3>
+                    <ul>
+                        <li>University entrance qualification (Hochschulzugangsberechtigung / HZB)</li>
+                        <li>School-leaving certificate equivalent to German Abitur</li>
+                        <li>Complete secondary school transcripts (all years)</li>
+                        <li>Bachelor's degree for Master's programs</li>
+                        <li>Minimum GPA or grade requirements (Numerus Clausus where applicable)</li>
+                        <li>Prerequisite subjects or coursework for specific programs</li>
+                    </ul>
+                </div>
+                <div class="admissions-card">
+                    <h3>🌐 Language Requirements</h3>
+                    <ul>
+                        <li>German-taught programs: TestDaF (TDN 4), DSH-2, or Goethe C1/C2</li>
+                        <li>English-taught programs: IELTS (6.0-6.5+) or TOEFL (80-90+)</li>
+                        <li>Some programs accept both German and English certificates</li>
+                        <li>Language certificates must be recent (typically within 2 years)</li>
+                        <li>Some universities offer conditional admission with language course</li>
+                    </ul>
+                </div>
+                <div class="admissions-card">
+                    <h3>📝 Application Documents</h3>
+                    <ul>
+                        <li>Certified translations of all certificates (German or English)</li>
+                        <li>CV in Europass format (widely used)</li>
+                        <li>Motivational letter / Statement of Purpose</li>
+                        <li>Letters of recommendation (for some programs)</li>
+                        <li>Portfolio or audition (for art/music programs)</li>
+                        <li>Passport copy and biometric photo</li>
+                    </ul>
+                </div>
+                <div class="admissions-card">
+                    <h3>📅 Deadlines & Process</h3>
+                    <ul>
+                        <li>Winter semester (starts October): Apply by July 15</li>
+                        <li>Summer semester (starts April): Apply by January 15</li>
+                        <li>Some universities have different deadlines — verify individually</li>
+                        <li>Apply via uni-assist (€75 first application + €30 each additional)</li>
+                        <li>Some universities use their own portals or Hochschulstart (DoSV)</li>
+                        <li>Processing time: 4-8 weeks typically</li>
+                    </ul>
+                </div>
+            </div>
 
-    </div>
-  </main>
+            <div class="admissions-note">
+                <p><strong>Important:</strong> Not all countries' secondary school certificates are directly recognized. Students from some countries may need to attend Studienkolleg (one-year foundation course) and pass the Feststellungsprüfung (assessment exam) before university admission. Check the DAAD database or contact universities directly about your specific qualifications.</p>
+            </div>
+        </div>
+    </section>
 
+    <!-- Tests & Language Section -->
+    <section id="tests" style="background: var(--card-tint);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Tests & Language Requirements</h2>
+                <p>Prepare for the examinations you may need for admission to German universities</p>
+            </div>
+            <div class="tests-grid">
+                <div class="test-card">
+                    <h3>TestDaF (Test Deutsch als Fremdsprache)</h3>
+                    <p>Standardized German language test recognized by all German universities. Tests reading, listening, writing, and speaking.</p>
+                    <div class="requirement">
+                        <strong>Required level:</strong> TDN 4 in all four sections for most programs (some require TDN 5)
+                    </div>
+                </div>
+                <div class="test-card">
+                    <h3>DSH (Deutsche Sprachprüfung für den Hochschulzugang)</h3>
+                    <p>German university entrance language exam, administered by individual universities in Germany. Must be taken in Germany.</p>
+                    <div class="requirement">
+                        <strong>Required level:</strong> DSH-2 minimum (some programs require DSH-3)
+                    </div>
+                </div>
+                <div class="test-card">
+                    <h3>Goethe-Zertifikat</h3>
+                    <p>German language certificates from Goethe-Institut, available worldwide at various levels (A1-C2).</p>
+                    <div class="requirement">
+                        <strong>Required level:</strong> C1 or C2 for university admission (varies by institution)
+                    </div>
+                </div>
+                <div class="test-card">
+                    <h3>IELTS / TOEFL</h3>
+                    <p>English proficiency tests required for English-taught programs. Accepted by most German universities offering international programs.</p>
+                    <div class="requirement">
+                        <strong>Required level:</strong> IELTS 6.0-6.5+ or TOEFL iBT 80-90+ (varies by program)
+                    </div>
+                </div>
+                <div class="test-card">
+                    <h3>TestAS</h3>
+                    <p>Aptitude test for international students, required by some universities for certain programs (especially engineering, economics).</p>
+                    <div class="requirement">
+                        <strong>Required for:</strong> Specific programs at participating universities — check individually
+                    </div>
+                </div>
+                <div class="test-card">
+                    <h3>GRE / GMAT</h3>
+                    <p>Graduate entrance exams required by some Master's programs, particularly in business, economics, and select STEM fields.</p>
+                    <div class="requirement">
+                        <strong>Required for:</strong> Some Master's programs — verify with your target institution
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Tracker Section -->
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>Application Tracker</h2>
+                <p>Stay organized with this comprehensive checklist for managing multiple applications</p>
+            </div>
+            <div class="tracker-container">
+                <table class="tracker-table">
+                    <thead>
+                        <tr>
+                            <th>Institution</th>
+                            <th>Program</th>
+                            <th>Degree Level</th>
+                            <th>Language</th>
+                            <th>Application Deadline</th>
+                            <th>Application Fee</th>
+                            <th>Required Tests</th>
+                            <th>Documents</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>TU Munich</td>
+                            <td>Computer Science</td>
+                            <td>Master's</td>
+                            <td>English</td>
+                            <td>May 31</td>
+                            <td>€75 (uni-assist)</td>
+                            <td>IELTS 6.5+</td>
+                            <td>Transcripts, CV, SOP, 2 LORs</td>
+                            <td><span class="status-badge status-pending">In Progress</span></td>
+                        </tr>
+                        <tr>
+                            <td>Heidelberg University</td>
+                            <td>Molecular Biology</td>
+                            <td>Master's</td>
+                            <td>English</td>
+                            <td>June 15</td>
+                            <td>€75 (uni-assist)</td>
+                            <td>TOEFL 90+</td>
+                            <td>Transcripts, CV, Research Statement</td>
+                            <td><span class="status-badge status-pending">Not Started</span></td>
+                        </tr>
+                        <tr>
+                            <td>RWTH Aachen</td>
+                            <td>Mechanical Engineering</td>
+                            <td>Master's</td>
+                            <td>German</td>
+                            <td>July 15</td>
+                            <td>€75 (uni-assist)</td>
+                            <td>TestDaF TDN 4</td>
+                            <td>Transcripts, CV, Motivation Letter</td>
+                            <td><span class="status-badge status-complete">Submitted</span></td>
+                        </tr>
+                        <tr>
+                            <td>LMU Munich</td>
+                            <td>Data Science</td>
+                            <td>Master's</td>
+                            <td>English</td>
+                            <td>May 31</td>
+                            <td>€75 (uni-assist)</td>
+                            <td>IELTS 6.5+</td>
+                            <td>Transcripts, CV, SOP, GRE (optional)</td>
+                            <td><span class="status-badge status-pending">In Progress</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="cost-note" style="text-align: center; margin-top: var(--spacing-md);">
+                <em>Use this template to track your applications. Customize with your target institutions and requirements.</em>
+            </p>
+        </div>
+    </section>
+
+    <!-- Costs & Budget Section -->
+    <section id="costs" style="background: var(--card-tint);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Costs & Budget Planning</h2>
+                <p>Understand the full financial picture — from tuition to daily living expenses</p>
+            </div>
+            <div class="costs-grid">
+                <div class="cost-card">
+                    <h3>🎓 Tuition Fees</h3>
+                    <div class="cost-item">
+                        <span>Public Universities (most states)</span>
+                        <span>€0-€1,500/semester</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Public Universities (Bavaria, non-EU from 2024/25)</span>
+                        <span>€2,000-€6,000/semester</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Private Universities</span>
+                        <span>€5,000-€20,000/year</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Semester Contribution (all students)</span>
+                        <span>€250-€350/semester</span>
+                    </div>
+                    <p class="cost-note">
+                        Semester contribution covers student services, public transport ticket, and administrative costs. Tuition-free public universities still charge this fee.
+                    </p>
+                </div>
+
+                <div class="cost-card">
+                    <h3>🏠 Living Expenses (Monthly)</h3>
+                    <div class="cost-item">
+                        <span>Accommodation (WG/Dorm)</span>
+                        <span>€350-€700</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Food & Groceries</span>
+                        <span>€200-€300</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Transportation</span>
+                        <span>€30-€100</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Health Insurance</span>
+                        <span>€120-€130</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Phone/Internet</span>
+                        <span>€20-€40</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Study Materials</span>
+                        <span>€20-€50</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Personal/Leisure</span>
+                        <span>€100-€200</span>
+                    </div>
+                    <div class="cost-total">
+                        <span>Estimated Monthly Total</span>
+                        <span>€840-€1,520</span>
+                    </div>
+                    <p class="cost-note">
+                        <strong>Official requirement (2025):</strong> €992/month (€11,904/year) must be proven via blocked account for visa. [5][7]
+                    </p>
+                </div>
+
+                <div class="cost-card">
+                    <h3>💰 One-Time Expenses</h3>
+                    <div class="cost-item">
+                        <span>Application Fees (uni-assist)</span>
+                        <span>€75 + €30 per additional</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Student Visa Fee</span>
+                        <span>€75-€110</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Flight to Germany</span>
+                        <span>€400-€1,200</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Accommodation Deposit</span>
+                        <span>€700-€2,100 (2-3 months rent)</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Initial Setup (furniture, kitchen)</span>
+                        <span>€300-€800</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Document Translations/Certifications</span>
+                        <span>€50-€150 per document</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Residence Permit Fee</span>
+                        <span>€100-€110</span>
+                    </div>
+                    <div class="cost-total">
+                        <span>Estimated One-Time Total</span>
+                        <span>€1,700-€4,500+</span>
+                    </div>
+                    <p class="cost-note">
+                        Costs vary significantly by city. Munich, Frankfurt, and Hamburg are more expensive; Leipzig, Dresden, and smaller cities are more affordable.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scholarships Section -->
+    <section id="scholarships">
+        <div class="container">
+            <div class="section-header">
+                <h2>Scholarships & Funding</h2>
+                <p>Multiple funding opportunities exist — start researching early as deadlines vary</p>
+            </div>
+            <div class="scholarships-grid">
+                <div class="scholarship-card">
+                    <h3>DAAD Scholarships</h3>
+                    <p>The German Academic Exchange Service (DAAD) is the primary funding organization for international students. Offers scholarships for Bachelor's, Master's, and PhD students.</p>
+                    <ul>
+                        <li>Study Scholarships for All Disciplines (Master's)</li>
+                        <li>Development-Related Postgraduate Courses (EPOS)</li>
+                        <li>Helmut Schmidt Programme (Public Policy)</li>
+                        <li>PhD scholarships with monthly stipend €1,300</li>
+                        <li>Application deadlines: typically October for following year</li>
+                    </ul>
+                </div>
+                <div class="scholarship-card">
+                    <h3>University Scholarships</h3>
+                    <p>Many German universities offer merit-based scholarships for international students. Amounts and eligibility vary by institution.</p>
+                    <ul>
+                        <li>Deutschlandstipendium (€300/month)</li>
+                        <li>University-specific excellence scholarships</li>
+                        <li>Department-specific funding</li>
+                        <li>Apply directly through university after admission</li>
+                        <li>Deadlines vary — check individual university websites</li>
+                    </ul>
+                </div>
+                <div class="scholarship-card">
+                    <h3>Erasmus+ (EU Students)</h3>
+                    <p>European Union program supporting study abroad within Europe. Provides grants for exchange semesters and some full degree programs.</p>
+                    <ul>
+                        <li>Monthly grant: €300-€600 depending on destination</li>
+                        <li>Additional support for students with fewer opportunities</li>
+                        <li>Apply through your home university</li>
+                        <li>Available for Bachelor's, Master's, and doctoral studies</li>
+                    </ul>
+                </div>
+                <div class="scholarship-card">
+                    <h3>Political Foundations</h3>
+                    <p>German political foundations (Stiftungen) offer scholarships to students demonstrating academic excellence and civic engagement.</p>
+                    <ul>
+                        <li>Friedrich Ebert Stiftung (SPD-aligned)</li>
+                        <li>Konrad Adenauer Stiftung (CDU-aligned)</li>
+                        <li>Heinrich Böll Stiftung (Green Party-aligned)</li>
+                        <li>Friedrich Naumann Stiftung (FDP-aligned)</li>
+                        <li>Requires German language skills and social engagement</li>
+                    </ul>
+                </div>
+                <div class="scholarship-card">
+                    <h3>Research Assistantships</h3>
+                    <p>PhD and some Master's students can work as research assistants (HiWi — Hilfskraft) at universities, earning €12-€15/hour.</p>
+                    <ul>
+                        <li>Typically 10-20 hours/week</li>
+                        <li>Related to your field of study</li>
+                        <li>Provides income and research experience</li>
+                        <li>Ask professors or check university job boards</li>
+                    </ul>
+                </div>
+                <div class="scholarship-card">
+                    <h3>External Organizations</h3>
+                    <p>Various foundations, corporations, and organizations offer scholarships based on merit, field of study, or background.</p>
+                    <ul>
+                        <li>Cusanuswerk (Catholic foundation)</li>
+                        <li>Ernst Ludwig Ehrlich Studienwerk (Jewish students)</li>
+                        <li>Corporate scholarships (industry-specific)</li>
+                        <li>Home country government scholarships</li>
+                        <li>Search DAAD scholarship database for options</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="admissions-note" style="margin-top: var(--spacing-xl);">
+                <p><strong>Important:</strong> Most scholarships are competitive and require strong academic records, clear motivation, and sometimes German language skills. Start researching 12+ months before your intended start date. DAAD scholarship database: www.funding-guide.de [20][24]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section style="background: var(--card-tint);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Preparation Timeline</h2>
+                <p>A realistic countdown to help you stay on track for your German university application</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>12–18+ Months Before</h3>
+                        <ul>
+                            <li>Research Germany as a study destination</li>
+                            <li>Identify universities and programs of interest</li>
+                            <li>Check if your qualifications are recognized</li>
+                            <li>Understand language requirements</li>
+                            <li>Begin learning German (if needed)</li>
+                            <li>Start researching scholarship opportunities</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>9–12 Months Before</h3>
+                        <ul>
+                            <li>Register and prepare for language tests (IELTS/TOEFL/TestDaF)</li>
+                            <li>Request transcripts and certificates from previous institutions</li>
+                            <li>Arrange certified translations of documents</li>
+                            <li>Prepare CV and draft motivation letters</li>
+                            <li>Contact potential recommenders</li>
+                            <li>Create preliminary budget and funding plan</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>6–9 Months Before</h3>
+                        <ul>
+                            <li>Take required language and aptitude tests</li>
+                            <li>Finalize list of universities (up to 10 via uni-assist)</li>
+                            <li>Submit applications before deadlines</li>
+                            <li>Apply for scholarships (many deadlines Oct-Jan)</li>
+                            <li>Pay application fees (€75 + €30 per additional)</li>
+                            <li>Begin researching accommodation options</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>3–6 Months Before</h3>
+                        <ul>
+                            <li>Receive and compare admission offers</li>
+                            <li>Accept your place at chosen university</li>
+                            <li>Open blocked account (Sperrkonto) with €11,904</li>
+                            <li>Apply for student visa at German embassy</li>
+                            <li>Secure accommodation (apply for student housing)</li>
+                            <li>Purchase health insurance</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>1–3 Months Before</h3>
+                        <ul>
+                            <li>Receive visa approval</li>
+                            <li>Book flights to Germany</li>
+                            <li>Confirm accommodation arrangements</li>
+                            <li>Prepare travel documents and copies</li>
+                            <li>Arrange international money transfer</li>
+                            <li>Attend pre-departure orientation (if available)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Departure & Arrival</h3>
+                        <ul>
+                            <li>Travel to Germany with all documents</li>
+                            <li>Register address (Anmeldung) within 2 weeks</li>
+                            <li>Open German bank account</li>
+                            <li>Enroll at university (Immatrikulation)</li>
+                            <li>Apply for residence permit at Ausländerbehörde</li>
+                            <li>Attend orientation week</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visa & Immigration Section -->
+    <section id="visa">
+        <div class="container">
+            <div class="section-header">
+                <h2>Visa & Immigration</h2>
+                <p>Understanding Germany's student visa requirements and residence permit process</p>
+            </div>
+            <div class="visa-grid">
+                <div class="visa-card">
+                    <h3>Who Needs a Visa?</h3>
+                    <p><strong>EU/EEA citizens:</strong> No visa required — valid ID or passport is sufficient.</p>
+                    <p><strong>Non-EU citizens:</strong> Most need a national visa (Visum zu Studienzwecken) before traveling to Germany. Citizens of some countries (USA, Canada, Australia, Japan, South Korea, etc.) can enter visa-free but must apply for a residence permit after arrival.</p>
+                    <p><strong>Check your specific requirements</strong> at the German embassy/consulate in your country or the Federal Foreign Office website.</p>
+                </div>
+                <div class="visa-card">
+                    <h3>Student Visa Application Process</h3>
+                    <ol>
+                        <li>Receive university admission letter</li>
+                        <li>Open blocked account (Sperrkonto) with €11,904 (€992/month for 12 months) [2][5]</li>
+                        <li>Purchase health insurance valid in Germany</li>
+                        <li>Complete online visa application via Consular Services Portal (digital.diplo.de) [2]</li>
+                        <li>Book appointment at German embassy/consulate</li>
+                        <li>Submit application with required documents</li>
+                        <li>Pay visa fee (€75-€110)</li>
+                        <li>Wait for approval (4-12 weeks typically)</li>
+                        <li>Travel to Germany with visa</li>
+                        <li>Convert visa to residence permit at local Ausländerbehörde (Foreigners' Authority)</li>
+                    </ol>
+                </div>
+                <div class="visa-card">
+                    <h3>Required Documents</h3>
+                    <ul>
+                        <li>Valid passport (valid for duration of stay)</li>
+                        <li>University admission letter (Zulassungsbescheid)</li>
+                        <li>Proof of financial resources (blocked account statement, scholarship letter, or declaration of commitment)</li>
+                        <li>Health insurance confirmation</li>
+                        <li>CV and motivation letter</li>
+                        <li>Academic certificates and transcripts</li>
+                        <li>Language proficiency certificate</li>
+                        <li>Biometric passport photos</li>
+                        <li>Visa application forms (completed and signed)</li>
+                    </ul>
+                </div>
+                <div class="visa-card">
+                    <h3>After Arrival in Germany</h3>
+                    <ol>
+                        <li><strong>Register your address (Anmeldung)</strong> at local Bürgeramt within 2 weeks of moving in [38][43]</li>
+                        <li><strong>Enroll at university</strong> (Immatrikulation) — bring health insurance proof</li>
+                        <li><strong>Apply for residence permit</strong> at Ausländerbehörde within 3 months of arrival [1][33]</li>
+                        <li><strong>Residence permit for students</strong> is typically issued for 1-2 years and must be renewed</li>
+                        <li><strong>Work rights:</strong> Student residence permits allow 120 full days or 240 half days of work per year</li>
+                        <li><strong>After graduation:</strong> Apply for 18-month job-seeking residence permit to find employment related to your degree</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="visa-warning">
+                <p><strong>⚠️ Important:</strong> Immigration requirements can change. Always verify current visa requirements, financial proof amounts, and procedures with the German embassy/consulate in your country or official government sources (auswaertiges-amt.de, make-it-in-germany.com). This guide is for informational purposes only and does not constitute legal advice.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Housing Section -->
+    <section id="housing" style="background: var(--card-tint);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Housing Options</h2>
+                <p>Finding accommodation is one of the biggest challenges — start early and explore multiple options</p>
+            </div>
+            <div class="housing-grid">
+                <div class="housing-card">
+                    <h3>🏢 Student Dormitories (Studentenwohnheim)</h3>
+                    <p>University-managed or student services (Studentenwerk) housing. Most affordable option but high demand and long waiting lists.</p>
+                    <p><span class="price">€250-€450/month</span></p>
+                    <ul>
+                        <li>Apply early (6+ months before semester starts)</li>
+                        <li>Usually furnished single rooms</li>
+                        <li>Shared kitchen and bathroom facilities</li>
+                        <li>Utilities and internet typically included</li>
+                        <li>Great for meeting other students</li>
+                    </ul>
+                </div>
+                <div class="housing-card">
+                    <h3>🏠 Shared Apartments (WG — Wohngemeinschaft)</h3>
+                    <p>Most popular option among students. Rent a room in a shared flat with other students or young professionals.</p>
+                    <p><span class="price">€350-€700/month</span></p>
+                    <ul>
+                        <li>Search on WG-Gesucht.de, ImmobilienScout24</li>
+                        <li>Utilities (Nebenkosten) may be extra</li>
+                        <li>Deposit: 2-3 months' rent (Kaution)</li>
+                        <li>Requires German language for many listings</li>
+                        <li>More independence than dorms</li>
+                    </ul>
+                </div>
+                <div class="housing-card">
+                    <h3>🏙️ Private Apartments</h3>
+                    <p>Rent a studio or one-bedroom apartment independently. More expensive but offers privacy.</p>
+                    <p><span class="price">€600-€1,200+/month</span></p>
+                    <ul>
+                        <li>Higher cost, especially in major cities</li>
+                        <li>Usually unfurnished</li>
+                        <li>Additional costs: utilities, internet, registration fee</li>
+                        <li>Requires proof of income or guarantor</li>
+                        <li>Longer lease contracts (1-2 years typical)</li>
+                    </ul>
+                </div>
+                <div class="housing-card">
+                    <h3>🏡 Private Student Residences</h3>
+                    <p>Commercial student housing complexes. Modern facilities, higher cost than dorms.</p>
+                    <p><span class="price">€400-€800/month</span></p>
+                    <ul>
+                        <li>Furnished rooms with private bathroom</li>
+                        <li>Shared kitchen or kitchenette</li>
+                        <li>Utilities and internet included</li>
+                        <li>Common areas, study rooms, events</li>
+                        <li>Examples: The Fizz, Student Village, Livensa</li>
+                    </ul>
+                </div>
+                <div class="housing-card">
+                    <h3>👨‍👩‍👧 Homestays</h3>
+                    <p>Live with a German host family. Good for language immersion and cultural experience.</p>
+                    <p><span class="price">€400-€600/month</span></p>
+                    <ul>
+                        <li>Includes meals (typically breakfast and dinner)</li>
+                        <li>Private or shared room</li>
+                        <li>House rules and family integration</li>
+                        <li>Less common for university students</li>
+                        <li>Good for language course students</li>
+                    </ul>
+                </div>
+                <div class="housing-card">
+                    <h3>🏨 Temporary Accommodation</h3>
+                    <p>Short-term housing for your first weeks while searching for permanent accommodation.</p>
+                    <p><span class="price">€30-€80/night or €500-€1,000/month</span></p>
+                    <ul>
+                        <li>Hostels, Airbnb, hotels</li>
+                        <li>University guest houses</li>
+                        <li>Wunderflats, HousingAnywhere (furnished, short-term)</li>
+                        <li>Useful for initial apartment hunting</li>
+                        <li>Book 2-4 weeks as buffer</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="admissions-note" style="margin-top: var(--spacing-xl);">
+                <p><strong>Practical Tips:</strong> Start searching 3-4 months before semester begins. Major cities (Munich, Berlin, Hamburg) have severe housing shortages. Prepare documents: proof of enrollment, financial guarantee, SCHUFA (credit check), references. Be cautious of scams — never wire money without seeing the apartment or signing a contract. Register your address (Anmeldung) is legally required within 2 weeks of moving in. [38][45]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Arrival & Student Life Section -->
+    <section id="student-life">
+        <div class="container">
+            <div class="section-header">
+                <h2>Arrival & Student Life</h2>
+                <p>Practical information for settling in and making the most of your time in Germany</p>
+            </div>
+            <div class="life-grid">
+                <div class="life-card">
+                    <h3>🛬 Airport & Initial Steps</h3>
+                    <p>Upon arrival, head to your accommodation. Within your first two weeks, complete these essential tasks:</p>
+                    <ul style="list-style: none; padding-left: 0; margin-top: var(--spacing-sm);">
+                        <li style="padding: var(--spacing-xs) 0; padding-left: var(--spacing-md); position: relative;"><strong style="color: var(--primary);">Anmeldung:</strong> Register your address at Bürgeramt/Einwohnermeldeamt. Bring: passport, visa, rental contract, Wohnungsgeberbestätigung (landlord confirmation). [38][43]</li>
+                        <li style="padding: var(--spacing-xs) 0; padding-left: var(--spacing-md); position: relative;"><strong style="color: var(--primary);">Bank account:</strong> Open a German bank account (Sparkasse, Deutsche Bank, N26, etc.). Required: passport, Anmeldung confirmation, enrollment certificate. [33][38]</li>
+                        <li style="padding: var(--spacing-xs) 0; padding-left: var(--spacing-md); position: relative;"><strong style="color: var(--primary);">Health insurance:</strong> Activate student health insurance with public provider (TK, AOK, Barmer). Mandatory for enrollment. [33][44]</li>
+                        <li style="padding: var(--spacing-xs) 0; padding-left: var(--spacing-md); position: relative;"><strong style="color: var(--primary);">University enrollment:</strong> Complete Immatrikulation in person with all documents. Receive student ID (Studentenausweis). [33]</li>
+                    </ul>
+                </div>
+                <div class="life-card">
+                    <h3>📱 Connectivity & Banking</h3>
+                    <p><strong>SIM Card:</strong> Get a German phone number. Options include:</p>
+                    <ul style="list-style: none; padding-left: 0; margin-top: var(--spacing-sm);">
+                        <li style="padding: var(--spacing-xs) 0; padding-left: var(--spacing-md); position: relative;">Prepaid: Aldi Talk, Lidl Connect, Congstar (€10-€20/month)</li>
+                        <li style="padding: var(--spacing-xs) 0; padding-left: var(--spacing-md); position: relative;">Contract: Vodafone, O2, Telekom (€20-€40/month)</li>
+                        <li style="padding: var(--spacing-xs) 0; padding-left: var(--spacing-md); position: relative;">Digital: Fraenk, Otelo (app-based, flexible)</li>
+                    </ul>
+                    <p style="margin-top: var(--spacing-sm);"><strong>Banking:</strong> German banks offer online banking and debit cards (Girocard). Many students also use N26, Comdirect, or Consorsbank for international-friendly features. Cash is still widely used in Germany — always carry some euros.</p>
+                </div>
+                <div class="life-card">
+                    <h3>🚇 Transportation</h3>
+                    <p><strong>Semester Ticket:</strong> Your student ID includes a public transport pass for your city/region (included in semester contribution).</p>
+                    <p><strong>Deutschlandticket:</strong> €49/month for unlimited regional trains and local transport nationwide (students may get discounts).</p>
+                    <p><strong>Long-distance trains:</strong> DB (Deutsche Bahn) offers student discounts. Book in advance for savings. Consider BahnCard 25 or 50 for regular travelers.</p>
+                    <p><strong>Bicycles:</strong> Many cities are bike-friendly. Buy a used bike (€100-€300) or use bike-sharing (Nextbike, Call a Bike).</p>
+                </div>
+                <div class="life-card">
+                    <h3>🏥 Healthcare</h3>
+                    <p><strong>Public Health Insurance:</strong> Mandatory for students under 30 (or 14th semester). Major providers: Techniker Krankenkasse (TK), AOK, Barmer, DAK. Cost: ~€120-€130/month. [33][44]</p>
+                    <p><strong>Coverage includes:</strong> Doctor visits, hospital treatment, prescription medications (small co-pay), preventive care, dental checkups.</p>
+                    <p><strong>Finding a doctor:</strong> Use your insurance provider's doctor search. For emergencies, call 112. For non-emergency medical advice, call 116 117.</p>
+                    <p><strong>Pharmacies:</strong> "Apotheke" — prescription medications only available at pharmacies. Some over-the-counter medications available at drugstores (dm, Rossmann).</p>
+                </div>
+                <div class="life-card">
+                    <h3>🎓 Academic Culture</h3>
+                    <p><strong>Independence:</strong> German universities expect self-directed learning. Attend lectures, but much learning happens independently.</p>
+                    <p><strong>Punctuality:</strong> Being on time is essential — for classes, exams, appointments, and meetings.</p>
+                    <p><strong>Formality:</strong> Professors are addressed as "Herr/Frau Professor [Last Name]" unless they invite informal address. Use "Sie" (formal you) initially.</p>
+                    <p><strong>Exams:</strong> Often one final exam determines your entire grade. Some courses have midterms or assignments. Retakes are possible but can delay graduation.</p>
+                    <p><strong>Office hours:</strong> Professors hold Sprechstunde (office hours) — attend to ask questions or discuss your work.</p>
+                </div>
+                <div class="life-card">
+                    <h3>🍽️ Food & Daily Life</h3>
+                    <p><strong>Groceries:</strong> Affordable supermarkets include Aldi, Lidl, Netto, Penny. Mid-range: Rewe, Edeka. Organic: Alnatura, Denn's, Bio Company.</p>
+                    <p><strong>Mensa:</strong> University cafeterias offer subsidized meals (€3-€6) for students. Good value and social option.</p>
+                    <p><strong>Restaurants:</strong> Tipping is customary (round up or add 5-10%). Say total amount including tip when paying. Cash preferred in many smaller establishments.</p>
+                    <p><strong>Shopping hours:</strong> Most stores close at 8 PM (20:00) and are closed on Sundays. Plan accordingly.</p>
+                </div>
+                <div class="life-card">
+                    <h3>🌍 International Student Support</h3>
+                    <p><strong>International Office:</strong> Every university has an International Office (Akademisches Auslandsamt) providing support for international students.</p>
+                    <p><strong>Services include:</strong> Orientation programs, visa/permit guidance, academic advising, cultural events, buddy programs, counseling.</p>
+                    <p><strong>Student organizations:</strong> Join AIESEC, ESN (Erasmus Student Network), or university international student groups.</p>
+                    <p><strong>Mental health:</strong> Universities offer psychological counseling (Psychologische Beratung). Services are free and confidential.</p>
+                </div>
+                <div class="life-card">
+                    <h3>🎉 Student Communities</h3>
+                    <p><strong>Fachschaft:</strong> Student representatives for your department/program — organize events, provide support, represent student interests.</p>
+                    <p><strong>Hochschulsport:</strong> University sports programs offer affordable access to gyms, classes, and teams (€50-€150/semester).</p>
+                    <p><strong>Clubs & societies:</strong> Join clubs related to your interests — sports, music, politics, culture, volunteering.</p>
+                    <p><strong>Parties & events:</strong> Student parties (Fachschaftsparties), cultural festivals, international nights, career fairs.</p>
+                    <p><strong>Networking:</strong> Attend industry events, career fairs, and alumni gatherings to build professional connections.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Country-Specific Culture Section -->
+    <section style="background: var(--card-tint);">
+        <div class="container">
+            <div class="section-header">
+                <h2>German Student Culture</h2>
+                <p>Understanding cultural norms and academic expectations helps you integrate successfully</p>
+            </div>
+            <div class="culture-grid">
+                <div class="culture-card">
+                    <h3>📚 Classroom Etiquette</h3>
+                    <p>German academic culture values directness, critical thinking, and intellectual independence. Students are expected to engage thoughtfully, ask questions, and challenge ideas respectfully. Participation may be less frequent than in some countries, but when students speak, contributions are typically well-considered.</p>
+                </div>
+                <div class="culture-card">
+                    <h3>⏰ Punctuality & Reliability</h3>
+                    <p>Punctuality is deeply valued in German culture. Arrive on time (or 5 minutes early) for classes, appointments, meetings, and social gatherings. Being late without notice is considered disrespectful. If delayed, communicate proactively.</p>
+                </div>
+                <div class="culture-card">
+                    <h3>🗣️ Communication Style</h3>
+                    <p>Germans tend toward direct, honest communication. Feedback may seem blunt but is intended constructively. Learn to appreciate straightforwardness. In academic settings, clarity and precision in language (both German and English) are highly valued.</p>
+                </div>
+                <div class="culture-card">
+                    <h3>👥 Group Work</h3>
+                    <p>Collaborative projects are common. Germans value thoroughness, reliability, and equal contribution. Establish clear roles and deadlines early. Direct communication about workload and expectations is appreciated, not considered rude.</p>
+                </div>
+                <div class="culture-card">
+                    <h3>🎓 Professor-Student Relationship</h3>
+                    <p>Relationships are more formal than in some countries. Use titles (Herr/Frau Professor [Name]) unless invited to use first names. Office hours (Sprechstunde) are the appropriate time for individual discussions. Email communication should be polite and formal initially.</p>
+                </div>
+                <div class="culture-card">
+                    <h3>🇩🇪 Language Matters</h3>
+                    <p>While many Germans speak English, learning German significantly enhances your experience — socially, academically, and professionally. Even B1-B2 German opens doors to internships, friendships, and deeper cultural understanding. Universities offer language courses (often free or subsidized).</p>
+                </div>
+                <div class="culture-card">
+                    <h3>💼 Work Culture (for Internships/Jobs)</h3>
+                    <p>German workplaces value structure, reliability, and quality over speed. Hierarchies exist but are often less rigid than stereotypes suggest. Feedback is direct. Work-life balance is respected — overtime is not expected as routine. Learn workplace norms specific to your industry.</p>
+                </div>
+                <div class="culture-card">
+                    <h3>🎭 Social Norms</h3>
+                    <p>Germans distinguish between public and private spheres. Friendships develop slowly but are deep and lasting. Invitations to homes are meaningful. "Feierabend" (end of work day) is respected — avoid contacting colleagues/professors late evenings or weekends unless urgent.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Germany Today Statistics Section -->
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>Germany Today</h2>
+                <p>Current data and trends for international students in Germany</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">469,485</div>
+                    <div class="stat-label">International students enrolled in German higher education institutions</div>
+                    <div class="stat-source">Source: 2024/25 data [13]</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">422</div>
+                    <div class="stat-label">State-maintained and state-recognized higher education institutions</div>
+                    <div class="stat-source">Source: 2025 [31]</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2,000+</div>
+                    <div class="stat-label">English-taught degree programs available</div>
+                    <div class="stat-source">Source: DAAD database [9]</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">€992</div>
+                    <div class="stat-label">Monthly financial proof required for student visa (2025)</div>
+                    <div class="stat-source">Source: Federal Foreign Office [2][5]</div>
+                </div>
+            </div>
+
+            <div class="admissions-grid" style="margin-top: var(--spacing-xl);">
+                <div class="admissions-card">
+                    <h3>📈 Popular Fields of Study</h3>
+                    <ul>
+                        <li>Engineering (especially mechanical, electrical, automotive)</li>
+                        <li>Computer Science & IT</li>
+                        <li>Business Administration & Economics</li>
+                        <li>Natural Sciences (Physics, Chemistry, Biology)</li>
+                        <li>Mathematics & Data Science</li>
+                        <li>Medicine & Health Sciences</li>
+                    </ul>
+                </div>
+                <div class="admissions-card">
+                    <h3>🏙️ Major Study Destinations</h3>
+                    <ul>
+                        <li><strong>Berlin:</strong> Capital city, diverse universities, vibrant culture</li>
+                        <li><strong>Munich:</strong> TU Munich, LMU, strong industry connections</li>
+                        <li><strong>Hamburg:</strong> Port city, international atmosphere</li>
+                        <li><strong>Cologne/Düsseldorf:</strong> Media, business, arts</li>
+                        <li><strong>Heidelberg:</strong> Historic university town</li>
+                        <li><strong>Aachen:</strong> RWTH Aachen, engineering excellence</li>
+                        <li><strong>Stuttgart:</strong> Automotive industry hub</li>
+                    </ul>
+                </div>
+                <div class="admissions-card">
+                    <h3>🌐 Education Trends</h3>
+                    <ul>
+                        <li>Growing number of English-taught programs</li>
+                        <li>Increased tuition fees in Bavaria for non-EU students (from 2024/25)</li>
+                        <li>Strong emphasis on digitalization and AI across programs</li>
+                        <li>Expanded scholarship opportunities for international students</li>
+                        <li>18-month post-study job-seeking residence permit</li>
+                        <li>Strong industry-university partnerships for internships and employment</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Master Checklist Section -->
+    <section style="background: var(--card-tint);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Master Checklist</h2>
+                <p>Track your progress through every stage of your study abroad journey</p>
+            </div>
+            <div class="checklist-container">
+                <div class="checklist-section">
+                    <h3>🔍 Research Phase</h3>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check1">
+                        <label for="check1">Choose field of study and degree level</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check2">
+                        <label for="check2">Research and compare German universities</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check3">
+                        <label for="check3">Check academic requirements for your qualifications</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check4">
+                        <label for="check4">Verify language requirements (German or English)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check5">
+                        <label for="check5">Research tuition fees and living costs</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check6">
+                        <label for="check6">Identify scholarship opportunities</label>
+                    </div>
+                </div>
+
+                <div class="checklist-section">
+                    <h3>📝 Testing & Preparation</h3>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check7">
+                        <label for="check7">Take required language test (IELTS/TOEFL/TestDaF/DSH)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check8">
+                        <label for="check8">Take entrance/standardized exams if needed (GRE/GMAT/TestAS)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check9">
+                        <label for="check9">Obtain certified translations of certificates</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check10">
+                        <label for="check10">Prepare CV in Europass format</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check11">
+                        <label for="check11">Draft motivation letters / statements of purpose</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check12">
+                        <label for="check12">Request letters of recommendation</label>
+                    </div>
+                </div>
+
+                <div class="checklist-section">
+                    <h3>📬 Applications</h3>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check13">
+                        <label for="check13">Create uni-assist account (if required)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check14">
+                        <label for="check14">Prepare all required documents for each university</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check15">
+                        <label for="check15">Submit applications before deadlines</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check16">
+                        <label for="check16">Pay application fees (€75 + €30 per additional via uni-assist)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check17">
+                        <label for="check17">Track application status and respond to requests</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check18">
+                        <label for="check18">Compare admission offers and accept your place</label>
+                    </div>
+                </div>
+
+                <div class="checklist-section">
+                    <h3>💰 Funding & Finances</h3>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check19">
+                        <label for="check19">Apply for scholarships (DAAD, university, external)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check20">
+                        <label for="check20">Prepare financial documents for visa</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check21">
+                        <label for="check21">Open blocked account (Sperrkonto) with €11,904</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check22">
+                        <label for="check22">Create comprehensive budget (tuition + living expenses)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check23">
+                        <label for="check23">Arrange international money transfer options</label>
+                    </div>
+                </div>
+
+                <div class="checklist-section">
+                    <h3>🛂 Visa & Immigration</h3>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check24">
+                        <label for="check24">Confirm correct visa category for your situation</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check25">
+                        <label for="check25">Gather all required visa documents</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check26">
+                        <label for="check26">Complete online visa application (digital.diplo.de)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check27">
+                        <label for="check27">Book embassy/consulate appointment</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check28">
+                        <label for="check28">Submit visa application and pay fee</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check29">
+                        <label for="check29">Track visa approval and collect passport</label>
+                    </div>
+                </div>
+
+                <div class="checklist-section">
+                    <h3>✈️ Departure & Arrival</h3>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check30">
+                        <label for="check30">Book flight to Germany</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check31">
+                        <label for="check31">Arrange accommodation (permanent or temporary)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check32">
+                        <label for="check32">Purchase health insurance valid in Germany</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check33">
+                        <label for="check33">Prepare travel documents folder (copies of everything)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check34">
+                        <label for="check34">Arrange emergency contacts and communication plan</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check35">
+                        <label for="check35">Pack appropriately for German climate and culture</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check36">
+                        <label for="check36">Register address (Anmeldung) within 2 weeks of arrival</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check37">
+                        <label for="check37">Open German bank account</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check38">
+                        <label for="check38">Enroll at university (Immatrikulation)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check39">
+                        <label for="check39">Apply for residence permit at Ausländerbehörde</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check40">
+                        <label for="check40">Attend orientation week and explore campus</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Official Resources Section -->
+    <section id="resources">
+        <div class="container">
+            <div class="section-header">
+                <h2>Official Starting Points</h2>
+                <p>Verify information and access authoritative resources for your study abroad planning</p>
+            </div>
+            <div class="resources-grid">
+                <a href="https://www.daad.de/en/" target="_blank" rel="noopener" class="resource-card">
+                    <h3>DAAD (German Academic Exchange Service)</h3>
+                    <p>Official information on studying in Germany, scholarships, and programs</p>
+                    <div class="url">www.daad.de/en</div>
+                </a>
+                <a href="https://www.funding-guide.de/" target="_blank" rel="noopener" class="resource-card">
+                    <h3>DAAD Scholarship Database</h3>
+                    <p>Search for funding opportunities for international students</p>
+                    <div class="url">www.funding-guide.de</div>
+                </a>
+                <a href="https://www.uni-assist.de/en/" target="_blank" rel="noopener" class="resource-card">
+                    <h3>uni-assist</h3>
+                    <p>Central application service for international students applying to 160+ German universities</p>
+                    <div class="url">www.uni-assist.de/en</div>
+                </a>
+                <a href="https://www.auswaertiges-amt.de/en/visa-service" target="_blank" rel="noopener" class="resource-card">
+                    <h3>Federal Foreign Office — Visas</h3>
+                    <p>Official visa requirements and application procedures</p>
+                    <div class="url">www.auswaertiges-amt.de/en/visa-service</div>
+                </a>
+                <a href="https://digital.diplo.de/studium/" target="_blank" rel="noopener" class="resource-card">
+                    <h3>Consular Services Portal</h3>
+                    <p>Online visa application system for study purposes</p>
+                    <div class="url">digital.diplo.de/studium</div>
+                </a>
+                <a href="https://www.make-it-in-germany.com/en/" target="_blank" rel="noopener" class="resource-card">
+                    <h3>Make it in Germany</h3>
+                    <p>Official German government portal for skilled workers and students</p>
+                    <div class="url">www.make-it-in-germany.com/en</div>
+                </a>
+                <a href="https://www.hrk.de/" target="_blank" rel="noopener" class="resource-card">
+                    <h3>German Rectors' Conference (HRK)</h3>
+                    <p>Information on German higher education system and institutions</p>
+                    <div class="url">www.hrk.de</div>
+                </a>
+                <a href="https://www2.daad.de/deutschland/stipendium/datenbank/en/21148-scholarship-database/" target="_blank" rel="noopener" class="resource-card">
+                    <h3>DAAD Scholarship Database (Search)</h3>
+                    <p>150+ scholarship options for studying in Germany</p>
+                    <div class="url">www2.daad.de/deutschland/stipendium/datenbank</div>
+                </a>
+                <a href="https://home-affairs.ec.europa.eu/policies/migration-and-asylum/eu-immigration-portal/student-germany_en" target="_blank" rel="noopener" class="resource-card">
+                    <h3>EU Immigration Portal — Germany</h3>
+                    <p>Official EU information on studying in Germany as a non-EU citizen</p>
+                    <div class="url">home-affairs.ec.europa.eu</div>
+                </a>
+                <a href="https://www.testdaf.de/en/" target="_blank" rel="noopener" class="resource-card">
+                    <h3>TestDaF Institute</h3>
+                    <p>Official German language test for university admission</p>
+                    <div class="url">www.testdaf.de/en</div>
+                </a>
+                <a href="https://www.goethe.de/en/index.html" target="_blank" rel="noopener" class="resource-card">
+                    <h3>Goethe-Institut</h3>
+                    <p>German language courses and cultural programs worldwide</p>
+                    <div class="url">www.goethe.de/en</div>
+                </a>
+                <a href="https://www.anerkennung-in-deutschland.de/en/" target="_blank" rel="noopener" class="resource-card">
+                    <h3>Recognition in Germany</h3>
+                    <p>Check if your foreign qualifications are recognized in Germany</p>
+                    <div class="url">www.anerkennung-in-deutschland.de/en</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>UniAI</h3>
+                    <p>Your trusted guide for studying abroad. We provide comprehensive, up-to-date information to help you make informed decisions about your international education journey.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#roadmap">Study Roadmap</a></li>
+                        <li><a href="#routes">Education Routes</a></li>
+                        <li><a href="#admissions">Admissions</a></li>
+                        <li><a href="#costs">Costs & Budget</a></li>
+                        <li><a href="#scholarships">Scholarships</a></li>
+                        <li><a href="#visa">Visa Guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Key Resources</h3>
+                    <ul>
+                        <li><a href="https://www.daad.de/en/" target="_blank" rel="noopener">DAAD</a></li>
+                        <li><a href="https://www.uni-assist.de/en/" target="_blank" rel="noopener">uni-assist</a></li>
+                        <li><a href="https://www.funding-guide.de/" target="_blank" rel="noopener">Scholarship Database</a></li>
+                        <li><a href="https://digital.diplo.de/studium/" target="_blank" rel="noopener">Visa Portal</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="disclaimer">
+                    <p><strong>Disclaimer:</strong> This guide is intended for educational planning purposes only. Admissions requirements, tuition fees, scholarships, immigration rules, and other policies can change. Always verify important information with the relevant institution and official government sources. This guide does not constitute legal, financial, or immigration advice.</p>
+                </div>
+                <p style="margin-top: var(--spacing-md);">© 2025 UniAI. All information is subject to change. Last updated: October 2025.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile navigation toggle
+        function toggleNav() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close mobile nav when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll animation to nav
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 50) {
+                nav.style.boxShadow = '0 2px 12px rgba(0,0,0,0.1)';
+            } else {
+                nav.style.boxShadow = '0 1px 4px rgba(0,0,0,0.05)';
+            }
+        });
+
+        // Checklist functionality - save to localStorage
+        document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(checkbox => {
+            const id = checkbox.id;
+            const saved = localStorage.getItem('germany_checklist_' + id);
+            if (saved === 'true') {
+                checkbox.checked = true;
+            }
+            checkbox.addEventListener('change', () => {
+                localStorage.setItem('germany_checklist_' + id, checkbox.checked);
+            });
+        });
+    </script>
 </body>
 </html>
