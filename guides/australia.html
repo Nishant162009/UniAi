@@ -1,0 +1,2383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study in Australia | UniAI Complete Guide</title>
+    <style>
+        :root {
+            --primary: #2D7A6E;
+            --primary-dark: #1E5C52;
+            --secondary: #E8A598;
+            --secondary-light: #F5D5CF;
+            --accent: #4A90A4;
+            --accent-light: #7FB3D5;
+            --background: #FDFBF8;
+            --card-bg: #FFFFFF;
+            --card-tint: #F8F6F2;
+            --text-dark: #2C3E50;
+            --text-medium: #5D6D7E;
+            --text-light: #7F8C8D;
+            --border: #E8E4DC;
+            --shadow: rgba(45, 122, 110, 0.08);
+            --shadow-hover: rgba(45, 122, 110, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', sans-serif;
+            background: var(--background);
+            color: var(--text-dark);
+            line-height: 1.7;
+            font-size: 17px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 16px 0;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-medium);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 24px;
+            height: 2px;
+            background: var(--text-medium);
+            border-radius: 2px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #F0F7F6 0%, #FFF5F3 50%, #F0F6F8 100%);
+            padding: 80px 0 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(232, 165, 152, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(74, 144, 164, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            line-height: 1.15;
+            letter-spacing: -0.5px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--text-medium);
+            margin-bottom: 32px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .hero-feature {
+            background: var(--card-bg);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            color: var(--text-medium);
+            box-shadow: 0 4px 12px var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 17px;
+            box-shadow: 0 8px 24px rgba(45, 122, 110, 0.25);
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(45, 122, 110, 0.35);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            letter-spacing: -0.3px;
+        }
+
+        .section-header p {
+            font-size: 19px;
+            color: var(--text-medium);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .section-accent {
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 32px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 4px 20px var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px var(--shadow-hover);
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--secondary-light), var(--secondary));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: var(--text-medium);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        /* Roadmap */
+        .roadmap {
+            background: linear-gradient(135deg, #F0F7F6 0%, #F8F6F2 100%);
+            padding: 80px 0;
+        }
+
+        .roadmap-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            counter-reset: step;
+        }
+
+        .roadmap-step {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 28px;
+            position: relative;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 16px var(--shadow);
+        }
+
+        .roadmap-step::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            top: -12px;
+            left: 24px;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .roadmap-step h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            margin-top: 8px;
+        }
+
+        .roadmap-step p {
+            color: var(--text-medium);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .roadmap-step ul {
+            margin-top: 16px;
+            padding-left: 20px;
+        }
+
+        .roadmap-step li {
+            color: var(--text-medium);
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        /* Image Cards */
+        .image-card {
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            height: 280px;
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .image-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .image-card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            padding: 24px;
+            color: white;
+        }
+
+        .image-card-overlay h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .image-card-overlay p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        /* Route Cards */
+        .route-card {
+            background: var(--card-tint);
+            border-radius: 16px;
+            padding: 28px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .route-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .route-card p {
+            color: var(--text-medium);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .route-card strong {
+            color: var(--primary);
+        }
+
+        /* Education System */
+        .system-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .system-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .system-card h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .system-card h4::before {
+            content: '•';
+            color: var(--accent);
+            font-size: 24px;
+        }
+
+        .system-card p {
+            color: var(--text-medium);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Admissions Table */
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px var(--shadow);
+            margin: 32px 0;
+        }
+
+        .info-table th {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 18px 24px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .info-table td {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-medium);
+            font-size: 15px;
+        }
+
+        .info-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .info-table tr:hover {
+            background: var(--card-tint);
+        }
+
+        /* Application Tracker */
+        .tracker {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 4px 20px var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .tracker-header {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 1fr 1fr 1fr;
+            gap: 16px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 14px;
+        }
+
+        .tracker-row {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 1fr 1fr 1fr;
+            gap: 16px;
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            align-items: center;
+        }
+
+        .tracker-row:last-child {
+            border-bottom: none;
+        }
+
+        .tracker-row input,
+        .tracker-row select {
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            background: var(--background);
+            color: var(--text-dark);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .status-not-started {
+            background: #F0F0F0;
+            color: #666;
+        }
+
+        .status-in-progress {
+            background: #FFF3CD;
+            color: #856404;
+        }
+
+        .status-completed {
+            background: #D4EDDA;
+            color: #155724;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding: 24px 0;
+            position: relative;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            margin-left: 50%;
+        }
+
+        .timeline-content {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 16px;
+            width: calc(100% - 40px);
+            box-shadow: 0 4px 16px var(--shadow);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -8px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -8px;
+        }
+
+        .timeline-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .timeline-content ul {
+            padding-left: 20px;
+        }
+
+        .timeline-content li {
+            color: var(--text-medium);
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        /* Statistics */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 32px 24px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 15px;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+
+        .stat-source {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 12px;
+        }
+
+        /* Checklist */
+        .checklist {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .checklist-section {
+            margin-bottom: 32px;
+        }
+
+        .checklist-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .checklist-section h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--secondary-light);
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checkbox {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            flex-shrink: 0;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .checkbox:hover {
+            border-color: var(--primary);
+        }
+
+        .checkbox.checked {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .checkbox.checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .checklist-item label {
+            color: var(--text-medium);
+            font-size: 16px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        /* Official Resources */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .resource-card {
+            background: var(--card-tint);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .resource-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+
+        .resource-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .resource-card p {
+            color: var(--text-medium);
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .resource-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .resource-link:hover {
+            color: var(--accent);
+        }
+
+        /* Callout */
+        .callout {
+            background: linear-gradient(135deg, #F0F7F6, #F5F9FA);
+            border-left: 4px solid var(--accent);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 32px 0;
+        }
+
+        .callout h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .callout p {
+            color: var(--text-medium);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--card-tint);
+            border-top: 1px solid var(--border);
+            padding: 48px 0 32px;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .disclaimer {
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 700px;
+            margin: 0 auto 24px;
+        }
+
+        .copyright {
+            color: var(--text-light);
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero-subtitle {
+                font-size: 17px;
+            }
+
+            .section-header h2 {
+                font-size: 32px;
+            }
+
+            .cards-grid,
+            .roadmap-steps,
+            .images-grid,
+            .system-grid,
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                width: 100%;
+                margin-left: 0;
+                justify-content: flex-start;
+                padding-left: 50px;
+            }
+
+            .timeline-item::after,
+            .timeline-item:nth-child(even)::after {
+                left: 12px;
+                right: auto;
+            }
+
+            .tracker-header,
+            .tracker-row {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-number {
+                font-size: 32px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .hero {
+                padding: 60px 0 40px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-content">
+            <a href="#" class="logo">
+                <div class="logo-icon">U</div>
+                UniAI
+            </a>
+            <ul class="nav-links">
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="#routes">Routes</a></li>
+                <li><a href="#admissions">Admissions</a></li>
+                <li><a href="#costs">Costs</a></li>
+                <li><a href="#visa">Visa</a></li>
+                <li><a href="#timeline">Timeline</a></li>
+                <li><a href="#resources">Resources</a></li>
+            </ul>
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Study in <span>Australia</span>. Find your path, prepare with confidence.</h1>
+            <p class="hero-subtitle">Your complete guide to studying in Australia — covering universities, admissions, costs, scholarships, visa requirements, housing, student life, and your preparation timeline.</p>
+            <div class="hero-features">
+                <span class="hero-feature">🎓 Universities</span>
+                <span class="hero-feature">💰 Costs & Scholarships</span>
+                <span class="hero-feature">🛂 Student Visa</span>
+                <span class="hero-feature">🏠 Housing</span>
+                <span class="hero-feature">📚 Student Life</span>
+            </div>
+            <a href="#roadmap" class="cta-button">Explore the Guide</a>
+        </div>
+    </section>
+
+    <!-- Australia Today Section -->
+    <section id="australia-today">
+        <div class="container">
+            <div class="section-header">
+                <h2>Australia Today</h2>
+                <p>Key facts about international education in Australia</p>
+                <div class="section-accent"></div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">851,780</div>
+                    <div class="stat-label">International students studying in Australia (2025)</div>
+                    <div class="stat-source">Source: Department of Education, 2025 [20]</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4.37M+</div>
+                    <div class="stat-label">International students studied in Australia (2005–2025)</div>
+                    <div class="stat-source">Source: Department of Education, 2025 [20]</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Group of Eight research-intensive universities</div>
+                    <div class="stat-source">Source: Go8 [35][36]</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$29,710</div>
+                    <div class="stat-label">Minimum annual living cost requirement (2026)</div>
+                    <div class="stat-source">Source: Department of Home Affairs, 2026 [3][37]</div>
+                </div>
+            </div>
+
+            <div class="cards-grid" style="margin-top: 48px;">
+                <div class="card">
+                    <div class="card-icon">🌏</div>
+                    <h3>Major Study Destinations</h3>
+                    <p>Sydney, Melbourne, Brisbane, Perth, and Adelaide are the most popular cities for international students, offering world-class universities and vibrant multicultural communities. [37]</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h3>Popular Fields of Study</h3>
+                    <p>Business, engineering, computer science, health sciences, and environmental studies are among the most popular fields for international students in Australia. [20]</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎯</div>
+                    <h3>Quality Education</h3>
+                    <p>Australian universities consistently rank among the world's best, with the Group of Eight undertaking 70% of Australia's university research. [35][38]</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section class="roadmap" id="roadmap">
+        <div class="container">
+            <div class="section-header">
+                <h2>Your Study Abroad Roadmap</h2>
+                <p>Six essential stages to guide your journey to studying in Australia</p>
+                <div class="section-accent"></div>
+            </div>
+
+            <div class="roadmap-steps">
+                <div class="roadmap-step">
+                    <h3>Define Your Target</h3>
+                    <p>Research Australia's education system and identify programs that match your academic interests and career goals.</p>
+                    <ul>
+                        <li>Explore universities and courses</li>
+                        <li>Understand entry requirements</li>
+                        <li>Consider location and lifestyle</li>
+                    </ul>
+                </div>
+                <div class="roadmap-step">
+                    <h3>Prepare Your Academic Profile</h3>
+                    <p>Ensure you meet academic prerequisites and gather necessary documentation.</p>
+                    <ul>
+                        <li>Review grade requirements</li>
+                        <li>Prepare transcripts</li>
+                        <li>Identify prerequisite subjects</li>
+                    </ul>
+                </div>
+                <div class="roadmap-step">
+                    <h3>Build Your Budget</h3>
+                    <p>Calculate total costs including tuition, living expenses, and one-time fees.</p>
+                    <ul>
+                        <li>Research tuition fees</li>
+                        <li>Estimate living costs (AUD $29,710/year minimum) [3]</li>
+                        <li>Explore scholarships</li>
+                    </ul>
+                </div>
+                <div class="roadmap-step">
+                    <h3>Apply to Institutions</h3>
+                    <p>Submit applications to your chosen universities and programs.</p>
+                    <ul>
+                        <li>Prepare personal statements</li>
+                        <li>Request recommendation letters</li>
+                        <li>Track application deadlines</li>
+                    </ul>
+                </div>
+                <div class="roadmap-step">
+                    <h3>Choose & Prepare</h3>
+                    <p>Compare offers, accept your institution, and begin visa preparations.</p>
+                    <ul>
+                        <li>Review acceptance offers</li>
+                        <li>Receive Confirmation of Enrolment (CoE) [1]</li>
+                        <li>Arrange accommodation</li>
+                    </ul>
+                </div>
+                <div class="roadmap-step">
+                    <h3>Visa, Travel & Arrival</h3>
+                    <p>Complete your Student visa (subclass 500) application and prepare for departure.</p>
+                    <ul>
+                        <li>Apply for Student visa [1][2]</li>
+                        <li>Book flights</li>
+                        <li>Plan arrival and orientation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Choose Your Route Section -->
+    <section id="routes">
+        <div class="container">
+            <div class="section-header">
+                <h2>Choose Your Route</h2>
+                <p>Explore the different education pathways available in Australia</p>
+                <div class="section-accent"></div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="route-card">
+                    <h3>🎓 Undergraduate (Bachelor's)</h3>
+                    <p><strong>Who it's for:</strong> Students who have completed secondary education (Year 12 or equivalent).</p>
+                    <p><strong>What it involves:</strong> Typically 3–4 years of full-time study. Some professional degrees (engineering, law, medicine) may take longer.</p>
+                    <p><strong>Considerations:</strong> May require foundation year if your secondary qualification doesn't meet direct entry requirements. English proficiency (IELTS 6.0–6.5 typically) is required. [39]</p>
+                </div>
+
+                <div class="route-card">
+                    <h3>📚 Master's Degree</h3>
+                    <p><strong>Who it's for:</strong> Students with a completed bachelor's degree seeking advanced study or career specialization.</p>
+                    <p><strong>What it involves:</strong> 1–2 years of coursework and/or research. Coursework master's focus on advanced knowledge; research master's emphasize independent research.</p>
+                    <p><strong>Considerations:</strong> Some programs require relevant work experience. Research programs may require a research proposal. [16][19]</p>
+                </div>
+
+                <div class="route-card">
+                    <h3>🔬 PhD / Research</h3>
+                    <p><strong>Who it's for:</strong> Students aiming for academic careers or advanced research positions.</p>
+                    <p><strong>What it involves:</strong> 3–4 years of original research under supervision, culminating in a thesis. RTP scholarships available for eligible international students. [16][17]</p>
+                    <p><strong>Considerations:</strong> Requires strong research background. You'll need to identify a supervisor and develop a research proposal. RTP funding limited to 10% for international students. [16]</p>
+                </div>
+
+                <div class="route-card">
+                    <h3>🛠️ Vocational Education (VET)</h3>
+                    <p><strong>Who it's for:</strong> Students seeking practical, career-focused training in trades, business, hospitality, or technical fields.</p>
+                    <p><strong>What it involves:</strong> Certificate I–IV, Diploma, or Advanced Diploma programs through TAFE institutes and private colleges.</p>
+                    <p><strong>Considerations:</strong> More affordable than university. Strong industry connections. Can pathway to university. [4]</p>
+                </div>
+
+                <div class="route-card">
+                    <h3>🗣️ English Language (ELICOS)</h3>
+                    <p><strong>Who it's for:</strong> Students needing to improve English before starting academic study.</p>
+                    <p><strong>What it involves:</strong> Intensive English courses ranging from 5–40+ weeks. Includes General English, English for Academic Purposes (EAP), and exam preparation.</p>
+                    <p><strong>Considerations:</strong> Can be packaged with university offers. Helps meet English requirements for degree programs. [4]</p>
+                </div>
+
+                <div class="route-card">
+                    <h3>🌍 Exchange / Visiting Student</h3>
+                    <p><strong>Who it's for:</strong> Currently enrolled university students wanting short-term study abroad experience.</p>
+                    <p><strong>What it involves:</strong> One or two semesters at an Australian university while remaining enrolled at your home institution.</p>
+                    <p><strong>Considerations:</strong> Arranged through your home university. Credits transfer back. More affordable than full degree. [4]</p>
+                </div>
+
+                <div class="route-card">
+                    <h3>🎯 Foundation / Pathway Programs</h3>
+                    <p><strong>Who it's for:</strong> Students whose qualifications don't meet direct university entry requirements.</p>
+                    <p><strong>What it involves:</strong> 8–12 months of preparatory study covering academic skills and subject content. Successful completion guarantees entry to linked degree programs.</p>
+                    <p><strong>Considerations:</strong> Offered by universities and private colleges. Excellent preparation for Australian academic culture. [4]</p>
+                </div>
+
+                <div class="route-card">
+                    <h3>⏱️ Short-term Study</h3>
+                    <p><strong>Who it's for:</strong> Students interested in summer programs, study tours, or short courses.</p>
+                    <p><strong>What it involves:</strong> Programs from 2 weeks to one semester. Can be academic, cultural, or language-focused.</p>
+                    <p><strong>Considerations:</strong> May not require Student visa if under 3 months. Check visa requirements based on course length. [7]</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education System Section -->
+    <section id="education-system" style="background: linear-gradient(135deg, #F8F6F2, #F0F7F6);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Understanding Australia's Education System</h2>
+                <p>How higher education works in Australia</p>
+                <div class="section-accent"></div>
+            </div>
+
+            <div class="system-grid">
+                <div class="system-card">
+                    <h4>Public Universities</h4>
+                    <p>Government-funded institutions offering comprehensive programs across multiple disciplines. All 43 Australian universities are publicly funded. Generally more affordable for domestic students, but international fees are similar across public institutions. [35][36]</p>
+                </div>
+
+                <div class="system-card">
+                    <h4>Group of Eight (Go8)</h4>
+                    <p>Australia's eight research-intensive universities: ANU, Melbourne, Sydney, UNSW, Queensland, Monash, Western Australia, and Adelaide. Undertake 70% of university research. Highly ranked globally. Competitive entry. [35][36][38]</p>
+                </div>
+
+                <div class="system-card">
+                    <h4>Technology & Innovation Network</h4>
+                    <p>Nine universities focused on industry partnerships, practical learning, and innovation. Strong connections to business and technology sectors. Emphasis on employability and real-world skills.</p>
+                </div>
+
+                <div class="system-card">
+                    <h4>TAFE Institutes</h4>
+                    <p>Technical and Further Education providers offering vocational qualifications. Government-owned. Practical, hands-on training. Pathways to university. More affordable than university. [4]</p>
+                </div>
+
+                <div class="system-card">
+                    <h4>Private Colleges</h4>
+                    <p>Privately-owned institutions offering specialized programs in business, hospitality, design, and other fields. CRICOS-registered for international students. Smaller class sizes. Flexible intakes.</p>
+                </div>
+
+                <div class="system-card">
+                    <h4>Specialized Schools</h4>
+                    <p>Institutions focusing on specific disciplines such as arts, music, theology, or defense. Offer targeted programs with industry-specific training and facilities.</p>
+                </div>
+            </div>
+
+            <div class="callout">
+                <h4>🏙️ City vs. Regional Campuses</h4>
+                <p><strong>Major cities (Sydney, Melbourne, Brisbane):</strong> More university options, vibrant student life, extensive public transport, higher living costs. <strong>Regional areas:</strong> Lower living costs, smaller class sizes, potential for post-study work visa extensions, quieter lifestyle. Both offer CRICOS-registered courses eligible for Student visas. [2]</p>
+            </div>
+
+            <div class="callout">
+                <h4>📖 English-Taught Programs</h4>
+                <p>Virtually all Australian university programs are taught in English. Some universities offer limited courses in other languages, but English proficiency (IELTS, TOEFL, PTE, or approved alternatives) is required for all international students. [31][39][40]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admissions Section -->
+    <section id="admissions">
+        <div class="container">
+            <div class="section-header">
+                <h2>Admissions Requirements</h2>
+                <p>What you need to apply to Australian universities</p>
+                <div class="section-accent"></div>
+            </div>
+
+            <table class="info-table">
+                <thead>
+                    <tr>
+                        <th>Requirement</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Academic Qualifications</strong></td>
+                        <td>Completed secondary education (Year 12 or equivalent) for undergraduate; bachelor's degree for master's; master's or honors for PhD. International qualifications assessed for equivalence. [4]</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Grades / GPA</strong></td>
+                        <td>Minimum ATAR or equivalent for undergraduate (varies by institution and program, typically 60–95+). For postgraduate, minimum GPA or classification (often 65–75% or 2:1 equivalent). Go8 universities more competitive. [38][39]</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Prerequisite Subjects</strong></td>
+                        <td>Some programs require specific subjects (e.g., mathematics for engineering, chemistry for health sciences). Check individual program requirements. [4]</td>
+                    </tr>
+                    <tr>
+                        <td><strong>English Proficiency</strong></td>
+                        <td>IELTS 6.0–7.0 (varies by program), TOEFL iBT 67–94, PTE Academic 47–65, or other approved tests. Minimum scores updated August 2025. Professional programs (medicine, law, teaching) often require higher scores. [31][39][40]</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Personal Statement</strong></td>
+                        <td>Required by many programs. Explains your motivation, relevant experience, and career goals. Some universities use this for selection. [4]</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Recommendation Letters</strong></td>
+                        <td>Typically 1–2 references from teachers or employers. Required for research programs and some professional degrees. [4]</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Portfolio / Audition</strong></td>
+                        <td>Required for creative arts, design, architecture, music, and performance programs. Demonstrates your skills and creative ability. [4]</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Interview</strong></td>
+                        <td>Some programs (medicine, dentistry, some business schools) require interviews as part of selection. May be conducted online for international applicants. [4]</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transcripts</strong></td>
+                        <td>Official academic records from all previous institutions. Must be translated to English if in another language. [4]</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Application Fee</strong></td>
+                        <td>Varies by institution (AUD $50–$150 typical). Some universities waive fees for certain applicants. Check individual institution websites. [4]</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Deadlines</strong></td>
+                        <td>Major intakes: February (Semester 1) and July (Semester 2). Applications typically open 6–12 months in advance. Some programs have earlier deadlines. [4]</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="callout">
+                <h4>⚠️ Important Note</h4>
+                <p>Requirements vary significantly by institution, program, and degree level. Always check the specific requirements on the university's official website or contact their admissions office directly. This table provides general guidance only. [4]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tests & Language Section -->
+    <section id="tests" style="background: linear-gradient(135deg, #F0F7F6, #F5F9FA);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Tests & Language Requirements</h2>
+                <p>English proficiency and other standardized tests</p>
+                <div class="section-accent"></div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">📝</div>
+                    <h3>IELTS (Academic)</h3>
+                    <p><strong>What it is:</strong> International English Language Testing System, widely accepted worldwide.</p>
+                    <p><strong>Who needs it:</strong> Most international students for visa and university admission.</p>
+                    <p><strong>Typical scores:</strong> 5.5–6.0 for diploma/VET, 6.0–6.5 for undergraduate, 6.5–7.0 for postgraduate. [39][40]</p>
+                    <p><strong>Note:</strong> One Skill Retake (OSR) accepted for eligible visas. [33]</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">💻</div>
+                    <h3>TOEFL iBT</h3>
+                    <p><strong>What it is:</strong> Test of English as a Foreign Language, internet-based test.</p>
+                    <p><strong>Who needs it:</strong> Alternative to IELTS, accepted by all Australian universities.</p>
+                    <p><strong>Typical scores:</strong> 60–67 for diploma/VET, 67–79 for undergraduate, 79–94 for postgraduate. [39]</p>
+                    <p><strong>Minimum for visa:</strong> 67 overall (from August 2025). [40]</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎯</div>
+                    <h3>PTE Academic</h3>
+                    <p><strong>What it is:</strong> Pearson Test of English Academic, computer-based test with AI scoring.</p>
+                    <p><strong>Who needs it:</strong> Popular alternative, faster results (typically 2 days).</p>
+                    <p><strong>Typical scores:</strong> 42–50 for diploma/VET, 50–58 for undergraduate, 58–65 for postgraduate. [39]</p>
+                    <p><strong>Minimum for visa:</strong> 47 overall (from August 2025). [40]</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📚</div>
+                    <h3>Other Approved Tests</h3>
+                    <p><strong>Accepted tests (from August 2025):</strong> CELPIP General (7.0), LanguageCert Academic (61), Michigan English Test (53), OET (1210), C1 Advanced (161). [31][40]</p>
+                    <p><strong>Who needs it:</strong> Students preferring alternative tests to IELTS/TOEFL/PTE.</p>
+                    <p><strong>Check:</strong> Verify your chosen university accepts your preferred test. [31]</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎓</div>
+                    <h3>GRE / GMAT</h3>
+                    <p><strong>What it is:</strong> Graduate Record Examination (GRE) and Graduate Management Admission Test (GMAT).</p>
+                    <p><strong>Who needs it:</strong> Some business schools (MBA, some master's programs) may require GMAT. GRE occasionally required for certain graduate programs.</p>
+                    <p><strong>Check:</strong> Not universally required. Verify program-specific requirements. [4]</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎨</div>
+                    <h3>Portfolio / Audition</h3>
+                    <p><strong>What it is:</strong> Collection of creative work or live performance demonstrating skills.</p>
+                    <p><strong>Who needs it:</strong> Applicants to arts, design, architecture, music, and performance programs.</p>
+                    <p><strong>Requirements:</strong> Varies by institution. May include digital portfolio, in-person audition, or recorded submission. [4]</p>
+                </div>
+            </div>
+
+            <div class="callout">
+                <h4>📅 Test Validity</h4>
+                <p>English test results are typically valid for 2–3 years from the test date. For Student visa applications, tests must be completed within 2 years before visa lodgement (from August 2025). [31][42] Plan your test timing accordingly to ensure results remain valid throughout your application process.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Planning Section -->
+    <section id="application-planning">
+        <div class="container">
+            <div class="section-header">
+                <h2>Application Planning Tracker</h2>
+                <p>Organize your university applications with this interactive tracker</p>
+                <div class="section-accent"></div>
+            </div>
+
+            <div class="tracker">
+                <div class="tracker-header">
+                    <div>Institution / Program</div>
+                    <div>Degree Level</div>
+                    <div>Deadline</div>
+                    <div>Application Fee</div>
+                    <div>Status</div>
+                </div>
+
+                <div class="tracker-row">
+                    <div>
+                        <input type="text" placeholder="University name" style="width: 100%; margin-bottom: 8px;">
+                        <input type="text" placeholder="Program name" style="width: 100%;">
+                    </div>
+                    <div>
+                        <select style="width: 100%;">
+                            <option>Bachelor's</option>
+                            <option>Master's</option>
+                            <option>PhD</option>
+                            <option>Diploma</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <input type="date" style="width: 100%;">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="AUD $" style="width: 100%;">
+                    </div>
+                    <div>
+                        <select style="width: 100%;">
+                            <option class="status-not-started">Not Started</option>
+                            <option class="status-in-progress">In Progress</option>
+                            <option class="status-completed">Completed</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="tracker-row">
+                    <div>
+                        <input type="text" placeholder="University name" style="width: 100%; margin-bottom: 8px;">
+                        <input type="text" placeholder="Program name" style="width: 100%;">
+                    </div>
+                    <div>
+                        <select style="width: 100%;">
+                            <option>Bachelor's</option>
+                            <option>Master's</option>
+                            <option>PhD</option>
+                            <option>Diploma</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <input type="date" style="width: 100%;">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="AUD $" style="width: 100%;">
+                    </div>
+                    <div>
+                        <select style="width: 100%;">
+                            <option class="status-not-started">Not Started</option>
+                            <option class="status-in-progress">In Progress</option>
+                            <option class="status-completed">Completed</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="tracker-row">
+                    <div>
+                        <input type="text" placeholder="University name" style="width: 100%; margin-bottom: 8px;">
+                        <input type="text" placeholder="Program name" style="width: 100%;">
+                    </div>
+                    <div>
+                        <select style="width: 100%;">
+                            <option>Bachelor's</option>
+                            <option>Master's</option>
+                            <option>PhD</option>
+                            <option>Diploma</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <input type="date" style="width: 100%;">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="AUD $" style="width: 100%;">
+                    </div>
+                    <div>
+                        <select style="width: 100%;">
+                            <option class="status-not-started">Not Started</option>
+                            <option class="status-in-progress">In Progress</option>
+                            <option class="status-completed">Completed</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout" style="margin-top: 32px;">
+                <h4>📋 Documents Checklist for Applications</h4>
+                <p>Prepare these documents for each application: academic transcripts, English test results, personal statement, recommendation letters, passport copy, CV/resume, portfolio (if required), and application fee payment. Keep digital copies organized in folders by institution. [4]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Costs & Budget Section -->
+    <section id="costs" style="background: linear-gradient(135deg, #F8F6F2, #F0F7F6);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Costs & Budget Planning</h2>
+                <p>Understanding tuition and living expenses in Australia</p>
+                <div class="section-accent"></div>
+            </div>
+
+            <div class="cards-grid" style="margin-bottom: 48px;">
+                <div class="card">
+                    <div class="card-icon">💰</div>
+                    <h3>Tuition Fees</h3>
+                    <p><strong>Undergraduate:</strong> AUD $20,000–$45,000 per year (average ~$39,805). Professional degrees (medicine, veterinary, dentistry) can exceed $55,000. [12][15]</p>
+                    <p><strong>Master's:</strong> AUD $22,000–$50,000+ per year, depending on program and institution. [12]</p>
+                    <p><strong>PhD:</strong> Often funded through RTP scholarships (fee offset + stipend). Self-funded: AUD $20,000–$42,000 per year. [16][21]</p>
+                    <p><strong>VET/TAFE:</strong> AUD $4,000–$25,000 per year, typically more affordable than university. [13]</p>
+                    <p><em>Fees vary by institution type, program, and location. Go8 universities tend to be at the higher end. [38]</em></p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🏠</div>
+                    <h3>Living Expenses</h3>
+                    <p><strong>Minimum requirement:</strong> AUD $29,710 per year (Department of Home Affairs, 2026). [3][37]</p>
+                    <p><strong>Typical breakdown (annual estimates):</strong> [37]</p>
+                    <ul style="margin-top: 12px; padding-left: 20px; color: var(--text-medium); font-size: 15px;">
+                        <li>Accommodation: AUD $16,640 ($320/week)</li>
+                        <li>Food: AUD $5,200 ($100/week)</li>
+                        <li>Transport: AUD $2,600 ($50/week)</li>
+                        <li>Utilities/Internet: AUD $1,800</li>
+                        <li>OSHC (health insurance): AUD $600–$800</li>
+                        <li>Personal/Entertainment: AUD $2,600</li>
+                    </ul>
+                    <p style="margin-top: 12px;"><em>Sydney and Melbourne are more expensive; regional areas more affordable. [37]</em></p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎫</div>
+                    <h3>One-Time Expenses</h3>
+                    <p><strong>Application fees:</strong> AUD $50–$150 per university application. [4]</p>
+                    <p><strong>Student visa (subclass 500):</strong> AUD $710 (base application charge, subject to change). [2]</p>
+                    <p><strong>Flight to Australia:</strong> AUD $800–$2,500+ depending on origin and season.</p>
+                    <p><strong>Accommodation deposit:</strong> Typically 2–6 weeks rent in advance.</p>
+                    <p><strong>Initial setup:</strong> AUD $1,000–$2,000 for bedding, kitchen items, textbooks, local transport card, SIM card, etc.</p>
+                    <p><strong>OSHC (upfront):</strong> Must purchase for entire visa duration (often 1–2 years upfront). [2]</p>
+                </div>
+            </div>
+
+            <div class="callout">
+                <h4>💡 Budget Planning Tips</h4>
+                <p><strong>1.</strong> Create a detailed budget before arriving, including all one-time and recurring costs. <strong>2.</strong> Research part-time work options (Student visa allows up to 48 hours per fortnight during study periods). [2] <strong>3.</strong> Consider regional areas for lower living costs. <strong>4.</strong> Apply for scholarships early—many have deadlines 6–12 months before study commences. <strong>5.</strong> Track expenses using budgeting apps. <strong>6.</strong> Build an emergency fund (3 months living expenses recommended).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scholarships & Funding Section -->
+    <section id="scholarships">
+        <div class="container">
+            <div class="section-header">
+                <h2>Scholarships & Funding</h2>
+                <p>Financial support options for international students</p>
+                <div class="section-accent"></div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🏛️</div>
+                    <h3>Australia Awards</h3>
+                    <p><strong>What it is:</strong> Australian Government's flagship international scholarship program.</p>
+                    <p><strong>Who it's for:</strong> Students from eligible developing countries in Indo-Pacific region.</p>
+                    <p><strong>Covers:</strong> Full tuition, return airfare, establishment allowance, contribution to living expenses, OSHC.</p>
+                    <p><strong>Application:</strong> Through Australian embassies in home countries. Highly competitive. [7]</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎓</div>
+                    <h3>Research Training Program (RTP)</h3>
+                    <p><strong>What it is:</strong> Australian Government scholarships for research degrees.</p>
+                    <p><strong>Who it's for:</strong> International students in research master's or PhD programs.</p>
+                    <p><strong>Covers:</strong> Tuition fee offset (up to 4 years PhD, 2 years master's) + stipend (~AUD $42,754–$44,293 per year, 2026–2027 rates). [16][17][21]</p>
+                    <p><strong>Application:</strong> Through universities. Competitive. Limited to 10% of RTP funding for international students. [16][19]</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🏫</div>
+                    <h3>University Scholarships</h3>
+                    <p><strong>What it is:</strong> Merit-based and need-based scholarships offered directly by universities.</p>
+                    <p><strong>Who it's for:</strong> High-achieving undergraduate and postgraduate students.</p>
+                    <p><strong>Covers:</strong> Varies from 10%–100% tuition fee reductions. Some include living allowances.</p>
+                    <p><strong>Application:</strong> Often automatic with admission application; some require separate applications. Check individual university websites. [7][19]</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🌟</div>
+                    <h3>Destination Australia</h3>
+                    <p><strong>What it is:</strong> Scholarships to encourage study in regional Australia.</p>
+                    <p><strong>Who it's for:</strong> International students choosing regional universities.</p>
+                    <p><strong>Covers:</strong> Varies by institution (typically AUD $5,000–$15,000 per year).</p>
+                    <p><strong>Application:</strong> Through participating regional universities. [7]</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">💼</div>
+                    <h3>External Foundations</h3>
+                    <p><strong>What it is:</strong> Scholarships from private organizations, foundations, and home country governments.</p>
+                    <p><strong>Who it's for:</strong> Varies by scholarship—check eligibility criteria.</p>
+                    <p><strong>Examples:</strong> Fulbright (US), Chevening (UK, for some programs), home country education ministries, professional associations.</p>
+                    <p><strong>Application:</strong> Directly to funding organizations. Research opportunities in your home country. [7]</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔬</div>
+                    <h3>Research Assistantships</h3>
+                    <p><strong>What it is:</strong> Paid research positions within universities.</p>
+                    <p><strong>Who it's for:</strong> PhD and research master's students.</p>
+                    <p><strong>Covers:</strong> Stipend/salary in exchange for research or teaching assistance.</p>
+                    <p><strong>Application:</strong> Through supervisors or university departments. Often arranged after admission. [16]</p>
+                </div>
+            </div>
+
+            <div class="callout">
+                <h4>📅 Scholarship Timing</h4>
+                <p>Most scholarship applications close 6–12 months before study commences. For February (Semester 1) intake, many scholarships close between March–August of the previous year. For July (Semester 2) intake, deadlines often fall between September–February. Research and prepare applications early! [7][19]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section id="timeline" style="background: linear-gradient(135deg, #F0F7F6, #F5F9FA);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Preparation Timeline</h2>
+                <p>Your month-by-month guide to studying in Australia</p>
+                <div class="section-accent"></div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>12–18+ Months Before</h3>
+                        <ul>
+                            <li>Research Australian universities and programs</li>
+                            <li>Understand admission requirements for your chosen field</li>
+                            <li>Start preparing for English proficiency tests (IELTS, TOEFL, PTE)</li>
+                            <li>Research scholarship opportunities and deadlines</li>
+                            <li>Attend education fairs or webinars about studying in Australia</li>
+                            <li>Begin gathering academic documents (transcripts, certificates)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>9–12 Months Before</h3>
+                        <ul>
+                            <li>Take English proficiency tests (allow time for retakes if needed)</li>
+                            <li>Prepare personal statements and CV/resume</li>
+                            <li>Request recommendation letters from teachers/employers</li>
+                            <li>Research specific scholarship applications and requirements</li>
+                            <li>Shortlist 3–5 universities and programs</li>
+                            <li>Check application deadlines for each institution</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>6–9 Months Before</h3>
+                        <ul>
+                            <li>Submit university applications</li>
+                            <li>Apply for scholarships (many close in this window)</li>
+                            <li>Begin financial planning—calculate total budget</li>
+                            <li>Research accommodation options in your chosen city</li>
+                            <li>Prepare for interviews or portfolio submissions if required</li>
+                            <li>Track application statuses and respond to university requests</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>3–6 Months Before</h3>
+                        <ul>
+                            <li>Receive and compare admission offers</li>
+                            <li>Accept your preferred offer and pay deposit</li>
+                            <li>Receive Confirmation of Enrolment (CoE) from university</li>
+                            <li>Apply for Student visa (subclass 500) with CoE [1][2]</li>
+                            <li>Purchase Overseas Student Health Cover (OSHC) [2]</li>
+                            <li>Begin searching for accommodation (apply early for on-campus housing)</li>
+                            <li>Book flights (often cheaper 2–3 months in advance)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>1–3 Months Before</h3>
+                        <ul>
+                            <li>Receive visa grant notification</li>
+                            <li>Finalize accommodation arrangements</li>
+                            <li>Arrange airport pickup or plan arrival transport</li>
+                            <li>Prepare travel documents (passport, visa grant letter, CoE, OSHC certificate)</li>
+                            <li>Set up international banking or research Australian bank accounts</li>
+                            <li>Pack essentials (check Australian customs regulations)</li>
+                            <li>Attend pre-departure orientation if offered by university</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Departure & Arrival</h3>
+                        <ul>
+                            <li>Carry all important documents in hand luggage</li>
+                            <li>Arrive at least 1–2 weeks before orientation</li>
+                            <li>Complete university enrollment and student ID registration</li>
+                            <li>Attend orientation week activities</li>
+                            <li>Set up local bank account and phone plan</li>
+                            <li>Register with local medical center</li>
+                            <li>Explore campus and local area</li>
+                            <li>Connect with student support services and international student groups</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visa & Immigration Section -->
+    <section id="visa">
+        <div class="container">
+            <div class="section-header">
+                <h2>Student Visa (Subclass 500)</h2>
+                <p>Everything you need to know about Australian student immigration</p>
+                <div class="section-accent"></div>
+            </div>
+
+            <div class="cards-grid" style="margin-bottom: 48px;">
+                <div class="card">
+                    <div class="card-icon">🛂</div>
+                    <h3>Who Needs It</h3>
+                    <p>All international students enrolled in full-time courses longer than 3 months must hold a Student visa (subclass 500). [1][2]</p>
+                    <p>You must be enrolled in a CRICOS-registered course (Commonwealth Register of Institutions and Courses for Overseas Students). [1][5]</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📋</div>
+                    <h3>Key Requirements</h3>
+                    <ul style="padding-left: 20px; color: var(--text-medium); font-size: 15px; margin-top: 12px;">
+                        <li>Confirmation of Enrolment (CoE) from your education provider [1][3]</li>
+                        <li>Genuine Student requirement—demonstrate study is your primary purpose [8]</li>
+                        <li>English proficiency evidence (IELTS, TOEFL, PTE, or approved tests) [31][39]</li>
+                        <li>Financial capacity: minimum AUD $29,710 for living costs (2026 requirement) [3]</li>
+                        <li>Overseas Student Health Cover (OSHC) for entire stay [2]</li>
+                        <li>Health and character requirements (may include medical exams, police certificates)</li>
+                        <li>Valid passport</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">💳</div>
+                    <h3>Application Process</h3>
+                    <ol style="padding-left: 20px; color: var(--text-medium); font-size: 15px; margin-top: 12px;">
+                        <li>Receive CoE from your education provider [1][3]</li>
+                        <li>Create ImmiAccount on Department of Home Affairs website [10]</li>
+                        <li>Complete online Student visa (subclass 500) application</li>
+                        <li>Upload required documents (CoE, passport, financial evidence, English test, OSHC, etc.)</li>
+                        <li>Pay visa application charge (AUD $710 base fee, subject to change) [2]</li>
+                        <li>Provide biometrics if requested</li>
+                        <li>Wait for visa decision (processing times vary—check current times on Home Affairs website)</li>
+                        <li>Receive visa grant notification with visa conditions</li>
+                    </ol>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">⚖️</div>
+                    <h3>Visa Conditions</h3>
+                    <ul style="padding-left: 20px; color: var(--text-medium); font-size: 15px; margin-top: 12px;">
+                        <li><strong>8202:</strong> Meet course requirements—maintain enrollment, attendance, and satisfactory progress [2][9]</li>
+                        <li><strong>8105:</strong> Work limitation—maximum 48 hours per fortnight during study periods; unlimited during scheduled breaks [2]</li>
+                        <li><strong>8501:</strong> Maintain adequate health insurance (OSHC) for entire stay [2]</li>
+                        <li><strong>8516:</strong> Continue to meet visa requirements throughout stay</li>
+                        <li><strong>8517:</strong> Maintain adequate arrangements for school-age dependents (if applicable)</li>
+                        <li>Notify education provider of residential address within 7 days of arrival [2]</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout">
+                <h4>⚠️ Important Changes (October 2026)</h4>
+                <p>From 2 October 2026, new rules apply to Student visa applications regarding who can apply while in Australia and whether family members can be included. Check the Department of Home Affairs website for current rules before applying. [1]</p>
+            </div>
+
+            <div class="callout">
+                <h4>📞 Official Resources</h4>
+                <p><strong>Department of Home Affairs:</strong> Official source for visa requirements, application process, and current fees. [1][2] <strong>Study Australia:</strong> Government website with step-by-step visa guides and student information. [3][7] Always verify current requirements with official government sources—immigration rules can change.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Housing Section -->
+    <section id="housing" style="background: linear-gradient(135deg, #F8F6F2, #F0F7F6);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Finding Accommodation</h2>
+                <p>Housing options for international students in Australia</p>
+                <div class="section-accent"></div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🏫</div>
+                    <h3>University Housing</h3>
+                    <p><strong>What it is:</strong> On-campus residential colleges and apartments managed by universities.</p>
+                    <p><strong>Cost:</strong> AUD $200–$450 per week (varies by city and room type). [37]</p>
+                    <p><strong>Pros:</strong> Close to classes, built-in student community, meals often included, support services.</p>
+                    <p><strong>Cons:</strong> Limited availability, often more expensive, apply early (6–12 months ahead).</p>
+                    <p><strong>Best for:</strong> First-year students wanting convenience and community. [37]</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🏢</div>
+                    <h3>Private Student Residences</h3>
+                    <p><strong>What it is:</strong> Purpose-built student accommodation (PBSA) operated by private companies.</p>
+                    <p><strong>Cost:</strong> AUD $250–$500+ per week depending on location and amenities.</p>
+                    <p><strong>Pros:</strong> Modern facilities, furnished rooms, social events, all-inclusive bills, flexible leases.</p>
+                    <p><strong>Cons:</strong> Can be expensive, may be further from campus.</p>
+                    <p><strong>Best for:</strong> Students wanting independent living with student community.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🏠</div>
+                    <h3>Private Rentals</h3>
+                    <p><strong>What it is:</strong> Renting apartments, houses, or rooms through real estate agents or private landlords.</p>
+                    <p><strong>Cost:</strong> AUD $180–$400+ per week for a room; $400–$800+ for entire apartments (varies significantly by city). [37]</p>
+                    <p><strong>Pros:</strong> More independence, potentially cheaper (especially sharing), wider location options.</p>
+                    <p><strong>Cons:</strong> Need to set up utilities, longer leases (6–12 months), bond/deposit required (typically 4 weeks rent), more responsibility.</p>
+                    <p><strong>Best for:</strong> Students wanting independence and potentially lower costs.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">👨‍👩‍👧</div>
+                    <h3>Homestay</h3>
+                    <p><strong>What it is:</strong> Living with an Australian host family.</p>
+                    <p><strong>Cost:</strong> AUD $250–$350 per week (usually includes meals).</p>
+                    <p><strong>Pros:</strong> Cultural immersion, meals provided, supportive environment, good for younger students.</p>
+                    <p><strong>Cons:</strong> Less independence, house rules, may be further from campus.</p>
+                    <p><strong>Best for:</strong> High school students or undergraduates wanting family environment and cultural experience.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🏨</div>
+                    <h3>Temporary Accommodation</h3>
+                    <p><strong>What it is:</strong> Short-term housing for your first days/weeks (hostels, hotels, short-term rentals).</p>
+                    <p><strong>Cost:</strong> AUD $40–$150+ per night depending on type and location.</p>
+                    <p><strong>Pros:</strong> Flexible, allows time to inspect properties in person, no long-term commitment.</p>
+                    <p><strong>Cons:</strong> More expensive per night, less comfortable for extended stays.</p>
+                    <p><strong>Best for:</strong> First 1–2 weeks while you search for permanent housing. Book for at least 7–14 days. [37]</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📝</div>
+                    <h3>Rental Tips</h3>
+                    <p><strong>Bond:</strong> Typically 4 weeks rent, lodged with state authority, refundable at end of tenancy.</p>
+                    <p><strong>Lease:</strong> Usually 6–12 months. Read carefully before signing.</p>
+                    <p><strong>Inspection:</strong> Always inspect properties in person or via video before committing.</p>
+                    <p><strong>Utilities:</strong> Budget AUD $150–$250/month for electricity, gas, water, internet if not included.</p>
+                    <p><strong>Commute:</strong> Consider proximity to campus and public transport links.</p>
+                    <p><strong>Resources:</strong> Use university accommodation services, realestate.com.au, domain.com.au, flatmates.com.au. [37]</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Arrival & Student Life Section -->
+    <section id="student-life">
+        <div class="container">
+            <div class="section-header">
+                <h2>Arrival & Student Life</h2>
+                <p>Settling in and making the most of your time in Australia</p>
+                <div class="section-accent"></div>
+            </div>
+
+            <div class="images-grid" style="margin-bottom: 48px;">
+                <div class="image-card">
+                    <img src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=600&h=400&fit=crop" alt="Sydney Opera House and harbor, iconic Sydney landmark" loading="lazy">
+                    <div class="image-card-overlay">
+                        <h3>Sydney</h3>
+                        <p>Major study destination</p>
+                    </div>
+                </div>
+                <div class="image-card">
+                    <img src="https://images.unsplash.com/photo-1514395462727-f31ba48a8181?w=600&h=400&fit=crop" alt="Melbourne laneway with street art and cafes" loading="lazy">
+                    <div class="image-card-overlay">
+                        <h3>Melbourne</h3>
+                        <p>Cultural capital</p>
+                    </div>
+                </div>
+                <div class="image-card">
+                    <img src="https://images.unsplash.com/photo-1528659560411-9a7062748639?w=600&h=400&fit=crop" alt="University campus with students studying outdoors" loading="lazy">
+                    <div class="image-card-overlay">
+                        <h3>Campus Life</h3>
+                        <p>Study and socialize</p>
+                    </div>
+                </div>
+                <div class="image-card">
+                    <img src="https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?w=600&h=400&fit=crop" alt="Great Barrier Reef underwater coral scene" loading="lazy">
+                    <div class="image-card-overlay">
+                        <h3>Natural Beauty</h3>
+                        <p>Explore on weekends</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">✈️</div>
+                    <h3>On Arrival</h3>
+                    <ul style="padding-left: 20px; color: var(--text-medium); font-size: 15px; margin-top: 12px;">
+                        <li>Clear immigration with passport and visa grant letter</li>
+                        <li>Collect luggage and clear customs (declare food, plant materials)</li>
+                        <li>Exchange currency or withdraw cash from ATM</li>
+                        <li>Purchase public transport card (Opal in Sydney, myki in Melbourne, etc.)</li>
+                        <li>Take pre-booked airport transfer, taxi, rideshare, or public transport to accommodation</li>
+                        <li>Rest and recover from jet lag before starting orientation</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📱</div>
+                    <h3>Essential Setup</h3>
+                    <ul style="padding-left: 20px; color: var(--text-medium); font-size: 15px; margin-top: 12px;">
+                        <li><strong>Phone/SIM:</strong> Get local SIM (Telstra, Optus, Vodafone, or MVNOs like Amaysim, Boost). Prepaid plans from AUD $20–$40/month.</li>
+                        <li><strong>Bank account:</strong> Open account with major banks (CommBank, Westpac, ANZ, NAB). Bring passport, CoE, visa grant. Some banks allow pre-arrival account setup.</li>
+                        <li><strong>Tax File Number (TFN):</strong> Apply free via ATO website if planning to work. Required for employment.</li>
+                        <li><strong>Medicare:</strong> Not available to most international students—maintain OSHC throughout stay. [2]</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎓</div>
+                    <h3>University Orientation</h3>
+                    <ul style="padding-left: 20px; color: var(--text-medium); font-size: 15px; margin-top: 12px;">
+                        <li>Complete enrollment and receive student ID card</li>
+                        <li>Attend faculty and course orientation sessions</li>
+                        <li>Learn about academic support, library, IT services</li>
+                        <li>Join student clubs and societies (great for meeting people!)</li>
+                        <li>Meet academic advisors and course coordinators</li>
+                        <li>Understand assessment requirements and academic integrity policies</li>
+                        <li>Explore campus facilities (gyms, cafes, study spaces)</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🚆</div>
+                    <h3>Getting Around</h3>
+                    <p><strong>Public transport:</strong> Excellent in major cities. Use Opal (Sydney), myki (Melbourne), go card (Brisbane), SmartRider (Perth). Weekly caps make it affordable. [37]</p>
+                    <p><strong>Trains, buses, trams, ferries:</strong> Extensive networks in cities. Download transport apps for real-time info.</p>
+                    <p><strong>Cycling:</strong> Many cities have bike lanes. Helmets required by law.</p>
+                    <p><strong>Driving:</strong> International driving permit or home license (with translation if not in English) valid for limited period. Consider Australian license for longer stays.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🍽️</div>
+                    <h3>Food & Culture</h3>
+                    <p><strong>Groceries:</strong> Major supermarkets (Coles, Woolworths, Aldi). Asian and international grocery stores widely available.</p>
+                    <p><strong>Eating out:</strong> AUD $15–$30 for casual meals; $40–$80+ for mid-range restaurants. [37]</p>
+                    <p><strong>Coffee culture:</strong> Australia takes coffee seriously! Expect high-quality cafes everywhere.</p>
+                    <p><strong>Multicultural:</strong> Diverse food options reflecting Australia's multicultural population. Easy to find familiar cuisines.</p>
+                    <p><strong>Weather:</strong> Varies significantly—tropical north, temperate south, arid interior. Pack accordingly! Seasons opposite to Northern Hemisphere.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🤝</div>
+                    <h3>Student Support</h3>
+                    <ul style="padding-left: 20px; color: var(--text-medium); font-size: 15px; margin-top: 12px;">
+                        <li><strong>International student advisors:</strong> Dedicated support for visa, academic, and personal matters</li>
+                        <li><strong>Counseling services:</strong> Free, confidential mental health support</li>
+                        <li><strong>Academic support:</strong> Writing centers, tutoring, study skills workshops</li>
+                        <li><strong>Career services:</strong> Resume help, interview prep, job search support</li>
+                        <li><strong>Student associations:</strong> Advocacy, events, representation</li>
+                        <li><strong>International student clubs:</strong> Connect with students from your country or region</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Academic Culture Section -->
+    <section id="academic-culture" style="background: linear-gradient(135deg, #F0F7F6, #F5F9FA);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Academic Culture in Australia</h2>
+                <p>Understanding classroom expectations and student life</p>
+                <div class="section-accent"></div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">📚</div>
+                    <h3>Classroom Etiquette</h3>
+                    <p><strong>Participation:</strong> Australian classrooms encourage questions and discussion. Don't hesitate to ask for clarification.</p>
+                    <p><strong>Punctuality:</strong> Arrive on time for lectures and tutorials. Lateness is considered disrespectful.</p>
+                    <p><strong>Preparation:</strong> Complete required readings before class. Tutorials assume you've done the work.</p>
+                    <p><strong>Respect:</strong> Diverse classrooms with students from many backgrounds. Respect different viewpoints and cultures.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">👨‍🏫</div>
+                    <h3>Professor-Student Relationship</h3>
+                    <p><strong>Approachable:</strong> Australian academics are generally accessible. Use office hours or email to ask questions.</p>
+                    <p><strong>Informality:</strong> First names often used, but maintain professional respect. Follow your lecturer's preference.</p>
+                    <p><strong>Independence:</strong> Expected to manage your own learning. Seek help when needed, but take initiative.</p>
+                    <p><strong>Feedback:</strong> Use feedback on assignments to improve. Request clarification if comments unclear.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">👥</div>
+                    <h3>Group Work</h3>
+                    <p><strong>Common:</strong> Many courses include group assignments to develop teamwork skills.</p>
+                    <p><strong>Communication:</strong> Establish clear roles, deadlines, and communication channels early.</p>
+                    <p><strong>Conflict:</strong> Address issues promptly. Speak with tutor if group dynamics problematic.</p>
+                    <p><strong>Assessment:</strong> Often includes both group product and individual contribution assessment.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📝</div>
+                    <h3>Academic Integrity</h3>
+                    <p><strong>Plagiarism:</strong> Serious offense. Always cite sources properly. Use referencing guides provided by university.</p>
+                    <p><strong>Cheating:</strong> Strictly prohibited. Includes unauthorized collaboration, copying, using unapproved materials in exams.</p>
+                    <p><strong>Consequences:</strong> Can range from failing assignment to expulsion. Understand your university's academic integrity policy.</p>
+                    <p><strong>Support:</strong> If unsure about referencing or collaboration rules, ask your lecturer or academic support services.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🗣️</div>
+                    <h3>Communication Style</h3>
+                    <p><strong>Direct:</strong> Australians tend to be direct communicators. This is not rudeness—it's clarity.</p>
+                    <p><strong>Critical thinking:</strong> Expected to analyze, question, and form your own arguments—not just memorize facts.</p>
+                    <p><strong>Written English:</strong> Academic writing standards are high. Use university writing centers for support.</p>
+                    <p><strong>Presentations:</strong> Common assessment method. Practice and prepare thoroughly.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🌏</div>
+                    <h3>Cultural Considerations</h3>
+                    <p><strong>Multicultural:</strong> Australian universities are diverse. You'll work with students from many countries and backgrounds.</p>
+                    <p><strong>Indigenous culture:</strong> Learn about Aboriginal and Torres Strait Islander peoples and cultures. Many universities have Indigenous support centers.</p>
+                    <p><strong>Informality:</strong> Australian culture is relatively informal. Dress codes are casual unless specified.</p>
+                    <p><strong>Work-life balance:</strong> Australians value balance. Make time for social activities, exercise, and rest alongside study.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Master Checklist Section -->
+    <section id="checklist">
+        <div class="container">
+            <div class="section-header">
+                <h2>Master Checklist</h2>
+                <p>Track your progress through the study abroad journey</p>
+                <div class="section-accent"></div>
+            </div>
+
+            <div class="checklist">
+                <div class="checklist-section">
+                    <h3>🔍 Research Phase</h3>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Choose program and degree level</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Compare universities and locations</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Check academic entry requirements</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Check English language requirements</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Research scholarship opportunities</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Estimate total budget (tuition + living)</label>
+                    </div>
+                </div>
+
+                <div class="checklist-section">
+                    <h3>📝 Testing Phase</h3>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Take English proficiency test (IELTS/TOEFL/PTE)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Take GRE/GMAT if required for program</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Prepare portfolio or audition if required</label>
+                    </div>
+                </div>
+
+                <div class="checklist-section">
+                    <h3>📤 Applications Phase</h3>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Request official transcripts from previous institutions</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Request recommendation letters</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Write personal statement / statement of purpose</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Prepare CV / resume</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Submit university applications</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Track application deadlines and statuses</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Apply for scholarships</label>
+                    </div>
+                </div>
+
+                <div class="checklist-section">
+                    <h3>💰 Funding Phase</h3>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Research all scholarship options</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Prepare financial documents (bank statements, sponsorship letters)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Create detailed budget including all costs</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Arrange funding (scholarships, loans, family support, savings)</label>
+                    </div>
+                </div>
+
+                <div class="checklist-section">
+                    <h3>🛂 Visa & Immigration Phase</h3>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Accept university offer and receive CoE</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Purchase Overseas Student Health Cover (OSHC)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Gather visa documents (passport, CoE, financial evidence, English test, OSHC)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Complete Student visa (subclass 500) application</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Provide biometrics if requested</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Receive visa grant notification</label>
+                    </div>
+                </div>
+
+                <div class="checklist-section">
+                    <h3>✈️ Departure Phase</h3>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Book flights to Australia</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Arrange accommodation (permanent or temporary)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Prepare travel documents (passport, visa grant, CoE, OSHC, academic documents)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Arrange travel insurance for journey</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Prepare emergency contacts and important phone numbers</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Pack essentials (check Australian customs regulations)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                        <label>Attend pre-departure orientation</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Gallery Section -->
+    <section id="gallery" style="background: linear-gradient(135deg, #F8F6F2, #F0F7F6);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Life in Australia</h2>
+                <p>Experience Australian cities, campuses, and landscapes</p>
+                <div class="section-accent"></div>
+            </div>
+
+            <div class="images-grid">
+                <div class="image-card">
+                    <img src="https://images.unsplash.com/photo-1549141079-89458e25f225?w=600&h=400&fit=crop" alt="Bondi Beach Sydney with surfers and golden sand" loading="lazy">
+                    <div class="image-card-overlay">
+                        <h3>Beach Culture</h3>
+                        <p>Iconic Australian lifestyle</p>
+                    </div>
+                </div>
+                <div class="image-card">
+                    <img src="https://images.unsplash.com/photo-1545044846-3512d358ae68?w=600&h=400&fit=crop" alt="University of Sydney historic sandstone buildings" loading="lazy">
+                    <div class="image-card-overlay">
+                        <h3>Historic Campuses</h3>
+                        <p>Beautiful university architecture</p>
+                    </div>
+                </div>
+                <div class="image-card">
+                    <img src="https://images.unsplash.com/photo-1523482580672-01e6f0637f45?w=600&h=400&fit=crop" alt="Australian bush landscape with eucalyptus trees" loading="lazy">
+                    <div class="image-card-overlay">
+                        <h3>Unique Nature</h3>
+                        <p>Explore on weekends</p>
+                    </div>
+                </div>
+                <div class="image-card">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop" alt="Melbourne restaurant dining scene with diverse food" loading="lazy">
+                    <div class="image-card-overlay">
+                        <h3>Food Scene</h3>
+                        <p>Multicultural cuisine</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Official Resources Section -->
+    <section id="resources">
+        <div class="container">
+            <div class="section-header">
+                <h2>Official Starting Points</h2>
+                <p>Trusted government and education resources</p>
+                <div class="section-accent"></div>
+            </div>
+
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <h3>🇦🇺 Study Australia</h3>
+                    <p>Official Australian Government website for international students. Course search, provider information, living guides, and scholarship information.</p>
+                    <a href="https://www.studyaustralia.gov.au/" class="resource-link" target="_blank">Visit Study Australia →</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>🛂 Department of Home Affairs</h3>
+                    <p>Official source for Student visa (subclass 500) requirements, application process, fees, and current immigration rules.</p>
+                    <a href="https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/student-500" class="resource-link" target="_blank">Student Visa Information →</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>🎓 Department of Education</h3>
+                    <p>Information about Australian education system, CRICOS registration, Research Training Program (RTP), and international education data.</p>
+                    <a href="https://www.education.gov.au/" class="resource-link" target="_blank">Visit Department of Education →</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>📚 CRICOS Register</h3>
+                    <p>Search registered courses and providers eligible to enroll international students. Verify your chosen course is CRICOS-registered.</p>
+                    <a href="https://cricos.education.gov.au/" class="resource-link" target="_blank">Search CRICOS →</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>🏛️ Group of Eight</h3>
+                    <p>Australia's eight research-intensive universities. Information about Go8 institutions, research, and academic excellence.</p>
+                    <a href="https://go8.edu.au/" class="resource-link" target="_blank">Visit Go8 →</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>🌏 Australia Awards</h3>
+                    <p>Australian Government's international scholarship program for students from developing countries in the Indo-Pacific region.</p>
+                    <a href="https://www.dfat.gov.au/australia-awards" class="resource-link" target="_blank">Australia Awards →</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>📝 English Language Tests</h3>
+                    <p>Official test information: IELTS, TOEFL, PTE Academic, and other approved English proficiency tests for Australian visas.</p>
+                    <a href="https://immi.homeaffairs.gov.au/help-support/meeting-our-requirements/english-language" class="resource-link" target="_blank">English Requirements →</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>💰 Scholarships Database</h3>
+                    <p>Study Australia's scholarships search tool to find funding opportunities for international students.</p>
+                    <a href="https://www.studyaustralia.gov.au/en/scholarships" class="resource-link" target="_blank">Search Scholarships →</a>
+                </div>
+            </div>
+
+            <div class="callout" style="margin-top: 48px;">
+                <h4>⚠️ Disclaimer</h4>
+                <p>This guide is intended for educational planning purposes. Admissions requirements, tuition fees, scholarships, immigration rules, and other policies can change. Always verify important information with the relevant institution and official government sources. This guide does not constitute legal or immigration advice. [1][2][4][7]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-logo">UniAI</div>
+            <p class="disclaimer">This guide is intended for educational planning purposes. Admissions requirements, tuition, scholarships, immigration rules and other policies can change. Always verify important information with the relevant institution and official government sources.</p>
+            <p class="copyright">© 2026 UniAI. All rights reserved. | Designed to help students study abroad with confidence.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle (basic implementation)
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenu.addEventListener('click', () => {
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.right = '0';
+                navLinks.style.background = 'white';
+                navLinks.style.padding = '20px';
+                navLinks.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+            }
+        });
+
+        // Hide mobile menu on window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'row';
+                navLinks.style.position = 'static';
+                navLinks.style.boxShadow = 'none';
+                navLinks.style.padding = '0';
+            } else {
+                navLinks.style.display = 'none';
+            }
+        });
+
+        // Initialize mobile menu state
+        if (window.innerWidth > 768) {
+            navLinks.style.display = 'flex';
+        } else {
+            navLinks.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
