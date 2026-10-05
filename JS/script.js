@@ -1932,6 +1932,24 @@ function scrollChatToBottom() {
   }, 30);
 }
 
+class ChatAuthError extends Error {}
+
+/** Newest access token. getSession() refreshes it if it has expired. */
+async function getChatAccessToken() {
+  try {
+    if (supabaseApp) {
+      const { data } = await supabaseApp.auth.getSession();
+      if (data && data.session) {
+        state.session = data.session;
+        return data.session.access_token;
+      }
+    }
+  } catch (err) {
+    console.warn("Could not read the session for chat.", err);
+  }
+  return state.session ? state.session.access_token : null;
+}
+
 async function askUniAI(customMessage = null) {
   const input = $("ai-input");
   if (!input || state.isSending) return;
@@ -1966,9 +1984,16 @@ async function askUniAI(customMessage = null) {
   const thinkingId = addAIMessage("assistant", "Thinking…", true);
 
   try {
+    const token = await getChatAccessToken();
+    if (!token) throw new ChatAuthError("Sign in to use AI Chat.");
+
     const res = await fetch(CONFIG.CHAT_ENDPOINT, {
       method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`
+      },
       body: JSON.stringify({
         message,
         conversation: state.conversation.map(({ role, content }) => ({ role, content })),
@@ -1976,6 +2001,9 @@ async function askUniAI(customMessage = null) {
       })
     });
 
+    if (res.status === 401 || res.status === 403) {
+      throw new ChatAuthError("Your session expired. Please sign in again.");
+    }
     if (!res.ok) throw new Error(`Server error: ${res.status}`);
 
     const data = await res.json();
@@ -2005,8 +2033,10 @@ async function askUniAI(customMessage = null) {
     // error text is sent back to the model as if it had said it.
     updateAIMessage(
       thinkingId,
-      "⚠️ I couldn't reach UniAI. Check that your server is running and that " +
-        `\`${CONFIG.CHAT_ENDPOINT}\` is available.`
+      error instanceof ChatAuthError
+        ? `🔒 ${error.message}`
+        : "⚠️ I couldn't reach UniAI. Check that your server is running and that " +
+            `\`${CONFIG.CHAT_ENDPOINT}\` is available.`
     );
   } finally {
     state.isSending = false;
