@@ -1868,19 +1868,99 @@ function animateCurrencyValue(id, finalValue, symbol) {
    11. AI CHAT
    ========================================================================== */
 
+/**
+ * Models sometimes answer in HTML (<ul><li>…) even when asked for Markdown.
+ * Turn that HTML into plain Markdown-style text so it renders as formatting
+ * instead of showing literal tags. Everything is still escaped afterwards.
+ */
+function aiHtmlToText(text) {
+  if (!/<\s*\/?\s*(ul|ol|li|p|br|strong|b|em|i|h[1-6]|div|span)\b/i.test(text)) return text;
+
+  return text
+    .replace(/<\s*br\s*\/?\s*>/gi, "\n")
+    .replace(/<\s*\/?\s*(ul|ol|div)\b[^>]*>/gi, "\n")
+    .replace(/<\s*li\b[^>]*>/gi, "\n- ")
+    .replace(/<\s*\/\s*li\s*>/gi, "")
+    .replace(/<\s*\/\s*p\s*>/gi, "\n\n")
+    .replace(/<\s*p\b[^>]*>/gi, "")
+    .replace(/<\s*(strong|b)\b[^>]*>([\s\S]*?)<\s*\/\s*\1\s*>/gi, "**$2**")
+    .replace(/<\s*(em|i)\b[^>]*>([\s\S]*?)<\s*\/\s*\1\s*>/gi, "*$2*")
+    .replace(/<\s*h[1-6]\b[^>]*>([\s\S]*?)<\s*\/\s*h[1-6]\s*>/gi, "\n**$1**\n")
+    .replace(/<\/?[a-z][^>]*>/gi, "")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
 function formatAIResponse(text) {
   if (text == null) return "";
 
-  // Escape first, then add a small, safe subset of markdown.
-  let out = escapeHTML(String(text));
+  // Pull code fences out first so nothing inside them is reformatted.
+  const fences = [];
+  let src = String(text).replace(/```(?:[a-z0-9+-]*\n)?([\s\S]*?)```/gi, (_, code) => {
+    fences.push(code.replace(/\n$/, ""));
+    return `\u0000${fences.length - 1}\u0000`;
+  });
 
-  out = out.replace(/```([\s\S]*?)```/g, "<pre><code>$1</code></pre>");
-  out = out.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-  out = out.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, "$1<em>$2</em>");
-  out = out.replace(/`([^`\n]+)`/g, "<code>$1</code>");
-  out = out.replace(/\n/g, "<br>");
+  src = aiHtmlToText(src);
 
-  return out;
+  // Escape, then add a small, safe subset of markdown.
+  const inline = (line) =>
+    escapeHTML(line)
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+      .replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, "$1<em>$2</em>")
+      .replace(/`([^`\n]+)`/g, "<code>$1</code>");
+
+  const html = [];
+  let list = null; // "ul" | "ol"
+
+  const closeList = () => {
+    if (list) html.push(`</${list}>`);
+    list = null;
+  };
+
+  const openList = (type) => {
+    if (list === type) return;
+    closeList();
+    list = type;
+    html.push(`<${type} style="margin:.4em 0 .4em 1.3em;padding:0">`);
+  };
+
+  const lines = src.split("\n");
+
+  lines.forEach((rawLine, idx) => {
+    const line = rawLine.replace(/\s+$/, "");
+    let m;
+
+    if ((m = line.match(/^\u0000(\d+)\u0000$/))) {
+      closeList();
+      html.push(`<pre><code>${escapeHTML(fences[Number(m[1])])}</code></pre>`);
+    } else if ((m = line.match(/^\s*[-*•]\s+(.*)$/))) {
+      openList("ul");
+      html.push(`<li>${inline(m[1])}</li>`);
+    } else if ((m = line.match(/^\s*\d+[.)]\s+(.*)$/))) {
+      openList("ol");
+      html.push(`<li>${inline(m[1])}</li>`);
+    } else if ((m = line.match(/^\s*#{1,6}\s+(.*)$/))) {
+      closeList();
+      html.push(`<strong>${inline(m[1])}</strong><br>`);
+    } else if (!line.trim()) {
+      // A blank line between items of the same list doesn't end the list.
+      const next = lines.slice(idx + 1).find((l) => l.trim());
+      const nextType = next && (/^\s*[-*•]\s+/.test(next) ? "ul" : /^\s*\d+[.)]\s+/.test(next) ? "ol" : null);
+      if (list && nextType === list) return;
+      closeList();
+      if (html.length && !/(<br>|<\/pre>|<\/[uo]l>)$/.test(html[html.length - 1])) html.push("<br>");
+    } else {
+      closeList();
+      html.push(`${inline(line)}<br>`);
+    }
+  });
+
+  closeList();
+
+  // Any fence marker that ended up inside a line (rare): restore it as inline code.
+  return html.join("").replace(/\u0000(\d+)\u0000/g, (_, i) => `<code>${escapeHTML(fences[Number(i)])}</code>`)
+    .replace(/(<br>)+$/, "");
 }
 
 function addAIMessage(role, text, temporary = false) {
