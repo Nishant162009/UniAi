@@ -50,7 +50,8 @@
   const PERSONAL_KEYS = [
     "roadmapProgress", // road.js
     "studyAbroadChecklist", // guide.js
-    "uniAIConversation", // script.js chat
+    "uniAIChats", // script.js chat history (all saved chats)
+    "uniAIConversation", // legacy single chat, imported once into uniAIChats
     "uniai-sop-studio" // sop.js drafts
   ];
 

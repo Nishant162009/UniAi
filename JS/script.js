@@ -60,7 +60,8 @@ const CONFIG = {
 
   STORAGE: {
     theme: "uniai-theme",
-    chat: "uniAIConversation",
+    chat: "uniAIConversation", // legacy single conversation (imported once)
+    chats: "uniAIChats",
     shortlist: "uniai-shortlist"
   }
 };
@@ -1968,19 +1969,29 @@ function addAIMessage(role, text, temporary = false) {
   if (!messages) return null;
 
   const messageId = `uni-ai-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+  const isUser = role === "user";
 
+  // ai.css styles .ai-msg / .ai-msg-avatar / .ai-msg-bubble; the extra
+  // .ai-message* classes are hooks other code (and updateAIMessage) rely on.
   const wrapper = document.createElement("div");
-  wrapper.className =
-    role === "user" ? "ai-message ai-user-message" : "ai-message ai-assistant-message";
+  wrapper.className = `ai-msg ${isUser ? "user" : "assistant"} ai-message ${
+    isUser ? "ai-user-message" : "ai-assistant-message"
+  }`;
   wrapper.dataset.messageId = messageId;
   if (temporary) wrapper.classList.add("ai-thinking-message");
 
+  const meta = (state.session && state.session.user && state.session.user.user_metadata) || {};
+  const avatar = isUser ? meta.avatar_emoji || "👤" : "✦";
+
+  const body = temporary
+    ? '<div class="ai-typing" role="status" aria-label="UniAI is typing"><span></span><span></span><span></span></div>'
+    : isUser
+      ? escapeHTML(text)
+      : formatAIResponse(text);
+
   wrapper.innerHTML = `
-    <div class="ai-message-avatar">${role === "user" ? "👤" : "✦"}</div>
-    <div class="ai-message-content">
-      <div class="ai-message-role">${role === "user" ? "You" : "UniAI"}</div>
-      <div class="ai-message-text">${role === "user" ? escapeHTML(text) : formatAIResponse(text)}</div>
-    </div>
+    <div class="ai-msg-avatar" aria-hidden="true">${escapeHTML(avatar)}</div>
+    <div class="ai-msg-bubble ai-message-text">${body}</div>
   `;
 
   messages.appendChild(wrapper);
@@ -2030,16 +2041,277 @@ async function getChatAccessToken() {
   return state.session ? state.session.access_token : null;
 }
 
+/* ==========================================================================
+   CHAT HISTORY — many saved chats with a ChatGPT-style sidebar
+
+   Storage key "uniAIChats" (mirrored to the account by sync.js):
+     { version, activeId, legacyMigrated, chats: [{ id, title, createdAt,
+       updatedAt, messages: [{ role, content, timestamp }] }] }
+   The old single-conversation key ("uniAIConversation") is imported once.
+   ========================================================================== */
+
+const CHAT_LIMITS = {
+  chats: 60, // newest kept
+  messages: 200, // per chat
+  context: 30, // messages sent to the model per request
+  chars: 800000, // stays under sync.js's 900 KB value limit
+  title: 48
+};
+
+const SIDEBAR_KEY = "uniai-chat-sidebar";
+
+const chatStore = { activeId: null, chats: [], legacyMigrated: false };
+const pendingReplies = new Map(); // chatId -> { thinkingId } while waiting for the model
+let chatSearch = "";
+let renamingChat = false;
+let chatListDirty = false;
+
+const newChatId = () => `c_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+
+function cleanMessages(list) {
+  if (!Array.isArray(list)) return [];
+  return list
+    .filter(
+      (m) => m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string"
+    )
+    .map((m) => ({
+      role: m.role,
+      content: m.content,
+      timestamp: m.timestamp || new Date().toISOString()
+    }))
+    .slice(-CHAT_LIMITS.messages);
+}
+
+function titleFrom(text) {
+  const t = String(text || "").replace(/\s+/g, " ").trim();
+  if (!t) return "New chat";
+  return t.length > CHAT_LIMITS.title ? `${t.slice(0, CHAT_LIMITS.title - 1).trimEnd()}…` : t;
+}
+
+const activeChat = () => chatStore.chats.find((c) => c.id === chatStore.activeId) || null;
+const isActiveChatBusy = () => Boolean(chatStore.activeId && pendingReplies.has(chatStore.activeId));
+
+function persistChats() {
+  chatStore.chats.sort((a, b) => b.updatedAt - a.updatedAt);
+  chatStore.chats = chatStore.chats.slice(0, CHAT_LIMITS.chats);
+  if (chatStore.activeId && !activeChat()) chatStore.activeId = null;
+
+  const build = () =>
+    JSON.stringify({
+      version: 1,
+      activeId: chatStore.activeId,
+      legacyMigrated: chatStore.legacyMigrated,
+      chats: chatStore.chats
+    });
+
+  let json = build();
+
+  // Stay under the sync size limit: drop the oldest chats, then the oldest messages.
+  let guard = 0;
+  while (json.length > CHAT_LIMITS.chars && guard++ < 500) {
+    if (chatStore.chats.length > 1) {
+      const last = chatStore.chats[chatStore.chats.length - 1];
+      if (last.id === chatStore.activeId) chatStore.chats.splice(chatStore.chats.length - 2, 1);
+      else chatStore.chats.pop();
+    } else if (chatStore.chats[0] && chatStore.chats[0].messages.length > 2) {
+      chatStore.chats[0].messages.splice(0, 2);
+    } else {
+      break;
+    }
+    json = build();
+  }
+
+  try {
+    localStorage.setItem(CONFIG.STORAGE.chats, json);
+  } catch (err) {
+    console.warn("Could not save chats:", err);
+  }
+}
+
+function loadChatStore() {
+  const raw = readStore(CONFIG.STORAGE.chats, null);
+
+  if (raw && Array.isArray(raw.chats)) {
+    chatStore.chats = raw.chats
+      .filter((c) => c && typeof c.id === "string")
+      .map((c) => {
+        const created = Number(c.createdAt) || Date.now();
+        return {
+          id: c.id,
+          title: String(c.title || "New chat").slice(0, 120),
+          createdAt: created,
+          updatedAt: Number(c.updatedAt) || created,
+          messages: cleanMessages(c.messages)
+        };
+      })
+      .filter((c) => c.messages.length);
+    chatStore.activeId = chatStore.chats.some((c) => c.id === raw.activeId) ? raw.activeId : null;
+    chatStore.legacyMigrated = Boolean(raw.legacyMigrated);
+  }
+
+  // One-time import of the old single saved conversation.
+  if (!chatStore.legacyMigrated) {
+    const legacy = cleanMessages(readStore(CONFIG.STORAGE.chat, []));
+    if (legacy.length) {
+      const first = legacy.find((m) => m.role === "user");
+      const stamp = Date.parse(legacy[legacy.length - 1].timestamp) || Date.now();
+      const chat = {
+        id: newChatId(),
+        title: titleFrom(first ? first.content : "Previous chat"),
+        createdAt: stamp,
+        updatedAt: stamp,
+        messages: legacy
+      };
+      chatStore.chats.push(chat);
+      if (!chatStore.activeId) chatStore.activeId = chat.id;
+    }
+    chatStore.legacyMigrated = true;
+    persistChats();
+  }
+}
+
+/** Saves state.conversation into the active chat, creating the chat on its first message. */
+function saveConversation() {
+  let chat = activeChat();
+
+  if (!chat) {
+    if (!state.conversation.length) return;
+    const first = state.conversation.find((m) => m.role === "user");
+    chat = {
+      id: newChatId(),
+      title: titleFrom(first ? first.content : ""),
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      messages: []
+    };
+    chatStore.chats.unshift(chat);
+    chatStore.activeId = chat.id;
+  }
+
+  chat.messages = cleanMessages(state.conversation);
+  chat.updatedAt = Date.now();
+  persistChats();
+  renderChatList();
+}
+
+/* ---------- screen state ---------- */
+
+function syncSendState() {
+  const busy = isActiveChatBusy();
+  state.isSending = busy;
+
+  const sendBtn = $("ai-send-btn");
+  if (sendBtn) {
+    sendBtn.disabled = busy;
+    sendBtn.classList.toggle("loading", busy);
+  }
+}
+
+function showWelcomeScreen() {
+  const messages = $("ai-messages");
+  if (messages) messages.innerHTML = "";
+
+  const conversation = $("ai-conversation");
+  if (conversation) conversation.classList.add("hidden");
+
+  const welcome = $("ai-welcome");
+  if (welcome) welcome.classList.remove("hidden");
+}
+
+function showChatScreen(chat) {
+  state.conversation = cleanMessages(chat.messages);
+
+  const welcome = $("ai-welcome");
+  const conversation = $("ai-conversation");
+  const messages = $("ai-messages");
+
+  if (welcome) welcome.classList.add("hidden");
+  if (conversation) conversation.classList.remove("hidden");
+  if (messages) messages.innerHTML = "";
+
+  state.conversation.forEach((item) => addAIMessage(item.role, item.content));
+
+  // A reply for this chat is still on its way: show the typing bubble again.
+  const pending = pendingReplies.get(chat.id);
+  if (pending) pending.thinkingId = addAIMessage("assistant", "Thinking…", true);
+
+  scrollChatToBottom();
+}
+
+function openChat(id) {
+  const chat = chatStore.chats.find((c) => c.id === id);
+  if (!chat) return;
+
+  chatStore.activeId = id;
+  persistChats();
+  showChatScreen(chat);
+  syncSendState();
+  renderChatList();
+  closeChatMenu();
+  if (isMobileChat()) setSidebar(false);
+
+  const input = $("ai-input");
+  if (input && !isMobileChat()) input.focus();
+}
+
+function startNewUniAIChat() {
+  state.conversation = [];
+  chatStore.activeId = null;
+  persistChats();
+
+  showWelcomeScreen();
+  syncSendState();
+  renderChatList();
+  closeChatMenu();
+  if (isMobileChat()) setSidebar(false);
+
+  const input = $("ai-input");
+  if (input) {
+    input.value = "";
+    input.style.height = "auto";
+    input.focus();
+  }
+}
+
+/* ---------- sending ---------- */
+
+function showReplyInDom(chatId, text) {
+  if (chatStore.activeId !== chatId) return;
+
+  const pending = pendingReplies.get(chatId);
+  const bubble = pending && document.querySelector(`[data-message-id="${pending.thinkingId}"]`);
+
+  if (bubble) updateAIMessage(pending.thinkingId, text);
+  else addAIMessage("assistant", text);
+}
+
+function storeReply(chatId, text) {
+  const message = { role: "assistant", content: text, timestamp: new Date().toISOString() };
+
+  if (chatStore.activeId === chatId) {
+    state.conversation.push(message);
+    saveConversation();
+    return;
+  }
+
+  // The user switched chats while waiting: file the reply in the chat it belongs to.
+  const chat = chatStore.chats.find((c) => c.id === chatId);
+  if (!chat) return; // deleted meanwhile
+  chat.messages = cleanMessages([...chat.messages, message]);
+  chat.updatedAt = Date.now();
+  persistChats();
+  renderChatList();
+}
+
 async function askUniAI(customMessage = null) {
   const input = $("ai-input");
-  if (!input || state.isSending) return;
+  if (!input || isActiveChatBusy()) return;
 
   const message = customMessage !== null ? String(customMessage) : input.value;
   if (!message.trim()) return;
 
   const welcome = $("ai-welcome");
   const conversation = $("ai-conversation");
-  const sendBtn = $("ai-send-btn");
 
   if (welcome) welcome.classList.add("hidden");
   if (conversation) conversation.classList.remove("hidden");
@@ -2050,18 +2322,20 @@ async function askUniAI(customMessage = null) {
     content: message,
     timestamp: new Date().toISOString()
   });
-  saveConversation();
+  saveConversation(); // creates the chat on its first message
+
+  const chatId = chatStore.activeId;
+  const history = state.conversation
+    .slice(-CHAT_LIMITS.context)
+    .map(({ role, content }) => ({ role, content }));
 
   input.value = "";
   input.style.height = "auto";
 
-  state.isSending = true;
-  if (sendBtn) {
-    sendBtn.disabled = true;
-    sendBtn.classList.add("loading");
-  }
-
   const thinkingId = addAIMessage("assistant", "Thinking…", true);
+  pendingReplies.set(chatId, { thinkingId });
+  syncSendState();
+  renderChatList(); // shows the "working" dot on this chat
 
   try {
     const token = await getChatAccessToken();
@@ -2076,7 +2350,7 @@ async function askUniAI(customMessage = null) {
       },
       body: JSON.stringify({
         message,
-        conversation: state.conversation.map(({ role, content }) => ({ role, content })),
+        conversation: history,
         profile: window.UniAIPreferences ? window.UniAIPreferences.get() : null
       })
     });
@@ -2099,112 +2373,364 @@ async function askUniAI(customMessage = null) {
 
     if (!reply) throw new Error("The backend returned an empty response.");
 
-    updateAIMessage(thinkingId, String(reply));
-    state.conversation.push({
-      role: "assistant",
-      content: String(reply),
-      timestamp: new Date().toISOString()
-    });
-    saveConversation();
+    storeReply(chatId, String(reply));
+    showReplyInDom(chatId, String(reply));
   } catch (error) {
     console.error("UniAI chat error:", error);
 
     // Shown to the user, but NOT stored in the conversation — otherwise the
     // error text is sent back to the model as if it had said it.
-    updateAIMessage(
-      thinkingId,
+    showReplyInDom(
+      chatId,
       error instanceof ChatAuthError
         ? `🔒 ${error.message}`
         : "⚠️ I couldn't reach UniAI. Check that your server is running and that " +
             `\`${CONFIG.CHAT_ENDPOINT}\` is available.`
     );
   } finally {
-    state.isSending = false;
-    if (sendBtn) {
-      sendBtn.disabled = false;
-      sendBtn.classList.remove("loading");
+    pendingReplies.delete(chatId);
+    syncSendState();
+    renderChatList();
+    if (chatStore.activeId === chatId) {
+      scrollChatToBottom();
+      input.focus();
     }
-    scrollChatToBottom();
-    input.focus();
   }
 }
 
-function startNewUniAIChat() {
-  state.conversation = [];
-  state.isSending = false;
+/* ---------- sidebar ---------- */
 
-  const messages = $("ai-messages");
-  if (messages) messages.innerHTML = "";
+const isMobileChat = () => window.matchMedia("(max-width: 820px)").matches;
 
-  const conversation = $("ai-conversation");
-  if (conversation) conversation.classList.add("hidden");
+function setSidebar(open) {
+  const shell = document.querySelector("#ai-chatPage .ai-shell");
+  if (!shell) return;
 
-  const welcome = $("ai-welcome");
-  if (welcome) welcome.classList.remove("hidden");
-
-  const input = $("ai-input");
-  if (input) {
-    input.value = "";
-    input.style.height = "auto";
-    input.focus();
+  if (isMobileChat()) {
+    shell.classList.toggle("sb-open", open);
+  } else {
+    shell.classList.toggle("sb-closed", !open);
+    try {
+      localStorage.setItem(SIDEBAR_KEY, open ? "open" : "closed");
+    } catch (err) {
+      /* ignore */
+    }
   }
 
-  try {
-    localStorage.removeItem(CONFIG.STORAGE.chat);
-  } catch (err) {
-    /* ignore */
+  const toggle = $("ai-sidebar-toggle");
+  if (toggle) toggle.setAttribute("aria-expanded", String(open));
+}
+
+function toggleSidebar() {
+  const shell = document.querySelector("#ai-chatPage .ai-shell");
+  if (!shell) return;
+  const open = isMobileChat() ? !shell.classList.contains("sb-open") : shell.classList.contains("sb-closed");
+  setSidebar(open);
+}
+
+function chatGroupLabel(ts) {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  const day = 86400000;
+
+  if (ts >= today) return "Today";
+  if (ts >= today - day) return "Yesterday";
+  if (ts >= today - 7 * day) return "Previous 7 days";
+  if (ts >= today - 30 * day) return "Previous 30 days";
+  return "Older";
+}
+
+function renderChatList() {
+  const list = $("chat-list");
+  if (!list) return;
+
+  // Don't wipe a title that is being edited; redraw once editing ends.
+  if (renamingChat) {
+    chatListDirty = true;
+    return;
   }
-}
 
-function saveConversation() {
-  writeStore(CONFIG.STORAGE.chat, state.conversation);
-}
-
-function loadConversation() {
-  const saved = readStore(CONFIG.STORAGE.chat, []);
-  if (!Array.isArray(saved) || !saved.length) return;
-
-  state.conversation = saved.filter(
-    (item) =>
-      item &&
-      (item.role === "user" || item.role === "assistant") &&
-      typeof item.content === "string"
+  const q = chatSearch.trim().toLowerCase();
+  const chats = chatStore.chats.filter(
+    (c) =>
+      !q ||
+      c.title.toLowerCase().includes(q) ||
+      c.messages.some((m) => m.content.toLowerCase().includes(q))
   );
 
-  if (!state.conversation.length) return;
+  const clearBtn = $("chat-clear-all");
+  if (clearBtn) clearBtn.hidden = !chatStore.chats.length;
 
-  const welcome = $("ai-welcome");
-  const conversation = $("ai-conversation");
-  const messages = $("ai-messages");
+  if (!chats.length) {
+    list.innerHTML = `<p class="ai-chat-empty">${
+      q ? "No chats match your search." : "Your conversations will be saved here."
+    }</p>`;
+    return;
+  }
 
-  if (welcome) welcome.classList.add("hidden");
-  if (conversation) conversation.classList.remove("hidden");
-  if (messages) messages.innerHTML = "";
+  let html = "";
+  let lastGroup = "";
 
-  state.conversation.forEach((item) => addAIMessage(item.role, item.content));
-  scrollChatToBottom();
+  chats.forEach((c) => {
+    const group = chatGroupLabel(c.updatedAt);
+    if (group !== lastGroup) {
+      html += `<div class="ai-chat-group">${group}</div>`;
+      lastGroup = group;
+    }
+
+    const classes = ["ai-chat-item"];
+    if (c.id === chatStore.activeId) classes.push("active");
+    if (pendingReplies.has(c.id)) classes.push("busy");
+
+    html += `
+      <div class="${classes.join(" ")}" data-chat-id="${escapeHTML(c.id)}">
+        <button type="button" class="ai-chat-open" title="${escapeHTML(c.title)}"${
+          c.id === chatStore.activeId ? ' aria-current="true"' : ""
+        }>
+          <span class="ai-chat-title">${escapeHTML(c.title)}</span>
+        </button>
+        <button type="button" class="ai-chat-more" aria-label="Chat options" aria-haspopup="menu">⋯</button>
+      </div>`;
+  });
+
+  list.innerHTML = html;
 }
 
+/* ---------- chat menu (rename / delete) ---------- */
+
+let menuChatId = null;
+
+function ensureChatMenu() {
+  let menu = $("chat-menu");
+  if (menu) return menu;
+
+  menu = document.createElement("div");
+  menu.id = "chat-menu";
+  menu.className = "ai-chat-menu";
+  menu.setAttribute("role", "menu");
+  menu.hidden = true;
+  menu.innerHTML = `
+    <button type="button" role="menuitem" data-act="rename">✎ Rename</button>
+    <button type="button" role="menuitem" data-act="delete" class="danger">🗑 Delete</button>`;
+  document.body.appendChild(menu);
+
+  menu.addEventListener("click", (event) => {
+    const btn = event.target.closest("button[data-act]");
+    if (!btn) return;
+    const id = menuChatId;
+    closeChatMenu();
+    if (btn.dataset.act === "rename") beginRenameChat(id);
+    else deleteChat(id);
+  });
+
+  return menu;
+}
+
+function openChatMenu(id, anchor) {
+  const menu = ensureChatMenu();
+  menuChatId = id;
+  menu.hidden = false;
+
+  const rect = anchor.getBoundingClientRect();
+  const width = menu.offsetWidth || 160;
+  const left = Math.min(Math.max(8, rect.right - width), window.innerWidth - width - 8);
+  const top = Math.min(rect.bottom + 4, window.innerHeight - menu.offsetHeight - 8);
+
+  menu.style.left = `${left}px`;
+  menu.style.top = `${Math.max(8, top)}px`;
+  menu.querySelector("button").focus();
+}
+
+function closeChatMenu() {
+  const menu = $("chat-menu");
+  if (menu) menu.hidden = true;
+  menuChatId = null;
+}
+
+function beginRenameChat(id) {
+  const chat = chatStore.chats.find((c) => c.id === id);
+  const item = $$(".ai-chat-item").find((n) => n.dataset.chatId === id);
+  if (!chat || !item) return;
+
+  renamingChat = true;
+  item.classList.add("renaming");
+
+  const field = document.createElement("input");
+  field.type = "text";
+  field.className = "ai-chat-rename";
+  field.maxLength = 80;
+  field.value = chat.title;
+  field.setAttribute("aria-label", "Chat title");
+
+  item.querySelector(".ai-chat-open").replaceWith(field);
+  field.focus();
+  field.select();
+
+  let finished = false;
+  const finish = (save) => {
+    if (finished) return;
+    finished = true;
+    renamingChat = false;
+
+    if (save) {
+      const title = field.value.replace(/\s+/g, " ").trim();
+      if (title) {
+        chat.title = title.slice(0, 80);
+        persistChats();
+      }
+    }
+    chatListDirty = false;
+    renderChatList();
+  };
+
+  // Global shortcut handlers swallow the space key; keep typing normal here.
+  field.addEventListener("keydown", (event) => {
+    event.stopPropagation();
+    if (event.key === "Enter") {
+      event.preventDefault();
+      finish(true);
+    } else if (event.key === "Escape") {
+      event.preventDefault();
+      finish(false);
+    }
+  });
+  field.addEventListener("blur", () => finish(true));
+}
+
+async function deleteChat(id) {
+  const chat = chatStore.chats.find((c) => c.id === id);
+  if (!chat) return;
+
+  if (shouldConfirm()) {
+    const ok = await showConfirmCard(`"${chat.title}" will be permanently deleted.`, {
+      title: "Delete this chat?",
+      confirmText: "Delete",
+      cancelText: "Keep it"
+    });
+    if (!ok) return;
+  }
+
+  const wasActive = chatStore.activeId === id;
+  chatStore.chats = chatStore.chats.filter((c) => c.id !== id);
+  pendingReplies.delete(id);
+
+  if (wasActive) startNewUniAIChat(); // also saves
+  else {
+    persistChats();
+    renderChatList();
+  }
+}
+
+async function clearAllChats() {
+  if (!chatStore.chats.length) return;
+
+  if (shouldConfirm()) {
+    const ok = await showConfirmCard("All your saved conversations will be permanently deleted.", {
+      title: "Clear all chats?",
+      confirmText: "Clear all",
+      cancelText: "Cancel"
+    });
+    if (!ok) return;
+  }
+
+  chatStore.chats = [];
+  pendingReplies.clear();
+  startNewUniAIChat();
+}
+
+/** Kept so any old call sites still work: opens the history sidebar. */
 function showUniAIHistory() {
-  const saved = readStore(CONFIG.STORAGE.chat, []);
+  setSidebar(true);
+  const search = $("chat-search");
+  if (search) search.focus();
+}
 
-  if (!Array.isArray(saved) || !saved.length) {
-    alert("No previous UniAI conversation found.");
-    return;
+function initChatHistory() {
+  loadChatStore();
+
+  const shell = document.querySelector("#ai-chatPage .ai-shell");
+  if (shell && !shell.dataset.bound) {
+    shell.dataset.bound = "1";
+
+    // Desktop remembers open/closed; phones always start closed.
+    let saved = "open";
+    try {
+      saved = localStorage.getItem(SIDEBAR_KEY) || "open";
+    } catch (err) {
+      /* ignore */
+    }
+    if (!isMobileChat() && saved === "closed") shell.classList.add("sb-closed");
+
+    const toggle = $("ai-sidebar-toggle");
+    if (toggle) toggle.addEventListener("click", toggleSidebar);
+
+    const backdrop = $("ai-sidebar-backdrop");
+    if (backdrop) backdrop.addEventListener("click", () => setSidebar(false));
+
+    const closeBtn = $("ai-sidebar-close");
+    if (closeBtn) closeBtn.addEventListener("click", () => setSidebar(false));
+
+    const list = $("chat-list");
+    if (list) {
+      list.addEventListener("click", (event) => {
+        const item = event.target.closest(".ai-chat-item");
+        if (!item) return;
+
+        if (event.target.closest(".ai-chat-more")) {
+          event.stopPropagation();
+          const same = menuChatId === item.dataset.chatId && !$("chat-menu").hidden;
+          closeChatMenu();
+          if (!same) openChatMenu(item.dataset.chatId, event.target.closest(".ai-chat-more"));
+          return;
+        }
+
+        if (event.target.closest(".ai-chat-open")) openChat(item.dataset.chatId);
+      });
+
+      list.addEventListener("scroll", closeChatMenu, { passive: true });
+    }
+
+    const search = $("chat-search");
+    if (search) {
+      search.addEventListener(
+        "keydown",
+        (event) => {
+          if (event.key === " ") event.stopPropagation();
+        },
+        true
+      );
+      search.addEventListener("input", () => {
+        chatSearch = search.value;
+        renderChatList();
+      });
+    }
+
+    const clearAll = $("chat-clear-all");
+    if (clearAll) clearAll.addEventListener("click", clearAllChats);
+
+    document.addEventListener("pointerdown", (event) => {
+      const menu = $("chat-menu");
+      if (menu && !menu.hidden && !menu.contains(event.target) && !event.target.closest(".ai-chat-more")) {
+        closeChatMenu();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      const menu = $("chat-menu");
+      if (menu && !menu.hidden) closeChatMenu();
+      else if (isMobileChat() && shell.classList.contains("sb-open")) setSidebar(false);
+    });
+
+    window.addEventListener("resize", closeChatMenu);
   }
 
-  const userMessages = saved.filter((item) => item && item.role === "user");
-  if (!userMessages.length) {
-    alert("No previous UniAI messages found.");
-    return;
-  }
+  renderChatList();
 
-  const latest = userMessages[userMessages.length - 1];
-  const ok = confirm(
-    `Previous chat found.\n\nLast question:\n${latest.content}\n\nLoad this conversation?`
-  );
-
-  if (ok) loadConversation();
+  const chat = activeChat();
+  if (chat) showChatScreen(chat);
+  else showWelcomeScreen();
+  syncSendState();
 }
 
 function setUniAIInput(text) {
@@ -2258,11 +2784,7 @@ function setupChatComposer() {
     });
   });
 
-  const newChatBtn = $("new-chat-btn");
-  if (newChatBtn) newChatBtn.addEventListener("click", startNewUniAIChat);
-
-  const historyBtn = $("chat-history-btn");
-  if (historyBtn) historyBtn.addEventListener("click", showUniAIHistory);
+  $$(".js-new-chat").forEach((btn) => btn.addEventListener("click", startNewUniAIChat));
 
   const tools = {
     "university-tool":
@@ -2280,7 +2802,7 @@ function setupChatComposer() {
 
   setupAttachment();
   setupVoice();
-  loadConversation();
+  initChatHistory();
 }
 
 function setupAttachment() {

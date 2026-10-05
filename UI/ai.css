@@ -434,3 +434,63 @@
   .ai-welcome-icon{ width:72px; height:72px; font-size:1.6rem; }
   .ai-msg{ max-width:96%; }
 }
+
+
+/* Final layout fixes */
+#ai-chatPage .ai-page.ai-shell {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  height: calc(100dvh - var(--chat-offset));
+  min-height: 520px;
+}
+
+/* The main area sits beside the sidebar */
+#ai-chatPage .ai-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header fills the main column */
+#ai-chatPage .ai-header {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+/* Remove old max-width restriction */
+#ai-chatPage .ai-header-content {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+/* Chat area fills remaining height */
+#ai-chatPage .ai-chat-container {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Keep sidebar inside the shell */
+#ai-chatPage .ai-sidebar {
+  flex: 0 0 272px;
+}
+
+/* Prevent the ambient pseudo-element from creating stacking issues */
+#ai-chatPage .ai-page.ai-shell::before {
+  z-index: 0;
+}
+
+#ai-chatPage .ai-sidebar,
+#ai-chatPage .ai-main {
+  position: relative;
+  z-index: 1;
+}
