@@ -244,560 +244,289 @@
   };
 
   /* ------------------------------------------------------------------------
-     Modal markup + styles
+     Uni Buddy: the mascot (2.5D SVG, springs, gestures) + the conversation
      ------------------------------------------------------------------------ */
 
-  const MODAL_HTML = `<div class="uniai-profile-shell" role="dialog" aria-modal="true" aria-labelledby="prefs-title"><div class="profile-orb orb-one"></div><div class="profile-orb orb-two"></div><div class="profile-grid"></div><header class="profile-header"><div><div class="profile-eyebrow"><span class="eyebrow-dot"></span> UNIAI STUDY IDENTITY </div><h2 id="prefs-title"> Build your <span>study future.</span></h2><p> Tell UniAI what you're aiming for. We'll personalize your study-abroad journey. </p></div><button type="button" class="profile-close" id="prefs-close" aria-label="Close" > × </button></header>
-<div class="profile-progress"><div class="progress-meta"><span id="profile-step-label"> STEP 01 / 06 </span><span id="profile-progress-percent"> 17% </span></div><div class="progress-track"><div id="profile-progress-bar" class="progress-fill" ></div></div></div>
-<form id="prefs-form" class="profile-form" >
-<section class="profile-step active" data-step="1" ><div class="step-number"> 01 </div><h3> What are you <span>planning to study?</span></h3><p class="step-description"> Start with your academic destination. </p><div class="field-label"> DEGREE LEVEL </div><div class="choice-grid degree-grid"><button type="button" class="choice-card" data-field="degree" data-value="Bachelor's" ><span class="choice-icon">🎓</span><strong>Bachelor's</strong><small>Undergraduate</small></button><button type="button" class="choice-card" data-field="degree" data-value="Master's" ><span class="choice-icon">✦</span><strong>Master's</strong><small>Graduate</small></button><button type="button" class="choice-card" data-field="degree" data-value="PhD" ><span class="choice-icon">◈</span><strong>PhD</strong><small>Doctoral</small></button><button type="button" class="choice-card" data-field="degree" data-value="Diploma" ><span class="choice-icon">▣</span><strong>Diploma</strong><small>Professional</small></button></div><div class="field-label"> FIELD OF STUDY </div><input id="prefs-field" class="profile-input large" type="text" placeholder="e.g. Computer Science, Business, Mechanical Engineering" autocomplete="off" /><div class="field-label"> TARGET INTAKE </div><div class="pill-row"><button type="button" class="pill-choice" data-field="intake" data-value="Fall 2026" > Fall 2026 </button><button type="button" class="pill-choice" data-field="intake" data-value="Spring 2027" > Spring 2027 </button><button type="button" class="pill-choice" data-field="intake" data-value="Fall 2027" > Fall 2027 </button><button type="button" class="pill-choice" data-field="intake" data-value="Spring 2028" > Spring 2028 </button><button type="button" class="pill-choice" data-field="intake" data-value="Fall 2028" > Fall 2028 </button><button type="button" class="pill-choice" data-field="intake" data-value="Not sure yet" > Not sure </button></div></section>
-<section class="profile-step" data-step="2" ><div class="step-number"> 02 </div><h3> Where do you want <span>to go?</span></h3><p class="step-description"> Pick every destination you're considering. You can change this later. </p><div class="destination-grid"><button type="button" class="destination-card" data-country="United States" ><span class="country-flag">🇺🇸</span><strong>United States</strong><small>US</small><span class="select-check">✓</span></button><button type="button" class="destination-card" data-country="United Kingdom" ><span class="country-flag">🇬🇧</span><strong>United Kingdom</strong><small>UK</small><span class="select-check">✓</span></button><button type="button" class="destination-card" data-country="Canada" ><span class="country-flag">🇨🇦</span><strong>Canada</strong><small>CA</small><span class="select-check">✓</span></button><button type="button" class="destination-card" data-country="Australia" ><span class="country-flag">🇦🇺</span><strong>Australia</strong><small>AU</small><span class="select-check">✓</span></button><button type="button" class="destination-card" data-country="Germany" ><span class="country-flag">🇩🇪</span><strong>Germany</strong><small>DE</small><span class="select-check">✓</span></button><button type="button" class="destination-card" data-country="Japan" ><span class="country-flag">🇯🇵</span><strong>Japan</strong><small>JP</small><span class="select-check">✓</span></button><button type="button" class="destination-card wide" data-country="Not sure yet" ><span class="country-flag">✦</span><strong>I'm still exploring</strong><small>Let UniAI help me decide</small><span class="select-check">✓</span></button></div><div id="destination-count" class="selection-hint" > Select at least one destination </div></section>
-<section class="profile-step" data-step="3" ><div class="step-number"> 03 </div><h3> Tell us about your <span>academic profile.</span></h3><p class="step-description"> This helps UniAI understand which programs may fit your academic background. </p><div class="metric-grid"><div class="metric-card"><span class="metric-icon"> ◉ </span><label> GPA / SCORE </label><input id="prefs-gpa" type="number" class="metric-input" placeholder="8.5" step="0.01" min="0" /></div><div class="metric-card"><span class="metric-icon"> % </span><label> GRADING SCALE </label><input id="prefs-grading-scale" type="text" class="metric-input" placeholder="10.0" /></div><div class="metric-card"><span class="metric-icon"> ◷ </span><label> GRADUATION YEAR </label><input id="prefs-graduation-year" type="number" class="metric-input" placeholder="2027" min="2020" max="2040" /></div></div><div class="field-label"> TEST SCORES </div><div class="test-grid"><div class="test-card"><span>IELTS</span><input id="prefs-ielts" type="number" placeholder="—" step="0.5" min="0" max="9" /></div><div class="test-card"><span>TOEFL</span><input id="prefs-toefl" type="number" placeholder="—" min="0" max="120" /></div><div class="test-card"><span>GRE</span><input id="prefs-gre" type="number" placeholder="—" min="0" max="340" /></div><div class="test-card"><span>GMAT</span><input id="prefs-gmat" type="number" placeholder="—" min="0" max="805" /></div></div><div class="info-banner"><span>✦</span><div><strong>Don't have test scores yet?</strong><small> No problem. You can leave these blank and update them later. </small></div></div></section>
-<section class="profile-step" data-step="4" ><div class="step-number"> 04 </div><h3> What's your <span>money plan?</span></h3><p class="step-description"> Give UniAI a realistic range so recommendations can account for your budget. </p><div class="currency-row"><span class="field-label"> CURRENCY </span><select id="prefs-currency" class="profile-select compact" ><option value="USD"> USD </option><option value="EUR"> EUR </option><option value="GBP"> GBP </option><option value="CAD"> CAD </option><option value="AUD"> AUD </option><option value="INR"> INR </option><option value="JPY"> JPY </option></select></div><div class="budget-panel"><div class="budget-heading"><div><span> MAX TUITION / YEAR </span><strong id="tuition-display" > $20,000 </strong></div></div><input id="prefs-tuition" class="budget-slider" type="range" min="0" max="100000" step="1000" value="20000" /><div class="slider-labels"><span>$0</span><span>$100K+</span></div></div><div class="budget-panel"><div class="budget-heading"><div><span> MAX LIVING COST / YEAR </span><strong id="living-display" > $12,000 </strong></div></div><input id="prefs-living" class="budget-slider" type="range" min="0" max="60000" step="1000" value="12000" /><div class="slider-labels"><span>$0</span><span>$60K+</span></div></div><div class="toggle-grid"><button type="button" class="toggle-card" id="toggle-scholarship" ><span class="toggle-icon"> 🎓 </span><span><strong> Scholarships </strong><small> I need financial aid </small></span><i></i></button><button type="button" class="toggle-card" id="toggle-loan" ><span class="toggle-icon"> 💳 </span><span><strong> Education loan </strong><small> I may need funding </small></span><i></i></button></div></section>
-<section class="profile-step" data-step="5" ><div class="step-number"> 05 </div><h3> What kind of <span>university fits you?</span></h3><p class="step-description"> There isn't one perfect university. Tell us what environment you're looking for. </p><div class="field-label"> UNIVERSITY TYPE </div><div class="segmented-control"><button type="button" data-field="universityType" data-value="Any" > Any </button><button type="button" data-field="universityType" data-value="Public" > Public </button><button type="button" data-field="universityType" data-value="Private" > Private </button></div><div class="field-label"> STUDY MODE </div><div class="segmented-control"><button type="button" data-field="studyMode" data-value="On-campus" > On-campus </button><button type="button" data-field="studyMode" data-value="Hybrid" > Hybrid </button><button type="button" data-field="studyMode" data-value="Online" > Online </button></div><div class="field-label"> WHAT MATTERS MORE? </div><div class="priority-grid"><button type="button" class="priority-card" data-priority="career" ><span>🚀</span><strong> Career </strong><small> Jobs, industry connections, employability </small></button><button type="button" class="priority-card" data-priority="research" ><span>🔬</span><strong> Research </strong><small> Labs, publications, academic opportunities </small></button><button type="button" class="priority-card" data-priority="balanced" ><span>⚖️</span><strong> Balanced </strong><small> A bit of everything </small></button></div></section>
-<section class="profile-step" data-step="6" ><div class="step-number"> 06 </div><h3> Let UniAI work <span>for you.</span></h3><p class="step-description"> Choose what you want us to keep an eye on. </p><div class="ai-card"><div class="ai-card-glow"></div><div class="ai-icon"> ✦ </div><div><strong> AI-powered personalization </strong><p> UniAI will use your Study Identity to personalize university matches, scholarships, deadlines and guidance. </p></div></div><div class="notification-list"><label class="notification-row"><span class="notification-symbol"> 🎓 </span><span><strong> Scholarship matches </strong><small> Tell me when relevant scholarships appear </small></span><input type="checkbox" id="prefs-notify-scholarships" checked /><i></i></label><label class="notification-row"><span class="notification-symbol"> ⏰ </span><span><strong> Application deadlines </strong><small> Keep my deadlines visible </small></span><input type="checkbox" id="prefs-notify-deadlines" checked /><i></i></label><label class="notification-row"><span class="notification-symbol"> ✨ </span><span><strong> University matches </strong><small> Tell me when new matches are found </small></span><input type="checkbox" id="prefs-notify-universities" checked /><i></i></label><label class="notification-row"><span class="notification-symbol"> 🛂 </span><span><strong> Visa updates </strong><small> Keep visa information on my radar </small></span><input type="checkbox" id="prefs-notify-visa" checked /><i></i></label></div><div class="identity-preview"><div class="preview-top"><span> YOUR STUDY IDENTITY </span><span id="final-strength" > 0% </span></div><div id="identity-summary" class="identity-summary" > Complete your profile to see your personalized identity. </div></div></section><div id="prefs-error" class="profile-error" ></div><div class="profile-navigation"><button type="button" id="profile-back" class="nav-secondary" > ← Back </button><button type="button" id="profile-skip" class="nav-skip" > Skip for now </button><button type="button" id="profile-next" class="nav-primary" > Continue <span>→</span></button></div></form></div>`;
+  const BUDDY_SVG = `<svg id="buddy" viewBox="0 0 300 520" role="img" aria-label="Uni Buddy, the UniAI Explorer">
+   <defs>
+    <linearGradient id="ub-fin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c4df2"/><stop offset="1" stop-color="#4a56f0"/></linearGradient>
+    <linearGradient id="ub-face" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8f6fe"/><stop offset="1" stop-color="#d6d0f0"/></linearGradient>
+    <linearGradient id="ub-hood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbfaff"/><stop offset="1" stop-color="#d7d3ee"/></linearGradient>
+    <linearGradient id="ub-iris" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14122e"/><stop offset=".62" stop-color="#14122e"/><stop offset="1" stop-color="#4b3fb5"/></linearGradient>
+    <g id="ub-shoe"><path d="M0 0h42q16 0 16 20v10H-6v-12q0-18 6-18z" fill="#f4f2fb"/><path d="M-6 22h64v8H-6z" fill="#5b4bf0"/><path d="M12 6q18-5 34 6" stroke="#4a56f0" stroke-width="6" fill="none" stroke-linecap="round"/></g>
+   </defs>
+   <ellipse cx="150" cy="508" rx="88" ry="10" fill="#000" opacity=".2"/>
+   <g id="body">
+    <rect x="100" y="386" width="36" height="86" rx="14" fill="#1d1b45"/><rect x="164" y="386" width="36" height="86" rx="14" fill="#1d1b45"/>
+    <rect x="104" y="410" width="18" height="22" rx="5" fill="#2a2860"/><rect x="178" y="410" width="18" height="22" rx="5" fill="#2a2860"/>
+    <use href="#ub-shoe" x="92" y="468"/><use href="#ub-shoe" x="156" y="468"/>
+    <rect x="86" y="272" width="42" height="104" rx="16" fill="#25234f"/><rect x="172" y="272" width="42" height="104" rx="16" fill="#25234f"/>
+    <rect x="78" y="262" width="18" height="48" rx="7" fill="#2fbf9f"/><rect x="78" y="262" width="18" height="11" rx="4" fill="#1f8f78"/>
+    <path d="M106 292Q106 270 130 268H170Q194 270 194 292L198 394Q150 410 102 394Z" fill="url(#ub-hood)"/>
+    <path d="M102 384Q150 400 198 384V394Q150 410 102 394Z" fill="#1d1b45"/>
+    <path d="M118 360H182l4 24H114z" fill="#e2deF4" opacity=".9"/>
+    <path d="M150 292V388" stroke="#c9c4e6" stroke-width="2"/>
+    <path d="M110 274Q150 306 190 274L184 258Q150 288 116 258z" fill="#4b3fb5"/>
+    <path d="M136 322l14-8 14 8-14 8z" fill="#4a56f0"/><path d="M141 328v8a9 9 0 0 0 18 0v-8" fill="none" stroke="#4a56f0" stroke-width="3.4" stroke-linecap="round"/>
+    <g id="armL"><path d="M112 282Q84 312 100 350" fill="none" stroke="#ece9f8" stroke-width="26" stroke-linecap="round"/><circle cx="101" cy="352" r="12" fill="#f3e3ea"/></g>
+    <rect x="198" y="326" width="24" height="46" rx="4" transform="rotate(10 210 350)" fill="#2a2850"/>
+    <g id="armR"><path d="M188 282Q216 312 204 352" fill="none" stroke="#ece9f8" stroke-width="26" stroke-linecap="round"/><circle cx="205" cy="354" r="12" fill="#f3e3ea"/></g>
+   </g>
+   <g id="head">
+    <g id="fin">
+     <path d="M120 190C76 186 44 152 32 100C88 106 130 132 152 166z" fill="url(#ub-fin)"/>
+     <path d="M180 190C224 186 256 152 268 100C212 106 170 132 148 166z" fill="url(#ub-fin)"/>
+     <path d="M126 194C96 194 70 180 54 156C90 162 122 168 142 182z" fill="#2fbf9f" opacity=".8"/>
+     <path d="M174 194C204 194 230 180 246 156C210 162 178 168 158 182z" fill="#2fbf9f" opacity=".8"/>
+    </g>
+    <ellipse id="facebase" cx="150" cy="208" rx="72" ry="60" fill="url(#ub-face)"/>
+    <path d="M78 206C76 150 112 140 150 140S224 150 222 206C200 170 100 170 78 206z" fill="url(#ub-fin)"/>
+    <g id="track"><g transform="translate(150 208)">
+     <ellipse cx="-46" cy="22" rx="11" ry="7" fill="#ec4899" opacity=".3"/><ellipse cx="46" cy="22" rx="11" ry="7" fill="#ec4899" opacity=".3"/>
+     <g id="eyes" class="ub-eyes">
+      <g id="eyeL" transform="translate(-29 0)"><ellipse class="iris" rx="13" ry="16" fill="url(#ub-iris)"/><circle class="hl" cx="-4" cy="-6" r="4.2" fill="#fff"/><circle class="hl" cx="5" cy="6" r="2" fill="#fff" opacity=".85"/><path class="eyearc" d="M-10 3Q0 -9 10 3" fill="none" stroke="#14122e" stroke-width="4.5" stroke-linecap="round" display="none"/></g>
+      <g id="eyeR" transform="translate(29 0)"><ellipse class="iris" rx="13" ry="16" fill="url(#ub-iris)"/><circle class="hl" cx="-4" cy="-6" r="4.2" fill="#fff"/><circle class="hl" cx="5" cy="6" r="2" fill="#fff" opacity=".85"/><path class="eyearc" d="M-10 3Q0 -9 10 3" fill="none" stroke="#14122e" stroke-width="4.5" stroke-linecap="round" display="none"/></g>
+     </g>
+     <g transform="translate(0 32)"><g id="mouthg"><path id="mouth" d="M-11 -1Q0 3 11 -1Q9 13 0 13Q-9 13 -11 -1Z" fill="#2a1030" stroke="#14122e" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><ellipse id="tongue" cx="0" cy="10" rx="5" ry="3.2" fill="#ec4899"/></g></g>
+    </g></g>
+   </g>
+  </svg>`;
 
-  const MODAL_CSS = `.uniai-profile-overlay{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient( circle at 50% 0%,rgba(124,58,237,.18),transparent 45% ),rgba(3,5,15,.88);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);animation:profileOverlayIn .35s ease}
-@keyframes profileOverlayIn{from{opacity:0}
-to{opacity:1}
-}
-.uniai-profile-shell{position:relative;width:min(860px,100%);max-height:min(900px,94vh);overflow:hidden auto;border:1px solid rgba(255,255,255,.1);border-radius:30px;background:linear-gradient( 145deg,rgba(19,20,37,.97),rgba(8,10,22,.98) );box-shadow:0 40px 100px rgba(0,0,0,.65),0 0 80px rgba(124,58,237,.12),inset 0 1px rgba(255,255,255,.08);color:#f7f7fb;scrollbar-width:thin;animation:shellIn .5s cubic-bezier(.2,.8,.2,1)}
-@keyframes shellIn{from{opacity:0;transform:translateY(25px) scale(.97)}
-to{opacity:1;transform:translateY(0) scale(1)}
-}
-.profile-orb{position:absolute;width:300px;height:300px;border-radius:50%;filter:blur(90px);pointer-events:none;opacity:.25;animation:orbFloat 8s ease-in-out infinite}
-.orb-one{top:-160px;right:-70px;background:#7c3aed}
-.orb-two{bottom:-180px;left:-80px;background:#2563eb;animation-delay:-4s}
-@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}
-50%{transform:translate(25px,-20px) scale(1.08)}
-}
-.profile-grid{position:absolute;inset:0;opacity:.035;background-image:linear-gradient( rgba(255,255,255,.3) 1px,transparent 1px ),linear-gradient( 90deg,rgba(255,255,255,.3) 1px,transparent 1px );background-size:35px 35px;pointer-events:none}
-.profile-header{position:relative;z-index:2;display:flex;justify-content:space-between;gap:20px;padding:38px 42px 24px}
-.profile-eyebrow{display:flex;align-items:center;gap:8px;margin-bottom:13px;font-size:10px;font-weight:800;letter-spacing:.18em;color:#a78bfa}
-.eyebrow-dot{width:7px;height:7px;border-radius:50%;background:#a78bfa;box-shadow:0 0 15px #8b5cf6;animation:pulseDot 1.8s infinite}
-@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}
-50%{opacity:.45;transform:scale(.75)}
-}
-.profile-header h2{margin:0;font-size:clamp(30px,5vw,48px);line-height:1;letter-spacing:-.045em}
-.profile-header h2 span{background:linear-gradient( 100deg,#a78bfa,#60a5fa,#c084fc );-webkit-background-clip:text;background-clip:text;color:transparent}
-.profile-header p{max-width:600px;margin:14px 0 0;color:#8e93a8;font-size:14px;line-height:1.6}
-.profile-close{flex:0 0 auto;width:40px;height:40px;border:1px solid rgba(255,255,255,.09);border-radius:12px;background:rgba(255,255,255,.04);color:#9ca3af;font-size:25px;cursor:pointer;transition:.2s ease}
-.profile-close:hover{color:white;border-color:rgba(167,139,250,.45);background:rgba(139,92,246,.12);transform:rotate(90deg)}
-.profile-progress{position:relative;z-index:2;padding:0 42px 25px}
-.progress-meta{display:flex;justify-content:space-between;margin-bottom:9px;font-size:10px;font-weight:800;letter-spacing:.14em;color:#656b7e}
-#profile-progress-percent{color:#a78bfa}
-.progress-track{height:4px;overflow:hidden;border-radius:999px;background:rgba(255,255,255,.06)}
-.progress-fill{width:16.666%;height:100%;border-radius:inherit;background:linear-gradient( 90deg,#7c3aed,#6366f1,#60a5fa );box-shadow:0 0 18px rgba(139,92,246,.8);transition:width .5s cubic-bezier(.2,.8,.2,1)}
-.profile-form{position:relative;z-index:2;padding:0 42px 35px}
-.profile-step{display:none;min-height:470px;animation:stepIn .4s cubic-bezier(.2,.8,.2,1)}
-.profile-step.active{display:block}
-@keyframes stepIn{from{opacity:0;transform:translateX(20px)}
-to{opacity:1;transform:translateX(0)}
-}
-.step-number{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;margin-bottom:20px;border:1px solid rgba(167,139,250,.25);border-radius:12px;background:rgba(139,92,246,.1);color:#a78bfa;font-size:11px;font-weight:900;letter-spacing:.08em}
-.profile-step h3{margin:0;max-width:700px;font-size:clamp(27px,4vw,38px);line-height:1.12;letter-spacing:-.035em}
-.profile-step h3 span{color:#a78bfa}
-.step-description{margin:12px 0 28px;color:#858b9e;line-height:1.6}
-.field-label{margin:25px 0 10px;font-size:10px;font-weight:900;letter-spacing:.14em;color:#666c80}
-.choice-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.choice-card{min-height:120px;padding:18px;text-align:left;border:1px solid rgba(255,255,255,.07);border-radius:17px;background:rgba(255,255,255,.025);color:white;cursor:pointer;transition:.25s cubic-bezier(.2,.8,.2,1)}
-.choice-card:hover{transform:translateY(-3px);border-color:rgba(167,139,250,.4);background:rgba(139,92,246,.08)}
-.choice-card.selected{border-color:rgba(167,139,250,.75);background:linear-gradient( 145deg,rgba(139,92,246,.2),rgba(59,130,246,.08) );box-shadow:0 0 30px rgba(124,58,237,.14),inset 0 0 25px rgba(139,92,246,.05)}
-.choice-icon{display:block;margin-bottom:12px;font-size:22px}
-.choice-card strong,.choice-card small{display:block}
-.choice-card strong{font-size:13px}
-.choice-card small{margin-top:4px;color:#73798b;font-size:11px}
-.profile-input,.profile-select{width:100%;box-sizing:border-box;padding:14px 16px;border:1px solid rgba(255,255,255,.08);border-radius:13px;outline:none;background:rgba(255,255,255,.035);color:white;transition:.2s ease}
-.profile-input:focus,.profile-select:focus{border-color:rgba(167,139,250,.65);background:rgba(139,92,246,.055);box-shadow:0 0 0 3px rgba(139,92,246,.08)}
-.profile-input.large{padding:16px;font-size:14px}
-.profile-select.compact{width:120px}
-.pill-row{display:flex;flex-wrap:wrap;gap:8px}
-.pill-choice{padding:10px 14px;border:1px solid rgba(255,255,255,.07);border-radius:999px;background:rgba(255,255,255,.025);color:#a4a9b8;cursor:pointer;transition:.2s ease}
-.pill-choice:hover,.pill-choice.selected{border-color:rgba(167,139,250,.55);background:rgba(139,92,246,.13);color:#ddd6fe}
-.destination-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.destination-card{position:relative;min-height:120px;padding:18px;text-align:left;border:1px solid rgba(255,255,255,.07);border-radius:17px;background:rgba(255,255,255,.025);color:white;cursor:pointer;overflow:hidden;transition:.25s ease}
-.destination-card::before{content:"";position:absolute;inset:-50%;background:radial-gradient( circle,rgba(139,92,246,.2),transparent 60% );opacity:0;transition:.3s ease}
-.destination-card:hover::before,.destination-card.selected::before{opacity:1}
-.destination-card:hover{transform:translateY(-3px);border-color:rgba(167,139,250,.35)}
-.destination-card.selected{border-color:rgba(167,139,250,.75);box-shadow:0 0 28px rgba(124,58,237,.13)}
-.destination-card.wide{grid-column:span 3;min-height:75px;display:flex;align-items:center;gap:14px}
-.country-flag{display:block;position:relative;z-index:1;margin-bottom:12px;font-size:27px}
-.destination-card.wide .country-flag{margin:0}
-.destination-card strong,.destination-card small{position:relative;z-index:1;display:block}
-.destination-card strong{font-size:13px}
-.destination-card small{margin-top:5px;color:#73798b;font-size:10px}
-.select-check{position:absolute;top:12px;right:12px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.08);border-radius:50%;color:transparent;background:rgba(255,255,255,.03)}
-.destination-card.selected .select-check{border-color:#8b5cf6;background:#8b5cf6;color:white;box-shadow:0 0 15px rgba(139,92,246,.55)}
-.selection-hint{margin-top:12px;color:#666c80;font-size:11px}
-.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.metric-card{padding:18px;border:1px solid rgba(255,255,255,.07);border-radius:16px;background:rgba(255,255,255,.025)}
-.metric-icon{display:block;margin-bottom:18px;color:#a78bfa;font-size:19px}
-.metric-card label{display:block;margin-bottom:7px;font-size:9px;font-weight:900;letter-spacing:.12em;color:#656b7e}
-.metric-input{width:100%;box-sizing:border-box;border:0;outline:0;background:transparent;color:white;font-size:22px;font-weight:700}
-.test-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.test-card{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:13px;border:1px solid rgba(255,255,255,.07);border-radius:13px;background:rgba(255,255,255,.025)}
-.test-card span{color:#7f8598;font-size:10px;font-weight:900}
-.test-card input{width:55px;border:0;outline:0;background:transparent;color:white;text-align:right}
-.info-banner{display:flex;align-items:center;gap:12px;margin-top:18px;padding:14px;border:1px solid rgba(96,165,250,.12);border-radius:13px;background:rgba(59,130,246,.05)}
-.info-banner>span{color:#60a5fa}
-.info-banner strong,.info-banner small{display:block}
-.info-banner strong{font-size:12px}
-.info-banner small{margin-top:3px;color:#72798b;font-size:10px}
-.currency-row{display:flex;align-items:center;justify-content:space-between}
-.currency-row .field-label{margin:0}
-.budget-panel{margin-top:14px;padding:20px;border:1px solid rgba(255,255,255,.07);border-radius:17px;background:rgba(255,255,255,.025)}
-.budget-heading{display:flex;justify-content:space-between}
-.budget-heading span{display:block;color:#686e80;font-size:9px;font-weight:900;letter-spacing:.13em}
-.budget-heading strong{display:block;margin-top:6px;font-size:26px;letter-spacing:-.03em}
-.budget-slider{width:100%;margin:22px 0 5px;accent-color:#8b5cf6;cursor:pointer}
-.slider-labels{display:flex;justify-content:space-between;color:#5f6577;font-size:9px}
-.toggle-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.toggle-card{display:flex;align-items:center;gap:12px;padding:16px;border:1px solid rgba(255,255,255,.07);border-radius:16px;background:rgba(255,255,255,.025);color:white;text-align:left;cursor:pointer;transition:.2s ease}
-.toggle-card.active{border-color:rgba(167,139,250,.55);background:rgba(139,92,246,.08)}
-.toggle-icon{font-size:22px}
-.toggle-card strong,.toggle-card small{display:block}
-.toggle-card strong{font-size:12px}
-.toggle-card small{margin-top:3px;color:#73798b;font-size:10px}
-.toggle-card i{margin-left:auto;width:34px;height:19px;border-radius:999px;background:#292d3a;position:relative}
-.toggle-card i::after{content:"";position:absolute;top:3px;left:3px;width:13px;height:13px;border-radius:50%;background:#777d8d;transition:.2s ease}
-.toggle-card.active i{background:#7c3aed}
-.toggle-card.active i::after{transform:translateX(15px);background:white}
-.segmented-control{display:flex;padding:4px;border:1px solid rgba(255,255,255,.07);border-radius:13px;background:rgba(255,255,255,.025)}
-.segmented-control button{flex:1;padding:11px;border:0;border-radius:9px;background:transparent;color:#777d8f;cursor:pointer;transition:.2s ease}
-.segmented-control button.selected{background:rgba(139,92,246,.16);color:#ddd6fe;box-shadow:inset 0 0 0 1px rgba(139,92,246,.2)}
-.priority-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.priority-card{min-height:145px;padding:18px;text-align:left;border:1px solid rgba(255,255,255,.07);border-radius:17px;background:rgba(255,255,255,.025);color:white;cursor:pointer;transition:.25s ease}
-.priority-card:hover{transform:translateY(-3px)}
-.priority-card.selected{border-color:rgba(167,139,250,.7);background:rgba(139,92,246,.1);box-shadow:0 0 25px rgba(124,58,237,.12)}
-.priority-card>span{display:block;margin-bottom:18px;font-size:24px}
-.priority-card strong,.priority-card small{display:block}
-.priority-card small{margin-top:5px;color:#73798b;line-height:1.4;font-size:10px}
-.ai-card{position:relative;display:flex;gap:15px;padding:20px;overflow:hidden;border:1px solid rgba(139,92,246,.2);border-radius:18px;background:linear-gradient( 120deg,rgba(124,58,237,.13),rgba(37,99,235,.05) )}
-.ai-card-glow{position:absolute;top:-70px;right:-40px;width:180px;height:180px;border-radius:50%;background:#7c3aed;filter:blur(70px);opacity:.16}
-.ai-icon{position:relative;width:42px;height:42px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;border:1px solid rgba(167,139,250,.3);border-radius:13px;background:rgba(139,92,246,.12);color:#c4b5fd;font-size:21px}
-.ai-card strong{position:relative;font-size:13px}
-.ai-card p{position:relative;margin:5px 0 0;color:#858b9e;font-size:11px;line-height:1.55}
-.notification-list{margin-top:14px;border:1px solid rgba(255,255,255,.07);border-radius:17px;overflow:hidden}
-.notification-row{display:flex;align-items:center;gap:12px;padding:15px;border-bottom:1px solid rgba(255,255,255,.055);cursor:pointer;transition:.2s ease}
-.notification-row:last-child{border-bottom:0}
-.notification-row:hover{background:rgba(139,92,246,.045)}
-.notification-symbol{width:35px;height:35px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:rgba(255,255,255,.04)}
-.notification-row strong,.notification-row small{display:block}
-.notification-row strong{font-size:12px}
-.notification-row small{margin-top:3px;color:#6e7487;font-size:10px}
-.notification-row input{display:none}
-.notification-row i{width:35px;height:20px;margin-left:auto;flex:0 0 auto;border-radius:999px;background:#292d3a;position:relative}
-.notification-row i::after{content:"";position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#777d8d;transition:.2s ease}
-.notification-row input:checked + i{background:#7c3aed}
-.notification-row input:checked + i::after{transform:translateX(15px);background:white}
-.identity-preview{margin-top:18px;padding:18px;border:1px solid rgba(167,139,250,.16);border-radius:17px;background:rgba(139,92,246,.055)}
-.preview-top{display:flex;justify-content:space-between;color:#777d8f;font-size:9px;font-weight:900;letter-spacing:.14em}
-#final-strength{color:#a78bfa}
-.identity-summary{margin-top:10px;color:#d5d7e0;font-size:13px;line-height:1.6}
-.profile-error{min-height:20px;margin-top:10px;color:#fb7185;font-size:11px}
-.profile-navigation{display:flex;align-items:center;gap:10px;padding-top:20px;border-top:1px solid rgba(255,255,255,.06)}
-.nav-secondary,.nav-primary,.nav-skip{min-height:45px;padding:0 17px;border-radius:12px;cursor:pointer;font-weight:700;transition:.2s ease}
-.nav-secondary{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#999faf}
-.nav-secondary:hover{color:white;background:rgba(255,255,255,.06)}
-.nav-skip{margin-left:auto;border:0;background:transparent;color:#666c7d;font-size:11px}
-.nav-skip:hover{color:#a78bfa}
-.nav-primary{display:flex;align-items:center;gap:12px;min-width:125px;justify-content:center;border:1px solid rgba(167,139,250,.3);background:linear-gradient( 100deg,#7c3aed,#6366f1 );color:white;box-shadow:0 8px 25px rgba(124,58,237,.25)}
-.nav-primary:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(124,58,237,.38)}
-@media (max-width:700px){.profile-header,.profile-progress,.profile-form{padding-left:20px;padding-right:20px}
-.choice-grid{grid-template-columns:1fr 1fr}
-.destination-grid{grid-template-columns:1fr 1fr}
-.destination-card.wide{grid-column:span 2}
-.metric-grid{grid-template-columns:1fr}
-.test-grid{grid-template-columns:1fr 1fr}
-.priority-grid{grid-template-columns:1fr}
-.toggle-grid{grid-template-columns:1fr}
-}
-@media (max-width:480px){.uniai-profile-overlay{padding:8px}
-.uniai-profile-shell{max-height:97vh;border-radius:22px}
-.profile-header{padding-top:25px}
-.profile-header h2{font-size:29px}
-.choice-grid,.destination-grid{grid-template-columns:1fr}
-.destination-card.wide{grid-column:auto}
-.profile-navigation{flex-wrap:wrap}
-.nav-skip{order:3;width:100%;margin:0}
-.nav-secondary,.nav-primary{flex:1}
-}
+  // Shared with Uni Buddy (uni-buddy.js): the full body, and a head-only crop for avatars.
+  window.UniAIBuddyMascotSVG = BUDDY_SVG;
+  window.UniAIBuddyHeadSVG = BUDDY_SVG
+    .replace('viewBox="0 0 300 520"', 'viewBox="22 84 256 200"')
+    .replace(' role="img" aria-label="Uni Buddy, the UniAI Explorer"', ' aria-hidden="true" focusable="false"')
+    .replace(/ id="(?!ub-)[^"]*"/g, "");
 
-/* ---- additions ---- */
+  const MODAL_HTML = `<div class="ob-stage"><div class="ob-buddy" id="buddy-wrap">${BUDDY_SVG}</div><span id="mood-name" hidden></span><button type="button" id="t-talk" hidden tabindex="-1"></button></div><section class="ob-panel" role="dialog" aria-modal="true" aria-labelledby="prefs-title"><header class="ob-head"><div><h2 id="prefs-title">Build your <span>study future.</span></h2><small id="ob-step"></small></div><button type="button" class="ob-close" id="prefs-close" aria-label="Close">×</button></header><div class="ob-bar"><i id="ob-bar"></i></div><div class="ob-thread" id="ob-thread" aria-live="polite"></div><div class="ob-dock" id="ob-dock"></div></section>`;
+
+  const MODAL_CSS = `.uniai-profile-overlay{position:fixed;inset:0;z-index:99999;display:grid;grid-template-columns:minmax(300px,46%) 1fr;color:var(--text,#f5f7fa);font-family:var(--font-body,Inter,system-ui,sans-serif);background:radial-gradient(circle at 25% 35%,rgba(124,58,237,.3),transparent 55%),var(--bg,#0b0c10);animation:obIn .35s ease}
 .uniai-profile-overlay[hidden]{display:none}
-.uniai-profile-shell :focus-visible{outline:2px solid #a78bfa;outline-offset:2px}
-.nav-primary:disabled{opacity:.6;cursor:not-allowed;transform:none}
-.profile-error:empty{display:none}
-.uniai-profile-toast{position:fixed;left:50%;bottom:28px;z-index:100000;display:flex;align-items:center;gap:12px;max-width:min(420px,calc(100vw - 32px));padding:14px 18px;border:1px solid rgba(167,139,250,.35);border-radius:16px;background:rgba(15,17,32,.96);color:#f7f7fb;box-shadow:0 18px 50px rgba(0,0,0,.5);opacity:0;transform:translate(-50%,16px);transition:opacity .25s ease,transform .25s ease;pointer-events:none}
-.uniai-profile-toast.show{opacity:1;transform:translate(-50%,0)}
-.uniai-profile-toast.warn{border-color:rgba(251,191,36,.45)}
-.uniai-profile-toast > span{color:#a78bfa;font-size:18px}
-.uniai-profile-toast.warn > span{color:#fbbf24}
-.uniai-profile-toast strong,.uniai-profile-toast small{display:block}
-.uniai-profile-toast strong{font-size:13px}
-.uniai-profile-toast small{margin-top:2px;color:#8e93a8;font-size:11px}
-@media (prefers-reduced-motion:reduce){.uniai-profile-overlay,.uniai-profile-shell,.profile-step,.profile-orb,.eyebrow-dot{animation:none!important}.progress-fill,.choice-card,.destination-card,.priority-card,.nav-primary{transition:none!important}}
+@keyframes obIn{from{opacity:0}}
+.ob-stage{position:relative;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;padding:18px 18px 0}
+.ob-stage:before{content:"";position:absolute;bottom:4%;width:min(560px,92%);aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,rgba(139,92,246,.5),rgba(236,72,153,.14) 62%,transparent)}
+.ob-buddy{position:relative;height:min(92vh,880px);aspect-ratio:300/520;max-width:100%;animation:obFloat 5s ease-in-out infinite;filter:drop-shadow(0 20px 36px rgba(139,92,246,.42))}
+.ob-buddy svg{display:block;width:100%;height:100%;overflow:visible}
+@keyframes obFloat{50%{transform:translateY(-8px)}}
+.ob-buddy #head{transform-origin:150px 250px}.ob-buddy #body{transform-origin:150px 400px}.ob-buddy #armL{transform-origin:112px 284px}.ob-buddy #armR{transform-origin:188px 284px}
+.ob-buddy #fin{transform-origin:150px 180px}.ob-buddy #facebase,.ob-buddy #track{transform-origin:150px 208px}.ob-buddy #eyes{transform-box:fill-box;transform-origin:center}
+.ob-buddy .eyearc{display:none;fill:none;stroke:#14122e;stroke-width:4.5;stroke-linecap:round}
+.ob-buddy .shut .eyearc{display:block}.ob-buddy .shut .iris,.ob-buddy .shut .hl{display:none}
+.ob-buddy #mouth{fill:none;stroke:#14122e;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}.ob-buddy #mouth.fill{fill:#2a1030}
+.ob-buddy #mouthg{transform-box:fill-box;transform-origin:center top}
+.ob-buddy.talking #mouthg{animation:obFlap .24s ease-in-out infinite alternate}
+@keyframes obFlap{to{transform:scaleY(.55)}}
+.ob-panel{display:flex;flex-direction:column;min-width:0;min-height:0;border-left:1px solid var(--border,#282c34);background:var(--card-bg,#17191f)}
+.ob-head{display:flex;align-items:center;gap:12px;padding:18px 24px;border-bottom:1px solid var(--border,#282c34)}
+.ob-head h2{margin:0;font:800 1.2rem var(--font-display,system-ui,sans-serif);letter-spacing:-.02em}
+.ob-head h2 span{background:linear-gradient(90deg,var(--primary,#8b5cf6),var(--pink,#ec4899));-webkit-background-clip:text;background-clip:text;color:transparent}
+.ob-head small{display:block;margin-top:3px;color:var(--text-muted,#9da3ae);font-size:.75rem}
+.ob-close{margin-left:auto;flex:0 0 44px;width:44px;height:44px;border:1px solid var(--border,#282c34);border-radius:12px;background:transparent;color:var(--text-muted,#9da3ae);font-size:24px;cursor:pointer}
+.ob-close:hover{color:var(--text,#fff);border-color:var(--primary,#8b5cf6)}
+.ob-bar{height:4px;background:var(--border,#282c34)}.ob-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--primary,#8b5cf6),var(--pink,#ec4899));transition:width .45s ease}
+.ob-thread{flex:1;min-height:0;overflow-y:auto;padding:22px 24px;display:flex;flex-direction:column;gap:12px}
+.ob-msg{max-width:86%;padding:12px 15px;border-radius:16px;font-size:.95rem;line-height:1.5;overflow-wrap:anywhere;animation:obMsg .3s both}
+@keyframes obMsg{from{opacity:0;transform:translateY(8px)}}
+.ob-msg.buddy{background:var(--surface-3,#1d2027);border:1px solid var(--border,#282c34);border-top-left-radius:5px}
+.ob-msg.you{align-self:flex-end;background:linear-gradient(135deg,var(--primary,#8b5cf6),var(--primary-dark,#7c3aed));color:#fff;border-top-right-radius:5px}
+.ob-dock{max-height:48vh;overflow-y:auto;padding:16px 24px calc(16px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--border,#282c34)}
+.ob-ctl{margin-bottom:12px}.ob-lab{display:block;margin-bottom:6px;color:var(--text-muted,#9da3ae);font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.ob-row{display:flex;flex-wrap:wrap;gap:8px}
+.ob-opt{min-height:44px;padding:0 15px;border:1px solid var(--border,#282c34);border-radius:14px;background:var(--surface-2,#17191f);color:var(--text,#f5f7fa);font:600 .88rem inherit;cursor:pointer;transition:.15s}
+.ob-opt:hover{border-color:var(--primary,#8b5cf6)}.ob-opt.on{background:var(--violet-light,#241c3d);border-color:var(--primary,#8b5cf6);color:var(--primary,#a78bfa)}
+.ob-in,.ob-sel{width:100%;min-height:46px;padding:0 14px;border:1px solid var(--border,#282c34);border-radius:12px;background:var(--bg,#0b0c10);color:var(--text,#f5f7fa);font-size:16px;outline:none}
+.ob-in:focus,.ob-sel:focus{border-color:var(--primary,#8b5cf6)}
+.ob-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.ob-range{display:flex;align-items:center;gap:12px}.ob-range input{flex:1;accent-color:var(--primary,#8b5cf6)}.ob-range b{min-width:96px;text-align:right;font:800 1.1rem var(--font-display,system-ui,sans-serif)}
+.ob-sum{padding:14px;border:1px solid var(--border,#282c34);border-radius:14px;background:var(--violet-light,#241c3d);line-height:1.6;font-size:.92rem;margin-bottom:12px}
+.ob-err{min-height:1.2em;margin:0 0 8px;color:#fb7185;font-size:.82rem}
+.ob-nav{display:flex;align-items:center;gap:10px}
+.ob-go,.ob-ghost{min-height:46px;padding:0 20px;border-radius:12px;font-weight:700;cursor:pointer}
+.ob-go{margin-left:auto;border:0;color:#fff;background:linear-gradient(135deg,var(--primary,#8b5cf6),var(--pink,#ec4899))}.ob-go:disabled{opacity:.5;cursor:not-allowed}
+.ob-ghost{border:1px solid var(--border,#282c34);background:transparent;color:var(--text-muted,#9da3ae)}.ob-ghost.skip{border:0;margin-left:auto}.ob-ghost.skip+.ob-go{margin-left:0}
+.uniai-profile-overlay :focus-visible{outline:2px solid var(--pink,#ec4899);outline-offset:2px}
+.uniai-profile-toast{position:fixed;left:50%;bottom:28px;z-index:100000;display:flex;align-items:center;gap:12px;max-width:min(420px,calc(100vw - 32px));padding:14px 18px;border:1px solid rgba(167,139,250,.35);border-radius:16px;background:rgba(15,17,32,.96);color:#f7f7fb;box-shadow:0 18px 50px rgba(0,0,0,.5);opacity:0;transform:translate(-50%,16px);transition:opacity .25s,transform .25s;pointer-events:none}
+.uniai-profile-toast.show{opacity:1;transform:translate(-50%,0)}.uniai-profile-toast.warn{border-color:rgba(251,191,36,.45)}
+.uniai-profile-toast>span{color:#a78bfa;font-size:18px}.uniai-profile-toast.warn>span{color:#fbbf24}
+.uniai-profile-toast strong,.uniai-profile-toast small{display:block}.uniai-profile-toast strong{font-size:13px}.uniai-profile-toast small{margin-top:2px;color:#8e93a8;font-size:11px}
+@media (max-width:820px){
+ .uniai-profile-overlay{grid-template-columns:1fr;grid-template-rows:minmax(170px,40vh) minmax(0,1fr)}
+ .ob-stage{padding:6px 12px 0}.ob-stage:before{width:80%;bottom:0}
+ .ob-buddy{height:100%}
+ .ob-panel{border-left:0;border-top:1px solid var(--border,#282c34);border-radius:22px 22px 0 0;margin-top:-14px;position:relative}
+ .ob-head{padding:12px 16px}.ob-head h2{font-size:1.02rem}
+ .ob-thread{padding:14px 16px}.ob-msg{max-width:92%;font-size:.92rem}
+ .ob-dock{max-height:50vh;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+}
+@media (prefers-reduced-motion:reduce){.uniai-profile-overlay,.ob-buddy,.ob-msg,.ob-bar i{animation:none!important;transition:none!important}}
 `;
 
-  /* ------------------------------------------------------------------------
-     Modal state
-     ------------------------------------------------------------------------ */
+  /** Builds the mascot engine once the SVG is in the page. Everything is scoped to the overlay. */
+  function initBuddy() {
+    const root = byId("prefs-overlay");
+    const $ = (s) => root.querySelector(s);
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    const syncMinis = () => {};
 
+/* ================= MASCOT (2.5D) ================= */
+const UP = "M-10 3Q0 -9 10 3", DOWN = "M-10 -3Q0 7 10 -3";
+const M = {grin: "M-11 -1Q0 3 11 -1Q9 13 0 13Q-9 13 -11 -1Z", big: "M-13 -2Q0 4 13 -2Q11 17 0 17Q-11 17 -13 -2Z", o: "M-5 0a5 6 0 1 0 10 0a5 6 0 1 0 -10 0Z",
+  hm: "M-6 3Q0 0 7 -1", flat: "M-5 3Q0 5 5 3", frown: "M-8 5Q0 -3 8 5", smirk: "M-9 1Q0 9 11 -2", tiny: "M-6 1Q0 5 6 1"};
+const op = {k: "open"}, ar = d => ({k: "arc", arc: d});
+const EXPR = {              // eye: per-eye shape, mouth: path, f: filled mouth, t: tongue
+  happy:    {eye: [op, op], mouth: M.grin, f: 1, t: 1},
+  curious:  {eye: [op, {k: "open", sx: 1.08, sy: 1.12, y: -2}], mouth: M.tiny},
+  thinking: {eye: [{k: "open", sy: .72, y: 2}, {k: "open", sy: .72, y: -1}], mouth: M.hm},
+  excited:  {eye: [ar(UP), ar(UP)], mouth: M.big, f: 1, t: 1},
+  surprised:{eye: [{k: "open", sx: 1.12, sy: 1.2}, {k: "open", sx: 1.12, sy: 1.2}], mouth: M.o, f: 1},
+  playful:  {eye: [op, ar(UP)], mouth: M.smirk},
+  sleepy:   {eye: [ar(DOWN), ar(DOWN)], mouth: M.flat},
+  oops:     {eye: [{k: "open", sx: .92, r: 10}, {k: "open", sx: .92, r: -10}], mouth: M.frown}
+};
+const REST = {curious: {roll: 7, yaw: .2}, thinking: {yaw: .45, pitch: -.35, roll: -3}, surprised: {pitch: -.2}, playful: {roll: 6}, sleepy: {pitch: .5, roll: 7}, oops: {pitch: .15}};
+const MOOD_GESTURE = {happy: "hop", curious: "tilt", thinking: "think", excited: "hop", surprised: "gasp", playful: "tilt", sleepy: "droop", oops: "shake"};
+let mood = "happy", booted = false, follow = true, manual = null, busy = false, gid = 0;
+const ptr = {x: 0, y: 0}, clamp = (v, a, b) => Math.max(a, Math.min(b, v)), rnd = (a, b) => a + Math.random() * (b - a);
+
+/* Spring channels [stiffness, damping]. Eyes are stiff (they lead), the ears are soft (they trail),
+   and damping is slightly low so every move overshoots and settles like a real object. */
+const CH = {yaw: [150, 15], pitch: [150, 15], roll: [170, 16], hop: [220, 13], eyeYaw: [300, 22], eyePitch: [300, 22], earYaw: [80, 10], gx: [420, 30], gy: [420, 30]};
+const P = {}, V = {}, T = {};
+Object.keys(CH).forEach(k => { P[k] = V[k] = T[k] = 0; });
+let raf = 0, last = 0;
+
+function go(t) {
+  Object.assign(T, t);
+  if (reduce) { T.eyeYaw = T.earYaw = T.yaw; T.eyePitch = T.pitch; Object.assign(P, T); draw(); return; }
+  if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); }
+}
+function tick(now) {
+  const dt = Math.min(.032, (now - last) / 1000); last = now;
+  T.eyeYaw = T.earYaw = T.yaw; T.eyePitch = T.pitch;
+  let moving = false;
+  for (const k in CH) {
+    V[k] += ((T[k] - P[k]) * CH[k][0] - V[k] * CH[k][1]) * dt; P[k] += V[k] * dt;
+    if (Math.abs(T[k] - P[k]) > .003 || Math.abs(V[k]) > .01) moving = true;
+  }
+  draw();
+  if (moving) raf = requestAnimationFrame(tick); else { raf = 0; syncMinis(); }
+}
+
+/* Each layer moves by a different amount with the head turn: that parallax is what reads as 3D. */
+function draw() {
+  const y = P.yaw, ey = P.eyeYaw, ay = P.earYaw, a = Math.abs;
+  const set = (id, t) => { $("#" + id).style.transform = t; };
+  set("head", `translate(${y * 4}px,${P.hop + P.pitch * 2}px) rotate(${P.roll}deg)`);
+  set("body", `translate(${-y * 3}px,${P.hop * .25}px)`);
+  set("armL", `rotate(${P.hop * .6}deg)`); set("armR", `rotate(${-P.hop * .6}deg)`);
+  set("fin", `translateX(${-y * 7}px) rotate(${-ay * 5}deg)`);          // fin trails behind the turn
+  set("facebase", `translateX(${y * 5}px) scaleX(${1 - a(y) * .06})`);
+  set("track", `translate(${ey * 18 + P.gx}px,${P.eyePitch * 7 + P.gy}px) scaleX(${1 - a(ey) * .24})`); // face features lead
+}
+
+function applyRest() {
+  if (busy) return;
+  const r = REST[mood] || {};
+  go({yaw: manual != null ? manual : clamp((r.yaw || 0) + (follow ? ptr.x * .55 : 0), -1, 1),
+      pitch: (r.pitch || 0) + (follow ? ptr.y * .4 : 0), roll: r.roll || 0, hop: 0});
+}
+
+/* gestures: anticipation -> overshoot -> settle. A new gesture cancels the previous one. */
+async function seq(steps) {
+  const id = ++gid; busy = true;
+  for (const [t, ms] of steps) { if (id !== gid) return; go(t); await sleep(reduce ? 0 : ms); }
+  if (id === gid) { busy = false; applyRest(); }
+}
+const G = {
+  nod:   () => seq([[{pitch: .7}, 130], [{pitch: -.1}, 120], [{pitch: .6}, 120], [{pitch: 0}, 160]]),
+  shake: () => seq([[{yaw: .3}, 70], [{yaw: -.9}, 150], [{yaw: .8}, 150], [{yaw: -.6}, 130], [{yaw: .35}, 120], [{yaw: 0}, 150]]),
+  hop:   () => seq([[{hop: 5, roll: -3}, 90], [{hop: -14, roll: 4}, 170], [{hop: 0, roll: 0}, 260]]),
+  tilt:  () => seq([[{roll: 9, yaw: .3}, 500]]),
+  think: () => seq([[{pitch: -.5, yaw: .55, roll: -3}, 700]]),
+  gasp:  () => seq([[{pitch: .3, hop: 2}, 70], [{pitch: -.35, hop: -9}, 180], [{hop: 0}, 200]]),
+  droop: () => seq([[{pitch: .7, roll: 8}, 700]]),
+  lookL: () => seq([[{yaw: -.85}, 800]]),
+  lookR: () => seq([[{yaw: .85}, 800]])
+};
+
+function setMood(name, opt) {
+  if (!EXPR[name]) return;
+  mood = name;
+  const m = EXPR[name];
+  const swap = () => {
+    ["L", "R"].forEach((k, i) => {
+      const e = m.eye[i], g = $("#eye" + k);
+      g.setAttribute("transform", `translate(${i ? 29 : -29} ${e.y || 0}) rotate(${e.r || 0}) scale(${e.sx || 1} ${e.sy || 1})`);
+      g.classList.toggle("shut", e.k === "arc");
+      if (e.arc) g.querySelector(".eyearc").setAttribute("d", e.arc);
+    });
+    const mo = $("#mouth"); mo.setAttribute("d", m.mouth); mo.classList.toggle("fill", !!m.f);
+    $("#tongue").style.opacity = m.t ? 1 : 0;
+  };
+  $("#mood-name").textContent = name;
+  document.querySelectorAll("#expr-row .pill").forEach(b => {
+    const on = b.dataset.mood === name; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on);
+  });
+  if (!booted || reduce) swap();
+  else {                       // close -> swap while shut -> reopen with a little squash and stretch
+    $("#eyes").animate([{transform: "scaleY(1)"}, {transform: "scaleY(.1)", offset: .25}, {transform: "scaleY(1.2) scaleX(.94)", offset: .7}, {transform: "scaleY(1)"}], {duration: 320, easing: "ease-out"});
+    setTimeout(swap, 80);
+  }
+  if (booted && !(opt && opt.quiet)) G[MOOD_GESTURE[name]] ? G[MOOD_GESTURE[name]]() : applyRest();
+  else applyRest();
+  booted = true; syncMinis();
+}
+
+let talkTimer = 0;
+function setTalking(on) {
+  $("#buddy-wrap").classList.toggle("talking", on);
+  const b = $("#t-talk"); b.classList.toggle("on", on); b.setAttribute("aria-pressed", on);
+  clearInterval(talkTimer);
+  if (on && !reduce) talkTimer = setInterval(() => { if (!busy) go({pitch: (REST[mood] || {}).pitch + rnd(-.12, .12) || rnd(-.12, .12), hop: -rnd(0, 2.5)}); }, 380);
+  else applyRest();
+}
+
+
+    let loopId = 0;
+    function runLoops() {
+      const id = ++loopId;
+      if (reduce) return;
+      (function blink() {
+        if (id !== loopId) return;
+        if (!EXPR[mood].eye.some((e) => e.k === "arc")) $("#eyes").animate([{transform: "scaleY(1)"}, {transform: "scaleY(.08)"}, {transform: "scaleY(1)"}], {duration: 140});
+        setTimeout(blink, 2600 + Math.random() * 3200);
+      })();
+      (function dart() {
+        if (id !== loopId) return;
+        if (!busy) go({gx: rnd(-5, 5), gy: rnd(-3, 3)});
+        setTimeout(dart, 1800 + Math.random() * 2400);
+      })();
+    }
+    const stopLoops = () => { loopId++; };
+
+    if (!reduce) addEventListener("pointermove", (e) => {
+      if (root.hidden) return;
+      const r = $("#buddy").getBoundingClientRect();
+      ptr.x = clamp((e.clientX - (r.left + r.width / 2)) / (innerWidth / 2), -1, 1);
+      ptr.y = clamp((e.clientY - (r.top + r.height / 2)) / (innerHeight / 2), -1, 1);
+      applyRest();
+    });
+
+    setMood("happy");
+    return {setMood, setTalking, G, runLoops, stopLoops, reduce, sleep};
+  }
+
+  let Buddy = null;
   let profileState = normalizePrefs(readPrefs());
-  let currentStep = 1;
   let lastFocused = null;
-  let built = false;
-
-  function buildModal() {
-    if (built && byId("prefs-overlay")) return;
-    built = true;
-
-    const wrap = document.createElement("div");
-    wrap.id = "prefs-overlay";
-    wrap.className = "uniai-profile-overlay";
-    wrap.hidden = true;
-    wrap.innerHTML = MODAL_HTML;
-    document.body.appendChild(wrap);
-
-    if (!byId("uniai-study-identity-css")) {
-      const style = document.createElement("style");
-      style.id = "uniai-study-identity-css";
-      style.textContent = MODAL_CSS;
-      document.head.appendChild(style);
-    }
-
-    bindModalEvents();
-  }
-
-  /* ------------------------------------------------------------------------
-     Reading the form into state
-     ------------------------------------------------------------------------ */
-
-  function val(id) {
-    const el = byId(id);
-    return el ? String(el.value).trim() : "";
-  }
-
-  function checked(id) {
-    const el = byId(id);
-    return el ? el.checked : false;
-  }
-
-  /** One place that copies every input into profileState. */
-  function syncFromDOM() {
-    profileState.field = val("prefs-field");
-
-    profileState.academic.gpa = val("prefs-gpa");
-    profileState.academic.gradingScale = val("prefs-grading-scale");
-    profileState.academic.graduationYear = val("prefs-graduation-year");
-
-    profileState.tests.ielts = val("prefs-ielts");
-    profileState.tests.toefl = val("prefs-toefl");
-    profileState.tests.gre = val("prefs-gre");
-    profileState.tests.gmat = val("prefs-gmat");
-
-    profileState.budget.currency = val("prefs-currency") || "USD";
-    profileState.budget.tuitionPerYear = val("prefs-tuition");
-    profileState.budget.livingPerYear = val("prefs-living");
-
-    profileState.notifications.scholarships = checked("prefs-notify-scholarships");
-    profileState.notifications.deadlines = checked("prefs-notify-deadlines");
-    profileState.notifications.universityMatches = checked("prefs-notify-universities");
-    profileState.notifications.visa = checked("prefs-notify-visa");
-  }
-
-  /** Called after every change: refresh the live bits and keep a draft. */
-  function touch() {
-    updateBudgetDisplay();
-    updateStrength();
-    saveDraft();
-  }
-
-  function saveDraft() {
-    writeJSON(sessionStorage, DRAFT_KEY, { state: profileState, step: currentStep });
-  }
-
-  /* ------------------------------------------------------------------------
-     Applying state to the form
-     ------------------------------------------------------------------------ */
-
-  function setSelected(el, on) {
-    el.classList.toggle("selected", on);
-    el.setAttribute("aria-pressed", String(on));
-  }
-
-  function refreshSelections() {
-    $$(".choice-card, .pill-choice").forEach((el) =>
-      setSelected(el, profileState[el.dataset.field] === el.dataset.value)
-    );
-
-    $$(".destination-card").forEach((el) =>
-      setSelected(el, profileState.countries.includes(el.dataset.country))
-    );
-
-    $$(".segmented-control button").forEach((el) => {
-      const current =
-        el.dataset.field === "universityType"
-          ? profileState.university.type
-          : profileState.university.studyMode;
-      setSelected(el, el.dataset.value === current);
-    });
-
-    $$(".priority-card").forEach((el) =>
-      setSelected(el, el.dataset.priority === profileState.ai.priority)
-    );
-
-    [
-      ["toggle-scholarship", "needsScholarship"],
-      ["toggle-loan", "needsLoan"]
-    ].forEach(([id, key]) => {
-      const el = byId(id);
-      if (!el) return;
-      el.classList.toggle("active", Boolean(profileState.budget[key]));
-      el.setAttribute("aria-pressed", String(Boolean(profileState.budget[key])));
-    });
-  }
-
-  function populateModal() {
-    const setValue = (id, value) => {
-      const el = byId(id);
-      if (el) el.value = value ?? "";
-    };
-
-    setValue("prefs-field", profileState.field);
-    setValue("prefs-gpa", profileState.academic.gpa);
-    setValue("prefs-grading-scale", profileState.academic.gradingScale);
-    setValue("prefs-graduation-year", profileState.academic.graduationYear);
-    setValue("prefs-ielts", profileState.tests.ielts);
-    setValue("prefs-toefl", profileState.tests.toefl);
-    setValue("prefs-gre", profileState.tests.gre);
-    setValue("prefs-gmat", profileState.tests.gmat);
-    setValue("prefs-currency", profileState.budget.currency);
-    setValue("prefs-tuition", profileState.budget.tuitionPerYear || 20000);
-    setValue("prefs-living", profileState.budget.livingPerYear || 12000);
-
-    // The sliders show a default even if nothing was saved, so make the saved
-    // state match what's on screen (it used to save "" while showing $20,000).
-    profileState.budget.tuitionPerYear = val("prefs-tuition");
-    profileState.budget.livingPerYear = val("prefs-living");
-
-    [
-      ["prefs-notify-scholarships", profileState.notifications.scholarships],
-      ["prefs-notify-deadlines", profileState.notifications.deadlines],
-      ["prefs-notify-universities", profileState.notifications.universityMatches],
-      ["prefs-notify-visa", profileState.notifications.visa]
-    ].forEach(([id, on]) => {
-      const el = byId(id);
-      if (el) el.checked = Boolean(on);
-    });
-
-    refreshSelections();
-    updateBudgetDisplay();
-    updateDestinationCount();
-    updateStrength();
-  }
-
-  /* ------------------------------------------------------------------------
-     Events
-     ------------------------------------------------------------------------ */
-
-  function bindModalEvents() {
-    const overlay = byId("prefs-overlay");
-    const form = byId("prefs-form");
-    if (!overlay || !form) return;
-
-    byId("prefs-close").addEventListener("click", () => closeModal(true));
-
-    overlay.addEventListener("mousedown", (e) => {
-      if (e.target === overlay) closeModal(true);
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (overlay.hidden) return;
-
-      if (e.key === "Escape") {
-        closeModal(true);
-        return;
-      }
-
-      if (e.key === "Tab") trapFocus(e, overlay);
-
-      if (
-        e.key === "Enter" &&
-        e.target.matches("input[type='text'], input[type='number']")
-      ) {
-        e.preventDefault();
-        nextStep();
-      }
-    });
-
-    form.addEventListener("click", onFormClick);
-    form.addEventListener("input", onFormInput);
-    form.addEventListener("change", onFormInput);
-    form.addEventListener("submit", (e) => e.preventDefault());
-
-    byId("profile-next").addEventListener("click", nextStep);
-    byId("profile-back").addEventListener("click", previousStep);
-    byId("profile-skip").addEventListener("click", () => closeModal(true));
-  }
-
-  function onFormClick(e) {
-    const choice = e.target.closest(".choice-card, .pill-choice");
-    if (choice) {
-      profileState[choice.dataset.field] = choice.dataset.value;
-      refreshSelections();
-      touch();
-      return;
-    }
-
-    const dest = e.target.closest(".destination-card");
-    if (dest) {
-      pickDestination(dest.dataset.country);
-      return;
-    }
-
-    const seg = e.target.closest(".segmented-control button");
-    if (seg) {
-      if (seg.dataset.field === "universityType") profileState.university.type = seg.dataset.value;
-      else profileState.university.studyMode = seg.dataset.value;
-      refreshSelections();
-      touch();
-      return;
-    }
-
-    const priority = e.target.closest(".priority-card");
-    if (priority) {
-      profileState.ai.priority = priority.dataset.priority;
-      profileState.university.focus = priority.dataset.priority;
-      refreshSelections();
-      touch();
-      return;
-    }
-
-    const toggle = e.target.closest(".toggle-card");
-    if (toggle) {
-      const key = toggle.id === "toggle-scholarship" ? "needsScholarship" : "needsLoan";
-      profileState.budget[key] = !profileState.budget[key];
-      refreshSelections();
-      touch();
-    }
-  }
-
-  function onFormInput() {
-    syncFromDOM();
-    touch();
-  }
-
-  function pickDestination(country) {
-    if (country === UNSURE) {
-      profileState.countries = [UNSURE];
-    } else {
-      const list = profileState.countries.filter((c) => c !== UNSURE);
-      const i = list.indexOf(country);
-
-      if (i >= 0) list.splice(i, 1);
-      else list.push(country);
-
-      profileState.countries = list;
-    }
-
-    refreshSelections();
-    updateDestinationCount();
-    touch();
-  }
-
-  function trapFocus(e, overlay) {
-    const focusable = $$(
-      "button, input, select, textarea, [href], [tabindex]:not([tabindex='-1'])",
-      overlay
-    ).filter((el) => !el.disabled && el.offsetParent !== null);
-
-    if (!focusable.length) return;
-
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
-    }
-  }
-
-  /* ------------------------------------------------------------------------
-     Steps
-     ------------------------------------------------------------------------ */
-
-  function nextStep() {
-    syncFromDOM();
-
-    const error = validateStep(currentStep);
-    if (error) {
-      showError(error);
-      return;
-    }
-
-    clearError();
-
-    if (currentStep < TOTAL_STEPS) {
-      currentStep++;
-      renderStep();
-      saveDraft();
-      return;
-    }
-
-    saveProfile();
-  }
-
-  function previousStep() {
-    clearError();
-
-    if (currentStep > 1) {
-      currentStep--;
-      renderStep();
-      saveDraft();
-    }
-  }
-
-  function renderStep() {
-    $$(".profile-step").forEach((step) => {
-      step.classList.toggle("active", Number(step.dataset.step) === currentStep);
-    });
-
-    const percentage = Math.round((currentStep / TOTAL_STEPS) * 100);
-
-    const bar = byId("profile-progress-bar");
-    if (bar) bar.style.width = `${percentage}%`;
-
-    const label = byId("profile-step-label");
-    if (label) label.textContent = `STEP ${String(currentStep).padStart(2, "0")} / 06`;
-
-    const percent = byId("profile-progress-percent");
-    if (percent) percent.textContent = `${percentage}%`;
-
-    const back = byId("profile-back");
-    if (back) back.style.visibility = currentStep === 1 ? "hidden" : "visible";
-
-    const next = byId("profile-next");
-    if (next) {
-      next.disabled = false; // it used to stay disabled after a successful save
-      next.innerHTML =
-        currentStep === TOTAL_STEPS
-          ? "Create my Study Identity <span>✦</span>"
-          : "Continue <span>→</span>";
-    }
-
-    if (currentStep === TOTAL_STEPS) updateIdentityPreview();
-
-    const shell = document.querySelector(".uniai-profile-shell");
-    if (shell) shell.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  /* ------------------------------------------------------------------------
-     Validation
-     ------------------------------------------------------------------------ */
+  let flowTok = 0;
+
+  const COUNTRY_LIST = [["United States", "🇺🇸"], ["United Kingdom", "🇬🇧"], ["Canada", "🇨🇦"], ["Australia", "🇦🇺"], ["Germany", "🇩🇪"], ["Japan", "🇯🇵"], [UNSURE, "✦"]];
+  const getP = (o, p) => p.split(".").reduce((a, k) => (a == null ? a : a[k]), o);
+  const setP = (o, p, v) => { const ks = p.split("."), last = ks.pop(); ks.reduce((a, k) => a[k], o)[last] = v; };
+  const numIn = (p, label, ph, x) => Object.assign({t: "in", type: "number", p, label, ph}, x);
 
   function inRange(value, min, max) {
     if (value === "" || value === null || value === undefined) return true;
@@ -839,52 +568,33 @@ to{opacity:1;transform:translateX(0)}
     return "";
   }
 
-  function showError(message) {
-    const el = byId("prefs-error");
-    if (el) el.textContent = message;
-  }
 
-  function clearError() {
-    showError("");
-  }
-
-  /* ------------------------------------------------------------------------
-     Live bits: destination count, budget labels, strength, summary
-     ------------------------------------------------------------------------ */
-
-  function updateDestinationCount() {
-    const el = byId("destination-count");
-    if (!el) return;
-
-    const count = profileState.countries.length;
-    el.textContent = !count
-      ? "Select at least one destination."
-      : count === 1
-      ? "1 destination selected"
-      : `${count} destinations selected`;
-  }
-
-  function updateBudgetDisplay() {
-    const currency = profileState.budget.currency || "USD";
-    const symbol = CURRENCY_SYMBOLS[currency] || currency;
-
-    const tuition = Number(profileState.budget.tuitionPerYear || 0);
-    const living = Number(profileState.budget.livingPerYear || 0);
-
-    const tuitionEl = byId("tuition-display");
-    if (tuitionEl) tuitionEl.textContent = `${symbol}${tuition.toLocaleString()}`;
-
-    const livingEl = byId("living-display");
-    if (livingEl) livingEl.textContent = `${symbol}${living.toLocaleString()}`;
-
-    // The slider end labels used to say "$" whatever currency was chosen.
-    const maxima = ["100K+", "60K+"];
-    $$(".budget-panel .slider-labels").forEach((labels, i) => {
-      const spans = labels.querySelectorAll("span");
-      if (spans[0]) spans[0].textContent = `${symbol}0`;
-      if (spans[1]) spans[1].textContent = `${symbol}${maxima[i] || ""}`;
-    });
-  }
+  /** The conversation. Each step: what Buddy says, which controls appear, and how to validate. */
+  const OB_STEPS = [
+    {mood: "happy", say: "Hi, I'm Uni Buddy! I'll help you build your Study Identity so UniAI can personalise everything for you. First: what level do you want to study?",
+      ctl: [{t: "chips", p: "degree", o: ["Bachelor's", "Master's", "PhD", "Diploma"]}], auto: 1, check: () => (profileState.degree ? "" : "Choose your degree level.")},
+    {mood: "curious", say: "Nice choice! And what do you want to study?",
+      ctl: [{t: "in", type: "text", p: "field", ph: "e.g. Computer Science, Business…"}], check: () => (profileState.field ? "" : "Enter your field of study.")},
+    {mood: "thinking", say: "Where in the world are you thinking of going? Pick every country you're considering.",
+      ctl: [{t: "multi", p: "countries"}], check: () => (profileState.countries.length ? "" : "Choose at least one destination.")},
+    {mood: "curious", say: "When would you like to start?",
+      ctl: [{t: "chips", p: "intake", o: ["Fall 2026", "Spring 2027", "Fall 2027", "Spring 2028", "Fall 2028", "Not sure yet"]}], auto: 1},
+    {mood: "thinking", say: "Let's talk grades. Everything here is optional.", skip: 1, check: () => validateStep(3),
+      ctl: [numIn("academic.gpa", "GPA / score", "8.5", {step: "0.01", min: 0}), {t: "in", type: "text", p: "academic.gradingScale", label: "Grading scale", ph: "10"}, numIn("academic.graduationYear", "Graduation year", "2027", {min: 2020, max: 2040})]},
+    {mood: "curious", say: "Any test scores yet? Leave blank what you haven't taken.", skip: 1, check: () => validateStep(3),
+      ctl: [numIn("tests.ielts", "IELTS (0–9)", "—", {step: "0.5", min: 0, max: 9}), numIn("tests.toefl", "TOEFL", "—", {min: 0, max: 120}), numIn("tests.gre", "GRE", "—", {min: 0, max: 340}), numIn("tests.gmat", "GMAT", "—", {min: 0, max: 805})]},
+    {mood: "thinking", say: "Now the money side. Give me a realistic yearly range.",
+      ctl: [{t: "sel", p: "budget.currency", label: "Currency", o: Object.keys(CURRENCY_SYMBOLS)},
+        {t: "range", p: "budget.tuitionPerYear", label: "Max tuition / year", min: 0, max: 100000, step: 1000, def: 20000},
+        {t: "range", p: "budget.livingPerYear", label: "Max living cost / year", min: 0, max: 60000, step: 1000, def: 12000},
+        {t: "tog", p: "budget.needsScholarship", label: "🎓 I need a scholarship"}, {t: "tog", p: "budget.needsLoan", label: "💳 I may need a loan"}]},
+    {mood: "curious", say: "What kind of university fits you?",
+      ctl: [{t: "chips", p: "university.type", label: "Type", o: ["Any", "Public", "Private"]}, {t: "chips", p: "university.studyMode", label: "Study mode", o: ["On-campus", "Hybrid", "Online"]},
+        {t: "chips", p: "ai.priority", also: "university.focus", label: "What matters more?", o: ["career", "research", "balanced"], names: {career: "🚀 Career", research: "🔬 Research", balanced: "⚖️ Balanced"}}]},
+    {mood: "excited", say: "Last thing! What should I keep an eye on for you?",
+      ctl: [{t: "tog", p: "notifications.scholarships", label: "🎓 Scholarship matches"}, {t: "tog", p: "notifications.deadlines", label: "⏰ Application deadlines"},
+        {t: "tog", p: "notifications.universityMatches", label: "✨ University matches"}, {t: "tog", p: "notifications.visa", label: "🛂 Visa updates"}]}
+  ];
 
   function calculateStrength() {
     const p = profileState;
@@ -906,88 +616,6 @@ to{opacity:1;transform:translateX(0)}
     return Math.min(100, score);
   }
 
-  function updateStrength() {
-    const el = byId("final-strength");
-    if (el) el.textContent = `${calculateStrength()}%`;
-  }
-
-  function updateIdentityPreview() {
-    updateStrength();
-
-    const el = byId("identity-summary");
-    if (!el) return;
-
-    const accent = (text) => {
-      const span = document.createElement("span");
-      span.style.color = "#a78bfa";
-      span.textContent = text;
-      return span;
-    };
-
-    const strong = document.createElement("strong");
-    strong.textContent = `${profileState.degree || "Future student"} · ${
-      profileState.field || "your chosen field"
-    }`;
-
-    const countries = profileState.countries.length
-      ? profileState.countries.join(", ")
-      : "your chosen destinations";
-
-    // Built with DOM nodes, never innerHTML: "field" is free text.
-    el.textContent = "";
-    el.append(
-      strong,
-      document.createElement("br"),
-      "Exploring ",
-      accent(countries),
-      " for ",
-      accent(profileState.intake || "your preferred intake"),
-      ". UniAI will use this profile to personalize your university, scholarship and application journey."
-    );
-  }
-
-  /* ------------------------------------------------------------------------
-     Save
-     ------------------------------------------------------------------------ */
-
-  async function saveProfile() {
-    clearError();
-    syncFromDOM();
-
-    for (let step = 1; step <= 3; step++) {
-      const error = validateStep(step);
-      if (error) {
-        currentStep = step;
-        renderStep();
-        showError(error);
-        return;
-      }
-    }
-
-    const next = byId("profile-next");
-    if (next) {
-      next.disabled = true;
-      next.innerHTML = "Saving… <span>✦</span>";
-    }
-
-    try {
-      const saved = await window.UniAIPreferences.set(profileState);
-
-      showToast(
-        "Study Identity created",
-        saved.__synced || !window.supabaseApp
-          ? "UniAI is now personalized for you."
-          : "Saved on this device. It will sync to your account shortly.",
-        !(saved.__synced || !window.supabaseApp)
-      );
-
-      setTimeout(() => closeModal(false), 400);
-    } catch (err) {
-      console.error("UniAI: profile save failed.", err);
-      showError("Could not save your profile. Please try again.");
-      renderStep();
-    }
-  }
 
   function showToast(title, detail, warn = false) {
     const toast = document.createElement("div");
@@ -1015,63 +643,241 @@ to{opacity:1;transform:translateX(0)}
     }, 3200);
   }
 
-  /* ------------------------------------------------------------------------
-     Open / close
-     ------------------------------------------------------------------------ */
+
+  const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; };
+  const saveDraft = (i) => writeJSON(sessionStorage, DRAFT_KEY, {state: profileState, step: i});
+
+  function addMsg(who, text) {
+    const t = byId("ob-thread"), m = el("div", "ob-msg " + who, text);
+    t.appendChild(m); t.scrollTop = t.scrollHeight; return m;
+  }
+
+  async function speak(text, tok) {
+    Buddy.setTalking(true);
+    const m = addMsg("buddy", Buddy.reduce ? text : "");
+    if (!Buddy.reduce) for (const ch of text) {
+      if (tok !== flowTok) return;
+      m.textContent += ch; byId("ob-thread").scrollTop = 1e6;
+      await Buddy.sleep(ch === " " ? 12 : 16);
+    }
+    Buddy.setTalking(false);
+  }
+
+  /** Draws one control and returns a function that refreshes it from profileState. */
+  function buildCtl(c, dock, refresh, picked) {
+    const box = el("div", "ob-ctl");
+    if (c.label && c.t !== "tog") box.appendChild(el("span", "ob-lab", c.label));
+    let update = () => {};
+
+    if (c.t === "chips" || c.t === "multi") {
+      const row = el("div", "ob-row"), list = c.t === "multi" ? COUNTRY_LIST : c.o.map((o) => [o]);
+      list.forEach(([value, flag]) => {
+        const b = el("button", "ob-opt", (flag ? flag + " " : "") + (c.names ? c.names[value] : value)); b.type = "button";
+        b.onclick = () => {
+          if (c.t === "chips") { setP(profileState, c.p, value); if (c.also) setP(profileState, c.also, value); }
+          else {
+            let a = profileState.countries.filter((x) => x !== UNSURE);
+            if (value === UNSURE) a = [UNSURE]; else { const i = a.indexOf(value); if (i >= 0) a.splice(i, 1); else a.push(value); }
+            profileState.countries = a;
+          }
+          refresh(); picked(c);
+        };
+        b.dataset.v = value; row.appendChild(b);
+      });
+      update = () => row.querySelectorAll(".ob-opt").forEach((b) => {
+        const v = getP(profileState, c.p), on = c.t === "multi" ? profileState.countries.includes(b.dataset.v) : v === b.dataset.v;
+        b.classList.toggle("on", on); b.setAttribute("aria-pressed", on);
+      });
+      box.appendChild(row);
+    }
+
+    if (c.t === "in") {
+      const i = el("input", "ob-in"); i.type = c.type; i.placeholder = c.ph || ""; i.autocomplete = "off";
+      if (c.step) i.step = c.step; if (c.min != null) i.min = c.min; if (c.max != null) i.max = c.max;
+      i.setAttribute("aria-label", c.label || c.ph);
+      i.value = getP(profileState, c.p) ?? "";
+      i.oninput = () => { setP(profileState, c.p, i.value.trim()); picked(c); };
+      i.onkeydown = (e) => { if (e.key === "Enter") { e.preventDefault(); dock.querySelector(".ob-go")?.click(); } };
+      box.appendChild(i);
+      if (c.label) { const l = el("span", "ob-lab", c.label); box.insertBefore(l, i); }
+      if (!c.label) setTimeout(() => i.focus({preventScroll: true}), 60);
+    }
+
+    if (c.t === "sel") {
+      const s = el("select", "ob-sel"); c.o.forEach((o) => s.appendChild(new Option(o, o)));
+      s.value = profileState.budget.currency; s.setAttribute("aria-label", c.label);
+      s.onchange = () => { setP(profileState, c.p, s.value); refresh(); };
+      box.appendChild(s);
+    }
+
+    if (c.t === "range") {
+      if (getP(profileState, c.p) === "") setP(profileState, c.p, String(c.def));
+      const w = el("div", "ob-range"), r = el("input"), out = el("b");
+      r.type = "range"; r.min = c.min; r.max = c.max; r.step = c.step; r.value = getP(profileState, c.p); r.setAttribute("aria-label", c.label);
+      r.oninput = () => { setP(profileState, c.p, r.value); refresh(); };
+      update = () => { out.textContent = (CURRENCY_SYMBOLS[profileState.budget.currency] || "$") + Number(r.value).toLocaleString(); };
+      w.append(r, out); box.appendChild(w);
+    }
+
+    if (c.t === "tog") {
+      const b = el("button", "ob-opt", c.label); b.type = "button";
+      b.onclick = () => { setP(profileState, c.p, !getP(profileState, c.p)); refresh(); };
+      update = () => { const on = Boolean(getP(profileState, c.p)); b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); };
+      box.appendChild(b);
+    }
+
+    dock.appendChild(box); update();
+    return update;
+  }
+
+  const fmtAnswer = (c) => {
+    const v = getP(profileState, c.p);
+    if (c.t === "multi") return profileState.countries.join(", ");
+    if (c.t === "tog") return v ? c.label.replace(/^\S+\s/, "") : "";
+    if (c.t === "range") return (CURRENCY_SYMBOLS[profileState.budget.currency] || "$") + Number(v).toLocaleString();
+    if (c.t === "sel") return "";
+    return v === "" || v == null ? "" : (c.names ? c.names[v] : String(v));
+  };
+
+  /** Shows the controls for one step. Resolves with "next" | "skip" | "back". */
+  function collect(step, i) {
+    const dock = byId("ob-dock"); dock.replaceChildren();
+    return new Promise((resolve) => {
+      const updates = [], refresh = () => updates.forEach((u) => u()), err = el("p", "ob-err");
+      const go = () => {
+        const e = step.check && step.check();
+        if (e) { err.textContent = e; Buddy.setMood("oops"); return; }
+        resolve("next");
+      };
+      step.ctl.forEach((c) => updates.push(buildCtl(c, dock, refresh, (cc) => {
+        err.textContent = ""; if (step.auto && cc.t === "chips") setTimeout(go, 180);
+      })));
+      const nav = el("div", "ob-nav");
+      if (i > 0) { const b = el("button", "ob-ghost", "← Back"); b.type = "button"; b.onclick = () => resolve("back"); nav.appendChild(b); }
+      if (step.skip) { const b = el("button", "ob-ghost skip", "Skip"); b.type = "button"; b.onclick = () => resolve("skip"); nav.appendChild(b); }
+      if (!step.auto) { const b = el("button", "ob-go", "Continue →"); b.type = "button"; b.onclick = go; nav.appendChild(b); }
+      dock.append(err, nav);
+    });
+  }
+
+  /** Index of the first required step that is still wrong, or -1. */
+  function firstInvalid() {
+    return OB_STEPS.findIndex((s, i) => (i <= 2 || i === 4) && s.check && s.check());
+  }
+
+  function identityText() {
+    const p = profileState, c = p.countries.length ? p.countries.join(", ") : "your chosen destinations";
+    return `${p.degree || "Future student"} · ${p.field || "your chosen field"}. Exploring ${c} for ${p.intake || "your preferred intake"}. Profile strength: ${calculateStrength()}%.`;
+  }
+
+  async function saveProfile(btn) {
+    btn.disabled = true; btn.textContent = "Saving… ✦";
+    try {
+      const saved = await window.UniAIPreferences.set(profileState);
+      showToast("Study Identity created", saved.__synced || !window.supabaseApp ? "UniAI is now personalized for you." : "Saved on this device. It will sync to your account shortly.", !(saved.__synced || !window.supabaseApp));
+      Buddy.setMood("excited");
+      setTimeout(() => closeModal(false), 900);
+    } catch (err) {
+      console.error("UniAI: profile save failed.", err);
+      btn.disabled = false; btn.textContent = "Create my Study Identity ✦";
+      byId("ob-dock").querySelector(".ob-err").textContent = "Could not save your profile. Please try again.";
+    }
+  }
+
+  async function runFlow(start, tok) {
+    const total = OB_STEPS.length, thread = byId("ob-thread"), marks = [];
+    let i = start;
+    if (start > 0) await speak("Welcome back! Let's pick up where we left off.", tok);
+
+    while (tok === flowTok) {
+      byId("ob-bar").style.width = Math.round((i / total) * 100) + "%";
+      byId("ob-step").textContent = i < total ? `Step ${i + 1} of ${total}` : "Almost done";
+      marks[i] = thread.children.length;
+
+      if (i === total) {                       // final: summary + create
+        Buddy.setMood("excited");
+        await speak("All set! Here's your Study Identity. I'll use it to personalise universities, scholarships and deadlines for you. ✦", tok);
+        if (tok !== flowTok) return;
+        const dock = byId("ob-dock"); dock.replaceChildren();
+        const err = el("p", "ob-err"), nav = el("div", "ob-nav");
+        const back = el("button", "ob-ghost", "← Back"); back.type = "button";
+        const create = el("button", "ob-go", "Create my Study Identity ✦"); create.type = "button";
+        dock.append(el("div", "ob-sum", identityText()), err, nav); nav.append(back, create);
+        const r = await new Promise((res) => { back.onclick = () => res("back"); create.onclick = () => res("create"); });
+        if (tok !== flowTok) return;
+        if (r === "back") { i = total - 1; thread.replaceChildren(...Array.from(thread.children).slice(0, marks[i])); continue; }
+        const bad = firstInvalid();
+        if (bad >= 0) { i = bad; Buddy.setMood("oops"); await speak("Hmm, I need one more thing here before I can save.", tok); continue; }
+        await saveProfile(create); return;
+      }
+
+      const step = OB_STEPS[i];
+      Buddy.setMood(step.mood);
+      await speak(step.say, tok);
+      if (tok !== flowTok) return;
+      const r = await collect(step, i);
+      if (tok !== flowTok) return;
+
+      if (r === "back") { i = Math.max(0, i - 1); Array.from(thread.children).slice(marks[i]).forEach((n) => n.remove()); continue; }
+      const text = r === "skip" ? "Skip" : step.ctl.map(fmtAnswer).filter(Boolean).join(" · ") || "Done";
+      addMsg("you", text);
+      if (r === "skip") Buddy.setMood("sleepy"); else { Buddy.setMood("happy", {quiet: true}); Buddy.G.nod(); }
+      i++; saveDraft(i);
+      await Buddy.sleep(Buddy.reduce ? 0 : 380);
+    }
+  }
+
+  function buildModal() {
+    if (byId("prefs-overlay")) return;
+    const wrap = el("div", "uniai-profile-overlay"); wrap.id = "prefs-overlay"; wrap.hidden = true; wrap.innerHTML = MODAL_HTML;
+    document.body.appendChild(wrap);
+    if (!byId("uniai-study-identity-css")) { const s = el("style"); s.id = "uniai-study-identity-css"; s.textContent = MODAL_CSS; document.head.appendChild(s); }
+    Buddy = initBuddy();
+
+    byId("prefs-close").addEventListener("click", () => closeModal(true));
+    document.addEventListener("keydown", (e) => {
+      if (wrap.hidden) return;
+      if (e.key === "Escape") { closeModal(true); return; }
+      if (e.key !== "Tab") return;
+      const f = $$("button, input, select, [tabindex]:not([tabindex='-1'])", wrap).filter((n) => !n.disabled && !n.hidden && n.offsetParent !== null);
+      if (!f.length) return;
+      if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+    });
+  }
 
   function openPrefsModal() {
     buildModal();
-
     const overlay = byId("prefs-overlay");
-    if (!overlay) return;
 
-    // Resume a half-finished form from this session, otherwise start from the saved profile.
+    // Resume a half-finished conversation from this session, otherwise start from the saved profile.
     const draft = readJSON(sessionStorage, DRAFT_KEY);
-
-    if (draft && draft.state) {
-      profileState = normalizePrefs(draft.state);
-      currentStep = Math.min(Math.max(Number(draft.step) || 1, 1), TOTAL_STEPS);
-    } else {
-      profileState = normalizePrefs(readPrefs());
-      currentStep = 1;
-    }
-
-    populateModal();
-    clearError();
-    renderStep();
+    let start = 0;
+    if (draft && draft.state) { profileState = normalizePrefs(draft.state); start = Math.min(Math.max(Number(draft.step) || 0, 0), OB_STEPS.length); }
+    else profileState = normalizePrefs(readPrefs());
 
     lastFocused = document.activeElement;
     overlay.hidden = false;
     document.body.style.overflow = "hidden";
-
-    const firstField = overlay.querySelector(".profile-step.active button, .profile-step.active input");
-    if (firstField) setTimeout(() => firstField.focus({ preventScroll: true }), 50);
+    byId("ob-thread").replaceChildren(); byId("ob-dock").replaceChildren();
+    Buddy.runLoops();
+    runFlow(start, ++flowTok);
   }
 
   function closeModal(dismissed) {
+    flowTok++;
     const overlay = byId("prefs-overlay");
     if (overlay) overlay.hidden = true;
-
+    if (Buddy) { Buddy.stopLoops(); Buddy.setTalking(false); }
     document.body.style.overflow = "";
-
-    const next = byId("profile-next");
-    if (next) next.disabled = false;
 
     if (dismissed && autoPromptActive) {
       const uid = currentUserId();
-      if (uid) {
-        try {
-          localStorage.setItem(DISMISS_PREFIX + uid, String(Date.now()));
-        } catch (err) {
-          /* ignore */
-        }
-      }
+      if (uid) { try { localStorage.setItem(DISMISS_PREFIX + uid, String(Date.now())); } catch (err) { /* ignore */ } }
     }
     autoPromptActive = false;
 
-    if (lastFocused && typeof lastFocused.focus === "function") {
-      lastFocused.focus({ preventScroll: true });
-    }
+    if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus({preventScroll: true});
   }
 
   window.openPrefsModal = openPrefsModal;

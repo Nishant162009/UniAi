@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UniAI | Complete Guide to Studying in France</title>
+  <meta name="description" content="A complete guide to studying in France for international students. Explore courses, universities, tuition, scholarships, visas, housing and student life.">
+
+  <style>
+    :root {
+      --bg: #070b16;
+      --bg-2: #0d1425;
+      --card: #111b30;
+      --card-2: #182640;
+      --text: #f7f8fc;
+      --muted: #a7b1c4;
+      --border: #233452;
+      --blue: #1e4fa3;
+      --blue-2: #5f98ff;
+      --red: #e63946;
+      --white: #f9fbff;
+      --gold: #f2c766;
+      --green: #4ade80;
+      --display: "Plus Jakarta Sans", sans-serif;
+      --body: "Inter", sans-serif;
+      --radius: 22px;
+      --shadow: 0 20px 60px rgba(0, 0, 0, .28);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 94px;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
+    ::selection {
+      background: rgba(94, 150, 255, .35);
+    }
+
+    .france-nav {
+      height: 76px;
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      border-bottom: 1px solid transparent;
+      transition: .25s ease;
+    }
+
+    .france-nav.scrolled {
+      background: rgba(7, 11, 22, .86);
+      backdrop-filter: blur(20px);
+      border-color: rgba(255, 255, 255, .09);
+    }
+
+    .logo {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -.06em;
+    }
+
+    .logo span {
+      background: linear-gradient(90deg, #6aa0ff 0%, #ffffff 48%, #ef5260 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .nav-links a:hover { color: #fff; }
+
+    .nav-btn,
+    .btn {
+      cursor: pointer;
+      color: white;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: rgba(255, 255, 255, .07);
+      transition: .25s ease;
+    }
+
+    .nav-btn {
+      padding: 10px 15px;
+      font-size: 11px;
+      font-weight: 800;
+      background: rgba(30, 79, 163, .32);
+      border-color: rgba(95, 152, 255, .42);
+    }
+
+    .nav-btn:hover,
+    .btn:hover { transform: translateY(-3px); }
+
+    .hero {
+      min-height: 92vh;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: -4px;
+      z-index: -3;
+      background:
+        url("https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2400&q=90")
+        center/cover;
+      animation: zoom 24s ease-in-out infinite alternate;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background: linear-gradient(180deg, rgba(5, 8, 16, .15), rgba(5, 8, 16, .64) 52%, var(--bg) 100%);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(circle at 75% 23%, rgba(30, 79, 163, .43), transparent 26%),
+        radial-gradient(circle at 88% 55%, rgba(230, 57, 70, .25), transparent 30%),
+        linear-gradient(90deg, rgba(5, 8, 16, .95), rgba(5, 8, 16, .18) 75%);
+    }
+
+    @keyframes zoom {
+      to { transform: scale(1.06); }
+    }
+
+    .hero-inner,
+    .container {
+      width: min(1240px, 92vw);
+      margin: auto;
+    }
+
+    .hero-inner { padding: 155px 0 75px; }
+
+    .eyebrow,
+    .kicker {
+      color: #9dbdff;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .eyebrow { margin-bottom: 20px; }
+
+    .hero h1 {
+      max-width: 1000px;
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(58px, 8.5vw, 122px);
+      line-height: .88;
+      letter-spacing: -.075em;
+    }
+
+    .gradient {
+      background: linear-gradient(90deg, #73a7ff 0%, #f6f8ff 47%, #e63946 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      max-width: 735px;
+      margin: 30px 0 0;
+      color: #d6deeb;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      padding: 13px 18px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .btn.primary {
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--blue), #e63946);
+      box-shadow: 0 12px 35px rgba(30, 79, 163, .25);
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 38px;
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, .13);
+    }
+
+    .stat strong {
+      display: block;
+      font-family: var(--display);
+      font-size: 24px;
+    }
+
+    .stat span {
+      display: block;
+      color: #a6b3c7;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+
+    .quickbar {
+      position: sticky;
+      top: 76px;
+      z-index: 50;
+      overflow: auto;
+      border-bottom: 1px solid var(--border);
+      background: #0b1220;
+    }
+
+    .quickbar-inner {
+      width: min(1240px, 92vw);
+      min-width: max-content;
+      margin: auto;
+      display: flex;
+      gap: 4px;
+      padding: 10px 0;
+    }
+
+    .quickbar a {
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .quickbar a:hover {
+      color: #fff;
+      background: #15243e;
+    }
+
+    .section { padding: 100px 0; }
+    .section.alt { background: rgba(255, 255, 255, .015); }
+
+    .kicker { margin-bottom: 14px; }
+
+    .title {
+      max-width: 900px;
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(40px, 5.5vw, 72px);
+      line-height: .95;
+      letter-spacing: -.065em;
+    }
+
+    .subtitle {
+      max-width: 760px;
+      margin: 20px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .guide-grid,
+    .application,
+    .cost-grid,
+    .work-columns {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      margin-top: 50px;
+    }
+
+    .info-card,
+    .requirements,
+    .cost-panel,
+    .work-box {
+      padding: 28px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: var(--radius);
+    }
+
+    .info-card h3,
+    .requirements h3,
+    .money h3 {
+      margin: 0 0 12px;
+      font-family: var(--display);
+      font-size: 22px;
+    }
+
+    .info-card p,
+    .reason p,
+    .education-card p,
+    .country p,
+    .uni p,
+    .course p,
+    .application-item p,
+    .scholar p,
+    .accommodation p,
+    .life p,
+    .work-card p,
+    .step p,
+    .faq-answer {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.75;
+    }
+
+    .notice {
+      margin-top: 18px;
+      padding: 17px 20px;
+      border-left: 3px solid var(--blue-2);
+      border-radius: 0 12px 12px 0;
+      background: linear-gradient(90deg, rgba(30, 79, 163, .17), transparent);
+      color: #d4def0;
+      font-size: 12px;
+    }
+
+    .reason-grid,
+    .scholar-grid,
+    .accommodation-grid,
+    .mistakes,
+    .uni-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 50px;
+    }
+
+    .reason,
+    .uni,
+    .scholar,
+    .accommodation,
+    .mistake {
+      min-height: 245px;
+      padding: 25px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--card);
+    }
+
+    .reason-number,
+    .course-num {
+      color: var(--gold);
+      font-family: var(--display);
+      font-size: 40px;
+      letter-spacing: -.06em;
+    }
+
+    .reason h3,
+    .course h3 {
+      margin: 22px 0 8px;
+      font-family: var(--display);
+      font-size: 19px;
+    }
+
+    .education-grid,
+    .region-grid,
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 50px;
+    }
+
+    .education-card,
+    .region,
+    .course,
+    .life {
+      min-height: 255px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: linear-gradient(145deg, #14223d, #0b1322);
+    }
+
+    .education-card .big {
+      color: #9fc0ff;
+      font-family: var(--display);
+      font-size: 40px;
+      font-weight: 800;
+    }
+
+    .education-card h3,
+    .region h3,
+    .life h3 {
+      margin: 20px 0 8px;
+      font-family: var(--display);
+      font-size: 18px;
+    }
+
+    .region-icon {
+      font-size: 30px;
+      filter: saturate(.85);
+    }
+
+    .city-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr 1fr;
+      gap: 14px;
+      margin-top: 50px;
+    }
+
+    .city {
+      min-height: 425px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background-size: cover;
+      background-position: center;
+      transition: .35s;
+    }
+
+    .city:hover {
+      transform: translateY(-5px);
+      border-color: rgba(95, 152, 255, .65);
+    }
+
+    .city::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(transparent 22%, rgba(5, 9, 17, .95));
+    }
+
+    .city-content {
+      position: relative;
+      z-index: 1;
+      padding: 25px;
+    }
+
+    .city small,
+    .uni small,
+    .scholar-type {
+      color: #9fc0ff;
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+    }
+
+    .city h3 {
+      margin: 7px 0;
+      font-family: var(--display);
+      font-size: 30px;
+      letter-spacing: -.05em;
+    }
+
+    .city p {
+      margin: 0;
+      color: #d1d7e2;
+      font-size: 11px;
+    }
+
+    .uni {
+      min-height: 285px;
+      background: linear-gradient(145deg, var(--card-2), var(--bg));
+      transition: .3s;
+    }
+
+    .uni:hover {
+      transform: translateY(-5px);
+      border-color: rgba(95, 152, 255, .52);
+      box-shadow: var(--shadow);
+    }
+
+    .uni h3 {
+      margin: 22px 0 8px;
+      font-family: var(--display);
+      font-size: 22px;
+    }
+
+    .tags { margin-top: 18px; }
+
+    .tag {
+      display: inline-block;
+      margin: 3px;
+      padding: 6px 9px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: #aeb8c8;
+      font-size: 9px;
+    }
+
+    .course.highlight {
+      background: linear-gradient(145deg, rgba(30, 79, 163, .35), var(--card));
+    }
+
+    .application {
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .application-list { display: grid; gap: 10px; }
+
+    .application-item {
+      display: flex;
+      gap: 15px;
+      padding: 19px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: var(--card);
+    }
+
+    .application-item > strong {
+      color: #a9c6ff;
+      font-family: var(--display);
+      font-size: 14px;
+    }
+
+    .application-item p {
+      margin: 4px 0 0;
+      font-size: 11px;
+    }
+
+    .check {
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+      color: #d5dce8;
+      font-size: 12px;
+    }
+
+    .check:last-child { border-bottom: 0; }
+
+    .journey-box {
+      margin-top: 50px;
+      padding: 35px;
+      border: 1px solid rgba(95, 152, 255, .4);
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(30, 79, 163, .25), rgba(230, 57, 70, .08));
+    }
+
+    .journey-box h3 { font-family: var(--display); }
+
+    .journey-steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .journey-step {
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(0, 0, 0, .18);
+    }
+
+    .journey-step b {
+      color: #9fc0ff;
+      font-family: var(--display);
+      font-size: 11px;
+    }
+
+    .journey-step h4 {
+      margin: 12px 0 6px;
+      font-size: 13px;
+    }
+
+    .journey-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    .cost-grid {
+      grid-template-columns: 1.2fr .8fr;
+      gap: 14px;
+    }
+
+    .cost-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 17px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cost-row:last-child { border-bottom: 0; }
+
+    .cost-row span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .cost-row strong {
+      font-family: var(--display);
+      font-size: 12px;
+      text-align: right;
+    }
+
+    .money {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: linear-gradient(145deg, rgba(30, 79, 163, .33), var(--card));
+    }
+
+    .money-symbol {
+      color: var(--gold);
+      font-family: var(--display);
+      font-size: 92px;
+      line-height: 1;
+    }
+
+    .money p { color: var(--muted); font-size: 12px; }
+
+    .scholar h3,
+    .accommodation h3 {
+      margin: 16px 0 8px;
+      font-family: var(--display);
+      font-size: 20px;
+    }
+
+    .timeline {
+      max-width: 850px;
+      position: relative;
+      margin-top: 55px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 17px;
+      width: 1px;
+      background: linear-gradient(var(--blue-2), var(--red), var(--border));
+    }
+
+    .step {
+      position: relative;
+      padding: 0 0 45px 62px;
+    }
+
+    .step:last-child { padding-bottom: 0; }
+
+    .dot {
+      position: absolute;
+      top: 0;
+      left: 6px;
+      width: 23px;
+      height: 23px;
+      border: 1px solid var(--blue-2);
+      border-radius: 50%;
+      background: var(--bg);
+      box-shadow: 0 0 0 7px var(--bg), 0 0 22px rgba(95, 152, 255, .25);
+    }
+
+    .step h3 {
+      margin: 7px 0;
+      font-family: var(--display);
+      font-size: 24px;
+    }
+
+    .step p { max-width: 720px; margin: 0; }
+
+    .life-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 50px;
+    }
+
+    .life { min-height: 190px; }
+
+    .work-box { margin-top: 50px; }
+
+    .work-columns {
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .work-card {
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(0, 0, 0, .15);
+    }
+
+    .work-card h4 {
+      margin: 0 0 7px;
+      font-family: var(--display);
+    }
+
+    .checklist {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 50px;
+    }
+
+    .check-item {
+      padding: 17px 19px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: var(--card);
+      color: #d5dce8;
+      font-size: 11px;
+    }
+
+    .check-item::before {
+      content: "✓";
+      margin-right: 9px;
+      color: var(--green);
+      font-weight: 900;
+    }
+
+    .mistake strong {
+      color: #ff929d;
+      font-family: var(--display);
+      font-size: 14px;
+    }
+
+    .faq {
+      max-width: 900px;
+      margin-top: 50px;
+    }
+
+    .faq-item { border-bottom: 1px solid var(--border); }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 21px 0;
+      border: 0;
+      background: none;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+      font-family: var(--display);
+      font-size: 15px;
+    }
+
+    .faq-icon {
+      color: #9fc0ff;
+      transition: .2s;
+    }
+
+    .faq-answer {
+      display: none;
+      margin: 0;
+      padding: 0 0 20px;
+    }
+
+    .faq-item.open .faq-answer { display: block; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    .final { padding: 110px 0; }
+
+    .final-card {
+      min-height: 500px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 60px;
+      border: 1px solid rgba(95, 152, 255, .42);
+      border-radius: 30px;
+      background:
+        linear-gradient(90deg, rgba(6, 10, 20, .96), rgba(6, 10, 20, .43)),
+        url("https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=1900&q=85")
+        center/cover;
+    }
+
+    .final-card::after {
+      content: "FRANCE";
+      position: absolute;
+      top: -50px;
+      right: -10px;
+      color: rgba(255, 255, 255, .05);
+      font-family: var(--display);
+      font-size: 180px;
+      font-weight: 800;
+      letter-spacing: -.12em;
+    }
+
+    .final-content {
+      z-index: 1;
+      max-width: 700px;
+    }
+
+    .final-content h2 {
+      margin: 0 0 20px;
+      font-family: var(--display);
+      font-size: clamp(45px, 6vw, 80px);
+      line-height: .92;
+      letter-spacing: -.07em;
+    }
+
+    .final-content p {
+      color: #d9e1ec;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    footer {
+      padding: 45px 0;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      width: min(1240px, 92vw);
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      color: white;
+      font-family: var(--display);
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .footer-links a {
+      margin-right: 15px;
+      font-size: 10px;
+    }
+
+    @media (max-width: 1000px) {
+      .nav-links { display: none; }
+      .guide-grid, .application, .cost-grid, .work-columns { grid-template-columns: 1fr; }
+      .reason-grid, .scholar-grid, .accommodation-grid, .mistakes { grid-template-columns: 1fr 1fr; }
+      .education-grid, .region-grid, .course-grid { grid-template-columns: 1fr 1fr; }
+      .city-grid { grid-template-columns: 1fr 1fr; }
+      .uni-grid { grid-template-columns: 1fr 1fr; }
+      .journey-steps { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .france-nav { padding: 0 16px; }
+      .hero-inner { padding: 130px 0 55px; }
+      .hero h1 { font-size: clamp(52px, 17vw, 78px); }
+      .hero-copy { font-size: 14px; }
+      .section, .final { padding: 78px 0; }
+      .reason-grid, .education-grid, .region-grid, .city-grid, .uni-grid, .course-grid,
+      .scholar-grid, .accommodation-grid, .life-grid, .mistakes, .checklist, .journey-steps {
+        grid-template-columns: 1fr;
+      }
+      .final-card { min-height: 520px; padding: 30px; }
+      .final-card::after { font-size: 100px; }
+      .hero-stats { gap: 20px; }
+      .cost-panel { padding: 22px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .hero-bg { animation: none; }
+      .reveal { transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="france-nav" id="nav">
+    <a href="#" class="logo">Uni<span>AI</span></a>
+
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#education">Education</a>
+      <a href="#universities">Universities</a>
+      <a href="#admissions">Admissions</a>
+      <a href="#costs">Costs</a>
+      <a href="#visa">Visa</a>
+      <a href="#life">Life</a>
+      <a href="#faq">FAQ</a>
+    </div>
+
+    <button class="nav-btn" onclick="document.querySelector('#plan').scrollIntoView({behavior:'smooth'})">
+      Build my plan
+    </button>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-bg"></div>
+
+    <div class="hero-inner">
+      <div class="eyebrow">The complete uni guide · France</div>
+
+      <h1>
+        Study in<br>
+        <span class="gradient">France.</span>
+      </h1>
+
+      <p class="hero-copy">
+        A practical guide for international students—from finding the right French programme
+        and university to admissions, scholarships, visas, accommodation, student life and arrival.
+      </p>
+
+      <div class="hero-buttons">
+        <button class="btn primary" onclick="document.querySelector('#overview').scrollIntoView({behavior:'smooth'})">
+          Start the guide
+        </button>
+        <button class="btn" onclick="document.querySelector('#costs').scrollIntoView({behavior:'smooth'})">
+          Explore costs
+        </button>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat"><strong>LMD</strong><span>Degree structure</span></div>
+        <div class="stat"><strong>€</strong><span>Plan your budget</span></div>
+        <div class="stat"><strong>FR</strong><span>French experience</span></div>
+        <div class="stat"><strong>01</strong><span>Complete guide</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="quickbar">
+    <div class="quickbar-inner">
+      <a href="#overview">Why France?</a>
+      <a href="#education">Education</a>
+      <a href="#regions">Regions</a>
+      <a href="#cities">Cities</a>
+      <a href="#universities">Universities</a>
+      <a href="#courses">Courses</a>
+      <a href="#admissions">Admissions</a>
+      <a href="#journey">Apply</a>
+      <a href="#costs">Costs</a>
+      <a href="#scholarships">Scholarships</a>
+      <a href="#visa">Visa</a>
+      <a href="#accommodation">Housing</a>
+      <a href="#life">Life</a>
+      <a href="#arrival">Arrival</a>
+      <a href="#mistakes">Mistakes</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </div>
+
+  <section class="section" id="overview">
+    <div class="container">
+      <div class="reveal">
+        <div class="kicker">01 · Start here</div>
+        <h2 class="title">Is France the right study destination for you?</h2>
+        <p class="subtitle">
+          France can offer public universities, specialist schools, global cities, research opportunities,
+          cultural life and programmes in both French and English. The best choice depends on your subject,
+          language level, budget, career goals and preferred student environment.
+        </p>
+      </div>
+
+      <div class="guide-grid">
+        <div class="info-card reveal">
+          <h3>Why students choose France</h3>
+          <p>
+            Students can consider public universities, engineering schools, business schools,
+            art and design institutions, and specialised programmes across many cities.
+          </p>
+          <div class="notice">
+            France is not one single higher-education experience. Your institution type,
+            city and language of instruction can change your whole journey.
+          </div>
+        </div>
+
+        <div class="info-card reveal">
+          <h3>Think beyond rankings</h3>
+          <p>
+            Compare programme modules, teaching language, internship links, assessment,
+            tuition, accommodation, city costs and graduate opportunities.
+          </p>
+          <div class="notice">
+            A strong course fit is usually more useful than choosing only by a famous name.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <div class="reveal">
+        <div class="kicker">02 · Why France</div>
+        <h2 class="title">What makes France different?</h2>
+      </div>
+
+      <div class="reason-grid">
+        <article class="reason reveal">
+          <div class="reason-number">01</div>
+          <h3>French and English options</h3>
+          <p>Many programmes are delivered in French, while English-taught choices are common in several international and postgraduate fields.</p>
+        </article>
+
+        <article class="reason reveal">
+          <div class="reason-number">02</div>
+          <h3>Different institution types</h3>
+          <p>Explore universities, Grandes Écoles, engineering schools, business schools and specialist creative institutions.</p>
+        </article>
+
+        <article class="reason reveal">
+          <div class="reason-number">03</div>
+          <h3>European degree system</h3>
+          <p>The Licence–Master–Doctorat model gives students a clear framework for undergraduate, postgraduate and research study.</p>
+        </article>
+
+        <article class="reason reveal">
+          <div class="reason-number">04</div>
+          <h3>Specialist strengths</h3>
+          <p>France is known for options in engineering, business, design, fashion, hospitality, science, research and culture.</p>
+        </article>
+
+        <article class="reason reveal">
+          <div class="reason-number">05</div>
+          <h3>Culture beyond campus</h3>
+          <p>Language, art, history, food, museums and regional travel can become part of your learning experience.</p>
+        </article>
+
+        <article class="reason reveal">
+          <div class="reason-number">06</div>
+          <h3>Gateway to Europe</h3>
+          <p>France provides strong rail and air connections for students interested in wider European exposure.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="education">
+    <div class="container">
+      <div class="reveal">
+        <div class="kicker">03 · Understand the system</div>
+        <h2 class="title">French education, explained simply.</h2>
+        <p class="subtitle">Before applying, understand the qualification type, expected duration, teaching language and the institution’s own requirements.</p>
+      </div>
+
+      <div class="education-grid">
+        <article class="education-card reveal">
+          <div class="big">L</div>
+          <h3>Licence</h3>
+          <p>Usually an undergraduate qualification completed after secondary education, commonly structured across three academic years.</p>
+        </article>
+
+        <article class="education-card reveal">
+          <div class="big">M</div>
+          <h3>Master</h3>
+          <p>Postgraduate study usually following a Licence, often designed to deepen academic or professional knowledge.</p>
+        </article>
+
+        <article class="education-card reveal">
+          <div class="big">D</div>
+          <h3>Doctorat</h3>
+          <p>Research-focused study completed under academic supervision, centred on original research and a doctoral project.</p>
+        </article>
+
+        <article class="education-card reveal">
+          <div class="big">PATH</div>
+          <h3>Preparation routes</h3>
+          <p>Language preparation, pathway programmes or other routes may help students meet entry conditions where available.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="regions">
+    <div class="container">
+      <div class="reveal">
+        <div class="kicker">04 · Study environments</div>
+        <h2 class="title">France offers more than one student experience.</h2>
+      </div>
+
+      <div class="region-grid">
+        <article class="region reveal">
+          <div class="region-icon">◉</div>
+          <h3>Paris & Île-de-France</h3>
+          <p>Major institutions, research, culture, business access and higher living costs.</p>
+        </article>
+
+        <article class="region reveal">
+          <div class="region-icon">◈</div>
+          <h3>South-East France</h3>
+          <p>Lyon, Grenoble and nearby cities provide different mixes of industry, research and lifestyle.</p>
+        </article>
+
+        <article class="region reveal">
+          <div class="region-icon">◇</div>
+          <h3>South-West France</h3>
+          <p>Toulouse and Bordeaux can appeal to students interested in technology, aerospace, business and culture.</p>
+        </article>
+
+        <article class="region reveal">
+          <div class="region-icon">◆</div>
+          <h3>North & East France</h3>
+          <p>Lille, Strasbourg and other cities bring international links, student communities and regional character.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cities">
+    <div class="container">
+      <div class="reveal">
+        <div class="kicker">05 · Where should you live?</div>
+        <h2 class="title">Your city can change your student experience.</h2>
+        <p class="subtitle">Housing, transport, internships, student communities, climate, lifestyle and travel time all matter alongside tuition.</p>
+      </div>
+
+      <div class="city-grid">
+        <article class="city reveal" style="background-image:url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1400&q=85')">
+          <div class="city-content">
+            <small>Île-de-France</small>
+            <h3>Paris</h3>
+            <p>Research · Arts · Business · Culture · Global city</p>
+          </div>
+        </article>
+
+        <article class="city reveal" style="background-image:url('https://images.unsplash.com/photo-1521305916504-4a1121188589?auto=format&fit=crop&w=1000&q=85')">
+          <div class="city-content">
+            <small>Auvergne-Rhône-Alpes</small>
+            <h3>Lyon</h3>
+            <p>Student life · Food · Business · Healthcare</p>
+          </div>
+        </article>
+
+        <article class="city reveal" style="background-image:url('https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=1000&q=85')">
+          <div class="city-content">
+            <small>Occitanie</small>
+            <h3>Toulouse</h3>
+            <p>Aerospace · Technology · Southern lifestyle</p>
+          </div>
+        </article>
+
+        <article class="city reveal" style="background-image:url('https://images.unsplash.com/photo-1550340499-a6c60fc8287c?auto=format&fit=crop&w=1000&q=85')">
+          <div class="city-content">
+            <small>Auvergne-Rhône-Alpes</small>
+            <h3>Grenoble</h3>
+            <p>Science · Engineering · Research · Mountains</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="universities">
+    <div class="container">
+      <div class="reveal">
+        <div class="kicker">06 · University explorer</div>
+        <h2 class="title">Look beyond the famous names.</h2>
+        <p class="subtitle">Build a shortlist that fits your course, grades, language ability, budget and preferred environment.</p>
+      </div>
+
+      <div class="uni-grid">
+        <article class="uni reveal">
+          <small>Paris region</small>
+          <h3>Université Paris-Saclay</h3>
+          <p>Known for broad strengths in science, engineering, research and innovation.</p>
+          <div class="tags"><span class="tag">Research</span><span class="tag">STEM</span><span class="tag">Paris region</span></div>
+        </article>
+
+        <article class="uni reveal">
+          <small>Paris</small>
+          <h3>Sorbonne University</h3>
+          <p>A major multidisciplinary environment spanning areas such as science, humanities and medicine.</p>
+          <div class="tags"><span class="tag">Paris</span><span class="tag">Research</span><span class="tag">Multidisciplinary</span></div>
+        </article>
+
+        <article class="uni reveal">
+          <small>Lyon</small>
+          <h3>INSA Lyon</h3>
+          <p>An example of a specialised engineering-focused institution in a major student city.</p>
+          <div class="tags"><span class="tag">Engineering</span><span class="tag">Technology</span><span class="tag">Lyon</span></div>
+        </article>
+
+        <article class="uni reveal">
+          <small>Grenoble</small>
+          <h3>Université Grenoble Alpes</h3>
+          <p>A major academic setting with science, technology, research and mountain-city life.</p>
+          <div class="tags"><span class="tag">Research</span><span class="tag">Science</span><span class="tag">Grenoble</span></div>
+        </article>
+
+        <article class="uni reveal">
+          <small>Paris</small>
+          <h3>Sciences Po</h3>
+          <p>A specialist example for social sciences, public affairs and international studies.</p>
+          <div class="tags"><span class="tag">Social science</span><span class="tag">Policy</span><span class="tag">Paris</span></div>
+        </article>
+
+        <article class="uni reveal">
+          <small>France</small>
+          <h3>Specialist schools</h3>
+          <p>Business, art, design, fashion and hospitality schools may use separate admissions and fee structures.</p>
+          <div class="tags"><span class="tag">Business</span><span class="tag">Creative fields</span><span class="tag">Specialist</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="courses">
+    <div class="container">
+      <div class="reveal">
+        <div class="kicker">07 · Choose your route</div>
+        <h2 class="title">Your course determines more than your timetable.</h2>
+      </div>
+
+      <div class="course-grid">
+        <article class="course highlight reveal">
+          <div class="course-num">01</div>
+          <h3>Licence</h3>
+          <p>Undergraduate programmes that develop academic foundations in a chosen field.</p>
+        </article>
+
+        <article class="course reveal">
+          <div class="course-num">02</div>
+          <h3>Master</h3>
+          <p>Advanced programmes for academic specialisation, research or career development.</p>
+        </article>
+
+        <article class="course reveal">
+          <div class="course-num">03</div>
+          <h3>Doctorat</h3>
+          <p>Research-based doctoral study focused on a substantial original research project.</p>
+        </article>
+
+        <article class="course reveal">
+          <div class="course-num">04</div>
+          <h3>Specialist route</h3>
+          <p>Professional schools may provide focused pathways in engineering, business, arts or design.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="admissions">
+    <div class="container">
+      <div class="reveal">
+        <div class="kicker">08 · Admissions</div>
+        <h2 class="title">What do French institutions look at?</h2>
+        <p class="subtitle">Requirements change by institution, programme, qualification level and applicant profile. Use each official course page as your final reference.</p>
+      </div>
+
+      <div class="application">
+        <div class="application-list">
+          <div class="application-item reveal"><strong>01</strong><div><strong>Academic qualifications</strong><p>Institutions assess your marks, transcripts and previous qualification against their entry standards.</p></div></div>
+          <div class="application-item reveal"><strong>02</strong><div><strong>Language ability</strong><p>French and/or English proficiency may be required depending on the programme language.</p></div></div>
+          <div class="application-item reveal"><strong>03</strong><div><strong>Motivation and profile</strong><p>Some programmes request a CV, motivation letter or evidence of relevant experience.</p></div></div>
+          <div class="application-item reveal"><strong>04</strong><div><strong>References</strong><p>Academic or professional references may be requested, especially for postgraduate applications.</p></div></div>
+          <div class="application-item reveal"><strong>05</strong><div><strong>Portfolio or interview</strong><p>Creative, professional and specialist courses may require extra selection material.</p></div></div>
+        </div>
+
+        <div class="requirements reveal">
+          <h3>Build your application file</h3>
+          <div class="check">Passport or identity document</div>
+          <div class="check">Academic transcripts and certificates</div>
+          <div class="check">Official translations where required</div>
+          <div class="check">French or English language evidence</div>
+          <div class="check">CV and motivation letter</div>
+          <div class="check">References where required</div>
+          <div class="check">Portfolio or interview preparation</div>
+          <div class="check">Financial planning documents</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="journey">
+    <div class="container">
+      <div class="reveal">
+        <div class="kicker">09 · Application journey</div>
+        <h2 class="title">Apply with a clear sequence.</h2>
+      </div>
+
+      <div class="journey-box reveal">
+        <h3>A simplified France application journey</h3>
+        <div class="journey-steps">
+          <div class="journey-step"><b>01</b><h4>Research</h4><p>Compare subject, city, tuition, language and entry requirements.</p></div>
+          <div class="journey-step"><b>02</b><h4>Prepare</h4><p>Collect transcripts, language evidence, CV and motivation material.</p></div>
+          <div class="journey-step"><b>03</b><h4>Apply</h4><p>Use the route stated by the institution or relevant application platform.</p></div>
+          <div class="journey-step"><b>04</b><h4>Offers</h4><p>Review conditions, payment schedules and accommodation choices.</p></div>
+          <div class="journey-step"><b>05</b><h4>Visa & arrival</h4><p>Complete required procedures, housing, travel and enrolment tasks.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="costs">
+    <div class="container">
+      <div class="reveal">
+        <div class="kicker">10 · Money map</div>
+        <h2 class="title">Understand the real cost of studying in France.</h2>
+        <p class="subtitle">Your budget depends on the institution type, programme, city, accommodation and lifestyle. Treat official tuition and city estimates as the final source.</p>
+      </div>
+
+      <div class="cost-grid">
+        <div class="cost-panel reveal">
+          <div class="cost-row"><span>Tuition fees</span><strong>Depends on institution and programme</strong></div>
+          <div class="cost-row"><span>Paris living budget</span><strong>Usually higher</strong></div>
+          <div class="cost-row"><span>Other French cities</span><strong>Often lower than Paris</strong></div>
+          <div class="cost-row"><span>Accommodation</span><strong>Plan monthly rent + deposit</strong></div>
+          <div class="cost-row"><span>Visa and residence costs</span><strong>Check current official rules</strong></div>
+          <div class="cost-row"><span>Food, transport, phone, books</span><strong>Build a monthly estimate</strong></div>
+        </div>
+
+        <div class="cost-panel money reveal">
+          <div class="money-symbol">€</div>
+          <h3>Budget in layers.</h3>
+          <p>Start with tuition. Add accommodation, food, local transport, phone, study materials, health needs, visa costs, travel and an emergency buffer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="scholarships">
+    <div class="container">
+      <div class="reveal">
+        <div class="kicker">11 · Scholarships</div>
+        <h2 class="title">Funding can support your plan—but apply early.</h2>
+      </div>
+
+      <div class="scholar-grid">
+        <article class="scholar reveal">
+          <div class="scholar-type">French government</div>
+          <h3>France Excellence Eiffel</h3>
+          <p>A competitive route for eligible master’s and doctoral applicants, normally submitted through a French institution.</p>
+        </article>
+
+        <article class="scholar reveal">
+          <div class="scholar-type">University funding</div>
+          <h3>Institution scholarships</h3>
+          <p>Universities and schools may offer awards based on merit, subject area, nationality or financial circumstances.</p>
+        </article>
+
+        <article class="scholar reveal">
+          <div class="scholar-type">External funding</div>
+          <h3>Foundations and sponsors</h3>
+          <p>Search for support through governments, charities, employers and professional organisations.</p>
+        </article>
+
+        <article class="scholar reveal">
+          <div class="scholar-type">Research funding</div>
+          <h3>Doctoral support</h3>
+          <p>PhD funding may include research contracts, project funding, tuition support or other institution-led opportunities.</p>
+        </article>
+
+        <article class="scholar reveal">
+          <div class="scholar-type">Your strategy</div>
+          <h3>Apply broadly</h3>
+          <p>Track eligibility, award value, required documents and deadlines for every funding option.</p>
+        </article>
+
+        <article class="scholar reveal">
+          <div class="scholar-type">Important</div>
+          <h3>Check current details</h3>
+          <p>Scholarship terms, deadlines and eligibility change, so verify every cycle directly with the provider.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="visa">
+    <div class="container">
+      <div class="reveal">
+        <div class="kicker">12 · Student visa</div>
+        <h2 class="title">Your France visa process, step by step.</h2>
+        <p class="subtitle">Immigration rules can change. Check the official guidance for your nationality, location and programme before booking travel.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="step reveal"><div class="dot"></div><small>STEP 01</small><h3>Receive your offer</h3><p>Secure admission and make sure you understand every condition attached to the offer.</p></div>
+        <div class="step reveal"><div class="dot"></div><small>STEP 02</small><h3>Complete required Campus France steps</h3><p>Follow the procedure applicable to your country before moving to the visa stage.</p></div>
+        <div class="step reveal"><div class="dot"></div><small>STEP 03</small><h3>Prepare documents and finances</h3><p>Organise passport, admission documents, accommodation evidence, funding evidence and other required documents.</p></div>
+        <div class="step reveal"><div class="dot"></div><small>STEP 04</small><h3>Apply through the official route</h3><p>Use the France-Visas instructions relevant to your application location and complete biometrics if required.</p></div>
+        <div class="step reveal"><div class="dot"></div><small>STEP 05</small><h3>Plan arrival and enrolment</h3><p>Arrange travel, housing, university registration and any required validation or residence steps after arrival.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="accommodation">
+    <div class="container">
+      <div class="reveal">
+        <div class="kicker">13 · Accommodation</div>
+        <h2 class="title">Where will you actually live?</h2>
+      </div>
+
+      <div class="accommodation-grid">
+        <article class="accommodation reveal"><h3>CROUS housing</h3><p>Student residences may offer useful options but can be limited and competitive, so apply as early as possible.</p></article>
+        <article class="accommodation reveal"><h3>Private residences</h3><p>Purpose-built student housing can provide furnished rooms and managed services at different price points.</p></article>
+        <article class="accommodation reveal"><h3>Private rental</h3><p>Shared flats and private rentals offer flexibility, but check deposits, guarantees, bills, contracts and commute time.</p></article>
+      </div>
+
+      <div class="notice reveal">
+        Before transferring money, confirm the property is genuine, understand the contract, check what bills are included and use secure payment methods.
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="life">
+    <div class="container">
+      <div class="reveal">
+        <div class="kicker">14 · Life in France</div>
+        <h2 class="title">Studying is only half the experience.</h2>
+      </div>
+
+      <div class="life-grid">
+        <article class="life reveal"><h3>Language</h3><p>French can help with daily life, internships, administration and local friendships—even if your degree is taught in English.</p></article>
+        <article class="life reveal"><h3>Transport</h3><p>Metro, tram, bus and rail networks vary by city. Research the commute before signing a housing contract.</p></article>
+        <article class="life reveal"><h3>Healthcare</h3><p>Understand the student health-registration and insurance arrangements relevant to your own immigration situation.</p></article>
+        <article class="life reveal"><h3>Food and budgeting</h3><p>Cooking, student restaurants, markets and a monthly budget can make day-to-day spending easier to manage.</p></article>
+        <article class="life reveal"><h3>Student communities</h3><p>Join societies, sports clubs, cultural groups and international-student activities to build a support network.</p></article>
+        <article class="life reveal"><h3>Academic habits</h3><p>Plan for independent study, coursework, presentations, group projects and assessment styles that vary by programme.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="work">
+    <div class="container">
+      <div class="reveal">
+        <div class="kicker">15 · Work while studying</div>
+        <h2 class="title">Understand your conditions before taking a job.</h2>
+      </div>
+
+      <div class="work-box reveal">
+        <div class="work-columns">
+          <div class="work-card">
+            <h4>Check your permission</h4>
+            <p>Work rights, hour limits and permitted work types depend on your immigration status and current official rules.</p>
+          </div>
+          <div class="work-card">
+            <h4>Keep study first</h4>
+            <p>Part-time work should fit around classes, assignments, exams, rest and your language-learning goals.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="arrival">
+    <div class="container">
+      <div class="reveal">
+        <div class="kicker">16 · Before you fly</div>
+        <h2 class="title">Your France arrival checklist.</h2>
+      </div>
+
+      <div class="checklist">
+        <div class="check-item reveal">Passport, visa and admission documents</div>
+        <div class="check-item reveal">Campus France documents where applicable</div>
+        <div class="check-item reveal">Accommodation confirmation</div>
+        <div class="check-item reveal">Flight and airport travel plan</div>
+        <div class="check-item reveal">Emergency contact details</div>
+        <div class="check-item reveal">Digital and paper copies of documents</div>
+        <div class="check-item reveal">Initial euro spending plan</div>
+        <div class="check-item reveal">French SIM or eSIM plan</div>
+        <div class="check-item reveal">University enrolment instructions</div>
+        <div class="check-item reveal">Health and insurance information</div>
+        <div class="check-item reveal">Appropriate clothing and adapter</div>
+        <div class="check-item reveal">Medication and personal essentials</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="mistakes">
+    <div class="container">
+      <div class="reveal">
+        <div class="kicker">17 · Avoid these mistakes</div>
+        <h2 class="title">The problems usually start before the flight.</h2>
+      </div>
+
+      <div class="mistakes">
+        <article class="mistake reveal"><strong>Mistake 01</strong><p>Choosing by prestige without checking the exact course content, teaching language and entry requirements.</p></article>
+        <article class="mistake reveal"><strong>Mistake 02</strong><p>Calculating tuition but forgetting housing deposits, transport, setup costs and emergency savings.</p></article>
+        <article class="mistake reveal"><strong>Mistake 03</strong><p>Waiting too long to apply for scholarships, housing or language preparation.</p></article>
+        <article class="mistake reveal"><strong>Mistake 04</strong><p>Assuming every French institution uses the same application process or fee structure.</p></article>
+        <article class="mistake reveal"><strong>Mistake 05</strong><p>Leaving visa tasks until after travel plans are already fixed.</p></article>
+        <article class="mistake reveal"><strong>Mistake 06</strong><p>Ignoring the value of basic French for housing, daily errands, internships and social life.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="faq">
+    <div class="container">
+      <div class="reveal">
+        <div class="kicker">18 · Frequently asked questions</div>
+        <h2 class="title">France study questions, answered.</h2>
+      </div>
+
+      <div class="faq">
+        <div class="faq-item">
+          <button class="faq-question">Do I need French to study in France?<span class="faq-icon">+</span></button>
+          <p class="faq-answer">It depends on the programme. Some degrees are taught in English, while many others require French. French can also be valuable outside the classroom.</p>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">What is the LMD system?<span class="faq-icon">+</span></button>
+          <p class="faq-answer">LMD refers to Licence, Master and Doctorat—the broad framework used for undergraduate, postgraduate and doctoral study.</p>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">What is a Grande École?<span class="faq-icon">+</span></button>
+          <p class="faq-answer">It is a category of selective higher-education institution. Admissions processes, programmes and costs vary, so review each school individually.</p>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Is Paris the best city for every student?<span class="faq-icon">+</span></button>
+          <p class="faq-answer">Not necessarily. Paris can offer extensive opportunities but often has higher living costs. Compare it with cities that better match your budget, subject and lifestyle.</p>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">How should I budget for France?<span class="faq-icon">+</span></button>
+          <p class="faq-answer">Start with tuition and housing, then add food, transport, phone, study materials, health needs, visa costs, travel and an emergency fund.</p>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Can I work while studying?<span class="faq-icon">+</span></button>
+          <p class="faq-answer">Work rights depend on your visa and current regulations. Check official conditions before accepting any employment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final" id="plan">
+    <div class="container">
+      <div class="final-card reveal">
+        <div class="final-content">
+          <div class="kicker">19 · Build your plan</div>
+          <h2>Your France plan should be more than a university list.</h2>
+          <p>
+            Choose your subject, compare programmes, shortlist cities, estimate your euro budget,
+            organise documents, track deadlines and prepare for a confident start in France.
+          </p>
+
+          <div class="hero-buttons">
+            <button class="btn primary" onclick="alert('Connect this button to your France study planner.')">
+              Build my France plan
+            </button>
+            <button class="btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+              Back to top
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">UniAI</div>
+        <div style="font-size:10px;margin-top:6px">
+          Study abroad, but smarter. <span style="color:var(--gold)">France edition.</span>
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <a href="#overview">Overview</a>
+        <a href="#universities">Universities</a>
+        <a href="#admissions">Admissions</a>
+        <a href="#costs">Costs</a>
+        <a href="#visa">Visa</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById("nav");
+
+    window.addEventListener("scroll", () => {
+      nav.classList.toggle("scrolled", window.scrollY > 40);
+    }, { passive: true });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.10 });
+
+    document.querySelectorAll(".reveal").forEach((element, index) => {
+      element.style.transitionDelay = `${(index % 4) * 60}ms`;
+      observer.observe(element);
+    });
+
+    document.querySelectorAll(".faq-question").forEach((button) => {
+      button.addEventListener("click", () => {
+        const item = button.closest(".faq-item");
+        const wasOpen = item.classList.contains("open");
+
+        document.querySelectorAll(".faq-item").forEach((faq) => {
+          faq.classList.remove("open");
+        });
+
+        if (!wasOpen) item.classList.add("open");
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0c10" />
+  <meta name="description" content="UniAI Guides — your next chapter is loading." />
+  <title>UniAI Guides — Coming Soon</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --surface: #111318;
+      --surface-2: #17191f;
+      --text: #f5f7fa;
+      --muted: #9da3ae;
+      --border: #282c34;
+      --violet: #8b5cf6;
+      --violet-deep: #7c3aed;
+      --pink: #ec4899;
+      --lime: #d9ff63;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+      --display: "Plus Jakarta Sans", sans-serif;
+      --body: "Inter", sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg: #f6f6f8;
+      --surface: #ffffff;
+      --surface-2: #ededf2;
+      --text: #111318;
+      --muted: #686e78;
+      --border: #dbdee5;
+      --shadow: 0 24px 70px rgba(38, 29, 61, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--text);
+      background: var(--bg);
+      font-family: var(--body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    ::selection {
+      background: rgba(139, 92, 246, 0.42);
+      color: #fff;
+    }
+
+    .site-nav {
+      position: absolute;
+      inset: 0 0 auto;
+      z-index: 20;
+      width: min(1440px, 100%);
+      margin: 0 auto;
+      padding: 26px clamp(20px, 4vw, 58px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      font-family: var(--display);
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+    }
+
+    .brand-mark {
+      width: 25px;
+      height: 25px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--violet), var(--pink));
+      box-shadow: 0 8px 22px rgba(139, 92, 246, 0.35);
+    }
+
+    .brand-mark::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border: 2px solid white;
+      border-radius: 2px;
+      opacity: 0.95;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .nav-label {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .theme-toggle {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      background: rgba(8, 8, 12, 0.22);
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .sun-icon,
+    .moon-icon {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    [data-theme="dark"] .sun-icon { display: block; }
+    [data-theme="dark"] .moon-icon { display: none; }
+    [data-theme="light"] .sun-icon { display: none; }
+    [data-theme="light"] .moon-icon { display: block; }
+
+    .hero {
+      min-height: 100svh;
+      position: relative;
+      isolation: isolate;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      background: #0b0c10;
+    }
+
+    .video-stage,
+    .video-fallback,
+    .hero-overlay,
+    .grain,
+    .scanlines {
+      position: absolute;
+      inset: 0;
+    }
+
+    .video-stage {
+      z-index: -5;
+      overflow: hidden;
+      background: #0b0c10;
+    }
+
+    .scene-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      filter: saturate(0.88) contrast(1.08) brightness(0.8);
+      transform: scale(1.03);
+      transition: opacity 1.4s ease, transform 7s ease;
+    }
+
+    .scene-video.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .video-fallback {
+      z-index: -6;
+      background:
+        linear-gradient(115deg, rgba(5, 5, 8, 0.72), rgba(10, 9, 16, 0.18)),
+        url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=2200&q=85")
+        center / cover;
+    }
+
+    .hero-overlay {
+      z-index: -3;
+      background:
+        linear-gradient(90deg, rgba(8, 8, 12, 0.95) 0%, rgba(8, 8, 12, 0.78) 32%, rgba(8, 8, 12, 0.22) 68%, rgba(8, 8, 12, 0.35) 100%),
+        linear-gradient(0deg, rgba(8, 8, 12, 0.93) 0%, transparent 34%, rgba(8, 8, 12, 0.22) 100%);
+    }
+
+    .grain {
+      z-index: -2;
+      pointer-events: none;
+      opacity: 0.115;
+      background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
+    }
+
+    .scanlines {
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.05;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.35) 0,
+        rgba(255, 255, 255, 0.35) 1px,
+        transparent 1px,
+        transparent 5px
+      );
+    }
+
+    .hero-content {
+      width: min(1440px, 100%);
+      margin: 0 auto;
+      padding: 140px clamp(20px, 8vw, 118px) 132px;
+    }
+
+    .hero-copy-wrap {
+      max-width: 920px;
+      will-change: transform;
+      transition: transform 0.18s ease-out;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      color: rgba(245, 247, 250, 0.78);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 15px rgba(217, 255, 99, 0.45);
+    }
+
+    .hero-title {
+      margin: 0;
+      color: #f8f9fc;
+      font-family: var(--display);
+      font-size: clamp(66px, 10vw, 166px);
+      font-weight: 800;
+      line-height: 0.8;
+      letter-spacing: -0.094em;
+    }
+
+    .hero-title span {
+      display: block;
+    }
+
+    .hero-title .next {
+      background: linear-gradient(98deg, #a78bfa 2%, var(--violet) 42%, var(--pink) 93%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-description {
+      max-width: 615px;
+      margin: 34px 0 0;
+      color: rgba(245, 247, 250, 0.78);
+      font-size: clamp(14px, 1.25vw, 17px);
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .button {
+      min-height: 50px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+      border-radius: 14px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+    }
+
+    .button-primary {
+      color: white;
+      background: linear-gradient(115deg, var(--violet-deep), var(--violet) 45%, var(--pink));
+      box-shadow: 0 14px 32px rgba(124, 58, 237, 0.32);
+    }
+
+    .button-primary:hover {
+      box-shadow: 0 18px 40px rgba(139, 92, 246, 0.48);
+    }
+
+    .button-secondary {
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(8px);
+    }
+
+    .scene-indicator {
+      position: absolute;
+      top: 50%;
+      right: clamp(22px, 5vw, 74px);
+      width: 140px;
+      transform: translateY(-50%);
+      color: #fff;
+    }
+
+    .scene-name {
+      font-family: var(--display);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .scene-track {
+      width: 100%;
+      height: 1px;
+      margin: 14px 0 12px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.26);
+    }
+
+    .scene-progress {
+      width: 33.333%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--lime), #fff);
+      transition: width 1s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .scene-meta {
+      display: flex;
+      justify-content: space-between;
+      color: rgba(255, 255, 255, 0.63);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .vertical-label {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      color: rgba(255, 255, 255, 0.31);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    .hero-bottom {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 5;
+    }
+
+    .ticker {
+      overflow: hidden;
+      border-top: 1px solid rgba(255, 255, 255, 0.11);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(9, 9, 13, 0.56);
+      backdrop-filter: blur(10px);
+      white-space: nowrap;
+    }
+
+    .ticker-track {
+      display: inline-flex;
+      width: max-content;
+      min-width: 200%;
+      animation: ticker 26s linear infinite;
+    }
+
+    .ticker-group {
+      display: inline-flex;
+      align-items: center;
+      padding: 15px 0;
+      color: rgba(255, 255, 255, 0.67);
+      font-family: var(--display);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .ticker-group span {
+      margin: 0 23px;
+    }
+
+    .ticker-star {
+      color: var(--lime);
+      font-size: 13px;
+    }
+
+    @keyframes ticker {
+      to { transform: translateX(-50%); }
+    }
+
+    .vision {
+      position: relative;
+      padding: clamp(90px, 12vw, 170px) clamp(20px, 7vw, 110px);
+      background: var(--bg);
+    }
+
+    .vision-inner {
+      width: min(1240px, 100%);
+      margin: auto;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      color: var(--violet);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 24px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    .vision-heading {
+      max-width: 760px;
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(47px, 6.5vw, 96px);
+      line-height: 0.95;
+      letter-spacing: -0.075em;
+    }
+
+    .vision-copy {
+      max-width: 680px;
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.85;
+    }
+
+    .guide-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 66px;
+    }
+
+    .guide-card {
+      min-height: 290px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+      padding: 27px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: linear-gradient(145deg, var(--surface-2), var(--surface));
+      transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .guide-card::before {
+      content: "";
+      position: absolute;
+      inset: -45% -20% auto;
+      height: 200px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.17), transparent 68%);
+      opacity: 0;
+      transition: opacity 0.28s ease;
+    }
+
+    .guide-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(139, 92, 246, 0.62);
+      box-shadow: 0 22px 48px rgba(67, 40, 123, 0.18);
+    }
+
+    .guide-card:hover::before { opacity: 1; }
+
+    .card-number {
+      position: absolute;
+      top: 25px;
+      left: 27px;
+      color: var(--lime);
+      font-family: var(--display);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+    }
+
+    .card-kicker {
+      margin: 0 0 10px;
+      color: #a78bfa;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .guide-card h3 {
+      margin: 0;
+      font-family: var(--display);
+      font-size: 25px;
+      letter-spacing: -0.045em;
+    }
+
+    .guide-card p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.75;
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+      padding: 28px clamp(20px, 7vw, 110px);
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      background: var(--bg);
+      font-size: 11px;
+    }
+
+    .footer strong {
+      color: var(--text);
+      font-family: var(--display);
+    }
+
+    @media (max-width: 980px) {
+      .guide-cards { grid-template-columns: repeat(2, 1fr); }
+      .scene-indicator { right: 28px; }
+      .vertical-label { display: none; }
+    }
+
+    @media (max-width: 680px) {
+      .site-nav { padding: 20px; }
+      .nav-label { display: none; }
+
+      .hero {
+        min-height: 100svh;
+      }
+
+      .hero-overlay {
+        background:
+          linear-gradient(90deg, rgba(8, 8, 12, 0.9), rgba(8, 8, 12, 0.48)),
+          linear-gradient(0deg, rgba(8, 8, 12, 0.94), transparent 58%);
+      }
+
+      .hero-content {
+        padding: 145px 22px 120px;
+      }
+
+      .hero-title {
+        font-size: clamp(62px, 19vw, 100px);
+        line-height: 0.82;
+      }
+
+      .hero-description {
+        margin-top: 28px;
+        font-size: 14px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .button { width: 100%; }
+
+      .scene-indicator {
+        top: auto;
+        right: 22px;
+        bottom: 84px;
+        width: 112px;
+        transform: none;
+      }
+
+      .scene-name { font-size: 9px; }
+      .scene-meta { font-size: 8px; }
+
+      .ticker-group {
+        padding: 13px 0;
+        font-size: 9px;
+      }
+
+      .guide-cards {
+        grid-template-columns: 1fr;
+        margin-top: 42px;
+      }
+
+      .guide-card { min-height: 245px; }
+      .footer { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .scene-video:not(.active) { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="site-nav" aria-label="Primary navigation">
+    <a class="brand" href="#" aria-label="UniAI home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>UniAI</span>
+    </a>
+
+    <div class="nav-right">
+      <span class="nav-label">Guides / Coming Soon</span>
+
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" aria-pressed="false">
+        <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+        </svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20.84 15.61A9 9 0 1 1 8.39 3.16 7 7 0 0 0 20.84 15.61Z"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="video-fallback" aria-hidden="true"></div>
+
+      <div class="video-stage" aria-hidden="true">
+        <!--
+          PRODUCTION VIDEO SETUP:
+          Download approved clips and self-host them in /assets/videos/.
+          Suggested clip topics:
+          1. students arriving / walking through university
+          2. students collaborating or studying
+          3. student moving through a campus or new city
+
+          Use only Pexels, Pixabay, or Mixkit clips with commercial permission.
+          For Mixkit, verify that each chosen clip carries "Free License", not "Restricted License".
+        -->
+
+        <video class="scene-video active" muted playsinline preload="metadata" loop poster="assets/images/arrival-fallback.jpg">
+          <source src="assets/videos/uniai-arrival.mp4" type="video/mp4" />
+        </video>
+
+        <video class="scene-video" muted playsinline preload="none" loop poster="assets/images/life-fallback.jpg">
+          <source src="assets/videos/uniai-life.mp4" type="video/mp4" />
+        </video>
+
+        <video class="scene-video" muted playsinline preload="none" loop poster="assets/images/move-fallback.jpg">
+          <source src="assets/videos/uniai-move.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="grain" aria-hidden="true"></div>
+      <div class="scanlines" aria-hidden="true"></div>
+
+      <div class="hero-content">
+        <div class="hero-copy-wrap" id="parallaxCopy">
+          <div class="eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            The guide system is loading
+          </div>
+
+          <h1 class="hero-title" id="heroTitle">
+            <span>YOUR</span>
+            <span class="next">NEXT</span>
+            <span>CHAPTER.</span>
+          </h1>
+
+          <p class="hero-description">
+            The university. The country. The campus. The life you keep imagining.
+            UniAI Guides is being built to turn that dream into an actual route.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="#vision">See what's coming ↗</a>
+            <a class="button button-secondary" href="#vision">Explore the vision</a>
+          </div>
+        </div>
+      </div>
+
+      <aside class="scene-indicator" aria-label="Current cinematic scene">
+        <div class="scene-name" id="sceneName">01 — Arrival</div>
+        <div class="scene-track" aria-hidden="true">
+          <div class="scene-progress" id="sceneProgress"></div>
+        </div>
+        <div class="scene-meta">
+          <span>UNI / 001</span>
+          <span id="sceneCount">01 / 03</span>
+        </div>
+      </aside>
+
+      <div class="vertical-label" aria-hidden="true">Campus / Future / Your Move</div>
+
+      <div class="hero-bottom">
+        <div class="ticker" aria-label="UniAI Guide topics">
+          <div class="ticker-track">
+            <div class="ticker-group">
+              <span>Uni AI</span><span class="ticker-star">✦</span>
+              <span>Study Abroad</span><span class="ticker-star">✦</span>
+              <span>Universities</span><span class="ticker-star">✦</span>
+              <span>Scholarships</span><span class="ticker-star">✦</span>
+              <span>Applications</span><span class="ticker-star">✦</span>
+              <span>Careers</span><span class="ticker-star">✦</span>
+            </div>
+
+            <div class="ticker-group" aria-hidden="true">
+              <span>Uni AI</span><span class="ticker-star">✦</span>
+              <span>Study Abroad</span><span class="ticker-star">✦</span>
+              <span>Universities</span><span class="ticker-star">✦</span>
+              <span>Scholarships</span><span class="ticker-star">✦</span>
+              <span>Applications</span><span class="ticker-star">✦</span>
+              <span>Careers</span><span class="ticker-star">✦</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="vision" id="vision" aria-labelledby="visionHeading">
+      <div class="vision-inner">
+        <div class="section-label">UniAI Guides / In Progress</div>
+
+        <h2 class="vision-heading" id="visionHeading">
+          Not another list<br />
+          of generic advice.
+        </h2>
+
+        <p class="vision-copy">
+          UniAI Guides is being designed around the questions students actually have:
+          where to go, what it costs, what to prepare, what the application really looks like,
+          and what life could feel like after you arrive.
+        </p>
+
+        <div class="guide-cards">
+          <article class="guide-card">
+            <span class="card-number">01 /</span>
+            <div>
+              <div class="card-kicker">Discover</div>
+              <h3>Find your world.</h3>
+              <p>Countries, universities, programs and pathways that fit the future you want.</p>
+            </div>
+          </article>
+
+          <article class="guide-card">
+            <span class="card-number">02 /</span>
+            <div>
+              <div class="card-kicker">Explore</div>
+              <h3>See the life.</h3>
+              <p>Campus culture, cities, student life and the stuff brochures conveniently skip.</p>
+            </div>
+          </article>
+
+          <article class="guide-card">
+            <span class="card-number">03 /</span>
+            <div>
+              <div class="card-kicker">Prepare</div>
+              <h3>Build the route.</h3>
+              <p>Applications, documents, scholarships, visas and the decisions between them.</p>
+            </div>
+          </article>
+
+          <article class="guide-card">
+            <span class="card-number">04 /</span>
+            <div>
+              <div class="card-kicker">Go</div>
+              <h3>Make it real.</h3>
+              <p>From “maybe someday” to a concrete plan you can actually execute.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span><strong>UniAI Guides</strong> — The future is closer than it looks.</span>
+    <span>© <span id="year"></span> UniAI</span>
+  </footer>
+
+  <script>
+    const root = document.documentElement;
+    const themeToggle = document.getElementById("themeToggle");
+    const year = document.getElementById("year");
+    const parallaxCopy = document.getElementById("parallaxCopy");
+
+    const videos = [...document.querySelectorAll(".scene-video")];
+    const sceneName = document.getElementById("sceneName");
+    const sceneCount = document.getElementById("sceneCount");
+    const sceneProgress = document.getElementById("sceneProgress");
+
+    const scenes = [
+      { name: "01 — Arrival", count: "01 / 03", progress: "33.333%" },
+      { name: "02 — The Life", count: "02 / 03", progress: "66.666%" },
+      { name: "03 — The Move", count: "03 / 03", progress: "100%" }
+    ];
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let sceneIndex = 0;
+    let sceneTimer;
+
+    year.textContent = new Date().getFullYear();
+
+    function setTheme(theme) {
+      root.dataset.theme = theme;
+      const light = theme === "light";
+      themeToggle.setAttribute("aria-pressed", String(light));
+      themeToggle.setAttribute("aria-label", light ? "Switch to dark theme" : "Switch to light theme");
+      localStorage.setItem("uniai-theme", theme);
+    }
+
+    const savedTheme = localStorage.getItem("uniai-theme");
+    if (savedTheme) setTheme(savedTheme);
+
+    themeToggle.addEventListener("click", () => {
+      setTheme(root.dataset.theme === "dark" ? "light" : "dark");
+    });
+
+    function playVideo(video) {
+      video.play().catch(() => {
+        video.style.display = "none";
+      });
+    }
+
+    function updateScene(nextIndex) {
+      sceneIndex = nextIndex;
+
+      videos.forEach((video, index) => {
+        const active = index === sceneIndex;
+        video.classList.toggle("active", active);
+
+        if (active) {
+          video.style.display = "block";
+          video.preload = "auto";
+          playVideo(video);
+        }
+      });
+
+      sceneName.textContent = scenes[sceneIndex].name;
+      sceneCount.textContent = scenes[sceneIndex].count;
+      sceneProgress.style.width = scenes[sceneIndex].progress;
+    }
+
+    function beginSceneCycle() {
+      if (reduceMotion.matches || videos.length < 2) return;
+
+      videos.forEach(playVideo);
+
+      sceneTimer = window.setInterval(() => {
+        updateScene((sceneIndex + 1) % scenes.length);
+      }, 6500);
+    }
+
+    if (!reduceMotion.matches) {
+      window.addEventListener("pointermove", (event) => {
+        if (window.innerWidth < 700) return;
+
+        const x = (event.clientX / window.innerWidth - 0.5) * 7;
+        const y = (event.clientY / window.innerHeight - 0.5) * 5;
+        parallaxCopy.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      }, { passive: true });
+
+      window.addEventListener("pointerleave", () => {
+        parallaxCopy.style.transform = "translate3d(0, 0, 0)";
+      });
+    }
+
+    reduceMotion.addEventListener("change", (event) => {
+      window.clearInterval(sceneTimer);
+
+      if (event.matches) {
+        updateScene(0);
+      } else {
+        beginSceneCycle();
+      }
+    });
+
+    updateScene(0);
+    beginSceneCycle();
+  </script>
+</body>
+</html>
