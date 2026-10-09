@@ -566,6 +566,9 @@ function setupAuthForm() {
           email,
           password,
           options: {
+                        emailRedirectTo: "https://uniai-0zoq.onrender.com",
+
+
             data: {
               username: username || email.split("@")[0],
               profile_type: roleEl ? roleEl.value : "student"

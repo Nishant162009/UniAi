@@ -12,7 +12,7 @@
 
   if (window.UniAIBuddy) return;
 
-  const HEAD_SVG = window.UniAIBuddyHeadSVG || "";
+  const headSvg = () => window.UniAIBuddyHeadSVG || ""; // a fresh copy (unique ids) on every call
 
   const STYLE = `
 .uni-buddy-launcher{position:fixed;right:22px;bottom:22px;z-index:99990;display:flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border:1px solid rgba(139,92,246,.4);border-radius:999px;background:rgba(19,20,31,.94);color:#fff;box-shadow:0 14px 40px rgba(0,0,0,.28),0 0 28px rgba(124,77,242,.2);backdrop-filter:blur(14px);cursor:pointer;font:700 13px/1 var(--font-body,system-ui,sans-serif);transition:transform .2s,box-shadow .2s,border-color .2s}
@@ -142,7 +142,7 @@ body:has(.uni-buddy-launcher:not([hidden])) .top-scroll-btn{bottom:92px}
     const style = el("style"); style.id = "uni-buddy-style"; style.textContent = STYLE; document.head.appendChild(style);
 
     const launcher = el("button", "uni-buddy-launcher",
-      `<span class="uni-buddy-mini">${HEAD_SVG}</span><span class="uni-buddy-label">Uni Buddy</span><i class="uni-buddy-dot" aria-hidden="true"></i>`);
+      `<span class="uni-buddy-mini">${headSvg()}</span><span class="uni-buddy-label">Uni Buddy</span><i class="uni-buddy-dot" aria-hidden="true"></i>`);
     launcher.type = "button";
     launcher.setAttribute("aria-label", "Open Uni Buddy, your UniAI guide");
     launcher.setAttribute("aria-expanded", "false");
@@ -150,7 +150,7 @@ body:has(.uni-buddy-launcher:not([hidden])) .top-scroll-btn{bottom:92px}
 
     const panel = el("aside", "uni-buddy-panel",
       `<header class="uni-buddy-head">
-         <span class="uni-buddy-head-avatar">${HEAD_SVG}</span>
+         <span class="uni-buddy-head-avatar">${headSvg()}</span>
          <div class="uni-buddy-head-copy"><strong>Uni Buddy</strong><small><i></i>Your UniAI guide</small></div>
          <button class="uni-buddy-close" type="button" aria-label="Close Uni Buddy">×</button>
        </header>
@@ -268,11 +268,11 @@ body:has(.uni-buddy-launcher:not([hidden])) .top-scroll-btn{bottom:92px}
     }
 
     /* Replace the robot emoji on the home AI panel with the real mascot. */
-    if (HEAD_SVG) {
+    if (headSvg()) {
       const art = document.querySelector(".ai-bot-illustration span");
-      if (art) { art.className = "ub-home-art"; art.innerHTML = HEAD_SVG; }
+      if (art) { art.className = "ub-home-art"; art.innerHTML = headSvg(); }
       const ico = document.querySelector(".ai-panel .ai-avatar");
-      if (ico) ico.innerHTML = `<span class="ub-home-ico">${HEAD_SVG}</span>`;
+      if (ico) ico.innerHTML = `<span class="ub-home-ico">${headSvg()}</span>`;
     }
 
     window.UniAIBuddy = {open, close, ask: handle};

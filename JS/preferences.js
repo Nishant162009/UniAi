@@ -293,11 +293,16 @@
   </svg>`;
 
   // Shared with Uni Buddy (uni-buddy.js): the full body, and a head-only crop for avatars.
-  window.UniAIBuddyMascotSVG = BUDDY_SVG;
-  window.UniAIBuddyHeadSVG = BUDDY_SVG
+  // Every copy gets its OWN gradient/shoe ids. Shared ids break as soon as the first copy is
+  // inside a hidden page (browsers don't paint gradients defined in a display:none element).
+  let buddyCopies = 0;
+  const freshIds = (svg) => { const n = ++buddyCopies; return svg.replace(/\bub-(fin|face|hood|iris|shoe)\b/g, `ub$1${n}`); };
+  const BUDDY_HEAD_SVG = BUDDY_SVG
     .replace('viewBox="0 0 300 520"', 'viewBox="22 84 256 200"')
     .replace(' role="img" aria-label="Uni Buddy, the UniAI Explorer"', ' aria-hidden="true" focusable="false"')
     .replace(/ id="(?!ub-)[^"]*"/g, "");
+  Object.defineProperty(window, "UniAIBuddyMascotSVG", {configurable: true, get: () => freshIds(BUDDY_SVG)});
+  Object.defineProperty(window, "UniAIBuddyHeadSVG", {configurable: true, get: () => freshIds(BUDDY_HEAD_SVG)});
 
   const MODAL_HTML = `<div class="ob-stage"><div class="ob-buddy" id="buddy-wrap">${BUDDY_SVG}</div><span id="mood-name" hidden></span><button type="button" id="t-talk" hidden tabindex="-1"></button></div><section class="ob-panel" role="dialog" aria-modal="true" aria-labelledby="prefs-title"><header class="ob-head"><div><h2 id="prefs-title">Build your <span>study future.</span></h2><small id="ob-step"></small></div><button type="button" class="ob-close" id="prefs-close" aria-label="Close">×</button></header><div class="ob-bar"><i id="ob-bar"></i></div><div class="ob-thread" id="ob-thread" aria-live="polite"></div><div class="ob-dock" id="ob-dock"></div></section>`;
 

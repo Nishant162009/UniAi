@@ -469,6 +469,28 @@ html[data-theme="dark"]{
   --page-soft:rgba(255,255,255,.07);--page-line:rgba(255,255,255,.13);--intro-overlay:rgba(3,4,7,.42);
 }
 
+
+html[data-theme="light"] .uniai-opening{
+  --opening-bg:#f5f7ff;
+  color:#111522;
+  background:
+    radial-gradient(circle at calc(50% + var(--world-x)) 42%,rgba(79,107,255,.18),transparent 24%),
+    radial-gradient(circle at 80% 75%,rgba(255,63,164,.10),transparent 25%),#f5f7ff;
+}
+html[data-theme="light"] .opening-grid{opacity:.2}
+html[data-theme="light"] .opening-status,
+html[data-theme="light"] .opening-copy,
+html[data-theme="light"] .opening-hint,
+html[data-theme="light"] .opening-world{color:rgba(17,21,34,.48)}
+html[data-theme="light"] .uniai-opening h1 strong{
+  background:linear-gradient(100deg,#101321,#526bff,#d548a0,#8054df,#101321);
+  background-size:300% auto;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+html[data-theme="light"] .opening-enter{color:#101321;background:rgba(255,255,255,.6);border-color:rgba(16,19,33,.15)}
+html[data-theme="light"] .opening-enter i{background:#101321;color:#fff}
+html[data-theme="light"] .opening-copy b{color:#111522}
+
 </style>
 
 <style>
@@ -701,6 +723,178 @@ html[data-theme="dark"]{
   .opening-brand,.opening-kicker,.uniai-opening h1,
   .opening-tagline,.opening-copy,.opening-scroll{animation:none}
 }
+
+/* ===== CINEMATIC / KINETIC OPENING OVERRIDE ===== */
+.uniai-opening{
+  --accent:#6f7cff;
+  --accent2:#d45cff;
+  --hot:#ff3fa4;
+  --world-x:0px;
+  --world-y:0px;
+  min-height:100svh;
+  min-height:100dvh;
+  cursor:crosshair;
+  background:
+    radial-gradient(circle at calc(50% + var(--world-x)) calc(45% + var(--world-y)),rgba(79,107,255,.20),transparent 22%),
+    radial-gradient(circle at 82% 78%,rgba(255,63,164,.12),transparent 25%),
+    #05060d;
+  transition:background 1s ease,filter .6s ease;
+}
+.uniai-opening::after{
+  content:"";
+  position:absolute;inset:0;z-index:7;pointer-events:none;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:inset 0 0 140px rgba(0,0,0,.75);
+}
+.opening-grid{
+  inset:-35%;
+  opacity:.32;
+  background-size:58px 58px;
+  transform:perspective(700px) rotateX(64deg) translateY(28%) translateX(var(--world-x));
+  animation:gridDrift 18s linear infinite;
+}
+.opening-noise{
+  position:absolute;inset:-50%;z-index:6;pointer-events:none;opacity:.07;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode:screen;animation:noiseShift .18s steps(2) infinite;
+}
+.opening-scan{
+  position:absolute;inset:0;z-index:4;pointer-events:none;opacity:.12;
+  background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(255,255,255,.12) 4px);
+  animation:scanMove 7s linear infinite;
+}
+.opening-glow{
+  width:38rem;height:38rem;filter:blur(100px);opacity:.22;
+}
+.opening-glow-one{background:#4f6bff;left:4%;top:8%}
+.opening-glow-two{background:#ff3fa4;right:2%;bottom:-5%}
+.opening-orbit{
+  position:absolute;z-index:-1;width:65vw;height:65vw;border:1px solid rgba(255,255,255,.06);
+  border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%) rotate(0deg);
+  box-shadow:0 0 80px rgba(90,105,255,.06),inset 0 0 80px rgba(255,70,170,.03);
+}
+.orbit-a{animation:orbitSpin 25s linear infinite}
+.orbit-b{width:42vw;height:42vw;border-style:dashed;animation:orbitSpin 17s linear infinite reverse;opacity:.65}
+.opening-crosshair{
+  position:absolute;z-index:5;width:90px;height:90px;opacity:.45;
+  border:1px solid rgba(255,255,255,.18);
+}
+.opening-crosshair::before,.opening-crosshair::after{
+  content:"";position:absolute;background:rgba(255,255,255,.35);
+}
+.opening-crosshair::before{width:1px;height:130%;left:50%;top:-15%}
+.opening-crosshair::after{height:1px;width:130%;top:50%;left:-15%}
+.crosshair-a{left:5%;top:20%;transform:rotate(45deg);animation:crossFloat 8s ease-in-out infinite}
+.crosshair-b{right:6%;bottom:22%;transform:rotate(45deg) scale(.65);animation:crossFloat 11s ease-in-out infinite reverse}
+
+.opening-content{
+  width:min(1050px,92vw);
+  padding:6rem 0 7rem;
+  transform:translate3d(calc(var(--world-x) * -.12),calc(var(--world-y) * -.12),0);
+  transition:transform .18s ease-out;
+}
+.opening-status{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  margin-bottom:2.2rem;color:rgba(255,255,255,.5);
+  font:700 9px/1 Inter,sans-serif;letter-spacing:.22em;text-transform:uppercase;
+}
+.opening-status b{margin-left:10px;color:rgba(255,255,255,.25);font-weight:700}
+.status-pulse{
+  width:7px;height:7px;border-radius:50%;background:#75f0ae;
+  box-shadow:0 0 0 0 rgba(117,240,174,.5);animation:pulseRing 1.8s infinite;
+}
+.opening-brand{
+  margin-bottom:2rem;
+  transform:scale(1);
+  transition:transform .4s ease;
+}
+.opening-brand:hover{transform:scale(1.04)}
+.opening-kicker{letter-spacing:.48em;opacity:.55}
+.opening-title-wrap{position:relative}
+.opening-glitch{
+  position:absolute;inset:0;display:grid;place-items:center;z-index:-1;
+  font-size:clamp(6rem,18vw,18rem);font-weight:900;letter-spacing:-.12em;
+  color:transparent;-webkit-text-stroke:1px rgba(111,124,255,.12);
+  transform:translate(7px,10px) skewX(-8deg);
+  animation:ghostGlitch 4s steps(2) infinite;
+}
+.uniai-opening h1{
+  font-size:clamp(5.5rem,14vw,13.5rem);
+  line-height:.72;
+  letter-spacing:-.095em;
+  text-shadow:0 0 45px rgba(95,110,255,.12);
+}
+.uniai-opening h1 strong{
+  background:linear-gradient(100deg,#fff 0%,#aeb9ff 30%,#ff5db4 55%,#9a67ff 75%,#fff 100%);
+  background-size:300% auto;
+  animation:openingShimmer 4s linear infinite, titleBreath 5s ease-in-out infinite;
+  filter:drop-shadow(0 18px 55px rgba(111,124,255,.16));
+}
+.opening-dot{animation:dotBlink .9s steps(2) infinite}
+.opening-tagline{
+  font-size:clamp(1.25rem,3vw,2rem);
+  margin-top:2.6rem;
+}
+.opening-tagline span{
+  color:#ff63b5;
+  text-shadow:0 0 25px rgba(255,63,164,.35);
+}
+.opening-copy{max-width:620px;font-size:1rem}
+.opening-copy b{color:#fff}
+.opening-actions{
+  margin-top:2.2rem;display:flex;align-items:center;justify-content:center;gap:18px;
+  animation:openingRise 1s .42s cubic-bezier(.2,.8,.2,1) both;
+}
+.opening-enter{
+  display:flex;align-items:center;gap:18px;border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.06);color:#fff;border-radius:999px;padding:13px 15px 13px 20px;
+  font:800 9px Inter,sans-serif;letter-spacing:.16em;cursor:pointer;
+  backdrop-filter:blur(15px);transition:.35s;
+}
+.opening-enter i{
+  display:grid;place-items:center;width:28px;height:28px;border-radius:50%;
+  background:#fff;color:#080912;font-style:normal;font-size:15px;transition:.35s;
+}
+.opening-enter:hover{transform:translateY(-4px) scale(1.03);background:rgba(255,255,255,.12);box-shadow:0 15px 50px rgba(90,105,255,.2)}
+.opening-enter:hover i{transform:rotate(-45deg);background:#ff5db4}
+.opening-hint{font-size:8px;letter-spacing:.16em;color:rgba(255,255,255,.32)}
+.opening-world{
+  position:absolute;z-index:4;inset:auto 0 7%;display:flex;justify-content:center;gap:28px;
+  color:rgba(255,255,255,.22);font:700 8px Inter,sans-serif;letter-spacing:.2em;
+  transform:translateX(var(--world-x));transition:transform .2s ease;
+}
+.opening-world span:nth-child(2n){transform:translateY(10px)}
+.opening-scroll{
+  position:absolute;z-index:8;left:50%;bottom:1.3rem;transform:translateX(-50%);
+  color:rgba(255,255,255,.5);font-size:.58rem;letter-spacing:.28em;
+}
+.opening-scroll i{height:35px}
+.opening-scroll i::after{background:#ff63b5}
+
+@keyframes gridDrift{to{transform:perspective(700px) rotateX(64deg) translateY(28%) translateX(58px)}}
+@keyframes noiseShift{0%{transform:translate(0)}25%{transform:translate(3%,-2%)}50%{transform:translate(-2%,3%)}75%{transform:translate(2%,2%)}100%{transform:translate(-3%,-1%)}}
+@keyframes scanMove{from{transform:translateY(-10%)}to{transform:translateY(10%)}}
+@keyframes orbitSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes crossFloat{50%{transform:translate(15px,-20px) rotate(80deg)}}
+@keyframes pulseRing{70%{box-shadow:0 0 0 10px rgba(117,240,174,0)}100%{box-shadow:0 0 0 0 rgba(117,240,174,0)}}
+@keyframes ghostGlitch{0%,90%,100%{clip-path:inset(0);opacity:.55}92%{clip-path:inset(12% 0 63%);transform:translate(-8px,4px) skewX(-10deg)}95%{clip-path:inset(63% 0 12%);transform:translate(8px,-3px) skewX(8deg)}}
+@keyframes titleBreath{50%{filter:drop-shadow(0 22px 80px rgba(255,63,164,.2))}}
+@keyframes dotBlink{50%{opacity:.15}}
+@media(max-width:700px){
+  .opening-content{padding:5.5rem 0 6.5rem}
+  .opening-status{font-size:7px;gap:7px}
+  .opening-kicker{letter-spacing:.27em}
+  .opening-copy{font-size:.88rem}
+  .opening-actions{flex-direction:column}
+  .opening-world{gap:12px;flex-wrap:wrap;padding:0 20px;bottom:8%}
+  .opening-world span{font-size:7px}
+  .opening-crosshair{transform:scale(.55)}
+}
+@media(prefers-reduced-motion:reduce){
+  .opening-noise,.opening-grid,.opening-orbit,.opening-crosshair,.opening-glitch,
+  .status-pulse,.opening-dot,.uniai-opening h1 strong{animation:none!important}
+}
+
 </style>
 
 </head>
@@ -709,10 +903,23 @@ html[data-theme="dark"]{
 
 <!-- UniAI Opening Intro -->
 <section class="uniai-opening" id="uniai-opening" aria-label="UniAI Guides introduction">
+  <div class="opening-noise"></div>
+  <div class="opening-orbit orbit-a"></div>
+  <div class="opening-orbit orbit-b"></div>
   <div class="opening-glow opening-glow-one"></div>
   <div class="opening-glow opening-glow-two"></div>
 
+  <div class="opening-scan"></div>
+  <div class="opening-crosshair crosshair-a"></div>
+  <div class="opening-crosshair crosshair-b"></div>
+
   <div class="opening-content">
+    <div class="opening-status">
+      <span class="status-pulse"></span>
+      <span id="openingStatus">SYSTEM ONLINE</span>
+      <b id="openingMode">01 / DREAM</b>
+    </div>
+
     <div class="opening-brand">
       <svg viewBox="0 0 32 32" class="opening-logo" aria-hidden="true">
         <defs>
@@ -730,28 +937,42 @@ html[data-theme="dark"]{
       <span>Uni<span class="opening-accent">AI</span></span>
     </div>
 
-    <div class="opening-kicker">UNI AI GUIDES</div>
+    <div class="opening-kicker" id="openingKicker">UNI AI GUIDES · DESTINATION INTELLIGENCE</div>
 
-    <h1>
-      <span>COMING</span>
-      <strong>SOON<span class="opening-dot">.</span></strong>
-    </h1>
+    <div class="opening-title-wrap">
+      <div class="opening-glitch" aria-hidden="true">GO</div>
+      <h1 id="openingTitle">
+        <span id="openingTop">YOUR NEXT</span>
+        <strong id="openingMain">CHAPTER<span class="opening-dot">.</span></strong>
+      </h1>
+    </div>
 
-    <div class="opening-tagline">Plan smarter. <span>Go farther.</span></div>
+    <div class="opening-tagline" id="openingTagline">
+      Don't just <span>choose a country.</span><br>choose a life.
+    </div>
 
-    <p class="opening-copy">
-      Your next destination is more than a place on a map.
-      It is a campus, a city, new people, late-night streets,
-      and a life you have not lived yet.
+    <p class="opening-copy" id="openingCopy">
+      Cities. Campuses. People. The tiny moments that turn a destination
+      into home. <b>UniAI Guides is building the map before you arrive.</b>
     </p>
 
-    <div class="opening-scroll">
-      <span>SCROLL TO EXPLORE</span>
-      <i></i>
+    <div class="opening-actions">
+      <button class="opening-enter" id="openingEnter" type="button">
+        <span>ENTER THE FUTURE</span><i>↘</i>
+      </button>
+      <span class="opening-hint">SCROLL / MOVE / EXPLORE</span>
     </div>
   </div>
 
+  <div class="opening-world" aria-hidden="true">
+    <span>NEW YORK</span><span>TOKYO</span><span>LONDON</span><span>BERLIN</span>
+    <span>SYDNEY</span><span>PARIS</span><span>AMSTERDAM</span>
+  </div>
+
   <div class="opening-grid"></div>
+  <div class="opening-scroll">
+    <span>SCROLL TO EXPLORE</span><i></i>
+  </div>
 </section>
 
 <div class="noise"></div>
@@ -966,7 +1187,7 @@ html[data-theme="dark"]{
   </article>
 
   <article class="destination reveal">
-    <img src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d3?auto=format&fit=crop&w=2200&q=90" alt="Sydney Australia">
+    <img src="https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?auto=format&fit=crop&w=1600&q=85" alt="Sydney Australia">
     <div class="dest-top"><span class="dest-number">06</span><span class="status">Guide coming soon</span></div>
     <div class="dest-content">
       <div class="dest-country">🇦🇺 Australia · Study with the ocean nearby</div>
@@ -1065,7 +1286,6 @@ slides.forEach((_,i)=>{
   d.onclick=()=>go(i);
   dots.appendChild(d);
 });
-
 function go(i){
   slides[current].classList.remove('active');
   dots.children[current].classList.remove('active');
@@ -1086,6 +1306,88 @@ window.addEventListener('pointermove',e=>{
   cursor.style.left=e.clientX+'px';
   cursor.style.top=e.clientY+'px';
 });
+
+/* ===== cinematic opening controller ===== */
+(() => {
+  const root=document.querySelector('.uniai-opening');
+  if(!root) return;
+
+  const top=document.getElementById('openingTop');
+  const main=document.getElementById('openingMain');
+  const kicker=document.getElementById('openingKicker');
+  const tagline=document.getElementById('openingTagline');
+  const copy=document.getElementById('openingCopy');
+  const mode=document.getElementById('openingMode');
+  const status=document.getElementById('openingStatus');
+  const enter=document.getElementById('openingEnter');
+
+  const worlds=[
+    {
+      top:'YOUR NEXT',main:'CHAPTER',kicker:'UNI AI GUIDES · DESTINATION INTELLIGENCE',
+      tagline:'Don’t just <span>choose a country.</span><br>choose a life.',
+      copy:'Cities. Campuses. People. The tiny moments that turn a destination into home. <b>UniAI Guides is building the map before you arrive.</b>',
+      mode:'01 / DREAM',status:'SYSTEM ONLINE',color:'#6f7cff'
+    },
+    {
+      top:'GO',main:'FARTHER',kicker:'WORLD MODE · ACTIVATED',
+      tagline:'The map ends.<br><span>your story starts.</span>',
+      copy:'From lecture halls to midnight streets, discover the places that could become your everyday. <b>Not tourism. Your future.</b>',
+      mode:'02 / GO',status:'WORLD UNLOCKED',color:'#ff4fa3'
+    },
+    {
+      top:'FIND',main:'YOUR PLACE',kicker:'CITY SIGNAL · CONNECTED',
+      tagline:'One city can change<br><span>everything.</span>',
+      copy:'Compare cities, imagine student life, and see the details that make somewhere feel right before you ever land.',
+      mode:'03 / FIND',status:'SIGNAL FOUND',color:'#54e5ff'
+    },
+    {
+      top:'BECOME',main:'SOMEONE NEW',kicker:'NEXT CHAPTER · LOADING',
+      tagline:'Your future is not<br><span>far away.</span>',
+      copy:'UniAI Guides is coming with the practical details and the feeling of the place—so choosing where to go feels less like a guess.',
+      mode:'04 / BECOME',status:'FUTURE LOADING',color:'#a66bff'
+    }
+  ];
+
+  let index=0, timer;
+  const paint=(w)=>{
+    [top,main,kicker,tagline,copy,mode,status].forEach(el=>el && (el.style.opacity='0'));
+    root.style.setProperty('--accent',w.color);
+    root.style.setProperty('--accent2',w.color);
+    setTimeout(()=>{
+      top.textContent=w.top;
+      main.innerHTML=w.main+'<span class="opening-dot">.</span>';
+      kicker.textContent=w.kicker;
+      tagline.innerHTML=w.tagline;
+      copy.innerHTML=w.copy;
+      mode.textContent=w.mode;
+      status.textContent=w.status;
+      [top,main,kicker,tagline,copy,mode,status].forEach(el=>{
+        if(el){el.style.transition='opacity .45s ease';el.style.opacity='1'}
+      });
+    },180);
+  };
+  const next=()=>{ index=(index+1)%worlds.length; paint(worlds[index]); };
+  timer=setInterval(next,5200);
+
+  enter.addEventListener('click',()=>{
+    document.getElementById('dream-intro')?.scrollIntoView({behavior:'smooth'});
+  });
+
+  window.addEventListener('pointermove',e=>{
+    const x=(e.clientX/window.innerWidth-.5)*2;
+    const y=(e.clientY/window.innerHeight-.5)*2;
+    root.style.setProperty('--world-x',(x*26).toFixed(1)+'px');
+    root.style.setProperty('--world-y',(y*18).toFixed(1)+'px');
+  },{passive:true});
+
+  let wheelLock=false;
+  root.addEventListener('wheel',()=>{
+    if(wheelLock) return;
+    wheelLock=true;
+    next();
+    setTimeout(()=>wheelLock=false,900);
+  },{passive:true});
+})();
 </script>
 
 <script>
