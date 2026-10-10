@@ -4,17 +4,21 @@ const { createClient } = require("@supabase/supabase-js");
 
 const router = express.Router();
 
-// Use service-role key from .env
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_KEY,
-  {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false
-    }
-  }
-);
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
+
+if (!supabaseUrl || !supabaseServiceKey) {
+  throw new Error("SUPABASE_URL and SUPABASE_SERVICE_KEY must be set.");
+}
+
+// Keep this service-role client on the server only.
+// Never expose SUPABASE_SERVICE_KEY to the frontend.
+const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false,
+  },
+});
 
 // DELETE /api/account/delete
 router.delete("/delete", async (req, res) => {
@@ -23,39 +27,40 @@ router.delete("/delete", async (req, res) => {
     const [scheme, token] = authHeader.split(" ");
 
     if (scheme !== "Bearer" || !token) {
-      return res.status(401).json({ error: "Missing or invalid Authorization header." });
+      return res.status(401).json({
+        error: "Missing or invalid Authorization header.",
+      });
     }
 
-    // Verify the JWT and get the user
-    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+    // Validate the access token and identify its user.
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser(token);
 
     if (authError || !user) {
-      return res.status(401).json({ error: "Invalid or expired token." });
+      return res.status(401).json({
+        error: "Invalid or expired token.",
+      });
     }
 
-    const { user_id } = req.body || {};
-
-    if (!user_id) {
-      return res.status(400).json({ error: "user_id is required." });
-    }
-
-    // Only allow users to delete their own account
-    if (user.id !== user_id) {
-      return res.status(403).json({ error: "You can only delete your own account." });
-    }
-
-    // Delete the user from auth
-    const { error: deleteError } = await supabase.auth.admin.deleteUser(user_id);
+    // Delete only the user identified by the verified token.
+    const { error: deleteError } =
+      await supabase.auth.admin.deleteUser(user.id);
 
     if (deleteError) {
       console.error("Supabase delete error:", deleteError);
-      return res.status(500).json({ error: deleteError.message || "Failed to delete user." });
+      return res.status(500).json({
+        error: deleteError.message || "Failed to delete user.",
+      });
     }
 
-    res.json({ ok: true });
+    return res.json({ ok: true });
   } catch (err) {
     console.error("Delete account error:", err);
-    res.status(500).json({ error: err.message || "Internal server error." });
+    return res.status(500).json({
+      error: err.message || "Internal server error.",
+    });
   }
 });
 
