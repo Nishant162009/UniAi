@@ -57,6 +57,27 @@ body:has(.uni-buddy-launcher:not([hidden])) .top-scroll-btn{bottom:92px}
 .uni-buddy-input:focus{border-color:#8b5cf6}
 .uni-buddy-send{flex:0 0 44px;width:44px;height:44px;border:0;border-radius:12px;background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;font-size:17px;cursor:pointer}
 .uni-buddy-foot{padding:0 14px 10px;color:var(--text-subtle,#737a87);font:10px/1.4 var(--font-body,system-ui,sans-serif);text-align:center}
+.uni-buddy-banner{position:fixed;right:22px;bottom:92px;z-index:99989;width:min(340px,calc(100vw - 28px));padding:16px 16px 14px;border:1px solid rgba(139,92,246,.45);border-radius:18px;background:var(--card-bg,#17191f);color:var(--text,#f5f7fa);box-shadow:0 22px 64px rgba(0,0,0,.38),0 0 34px rgba(124,77,242,.22);transform-origin:bottom right;animation:ubBan .5s cubic-bezier(.2,1.2,.3,1) both}
+.uni-buddy-banner[hidden]{display:none}
+.uni-buddy-banner::after{content:"";position:absolute;right:36px;bottom:-8px;width:14px;height:14px;background:var(--card-bg,#17191f);border-right:1px solid rgba(139,92,246,.45);border-bottom:1px solid rgba(139,92,246,.45);transform:rotate(45deg)}
+.uni-buddy-banner.out{animation:ubBanOut .24s ease forwards}
+@keyframes ubBan{from{opacity:0;transform:translateY(16px) scale(.9)}}
+@keyframes ubBanOut{to{opacity:0;transform:translateY(8px) scale(.96)}}
+.ub-ban-head{display:flex;align-items:center;gap:11px;margin-bottom:9px}
+.ub-ban-ava{display:grid;place-items:center;overflow:hidden;flex:none;width:44px;height:44px;border-radius:14px;background:radial-gradient(circle at 50% 40%,#efe9ff,#a78bfa 80%)}
+.ub-ban-ava svg{width:62px;height:auto;display:block}
+.ub-ban-title{flex:1;min-width:0;font:800 15px/1.25 var(--font-display,system-ui,sans-serif)}
+.ub-ban-x{flex:none;width:30px;height:30px;border:0;border-radius:9px;background:transparent;color:var(--text-muted,#9da3ae);font-size:20px;line-height:1;cursor:pointer;align-self:flex-start}
+.ub-ban-x:hover{background:var(--surface-hover,#232731);color:var(--text,#fff)}
+.ub-ban-text{margin:0;font:13.5px/1.55 var(--font-body,system-ui,sans-serif);color:var(--text-muted,#9da3ae)}
+.ub-ban-actions{display:flex;gap:8px;margin-top:13px}
+.ub-ban-btn{min-height:38px;padding:0 15px;border-radius:11px;font:700 13px var(--font-body,system-ui,sans-serif);cursor:pointer;border:1px solid var(--border,#282c34);background:transparent;color:var(--text-muted,#9da3ae)}
+.ub-ban-btn:hover{color:var(--text,#fff);border-color:#8b5cf6}
+.ub-ban-btn.primary{border:0;color:#fff;background:linear-gradient(135deg,#8b5cf6,#ec4899);box-shadow:0 6px 16px rgba(124,58,237,.35)}
+.ub-ban-btn.primary:hover{filter:brightness(1.07)}
+.uni-buddy-banner :focus-visible{outline:2px solid #ec4899;outline-offset:2px}
+.uni-buddy-launcher.nudge{animation:ubNudge 1.1s ease-in-out 2}
+@keyframes ubNudge{0%,100%{transform:translateY(0)}30%{transform:translateY(-9px)}60%{transform:translateY(-2px)}}
 .ub-home-art svg{width:130px;height:auto;display:block;margin:0 auto;filter:drop-shadow(0 8px 16px rgba(124,58,237,.35))}
 .ai-avatar .ub-home-ico{width:100%;height:100%;display:grid;place-items:center;overflow:hidden;border-radius:inherit}
 .ai-avatar .ub-home-ico svg{width:50px;height:auto;display:block}
@@ -67,11 +88,15 @@ body:has(.uni-buddy-launcher:not([hidden])) .top-scroll-btn{bottom:92px}
  .uni-buddy-mini{width:54px;height:54px}.uni-buddy-mini svg{width:74px}
  body:has(.uni-buddy-launcher:not([hidden])) .top-scroll-btn{bottom:84px;right:18px}
  .uni-buddy-panel{right:10px;left:10px;bottom:78px;width:auto;height:min(72dvh,600px);border-radius:18px}
+ .uni-buddy-banner{right:10px;left:10px;width:auto;bottom:80px}
+ .uni-buddy-banner::after{right:30px}
  .uni-buddy-input{font-size:16px}
 }
 @media(prefers-reduced-motion:reduce){
  .uni-buddy-panel,.uni-buddy-msg{animation:none}
  .uni-buddy-launcher,.uni-buddy-chip{transition:none}
+ .uni-buddy-banner,.uni-buddy-banner.out{animation:none}
+ .uni-buddy-launcher.nudge{animation:none}
  .uni-buddy-launcher .ub-eyes,.uni-buddy-head-avatar .ub-eyes,.uni-buddy-typing i{animation:none}
 }`;
 
@@ -228,6 +253,7 @@ body:has(.uni-buddy-launcher:not([hidden])) .top-scroll-btn{bottom:92px}
     }
 
     function open() {
+      hideBanner();
       panel.hidden = false;
       launcher.setAttribute("aria-expanded", "true");
       if (!thread.children.length) {
@@ -249,7 +275,7 @@ body:has(.uni-buddy-launcher:not([hidden])) .top-scroll-btn{bottom:92px}
     panel.querySelector(".uni-buddy-form").addEventListener("submit", (e) => { e.preventDefault(); handle(input.value); });
     // a global shortcut handler elsewhere in the app swallows the space key; keep typing normal
     input.addEventListener("keydown", (e) => e.stopPropagation());
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !panel.hidden) close(); });
+    document.addEventListener("keydown", (e) => { if (e.key !== "Escape") return; if (!panel.hidden) close(); else hideBanner(); });
 
     /* The AI Assistant page already has its own composer in the corner, so Buddy steps aside there. */
     const syncVisibility = (page) => {
@@ -275,7 +301,122 @@ body:has(.uni-buddy-launcher:not([hidden])) .top-scroll-btn{bottom:92px}
       if (ico) ico.innerHTML = `<span class="ub-home-ico">${headSvg()}</span>`;
     }
 
-    window.UniAIBuddy = {open, close, ask: handle};
+    /* ---------------------------------------------------------------------
+       Login welcome: a speech bubble above the launcher introduces Buddy.
+       First time ever for this account -> the full intro.
+       Later sign-ins -> a short "welcome back", once per browser session.
+       --------------------------------------------------------------------- */
+    const banner = el("aside", "uni-buddy-banner",
+      `<div class="ub-ban-head">
+         <span class="ub-ban-ava">${headSvg()}</span>
+         <strong class="ub-ban-title"></strong>
+         <button class="ub-ban-x" type="button" aria-label="Dismiss">×</button>
+       </div>
+       <p class="ub-ban-text"></p>
+       <div class="ub-ban-actions">
+         <button class="ub-ban-btn primary" type="button"></button>
+         <button class="ub-ban-btn ghost" type="button">Maybe later</button>
+       </div>`);
+    banner.hidden = true;
+    banner.setAttribute("role", "status");
+    banner.setAttribute("aria-label", "Message from Uni Buddy");
+    document.body.appendChild(banner);
+
+    const ui = {
+      title: banner.querySelector(".ub-ban-title"),
+      text: banner.querySelector(".ub-ban-text"),
+      go: banner.querySelector(".ub-ban-btn.primary")
+    };
+
+    let bannerTimer = 0;
+    const armTimer = () => { clearTimeout(bannerTimer); bannerTimer = setTimeout(hideBanner, 15000); };
+
+    function hideBanner() {
+      clearTimeout(bannerTimer);
+      launcher.classList.remove("nudge");
+      if (banner.hidden) return;
+      banner.classList.add("out");
+      setTimeout(() => { banner.hidden = true; banner.classList.remove("out"); }, reduce ? 0 : 240);
+    }
+
+    function showBanner(first, name) {
+      const hi = name ? `, ${name}` : "";
+      ui.title.textContent = first ? `Hey${hi}! I'm Uni Buddy 👋` : `Welcome back${hi}!`;
+      ui.text.textContent = first
+        ? "I'm your UniAI guide. Ask me where to find universities, scholarships, visas or your roadmap, and I'll take you right there."
+        : "Need a hand finding something? I'm right here in the corner.";
+      ui.go.textContent = first ? "Show me around" : "Ask Uni Buddy";
+
+      banner.classList.remove("out");
+      banner.hidden = false;
+      launcher.classList.add("nudge");
+      setTimeout(() => launcher.classList.remove("nudge"), 2600);
+      armTimer();
+    }
+
+    banner.querySelector(".ub-ban-x").addEventListener("click", hideBanner);
+    banner.querySelector(".ub-ban-btn.ghost").addEventListener("click", hideBanner);
+    ui.go.addEventListener("click", () => open());
+    // don't vanish while the person is reading or about to click
+    banner.addEventListener("mouseenter", () => clearTimeout(bannerTimer));
+    banner.addEventListener("mouseleave", armTimer);
+    banner.addEventListener("focusin", () => clearTimeout(bannerTimer));
+
+    /** Waits until nothing else is demanding attention (sign-in dialog, onboarding, open panel). */
+    function whenQuiet(fn, tries = 0) {
+      const prefs = document.getElementById("prefs-overlay");
+      const auth = document.getElementById("auth-overlay");
+      const authOpen = auth && getComputedStyle(auth).display !== "none";
+      const busy = (prefs && !prefs.hidden) || authOpen || !panel.hidden || launcher.hidden;
+      if (!busy) return fn();
+      if (tries < 40) setTimeout(() => whenQuiet(fn, tries + 1), 700);
+    }
+
+    const GREETED = "uniai-buddy-greeted:";   // sessionStorage: already greeted in this browser session
+    const INTRO = "uniai-buddy-intro:";       // localStorage: this account has met Buddy before
+    let lastUid = null;
+
+    function greetUser(user) {
+      const uid = user && user.id;
+      if (!uid) return;
+      lastUid = uid;
+
+      try {
+        if (sessionStorage.getItem(GREETED + uid) === "1") return;   // reloads don't re-trigger it
+        sessionStorage.setItem(GREETED + uid, "1");
+      } catch (err) { /* storage blocked: greet anyway */ }
+
+      const meta = user.user_metadata || {};
+      const raw = String(meta.username || (user.email || "").split("@")[0] || "").trim();
+      const name = raw ? raw.charAt(0).toUpperCase() + raw.slice(1) : "";
+
+      let first = true;
+      try { first = !localStorage.getItem(INTRO + uid); } catch (err) { /* ignore */ }
+
+      setTimeout(() => whenQuiet(() => {
+        showBanner(first, name);
+        try { localStorage.setItem(INTRO + uid, "1"); } catch (err) { /* ignore */ }
+      }), 1200);
+    }
+
+    window.addEventListener("uniai:auth-state", (e) => {
+      const session = e.detail && e.detail.session;
+      if (session && session.user) greetUser(session.user);
+      else {
+        // signed out: forget the greeting so the next sign-in gets one
+        if (lastUid) { try { sessionStorage.removeItem(GREETED + lastUid); } catch (err) { /* ignore */ } }
+        lastUid = null;
+        hideBanner();
+      }
+    });
+
+    // The auth event may have fired before this file loaded: check the current session once.
+    const sb = window.supabaseApp;
+    if (sb && sb.auth && typeof sb.auth.getSession === "function") {
+      sb.auth.getSession().then(({data}) => { if (data && data.session) greetUser(data.session.user); }).catch(() => {});
+    }
+
+    window.UniAIBuddy = {open, close, ask: handle, greet: (first = true) => showBanner(first, userName()), hideGreeting: hideBanner};
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, {once: true});
