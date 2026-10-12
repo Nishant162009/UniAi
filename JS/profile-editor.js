@@ -24,7 +24,11 @@
    XP is real, derived from what the user has actually done:
        roadmap milestone ×100 · guide checklist item ×40 · saved item ×25
        SOP draft started ×150 · each profile quest ×25 (once, ever)
-   Streak is counted per browser (localStorage "uniai-streak").
+   Daily quests keep the streak: each day 5 of 10 quests are drawn (same draw
+   all day, reshuffled at midnight) and finishing any 3 saves the streak.
+   Miss a whole day and it resets. Stored in localStorage "uniai-streak" and
+   "uniai-daily" (add both to PERSONAL_KEYS in sync.js to follow the account).
+   Phone: shown masked and read-only (user.phone or user_metadata.phone_number).
    Quest rewards also keep a per-user local fallback copy
    (localStorage "uniai-quest-rewards:<user id>").
    ========================================================================== */
@@ -198,20 +202,250 @@
   const isoDay = (d) =>
     `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
-  /** Counts consecutive days the app was opened. Runs once per day. */
-  function touchStreak() {
-    const s = readJSON("uniai-streak", { count: 0, best: 0, last: "" });
-    const today = isoDay(new Date());
+  /* ------------------------------------------------------------------------
+     Daily quests — finish DAILY_NEEDED of today's DAILY_SHOWN to keep the streak
+     ------------------------------------------------------------------------ */
 
-    if (s.last !== today) {
-      const y = new Date();
-      y.setDate(y.getDate() - 1);
-      s.count = s.last === isoDay(y) ? (s.count || 0) + 1 : 1;
-      s.best = Math.max(s.best || 0, s.count);
-      s.last = today;
-      writeJSON("uniai-streak", s);
+  const DAILY_SHOWN = 5;
+  const DAILY_NEEDED = 3;
+  const DAILY_KEY = "uniai-daily";
+  const STREAK_KEY = "uniai-streak";
+  const BOOT_QUIET_MS = 4000; // ignore the app's own start-up work
+  const bootAt = Date.now();
+
+  const DAILY_POOL = [
+    { id: "chat", icon: "💬", label: "Ask UniAI a question", desc: "Send one message in AI Chat." },
+    { id: "road", icon: "🗺️", label: "Check off a roadmap step", desc: "Tick one milestone on your Roadmap." },
+    { id: "guide", icon: "📋", label: "Tick a checklist item", desc: "Mark one 'before you fly' task done." },
+    { id: "save", icon: "⭐", label: "Save something for later", desc: "Star a university or a job." },
+    { id: "sop", icon: "✍️", label: "Work on your SOP", desc: "Write or edit a few lines in SOP Studio." },
+    { id: "find", icon: "🔎", label: "Search the University Finder", desc: "Run a search with your own filters." },
+    { id: "cost", icon: "🧮", label: "Run the cost calculator", desc: "Estimate a monthly living budget." },
+    { id: "fx", icon: "💱", label: "Convert a currency", desc: "See what your money is worth abroad." },
+    { id: "visa", icon: "🛂", label: "Open the Visa Guide", desc: "Read up on a country's visa steps." },
+    { id: "profile", icon: "🎭", label: "Update your profile", desc: "Save a change in Profile Studio." }
+  ];
+
+  /** Small seeded PRNG so the same date always gives the same draw. */
+  function seededRandom(seed) {
+    let h = 2166136261;
+    for (let i = 0; i < seed.length; i++) {
+      h ^= seed.charCodeAt(i);
+      h = Math.imul(h, 16777619);
     }
-    return s;
+    let a = h >>> 0;
+    return () => {
+      a = (a + 0x6d2b79f5) >>> 0;
+      let t = a;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  /** The quests for a given day: a seeded shuffle of the pool, first DAILY_SHOWN. */
+  function todaysQuests(day) {
+    const rand = seededRandom(`uniai-daily:${day || isoDay(new Date())}`);
+    const pool = DAILY_POOL.slice();
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(rand() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    return pool.slice(0, DAILY_SHOWN);
+  }
+
+  function dailyState() {
+    const day = isoDay(new Date());
+    const s = readJSON(DAILY_KEY, null);
+    const done = s && s.day === day && s.done && typeof s.done === "object" ? s.done : {};
+    return { day, done };
+  }
+
+  const dailyDone = (st) => todaysQuests(st.day).filter((q) => st.done[q.id]).length;
+
+  /** The streak as it stands right now: it is broken once a whole day was missed. */
+  function readStreak() {
+    const s = readJSON(STREAK_KEY, { count: 0, best: 0, last: "" }) || {};
+    const today = isoDay(new Date());
+    const y = new Date();
+    y.setDate(y.getDate() - 1);
+    const alive = s.last === today || s.last === isoDay(y);
+    return { count: alive ? s.count || 0 : 0, best: s.best || 0, last: s.last || "", savedToday: s.last === today };
+  }
+
+  /** Called when today's goal is reached. Returns the new count, or 0 if already counted today. */
+  function advanceStreak() {
+    const s = readJSON(STREAK_KEY, { count: 0, best: 0, last: "" }) || {};
+    const today = isoDay(new Date());
+    if (s.last === today) return 0;
+
+    const y = new Date();
+    y.setDate(y.getDate() - 1);
+    s.count = s.last === isoDay(y) ? (s.count || 0) + 1 : 1;
+    s.best = Math.max(s.best || 0, s.count);
+    s.last = today;
+    writeJSON(STREAK_KEY, s);
+    return s.count;
+  }
+
+  /**
+   * Marks one of today's quests done (only if it is one of today's draw).
+   * Returns { n, streakNow, quest } or null when nothing changed.
+   */
+  function recordDaily(id, opts) {
+    if (Date.now() - bootAt < BOOT_QUIET_MS) return null;
+
+    const st = dailyState();
+    const quest = todaysQuests(st.day).find((q) => q.id === id);
+    if (!quest || st.done[id]) return null;
+
+    st.done[id] = Date.now();
+    writeJSON(DAILY_KEY, st);
+
+    const n = dailyDone(st);
+    const streakNow = n >= DAILY_NEEDED ? advanceStreak() : 0;
+    const result = { n, streakNow, quest };
+
+    window.dispatchEvent(new CustomEvent("uniai:daily-change", { detail: { id, done: n, needed: DAILY_NEEDED, streak: readStreak().count } }));
+
+    if (!(opts && opts.quiet)) {
+      injectStyles();
+      if (streakNow) {
+        toast(`🔥 Streak saved! ${streakNow}-day streak`);
+        confetti();
+      } else if (n > DAILY_NEEDED) {
+        toast(`${quest.icon} Bonus quest done!`);
+      } else {
+        toast(`${quest.icon} Daily quest done · ${n}/${DAILY_NEEDED}`);
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Watches what the person actually does. Nothing here changes behaviour:
+   * each wrapper calls the original and only then notes the action.
+   * Writes applied by sync.js use the native setItem and are not counted.
+   */
+  function installDailyHooks() {
+    if (window.__uniaiDailyHooks) return;
+    window.__uniaiDailyHooks = true;
+
+    const trues = (raw) => {
+      try {
+        const v = JSON.parse(raw);
+        return Array.isArray(v) ? v.filter(Boolean).length : 0;
+      } catch (err) {
+        return 0;
+      }
+    };
+
+    const chatsToday = (raw) => {
+      try {
+        const v = JSON.parse(raw);
+        const day = isoDay(new Date());
+        let n = 0;
+        ((v && v.chats) || []).forEach((c) =>
+          (c.messages || []).forEach((m) => {
+            const t = m && m.timestamp ? new Date(m.timestamp) : null;
+            if (m && m.role === "user" && t && !isNaN(t) && isoDay(t) === day) n++;
+          })
+        );
+        return n;
+      } catch (err) {
+        return 0;
+      }
+    };
+
+    const WATCH = new Set(["roadmapProgress", "studyAbroadChecklist", "uniai-sop-studio", "uniAIChats"]);
+
+    const analyse = (key, before, after) => {
+      if (before === after) return;
+      if (key === "roadmapProgress" && trues(after) > trues(before)) recordDaily("road");
+      else if (key === "studyAbroadChecklist" && trues(after) > trues(before)) recordDaily("guide");
+      else if (key === "uniai-sop-studio" && before !== null && after.length !== before.length) recordDaily("sop");
+      else if (key === "uniAIChats" && chatsToday(after) > chatsToday(before)) recordDaily("chat");
+    };
+
+    try {
+      const proto = Storage.prototype;
+      const prevSet = proto.setItem;
+      proto.setItem = function (key, value) {
+        const watch = this === window.localStorage && WATCH.has(key);
+        let before = null;
+        if (watch) {
+          try {
+            before = this.getItem(key);
+          } catch (err) {
+            /* ignore */
+          }
+        }
+        const out = prevSet.apply(this, arguments);
+        if (watch) {
+          try {
+            analyse(key, before, String(value));
+          } catch (err) {
+            /* never break a save */
+          }
+        }
+        return out;
+      };
+    } catch (err) {
+      console.warn("Profile Studio: could not watch storage for daily quests.", err);
+    }
+
+    const wrap = (name, after) => {
+      const fn = window[name];
+      if (typeof fn !== "function" || fn.__uniaiDaily) return;
+      const wrapped = function () {
+        const out = fn.apply(this, arguments);
+        try {
+          after(out, arguments);
+        } catch (err) {
+          /* ignore */
+        }
+        return out;
+      };
+      wrapped.__uniaiDaily = true;
+      window[name] = wrapped;
+    };
+
+    wrap("findUniversities", () => recordDaily("find"));
+    wrap("calculateLivingCost", () => recordDaily("cost"));
+    wrap("convertCurrency", () => recordDaily("fx"));
+    wrap("toggleShortlist", (saved) => {
+      if (saved === true) recordDaily("save");
+    });
+    wrap("showPage", (result, args) => {
+      Promise.resolve(result).then((shown) => {
+        if (shown && String(args[0] || "").replace(/Page$/, "") === "visaGuide") recordDaily("visa");
+      });
+    });
+
+    const store = window.UniAISaved;
+    if (store && typeof store.toggle === "function" && !store.toggle.__uniaiDaily) {
+      const orig = store.toggle;
+      const wrapped = function () {
+        const out = orig.apply(this, arguments);
+        if (out === true) recordDaily("save");
+        return out;
+      };
+      wrapped.__uniaiDaily = true;
+      try {
+        store.toggle = wrapped;
+      } catch (err) {
+        /* frozen: toggleShortlist still covers the Finder */
+      }
+    }
+
+    window.UniAIDaily = {
+      streak: readStreak,
+      needed: DAILY_NEEDED,
+      today: () => {
+        const st = dailyState();
+        return { day: st.day, done: dailyDone(st), quests: todaysQuests(st.day).map((q) => ({ id: q.id, label: q.label, done: Boolean(st.done[q.id]) })) };
+      }
+    };
   }
 
   function levelInfo(totalXP) {
@@ -288,7 +522,7 @@
     const done = questsDone(d);
 
     return [
-      { icon: "🔥", name: "On fire", hint: "Open UniAI 3 days in a row", prog: [Math.min(streakNow, 3), 3], on: streakNow >= 3 },
+      { icon: "🔥", name: "On fire", hint: "Keep a 3-day quest streak", prog: [Math.min(streakNow, 3), 3], on: streakNow >= 3 },
       { icon: "🗺️", name: "Pathfinder", hint: "Finish a roadmap milestone", prog: [Math.min(stats.roadmap, 1), 1], on: stats.roadmap >= 1 },
       { icon: "⭐", name: "Collector", hint: "Save 3 items", prog: [Math.min(stats.saved, 3), 3], on: stats.saved >= 3 },
       { icon: "✍️", name: "Storyteller", hint: "Start an SOP draft", prog: [Math.min(stats.sop, 1), 1], on: stats.sop >= 1 },
@@ -696,6 +930,19 @@ textarea.ue-in{resize:none;min-height:70px}
 .ue-bounce{animation:ue-pop .45s ease}
 .ue-shake{animation:ue-shake .4s ease}
 
+/* ---- daily quests + phone ---- */
+.ue-daysec{margin-top:4px}
+.ue-preview+.ue-daysec>.ue-h:first-child,.ue-daysec+.ue-questsec>.ue-h:first-child{margin-top:20px}
+.ue-daysec .ue-h{display:flex;align-items:center;justify-content:space-between}
+.ue-daycount{font-size:.76rem;font-weight:800;letter-spacing:0;color:var(--orange);background:var(--ol);padding:2px 10px;border-radius:999px}
+.ue-daycount.ok{color:var(--gd);background:var(--gl)}
+.ue-daybar{height:8px;border-radius:8px;background:var(--line);overflow:hidden;margin:0 0 8px}
+.ue-daybar i{display:block;height:100%;width:0;border-radius:8px;background:linear-gradient(90deg,var(--orange),#ffb86b);transition:width .5s cubic-bezier(.2,1,.3,1)}
+.ue-daybar.ok i{background:linear-gradient(90deg,var(--green),#7be08f)}
+.ue-dayhint{margin:0 0 10px;font-size:.76rem;font-weight:700;color:var(--muted);line-height:1.4}
+.ue-in.ue-ro{opacity:.8;cursor:default;letter-spacing:.06em}
+.ue-field label span.ok{color:var(--gd)}
+
 /* ---- mobile ---- */
 @media (max-width:860px){
   .ue-overlay{padding:0;align-items:flex-end}
@@ -709,6 +956,7 @@ textarea.ue-in{resize:none;min-height:70px}
   .ue-body{display:flex;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
   .ue-side{display:contents}
   .ue-preview{order:1;padding:14px 14px 4px;background:var(--soft)}
+  .ue-daysec{order:2;margin:0;padding:0 14px 6px;background:var(--soft)}
   .ue-questsec{order:2;padding:0 14px 14px;background:var(--soft);border-bottom:2px solid var(--line)}
   .ue-main{order:3;overflow:visible;padding:18px 14px 22px}
   .ue-extras{order:4;padding:0 14px 24px;background:var(--soft);border-top:2px solid var(--line)}
@@ -959,7 +1207,7 @@ textarea.ue-in{resize:none;min-height:70px}
     /* ---- state ---- */
 
     const stats = activityStats();
-    const streak = touchStreak();
+    let streak = readStreak();
     const baseXP = activityXP(stats);
 
     let initial = draftFromUser(user);
@@ -1038,6 +1286,13 @@ textarea.ue-in{resize:none;min-height:70px}
               </div>
             </div>
 
+            <div class="ue-daysec" id="ue-daysec">
+              <div class="ue-h">DAILY QUESTS <span class="ue-daycount" id="ue-daycount">0/3</span></div>
+              <div class="ue-daybar" id="ue-daybar"><i id="ue-daybarfill"></i></div>
+              <p class="ue-dayhint" id="ue-dayhint" aria-live="polite"></p>
+              <div class="ue-quests" id="ue-dayq"></div>
+            </div>
+
             <div class="ue-questsec">
               <div class="ue-h">PROFILE QUESTS</div>
               <div class="ue-quests" id="ue-quests"></div>
@@ -1077,6 +1332,11 @@ textarea.ue-in{resize:none;min-height:70px}
                 <label for="ue-name">USERNAME <span id="ue-namecount">0/${NAME_MAX}</span></label>
                 <input id="ue-name" class="ue-in" type="text" maxlength="${NAME_MAX + 10}" autocomplete="nickname" placeholder="e.g. Aarav">
                 <div class="ue-err" id="ue-nameerr"></div>
+              </div>
+              <div class="ue-field">
+                <label for="ue-phone">PHONE <span id="ue-phonestate"></span></label>
+                <input id="ue-phone" class="ue-in ue-ro" type="text" readonly tabindex="-1" aria-describedby="ue-phonehint">
+                <p class="ue-hint" id="ue-phonehint" style="margin:6px 0 0">Saved on your account. Only the last 3 digits are shown here.</p>
               </div>
               <div class="ue-field">
                 <label for="ue-bio">ABOUT YOU <span id="ue-biocount">0/${BIO_MAX}</span></label>
@@ -1187,6 +1447,69 @@ textarea.ue-in{resize:none;min-height:70px}
       b.innerHTML = `<span class="i">${d.icon}</span>${d.label}`;
       el.degrees.appendChild(b);
     });
+
+    /* ---- daily quests + phone ---- */
+
+    const dayEl = {
+      count: q("ue-daycount"), bar: q("ue-daybar"), fill: q("ue-daybarfill"),
+      hint: q("ue-dayhint"), list: q("ue-dayq"), phone: q("ue-phone"), phoneState: q("ue-phonestate")
+    };
+
+    function paintDaily(justId) {
+      const st = dailyState();
+      const picks = todaysQuests(st.day);
+      const n = dailyDone(st);
+      const ok = n >= DAILY_NEEDED;
+      const shown = Math.min(n, DAILY_NEEDED);
+      streak = readStreak();
+
+      dayEl.count.textContent = `${shown}/${DAILY_NEEDED}`;
+      dayEl.count.classList.toggle("ok", ok);
+      dayEl.bar.classList.toggle("ok", ok);
+      dayEl.fill.style.width = `${Math.round((shown / DAILY_NEEDED) * 100)}%`;
+
+      dayEl.hint.textContent = ok
+        ? `Streak saved for today ✓ ${plural(streak.count, "day")} and counting. The rest are bonus.`
+        : streak.count > 0
+          ? `Finish ${DAILY_NEEDED - n} more to keep your ${plural(streak.count, "day")} streak alive.`
+          : `Finish ${DAILY_NEEDED} of today's ${DAILY_SHOWN} to start a streak.`;
+
+      dayEl.list.innerHTML = picks
+        .map((qs) => {
+          const done = Boolean(st.done[qs.id]);
+          return `<div class="ue-quest${done ? " done" : ""}${justId === qs.id ? " just" : ""}" data-d="${qs.id}">
+            <span class="qi" aria-hidden="true">${qs.icon}</span>
+            <div class="qt"><b>${esc(qs.label)}</b><small>${esc(qs.desc)}</small></div>
+            <span class="qc" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+          </div>`;
+        })
+        .join("");
+
+      el.streak.textContent = String(streak.count || 0);
+      el.hstreak.textContent = String(streak.count || 0);
+    }
+
+    const onDaily = (e) => {
+      paintDaily(e && e.detail && e.detail.id);
+      render({});
+    };
+    window.addEventListener("uniai:daily-change", onDaily);
+    paintDaily();
+
+    {
+      const phoneMeta = user.user_metadata || {};
+      const phoneRaw = String(user.phone || phoneMeta.phone_number || "");
+      const digits = phoneRaw.replace(/\D/g, "");
+
+      if (digits) {
+        dayEl.phone.value = digits.length < 4 ? "••••" : `••••• •••${digits.slice(-3)}`;
+        dayEl.phoneState.textContent = user.phone_confirmed_at ? "Verified ✓" : "Not verified";
+        dayEl.phoneState.classList.toggle("ok", Boolean(user.phone_confirmed_at));
+      } else {
+        dayEl.phone.placeholder = "No phone added";
+        dayEl.phoneState.textContent = "Optional";
+      }
+    }
 
     const questNodes = {};
     el.quests.innerHTML = QUESTS.map(
@@ -1732,6 +2055,7 @@ textarea.ue-in{resize:none;min-height:70px}
     document.documentElement.style.overflow = "hidden";
 
     function closeEditor() {
+      window.removeEventListener("uniai:daily-change", onDaily);
       scope.dispose();
       overlay.classList.remove("ue-open");
       document.removeEventListener("keydown", onKey, true);
@@ -1835,6 +2159,7 @@ textarea.ue-in{resize:none;min-height:70px}
         }
 
         saving = false;
+        const daily = recordDaily("profile", { quiet: true });
         render({});
         renderActivity();
         el.save.textContent = "Saved ✓";
@@ -1843,6 +2168,8 @@ textarea.ue-in{resize:none;min-height:70px}
         let message = "Profile saved";
         if (leveledUp) message += unlocks.length ? " · LEVEL UP! New reward unlocked!" : " · LEVEL UP!";
         else if (gained > 0) message += ` · +${gained} XP`;
+        if (daily && daily.streakNow) message += ` · 🔥 ${daily.streakNow}-day streak saved!`;
+        else if (daily && daily.n <= DAILY_NEEDED) message += ` · Daily quest ${daily.n}/${DAILY_NEEDED}`;
         toast(message);
 
         confetti();
@@ -1909,5 +2236,5 @@ textarea.ue-in{resize:none;min-height:70px}
       .catch(() => {});
   })();
 
-  touchStreak();
+  installDailyHooks();
 })();
