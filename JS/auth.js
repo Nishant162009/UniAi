@@ -27,7 +27,7 @@
      ------------------------------------------------------------------------ */
 
   const OPTIONS = {
-    OTP_LENGTH: 6, // must match Supabase -> Auth -> Providers -> Email -> OTP length
+    OTP_LENGTH: 8, // must match Supabase -> Auth -> Providers -> Email -> OTP length
     RESEND_SECONDS: 60, // Supabase allows one email per address per minute
     MAX_CODE_TRIES: 5, // then the user must request a fresh code
     MIN_PASSWORD: 8,
