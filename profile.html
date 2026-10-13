@@ -2,1343 +2,603 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>University Profile | UniAI</title>
+
+  <!-- Apply the visitor's saved theme + accent BEFORE first paint (same keys as settings.js) -->
+  <script>
+    (function () {
+      try {
+        var root = document.documentElement, s = {};
+        try { s = JSON.parse(localStorage.getItem("uniai_settings_v2") || "{}") || {}; } catch (e) {}
+
+        var t = s.theme;
+        if (t !== "light" && t !== "dark") {
+          var legacy = localStorage.getItem("uniai-theme") || localStorage.getItem("theme");
+          t = legacy === "light" || legacy === "dark" ? legacy : "system";
+        }
+        if (t === "system") {
+          t = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        }
+        root.setAttribute("data-theme", t);
+
+        var A = {
+          violet: ["#6d5dfb", "#5848e8"], blue: ["#3b82f6", "#2563eb"], cyan: ["#06b6d4", "#0891b2"],
+          pink: ["#ec4899", "#db2777"], green: ["#10b981", "#059669"], orange: ["#f97316", "#ea580c"]
+        };
+        if (A[s.accent]) {
+          root.style.setProperty("--primary", A[s.accent][0]);
+          root.style.setProperty("--primary-dark", A[s.accent][1]);
+        }
+      } catch (e) { /* fall back to the dark defaults in main.css */ }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/UI/main.css">
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    /* Everything here is prefixed `up-` so it can never collide with main.css */
 
-  
+    [hidden] { display: none !important; }
+
+    .up-topbar {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 12px clamp(16px, 4vw, 40px);
+      padding-top: calc(12px + env(safe-area-inset-top, 0px));
+      background: var(--bg);
+      background: color-mix(in srgb, var(--bg) 82%, transparent);
+      -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .up-brand {
+      display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text);
+      font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; letter-spacing: -.01em;
+    }
+    .up-brand b {
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--primary), var(--pink));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .up-back {
+      display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+      padding: 10px 16px; border-radius: 12px; font-size: .85rem; font-weight: 600;
+      color: var(--text); background: var(--card-bg); border: 1px solid var(--border);
+      transition: border-color .18s ease, color .18s ease, transform .18s ease;
+    }
+    .up-back:hover { color: var(--primary); border-color: var(--primary); transform: translateX(-2px); }
+    .up-back:focus-visible, .up-btn:focus-visible, .up-cta-btn:focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; }
+
+    .up-shell { max-width: 1180px; margin: 0 auto; padding: 26px clamp(16px, 4vw, 40px) 70px; }
+
+    /* ---------- hero ---------- */
+    .up-hero {
+      position: relative; overflow: hidden; isolation: isolate;
+      border-radius: var(--radius-lg); border: 1px solid var(--border);
+      box-shadow: var(--shadow-md); color: #fff; min-height: 300px;
+    }
+    .up-hero-bg {
+      position: absolute; inset: 0; z-index: -2;
+      background: linear-gradient(135deg, #2a1f5c, #5b2a86 60%, #8b2f6b) center / cover no-repeat;
+      transform: scale(1.04);
+    }
+    .up-hero-shade {
+      position: absolute; inset: 0; z-index: -1;
+      background:
+        radial-gradient(circle at 12% 100%, rgba(124, 58, 237, .45), transparent 45%),
+        radial-gradient(circle at 95% 0%, rgba(236, 72, 153, .28), transparent 40%),
+        linear-gradient(to top, rgba(9, 9, 16, .94) 0%, rgba(9, 9, 16, .66) 52%, rgba(9, 9, 16, .34) 100%);
+    }
+    .up-hero-body {
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 28px;
+      padding: clamp(22px, 4vw, 40px); min-height: 300px;
+    }
+    .up-hero-main { display: flex; align-items: flex-end; gap: 22px; min-width: 0; }
+    .up-logo {
+      position: relative; flex: 0 0 auto; width: 96px; height: 96px; border-radius: 22px;
+      background: #fff; display: grid; place-items: center; overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .5); box-shadow: 0 14px 34px rgba(0, 0, 0, .4);
+    }
+    .up-logo img { width: 100%; height: 100%; object-fit: contain; padding: 10px; display: block; }
+    .up-logo-fallback {
+      position: absolute; inset: 0; display: none; place-items: center;
+      font-family: var(--font-display); font-weight: 800; font-size: 1.7rem; color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--pink));
+    }
+    .up-logo.no-img .up-logo-fallback { display: grid; }
+    .up-logo.no-img img { display: none; }
+
+    .up-hero-info { min-width: 0; }
+    .up-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .up-pill {
+      display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 999px;
+      font-size: .72rem; font-weight: 700; letter-spacing: .02em; white-space: nowrap;
+      background: rgba(139, 92, 246, .28); border: 1px solid rgba(196, 181, 253, .4); color: #f1ecff;
+    }
+    .up-pill.ghost { background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .22); color: #fff; }
+    .up-hero h1 {
+      margin: 0 0 8px; font-family: var(--font-display); font-weight: 800; letter-spacing: -.02em;
+      font-size: clamp(1.7rem, 4.2vw, 2.7rem); line-height: 1.1; overflow-wrap: anywhere;
+    }
+    .up-loc { margin: 0 0 18px; color: rgba(255, 255, 255, .78); font-size: .95rem; }
+    .up-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .up-btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 12px;
+      font-size: .85rem; font-weight: 650; text-decoration: none; line-height: 1; white-space: nowrap;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .up-btn.primary {
+      color: #fff; background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border: 1px solid rgba(255, 255, 255, .12); box-shadow: 0 8px 22px rgba(109, 93, 251, .38);
+    }
+    .up-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(109, 93, 251, .5); }
+    .up-btn.ghost { color: #fff; background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .25); }
+    .up-btn.ghost:hover { background: rgba(255, 255, 255, .18); transform: translateY(-2px); }
+
+    .up-score { position: relative; flex: 0 0 auto; width: 128px; text-align: center; }
+    .up-score svg { width: 128px; height: 128px; transform: rotate(-90deg); display: block; }
+    .up-score .bg { fill: rgba(9, 9, 16, .4); stroke: rgba(255, 255, 255, .16); stroke-width: 9; }
+    .up-score .fg {
+      fill: none; stroke: url(#up-grad); stroke-width: 9; stroke-linecap: round;
+      stroke-dasharray: 289.03; stroke-dashoffset: 289.03; transition: stroke-dashoffset 1.2s cubic-bezier(.2, 1, .3, 1) .2s;
+    }
+    .up-score-center {
+      position: absolute; top: 0; left: 0; width: 128px; height: 128px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .up-score-center b { font-family: var(--font-display); font-size: 1.9rem; font-weight: 800; line-height: 1; }
+    .up-score-center small { margin-top: 4px; font-size: .62rem; font-weight: 700; letter-spacing: .12em; color: rgba(255, 255, 255, .7); }
+
+    /* ---------- stat strip ---------- */
+    .up-stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin: 18px 0 22px; }
+    .up-stat {
+      display: flex; align-items: center; gap: 12px; padding: 16px; min-width: 0;
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; box-shadow: var(--shadow-sm);
+      transition: transform .2s ease, border-color .2s ease;
+    }
+    .up-stat:hover { transform: translateY(-2px); border-color: var(--primary); }
+    .up-stat-icon {
+      flex: 0 0 40px; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; font-size: 1.05rem;
+      background: rgba(139, 92, 246, .14);
+    }
+    .up-stat:nth-child(2) .up-stat-icon { background: rgba(251, 191, 36, .16); }
+    .up-stat:nth-child(3) .up-stat-icon { background: rgba(56, 189, 248, .16); }
+    .up-stat:nth-child(4) .up-stat-icon { background: rgba(52, 211, 153, .16); }
+    .up-stat:nth-child(5) .up-stat-icon { background: rgba(251, 113, 133, .16); }
+    .up-stat b { display: block; font-family: var(--font-display); font-size: 1.25rem; line-height: 1.1; letter-spacing: -.02em; }
+    .up-stat small { display: block; margin-top: 4px; color: var(--text-muted); font-size: .72rem; }
+
+    /* ---------- cards ---------- */
+    .up-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+    .up-col { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+    .up-card {
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      padding: 24px; box-shadow: var(--shadow-sm); transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    .up-card:hover { border-color: var(--primary); box-shadow: var(--shadow-md); }
+    .up-card-head { margin-bottom: 18px; }
+    .up-card-head h2 { margin: 0; font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; letter-spacing: -.01em; }
+    .up-card-head p { margin: 4px 0 0; color: var(--text-muted); font-size: .8rem; }
+    .up-about { margin: 0; color: var(--text-muted); font-size: .95rem; line-height: 1.75; }
+
+    .up-bar { margin-bottom: 16px; }
+    .up-bar:last-child { margin-bottom: 0; }
+    .up-bar-top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 7px; font-size: .84rem; }
+    .up-bar-top span:first-child { color: var(--text-muted); font-weight: 500; }
+    .up-bar-top span:last-child { font-family: var(--font-display); font-weight: 700; }
+    .up-track { height: 9px; border-radius: 999px; background: var(--surface-3); border: 1px solid var(--border-soft); overflow: hidden; }
+    .up-fill {
+      height: 100%; width: var(--score, 0%); border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary), var(--pink));
+      transition: width 1s cubic-bezier(.2, 1, .3, 1);
+    }
+    .up-note-inline { margin: 16px 0 0; color: var(--text-subtle); font-size: .74rem; }
+
+    .up-facts { list-style: none; margin: 0; padding: 0; }
+    .up-facts li { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: .88rem; }
+    .up-facts li:last-child { border-bottom: 0; padding-bottom: 0; }
+    .up-facts li:first-child { padding-top: 0; }
+    .up-facts span { color: var(--text-muted); }
+    .up-facts b { font-weight: 600; text-align: right; overflow-wrap: anywhere; }
+
+    .up-money {
+      font-family: var(--font-display); font-weight: 800; font-size: clamp(1.9rem, 4vw, 2.4rem); letter-spacing: -.03em; line-height: 1.05;
+      background: linear-gradient(90deg, var(--primary), var(--pink)); -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .up-money.muted { background: none; color: var(--text-muted); font-size: 1.3rem; }
+    .up-money-sub { margin: 6px 0 0; color: var(--text-muted); font-size: .8rem; }
+
+    .up-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 12px; }
+    .up-tile { padding: 16px 14px; border-radius: 16px; background: var(--surface-2); border: 1px solid var(--border); text-align: center; }
+    .up-tile b { display: block; font-family: var(--font-display); font-size: 1.5rem; letter-spacing: -.02em; }
+    .up-tile small { display: block; margin-top: 4px; color: var(--text-muted); font-size: .72rem; font-weight: 600; letter-spacing: .04em; }
+    .up-empty-line { margin: 0; color: var(--text-muted); font-size: .88rem; }
+
+    /* ---------- CTA + notes ---------- */
+    .up-cta {
+      margin-top: 22px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+      padding: clamp(22px, 4vw, 34px); border-radius: var(--radius-lg); color: #fff; position: relative; overflow: hidden;
+      background: linear-gradient(120deg, var(--primary-dark), var(--primary) 55%, var(--pink));
+      box-shadow: 0 18px 44px rgba(109, 93, 251, .28);
+    }
+    .up-cta::after { content: ""; position: absolute; right: -60px; top: -80px; width: 240px; height: 240px; border-radius: 50%; background: rgba(255, 255, 255, .12); filter: blur(10px); }
+    .up-cta > * { position: relative; z-index: 1; }
+    .up-cta h2 { margin: 0 0 6px; font-family: var(--font-display); font-size: clamp(1.2rem, 3vw, 1.6rem); letter-spacing: -.02em; }
+    .up-cta p { margin: 0; max-width: 520px; color: rgba(255, 255, 255, .88); font-size: .92rem; line-height: 1.55; }
+    .up-cta-btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 13px; text-decoration: none;
+      background: #fff; color: var(--primary-dark); font-weight: 700; font-size: .9rem; white-space: nowrap;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, .2); transition: transform .18s ease;
+    }
+    .up-cta-btn:hover { transform: translateY(-2px); }
+    .up-note { margin: 18px 4px 0; color: var(--text-subtle); font-size: .76rem; line-height: 1.6; text-align: center; }
+
+    .up-error { text-align: center; padding: 70px 20px; background: var(--card-bg); border: 1px dashed var(--border); border-radius: var(--radius-lg); }
+    .up-error h2 { margin: 12px 0 8px; font-family: var(--font-display); }
+    .up-error p { margin: 0 auto 22px; max-width: 420px; color: var(--text-muted); line-height: 1.6; }
+    .up-error .up-btn { color: #fff; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); }
+
+    /* ---------- loading + entrance ---------- */
+    .up-loading .up-hero h1, .up-loading .up-loc, .up-loading .up-about { animation: up-pulse 1.2s ease-in-out infinite; }
+    @keyframes up-pulse { 50% { opacity: .45; } }
+    .up-in { opacity: 0; transform: translateY(14px); animation: up-rise .55s cubic-bezier(.2, 1, .3, 1) forwards; animation-delay: var(--d, 0s); }
+    @keyframes up-rise { to { opacity: 1; transform: none; } }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 960px) {
+      .up-grid { grid-template-columns: 1fr; }
+      .up-stats { grid-template-columns: repeat(2, 1fr); }
+      .up-stats .up-stat:last-child { grid-column: 1 / -1; }
+    }
+    @media (max-width: 720px) {
+      .up-hero-body { flex-direction: column; align-items: flex-start; }
+      .up-hero-main { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .up-score { align-self: flex-start; }
+      .up-logo { width: 78px; height: 78px; border-radius: 18px; }
+      .up-back span { display: none; }
+      .up-cta { flex-direction: column; align-items: flex-start; }
+      .up-cta-btn { width: 100%; justify-content: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .up-in { animation: none; opacity: 1; transform: none; }
+      .up-fill, .up-score .fg, .up-back, .up-stat, .up-btn, .up-cta-btn { transition: none; }
+      .up-loading .up-hero h1, .up-loading .up-loc, .up-loading .up-about { animation: none; }
+    }
+  </style>
 </head>
-<style></style>
 
-<body>
+<body class="up-loading">
 
-  <main class="profile-page">
+  <header class="up-topbar">
+    <a class="up-brand" href="/" aria-label="UniAI home">Uni<b>AI</b></a>
+    <a class="up-back" href="/">← <span>Back to University Finder</span></a>
+  </header>
 
+  <main class="up-shell">
 
-    <!-- =================================================
-         TOP BAR
-         ================================================= -->
+    <!-- ================= HERO ================= -->
+    <section class="up-hero up-in" aria-labelledby="uni-name">
+      <div class="up-hero-bg" id="uni-banner"></div>
+      <div class="up-hero-shade"></div>
 
-    <div class="profile-topbar">
-
-      <a href="/" class="back-btn">
-        ← Back to University Finder
-      </a>
-
-      <div class="profile-label">
-        <span class="profile-label-dot"></span>
-        UniAI University Profile
-      </div>
-
-    </div>
-
-
-    <!-- =================================================
-         UNIVERSITY HERO
-         ================================================= -->
-
-    <section class="university-hero">
-
-      <div
-        class="hero-background"
-        id="uni-banner">
-      </div>
-
-      <div class="hero-gradient"></div>
-
-
-      <div class="hero-content">
-
-        <div class="hero-main">
-
-
-          <img
-            id="uni-logo"
-            class="university-logo"
-            src="https://placehold.co/120x120?text=UNI"
-            alt="University logo"
-          >
-
-
-          <div class="hero-info">
-
-            <div class="rank-pill">
-              ★ QS Ranked Institution
-            </div>
-
-
-            <h1
-              id="uni-name"
-              class="loading">
-              Loading University...
-            </h1>
-
-
-            <p
-              id="uni-location"
-              class="hero-location">
-              📍 Loading location...
-            </p>
-
-
-            <div class="hero-actions">
-
-              <a
-                id="val-web"
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="action-btn action-primary">
-                🌐 Official Website
-              </a>
-
-
-              <a
-                id="wiki-link"
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="action-btn action-secondary">
-                📚 Wikipedia
-              </a>
-
-            </div>
-
+      <div class="up-hero-body">
+        <div class="up-hero-main">
+          <div class="up-logo" id="uni-logo-wrap">
+            <img id="uni-logo" alt="" decoding="async">
+            <span class="up-logo-fallback" id="uni-logo-fallback">U</span>
           </div>
 
-
-          <!-- Overall Score -->
-
-          <div class="hero-score">
-
-            <span class="hero-score-label">
-              Overall Score
-            </span>
-
-            <div
-              id="hero-score-value"
-              class="hero-score-value">
-              --
+          <div class="up-hero-info">
+            <div class="up-pills">
+              <span class="up-pill" id="up-rank-pill" hidden></span>
+              <span class="up-pill ghost" id="up-country-pill" hidden></span>
             </div>
-
-            <span class="hero-score-sub">
-              UniAI profile
-            </span>
-
+            <h1 id="uni-name">Loading university…</h1>
+            <p class="up-loc" id="uni-location">&nbsp;</p>
+            <div class="up-actions">
+              <a id="val-web" class="up-btn primary" href="#" target="_blank" rel="noopener noreferrer" hidden>Official website ↗</a>
+              <a id="wiki-link" class="up-btn ghost" href="#" target="_blank" rel="noopener noreferrer" hidden>Wikipedia ↗</a>
+            </div>
           </div>
-
-
         </div>
 
+        <div class="up-score" role="img" aria-label="Overall score" id="up-score">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <defs>
+              <linearGradient id="up-grad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" style="stop-color:var(--primary)"></stop>
+                <stop offset="1" style="stop-color:var(--pink)"></stop>
+              </linearGradient>
+            </defs>
+            <circle class="bg" cx="60" cy="60" r="46"></circle>
+            <circle class="fg" id="up-ring" cx="60" cy="60" r="46"></circle>
+          </svg>
+          <div class="up-score-center"><b id="hero-score-value">--</b><small>OVERALL</small></div>
+        </div>
       </div>
-
     </section>
 
-
-
-    <!-- =================================================
-         MAIN CONTENT
-         ================================================= -->
-
-    <div class="profile-grid">
-
-
-      <!-- =================================================
-           RANKING
-           ================================================= -->
-
-      <section class="profile-card ranking-card">
-
-        <div class="card-header">
-
-          <div>
-            <h2 class="card-title">
-              📊 Ranking Snapshot
-            </h2>
-
-            <p class="card-subtitle">
-              Key indicators from the university profile
-            </p>
-          </div>
-
-        </div>
-
-
-        <div class="ranking-grid">
-
-
-          <div class="ranking-item">
-
-            <span class="ranking-item-label">
-              QS World Rank
-            </span>
-
-            <span
-              id="val-rank"
-              class="ranking-item-value">
-              --
-            </span>
-
-          </div>
-
-
-          <div class="ranking-item">
-
-            <span class="ranking-item-label">
-              Overall Score
-            </span>
-
-            <span
-              id="val-score"
-              class="ranking-item-value">
-              --
-            </span>
-
-          </div>
-
-
-          <div class="ranking-item">
-
-            <span class="ranking-item-label">
-              Academic Reputation
-            </span>
-
-            <span
-              id="val-academic"
-              class="ranking-item-value">
-              --
-            </span>
-
-          </div>
-
-
-          <div class="ranking-item">
-
-            <span class="ranking-item-label">
-              Employer Reputation
-            </span>
-
-            <span
-              id="val-employer-short"
-              class="ranking-item-value">
-              --
-            </span>
-
-          </div>
-
-
-          <div class="ranking-item">
-
-            <span class="ranking-item-label">
-              International
-            </span>
-
-            <span
-              id="val-intl-short"
-              class="ranking-item-value">
-              --
-            </span>
-
-          </div>
-
-
-        </div>
-
-      </section>
-
-
-
-      <!-- =================================================
-           ABOUT
-           ================================================= -->
-
-      <section class="profile-card about-card">
-
-        <div class="card-header">
-
-          <div>
-
-            <h2 class="card-title">
-              🏛 About Institution
-            </h2>
-
-            <p class="card-subtitle">
-              University overview
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <p
-          id="uni-bio"
-          class="about-text">
-          Fetching university biography...
-        </p>
-
-      </section>
-
-
-
-      <!-- =================================================
-           QUICK FACTS
-           ================================================= -->
-
-      <section class="profile-card">
-
-        <div class="card-header">
-
-          <div>
-
-            <h2 class="card-title">
-              📌 Quick Facts
-            </h2>
-
-            <p class="card-subtitle">
-              Essential information
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="facts-list">
-
-
-          <div class="fact">
-
-            <span class="fact-label">
-              Founded
-            </span>
-
-            <span
-              id="val-founded"
-              class="fact-value">
-              --
-            </span>
-
-          </div>
-
-
-          <div class="fact">
-
-            <span class="fact-label">
-              Institution Type
-            </span>
-
-            <span class="fact-value">
-              Research Institution
-            </span>
-
-          </div>
-
-
-          <div class="fact">
-
-            <span class="fact-label">
-              Country
-            </span>
-
-            <span
-              id="fact-country"
-              class="fact-value">
-              --
-            </span>
-
-          </div>
-
-
-          <div class="fact">
-
-            <span class="fact-label">
-              City
-            </span>
-
-            <span
-              id="fact-city"
-              class="fact-value">
-              --
-            </span>
-
-          </div>
-
-
-        </div>
-
-      </section>
-
-
-
-      <!-- =================================================
-           FINANCIAL
-           ================================================= -->
-
-      <section class="profile-card">
-
-        <div class="card-header">
-
-          <div>
-
-            <h2 class="card-title">
-              💰 Financial Overview
-            </h2>
-
-            <p class="card-subtitle">
-              Estimated study costs
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="info-grid">
-
-
-          <div class="info-box">
-
-            <div class="info-icon">
-              💵
-            </div>
-
-            <span class="info-label">
-              Annual Tuition
-            </span>
-
-            <span
-              id="val-tuition"
-              class="info-value highlight">
-              --
-            </span>
-
-          </div>
-
-
-          <div class="info-box">
-
-            <div class="info-icon">
-              🎓
-            </div>
-
-            <span class="info-label">
-              Scholarships
-            </span>
-
-            <span class="info-value">
-              Available
-            </span>
-
-          </div>
-
-
-          <div class="info-box">
-
-            <div class="info-icon">
-              💳
-            </div>
-
-            <span class="info-label">
-              Financial Aid
-            </span>
-
-            <span class="info-value">
-              International
-            </span>
-
-          </div>
-
-
-          <div class="info-box">
-
-            <div class="info-icon">
-              🌍
-            </div>
-
-            <span class="info-label">
-              International Students
-            </span>
-
-            <span class="info-value">
-              Supported
-            </span>
-
-          </div>
-
-
-        </div>
-
-      </section>
-
-
-
-      <!-- =================================================
-           ADMISSIONS
-           ================================================= -->
-
-      <section class="profile-card">
-
-        <div class="card-header">
-
-          <div>
-
-            <h2 class="card-title">
-              📝 Admission Benchmarks
-            </h2>
-
-            <p class="card-subtitle">
-              Typical language requirements
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="info-grid">
-
-
-          <div class="info-box">
-
-            <div class="info-icon">
-              🗣️
-            </div>
-
-            <span class="info-label">
-              IELTS Target
-            </span>
-
-            <span
-              id="val-ielts"
-              class="info-value highlight">
-              --
-            </span>
-
-          </div>
-
-
-          <div class="info-box">
-
-            <div class="info-icon">
-              🎧
-            </div>
-
-            <span class="info-label">
-              TOEFL Minimum
-            </span>
-
-            <span
-              id="val-toefl"
-              class="info-value">
-              --
-            </span>
-
-          </div>
-
-
-          <div class="info-box">
-
-            <div class="info-icon">
-              📚
-            </div>
-
-            <span class="info-label">
-              GPA Scale
-            </span>
-
-            <span class="info-value">
-              4.0
-            </span>
-
-          </div>
-
-
-          <div class="info-box">
-
-            <div class="info-icon">
-              🌐
-            </div>
-
-            <span class="info-label">
-              International Admission
-            </span>
-
-            <span class="info-value">
-              Yes
-            </span>
-
-          </div>
-
-
-        </div>
-
-      </section>
-
-
-
-      <!-- =================================================
-           PERFORMANCE
-           ================================================= -->
-
-      <section class="profile-card performance-card">
-
-        <div class="card-header">
-
-          <div>
-
-            <h2 class="card-title">
-              📈 Reputation & Performance
-            </h2>
-
-            <p class="card-subtitle">
-              Comparative university indicators
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="performance-grid">
-
-
-          <div class="performance-item">
-
-            <span class="performance-label">
-              Employer Reputation
-            </span>
-
-            <span
-              id="val-employer"
-              class="performance-value">
-              --
-            </span>
-
-          </div>
-
-
-          <div class="performance-item">
-
-            <span class="performance-label">
-              Faculty Student Ratio
-            </span>
-
-            <span
-              id="val-faculty"
-              class="performance-value">
-              --
-            </span>
-
-          </div>
-
-
-          <div class="performance-item">
-
-            <span class="performance-label">
-              Citations per Faculty
-            </span>
-
-            <span
-              id="val-citations"
-              class="performance-value">
-              --
-            </span>
-
-          </div>
-
-
-          <div class="performance-item">
-
-            <span class="performance-label">
-              International Score
-            </span>
-
-            <span
-              id="val-intl"
-              class="performance-value">
-              --
-            </span>
-
-          </div>
-
-
-          <div class="performance-item">
-
-            <span class="performance-label">
-              Sustainability Score
-            </span>
-
-            <span
-              id="val-sustain"
-              class="performance-value">
-              --
-            </span>
-
-          </div>
-
-
-        </div>
-
-      </section>
-
-
-
-      <!-- =================================================
-           VISUAL SCORE PROFILE
-           ================================================= -->
-
-      <section class="profile-card">
-
-        <div class="card-header">
-
-          <div>
-
-            <h2 class="card-title">
-              📊 Score Profile
-            </h2>
-
-            <p class="card-subtitle">
-              Performance at a glance
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="score-row">
-
-          <div class="score-top">
-
-            <span class="score-name">
-              Academic Reputation
-            </span>
-
-            <span
-              id="bar-academic-value"
-              class="score-number">
-              --
-            </span>
-
-          </div>
-
-          <div class="score-track">
-
-            <div
-              id="bar-academic"
-              class="score-fill">
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="score-row">
-
-          <div class="score-top">
-
-            <span class="score-name">
-              Employer Reputation
-            </span>
-
-            <span
-              id="bar-employer-value"
-              class="score-number">
-              --
-            </span>
-
-          </div>
-
-          <div class="score-track">
-
-            <div
-              id="bar-employer"
-              class="score-fill">
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="score-row">
-
-          <div class="score-top">
-
-            <span class="score-name">
-              International
-            </span>
-
-            <span
-              id="bar-intl-value"
-              class="score-number">
-              --
-            </span>
-
-          </div>
-
-          <div class="score-track">
-
-            <div
-              id="bar-intl"
-              class="score-fill">
-            </div>
-
-          </div>
-
-        </div>
-
-
-      </section>
-
-
+    <!-- ================= STAT STRIP ================= -->
+    <section class="up-stats" aria-label="Ranking snapshot">
+      <div class="up-stat up-in" style="--d:.05s"><span class="up-stat-icon" aria-hidden="true">🏆</span><div><b id="st-rank">--</b><small>QS World Rank</small></div></div>
+      <div class="up-stat up-in" style="--d:.09s"><span class="up-stat-icon" aria-hidden="true">⭐</span><div><b id="st-score">--</b><small>Overall Score</small></div></div>
+      <div class="up-stat up-in" style="--d:.13s"><span class="up-stat-icon" aria-hidden="true">🎓</span><div><b id="st-academic">--</b><small>Academic Reputation</small></div></div>
+      <div class="up-stat up-in" style="--d:.17s"><span class="up-stat-icon" aria-hidden="true">💼</span><div><b id="st-employer">--</b><small>Employer Reputation</small></div></div>
+      <div class="up-stat up-in" style="--d:.21s"><span class="up-stat-icon" aria-hidden="true">🌍</span><div><b id="st-intl">--</b><small>International</small></div></div>
+    </section>
+
+    <!-- ================= CONTENT ================= -->
+    <div class="up-grid" id="up-grid">
+
+      <div class="up-col">
+        <section class="up-card up-in" style="--d:.1s">
+          <div class="up-card-head"><h2>About</h2><p>University overview</p></div>
+          <p class="up-about" id="uni-bio">Fetching university details…</p>
+        </section>
+
+        <section class="up-card up-in" style="--d:.16s">
+          <div class="up-card-head"><h2>Score profile</h2><p>How this university performs on key indicators</p></div>
+          <div id="up-bars"></div>
+          <p class="up-note-inline">Indicators are shown out of 100.</p>
+        </section>
+      </div>
+
+      <div class="up-col">
+        <section class="up-card up-in" style="--d:.12s" id="up-facts-card">
+          <div class="up-card-head"><h2>Quick facts</h2><p>The essentials at a glance</p></div>
+          <ul class="up-facts" id="up-facts"></ul>
+        </section>
+
+        <section class="up-card up-in" style="--d:.18s">
+          <div class="up-card-head"><h2>Annual tuition</h2><p>Estimated cost of study</p></div>
+          <div class="up-money" id="val-tuition">--</div>
+          <p class="up-money-sub" id="up-tuition-sub"></p>
+        </section>
+
+        <section class="up-card up-in" style="--d:.24s">
+          <div class="up-card-head"><h2>Admission benchmarks</h2><p>Typical requirements</p></div>
+          <div class="up-tiles" id="up-tests"></div>
+        </section>
+      </div>
     </div>
 
-
-
-    <!-- =================================================
-         CTA
-         ================================================= -->
-
-    <section class="profile-cta">
-
+    <!-- ================= CTA ================= -->
+    <section class="up-cta up-in" style="--d:.3s" id="up-cta">
       <div>
-
-        <h2 class="cta-title">
-          🎓 Interested in this university?
-        </h2>
-
-        <p class="cta-text">
-          Explore courses, scholarships, admission requirements
-          and your study-abroad options with UniAI.
-        </p>
-
+        <h2 id="up-cta-title">Interested in this university?</h2>
+        <p>Compare it with other options, check your chances and plan your study-abroad journey with UniAI.</p>
       </div>
-
-
-      <a
-        href="/"
-        class="cta-button">
-        Explore More Universities →
-      </a>
-
+      <a href="/" class="up-cta-btn">Explore more universities →</a>
     </section>
 
+    <p class="up-note">Figures are estimates and can change. Always confirm fees, deadlines and requirements on the university's official website.</p>
+
+    <!-- ================= ERROR ================= -->
+    <section class="up-error" id="up-error" hidden role="alert">
+      <div style="font-size:2.4rem" aria-hidden="true">🔎</div>
+      <h2>University not found</h2>
+      <p>We couldn't load this profile. The link may be out of date, or the server may be unreachable.</p>
+      <a class="up-btn" href="/">← Back to University Finder</a>
+    </section>
 
   </main>
 
-
-
-  <!-- =====================================================
-       PROFILE DATA
-       ===================================================== -->
-
   <script>
+    (function () {
+      "use strict";
 
-    async function loadProfile() {
+      var $ = function (id) { return document.getElementById(id); };
+      var RING = 2 * Math.PI * 46;
 
-      const slug =
-        window.location.pathname
-          .split("/")
-          .filter(Boolean)
-          .pop();
+      /* ---------- helpers ---------- */
 
-
-      try {
-
-        const res =
-          await fetch(`/universities/${slug}`);
-
-
-        if (!res.ok) {
-          throw new Error("University not found");
+      // Only http(s) links are ever used for href / src / CSS urls.
+      function safeUrl(raw) {
+        if (!raw) return "";
+        var u = String(raw).trim();
+        if (!u) return "";
+        if (!/^[a-z][a-z0-9+.-]*:/i.test(u)) u = "https://" + u.replace(/^\/+/, "");
+        try {
+          var p = new URL(u);
+          return /^https?:$/.test(p.protocol) ? p.href : "";
+        } catch (err) {
+          return "";
         }
-
-
-        const data =
-          await res.json();
-
-
-        /* ================================================
-           HERO
-           ================================================ */
-
-        document
-          .getElementById("uni-name")
-          .textContent =
-            data.name ||
-            "Unknown University";
-
-
-        document
-          .getElementById("uni-name")
-          .classList.remove("loading");
-
-
-        const location = [
-          data.city,
-          data.state,
-          data.country
-        ]
-        .filter(Boolean)
-        .join(", ");
-
-
-        document
-          .getElementById("uni-location")
-          .textContent =
-            "📍 " +
-            (location || "Global");
-
-
-        /* ================================================
-           LOGO
-           ================================================ */
-
-        const logo =
-          document.getElementById("uni-logo");
-
-
-        logo.src =
-          data.logo ||
-          "https://placehold.co/120x120?text=UNI";
-
-
-        logo.onerror = () => {
-
-          logo.src =
-            "https://placehold.co/120x120?text=UNI";
-
-        };
-
-
-        /* ================================================
-           BANNER
-           ================================================ */
-
-        const banner =
-          document.getElementById("uni-banner");
-
-
-        banner.style.backgroundImage =
-          `url("${data.banner ||
-          "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1600"}")`;
-
-
-        /* ================================================
-           LOCATION FACTS
-           ================================================ */
-
-        document
-          .getElementById("fact-country")
-          .textContent =
-            data.country ||
-            "N/A";
-
-
-        document
-          .getElementById("fact-city")
-          .textContent =
-            data.city ||
-            "N/A";
-
-
-        /* ================================================
-           RANKING
-           ================================================ */
-
-        const rank =
-          data.qs_rank ||
-          data["2024 RANK"] ||
-          "N/A";
-
-
-        document
-          .getElementById("val-rank")
-          .textContent = rank;
-
-
-        const score =
-          data.overall_score ??
-          "N/A";
-
-
-        document
-          .getElementById("val-score")
-          .textContent =
-            score;
-
-
-        document
-          .getElementById("hero-score-value")
-          .textContent =
-            score;
-
-
-        const academic =
-          data.academic_score ??
-          "N/A";
-
-
-        document
-          .getElementById("val-academic")
-          .textContent =
-            academic;
-
-
-        /* ================================================
-           REPUTATION
-           ================================================ */
-
-        const employer =
-          data.employer_score ??
-          "N/A";
-
-
-        const faculty =
-          data.faculty_score ??
-          "N/A";
-
-
-        const citations =
-          data.citations_score ??
-          "N/A";
-
-
-        const intl =
-          data.international_score ??
-          "N/A";
-
-
-        const sustain =
-          data.sustainability_score ??
-          "N/A";
-
-
-        document
-          .getElementById("val-employer")
-          .textContent =
-            employer;
-
-
-        document
-          .getElementById("val-faculty")
-          .textContent =
-            faculty;
-
-
-        document
-          .getElementById("val-citations")
-          .textContent =
-            citations;
-
-
-        document
-          .getElementById("val-intl")
-          .textContent =
-            intl;
-
-
-        document
-          .getElementById("val-sustain")
-          .textContent =
-            sustain;
-
-
-        document
-          .getElementById("val-employer-short")
-          .textContent =
-            employer;
-
-
-        document
-          .getElementById("val-intl-short")
-          .textContent =
-            intl;
-
-
-        /* ================================================
-           SCORE BARS
-           ================================================ */
-
-        setScoreBar(
-          "bar-academic",
-          "bar-academic-value",
-          academic
-        );
-
-
-        setScoreBar(
-          "bar-employer",
-          "bar-employer-value",
-          employer
-        );
-
-
-        setScoreBar(
-          "bar-intl",
-          "bar-intl-value",
-          intl
-        );
-
-
-        /* ================================================
-           TUITION
-           ================================================ */
-
-        const tuition =
-          data.tuition_fee;
-
-
-        document
-          .getElementById("val-tuition")
-          .textContent =
-            tuition
-              ? "$" +
-                Number(tuition)
-                  .toLocaleString()
-              : "Not Available";
-
-
-        /* ================================================
-           TEST REQUIREMENTS
-           ================================================ */
-
-        document
-          .getElementById("val-ielts")
-          .textContent =
-            data.ielts ||
-            "Not Available";
-
-
-        document
-          .getElementById("val-toefl")
-          .textContent =
-            data.toefl ||
-            "Not Available";
-
-
-        /* ================================================
-           FOUNDED
-           ================================================ */
-
-        document
-          .getElementById("val-founded")
-          .textContent =
-            data.founded_year ||
-            "N/A";
-
-
-        /* ================================================
-           WEBSITE
-           ================================================ */
-
-        const website =
-          document.getElementById("val-web");
-
-
-        if (data.website) {
-
-          let url =
-            data.website;
-
-
-          if (
-            !url.startsWith("http")
-          ) {
-
-            url =
-              "https://" +
-              url;
-
-          }
-
-
-          website.href =
-            url;
-
-
-          website.style.display =
-            "inline-flex";
-
-        }
-        else {
-
-          website.style.display =
-            "none";
-
-        }
-
-
-        /* ================================================
-           WIKIPEDIA
-           ================================================ */
-
-        const wiki =
-          document.getElementById("wiki-link");
-
-
-        if (data.wikipedia) {
-
-          wiki.href =
-            data.wikipedia;
-
-
-          wiki.style.display =
-            "inline-flex";
-
-        }
-        else {
-
-          wiki.style.display =
-            "none";
-
-        }
-
-
-        /* ================================================
-           DESCRIPTION
-           ================================================ */
-
-        document
-          .getElementById("uni-bio")
-          .textContent =
-            data.description ||
-            `${data.name || "This university"} is a leading institution in ${
-              data.country || "its country"
-            }. More information will be available soon.`;
-
-
-      }
-      catch (error) {
-
-        console.error(
-          "University profile error:",
-          error
-        );
-
-
-        document
-          .getElementById("uni-name")
-          .textContent =
-            "University Not Found";
-
-
-        document
-          .getElementById("uni-location")
-          .textContent =
-            "";
-
-
-        document
-          .getElementById("uni-bio")
-          .textContent =
-            "Unable to load university information. Please return to the University Finder and try again.";
-
       }
 
-    }
-
-
-
-    /* =====================================================
-       SCORE BAR HELPER
-       ===================================================== */
-
-    function setScoreBar(
-      barId,
-      valueId,
-      value
-    ) {
-
-      const bar =
-        document.getElementById(barId);
-
-
-      const label =
-        document.getElementById(valueId);
-
-
-      if (
-        value === null ||
-        value === undefined ||
-        value === "N/A"
-      ) {
-
-        label.textContent =
-          "N/A";
-
-        bar.style.width =
-          "0%";
-
-        return;
-
+      function num(v) {
+        if (v === null || v === undefined || v === "") return null;
+        var n = Number(v);
+        return isFinite(n) ? n : null;
       }
 
-
-      const number =
-        Number(value);
-
-
-      if (Number.isNaN(number)) {
-
-        label.textContent =
-          value;
-
-        bar.style.width =
-          "0%";
-
-        return;
-
+      function fmt(n) { return Number.isInteger(n) ? String(n) : n.toFixed(1); }
+      function pad(v) { return v === null || v === undefined || v === "" ? "N/A" : String(v); }
+      function scoreText(v) { var n = num(v); return n === null ? "N/A" : fmt(n); }
+      function esc(s) {
+        return String(s).replace(/[&<>"']/g, function (c) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+        });
       }
 
+      function initials(name) {
+        var out = String(name || "")
+          .split(/\s+/)
+          .filter(function (w) { return /^[A-Za-z]/.test(w) && !/^(of|the|and|de|la)$/i.test(w); })
+          .slice(0, 3)
+          .map(function (w) { return w.charAt(0); })
+          .join("")
+          .toUpperCase();
+        return out || "U";
+      }
 
-      label.textContent =
-        number;
+      /* ---------- render ---------- */
 
+      function render(data) {
+        var name = data.name || "Unknown University";
+        document.title = name + " | UniAI";
 
-      /*
-       * Most ranking indicators are
-       * approximately 0–100.
-       */
+        $("uni-name").textContent = name;
+        $("up-cta-title").textContent = "Interested in " + name + "?";
 
-      const percentage =
-        Math.max(
-          0,
-          Math.min(
-            100,
-            number
-          )
-        );
+        var location = [data.city, data.state, data.country].filter(Boolean).join(", ");
+        $("uni-location").textContent = location ? "📍 " + location : "📍 Global";
 
+        /* banner */
+        var banner = safeUrl(data.banner) || "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1600";
+        $("uni-banner").style.backgroundImage =
+          'url("' + banner.replace(/["\\\n\r]/g, function (c) { return encodeURIComponent(c); }) + '")';
 
-      requestAnimationFrame(() => {
+        /* logo (initials tile if it is missing or fails to load) */
+        var wrap = $("uni-logo-wrap");
+        var logo = $("uni-logo");
+        $("uni-logo-fallback").textContent = initials(name);
+        logo.alt = name + " logo";
 
-        bar.style.setProperty(
-          "--score",
-          percentage + "%"
-        );
+        var logoUrl = safeUrl(data.logo);
+        if (logoUrl) {
+          logo.onerror = function () { wrap.classList.add("no-img"); };
+          logo.src = logoUrl;
+        } else {
+          wrap.classList.add("no-img");
+        }
 
+        /* pills */
+        var rank = data.qs_rank != null && data.qs_rank !== "" ? data.qs_rank : data["2024 RANK"];
+        if (rank != null && rank !== "") {
+          $("up-rank-pill").textContent = "★ QS #" + rank;
+          $("up-rank-pill").hidden = false;
+        }
+        if (data.country) {
+          $("up-country-pill").textContent = data.country;
+          $("up-country-pill").hidden = false;
+        }
+
+        /* stats + ring */
+        $("st-rank").textContent = rank != null && rank !== "" ? "#" + rank : "N/A";
+        $("st-score").textContent = scoreText(data.overall_score);
+        $("st-academic").textContent = scoreText(data.academic_score);
+        $("st-employer").textContent = scoreText(data.employer_score);
+        $("st-intl").textContent = scoreText(data.international_score);
+
+        var overall = num(data.overall_score);
+        $("hero-score-value").textContent = overall === null ? "--" : fmt(overall);
+        $("up-score").setAttribute("aria-label", "Overall score " + (overall === null ? "not available" : fmt(overall) + " out of 100"));
+
+        /* score bars */
+        var BARS = [
+          ["academic_score", "Academic reputation"],
+          ["employer_score", "Employer reputation"],
+          ["faculty_score", "Faculty / student ratio"],
+          ["citations_score", "Citations per faculty"],
+          ["international_score", "International outlook"],
+          ["sustainability_score", "Sustainability"]
+        ];
+        var barsHtml = "";
+        var targets = [];
+        BARS.forEach(function (b) {
+          var n = num(data[b[0]]);
+          if (n === null) return;
+          barsHtml +=
+            '<div class="up-bar"><div class="up-bar-top"><span>' + b[1] + "</span><span>" + fmt(n) +
+            '</span></div><div class="up-track"><div class="up-fill"></div></div></div>';
+          targets.push(Math.max(0, Math.min(100, n)));
+        });
+        $("up-bars").innerHTML = barsHtml || '<p class="up-empty-line">No score data is available for this university yet.</p>';
+
+        /* quick facts (only rows that have data) */
+        var gpa = num(data.avg_gpa);
+        var facts = [
+          ["Founded", data.founded_year],
+          ["Country", data.country],
+          ["State / region", data.state],
+          ["City", data.city],
+          ["Typical GPA (4.0 scale)", gpa === null ? "" : fmt(gpa)]
+        ].filter(function (f) { return f[1] !== undefined && f[1] !== null && f[1] !== ""; });
+        if (facts.length) {
+          $("up-facts").innerHTML = facts.map(function (f) { return "<li><span>" + f[0] + "</span><b>" + esc(f[1]) + "</b></li>"; }).join("");
+        } else {
+          $("up-facts-card").hidden = true;
+        }
+
+        /* tuition */
+        var tuition = num(data.tuition_fee);
+        var money = $("val-tuition");
+        if (tuition === null) {
+          money.textContent = "Not available";
+          money.classList.add("muted");
+        } else {
+          money.textContent = "$" + tuition.toLocaleString("en-US");
+          $("up-tuition-sub").textContent = "per year, in USD. Estimate for international students.";
+        }
+
+        /* admission tiles */
+        var tests = [["IELTS", data.ielts], ["TOEFL", data.toefl], ["GPA", gpa === null ? "" : fmt(gpa)]].filter(function (t) {
+          return t[1] !== undefined && t[1] !== null && t[1] !== "";
+        });
+        $("up-tests").innerHTML = tests.length
+          ? tests.map(function (t) { return '<div class="up-tile"><b>' + esc(t[1]) + "</b><small>" + t[0] + "</small></div>"; }).join("")
+          : '<p class="up-empty-line">Requirements are not available yet.</p>';
+
+        /* links */
+        var web = safeUrl(data.website);
+        if (web) { $("val-web").href = web; $("val-web").hidden = false; }
+        var wiki = safeUrl(data.wikipedia);
+        if (wiki) { $("wiki-link").href = wiki; $("wiki-link").hidden = false; }
+
+        /* about: only say what we actually know */
+        $("uni-bio").textContent =
+          data.description ||
+          name + (data.country ? " is located in " + data.country + "." : " is listed on UniAI.") +
+          " A detailed overview isn't available yet.";
+
+        /* animate ring + bars after the first paint */
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            $("up-ring").style.strokeDashoffset = String(RING - (overall === null ? 0 : Math.max(0, Math.min(100, overall)) / 100) * RING);
+            Array.prototype.forEach.call(document.querySelectorAll(".up-fill"), function (el, i) {
+              el.style.setProperty("--score", targets[i] + "%");
+            });
+          });
+        });
+      }
+
+      function fail() {
+        document.title = "University not found | UniAI";
+        ["up-grid", "up-cta"].forEach(function (id) { $(id).hidden = true; });
+        document.querySelector(".up-stats").hidden = true;
+        document.querySelector(".up-hero").hidden = true;
+        document.querySelector(".up-note").hidden = true;
+        $("up-error").hidden = false;
+      }
+
+      async function load() {
+        var slug = window.location.pathname.split("/").filter(Boolean).pop();
+        try {
+          if (!slug) throw new Error("No university specified");
+          var res = await fetch("/universities/" + slug, { headers: { Accept: "application/json" } });
+          if (!res.ok) throw new Error("University not found");
+          render(await res.json());
+        } catch (err) {
+          console.error("University profile error:", err);
+          fail();
+        } finally {
+          document.body.classList.remove("up-loading");
+        }
+      }
+
+      // Follow theme / accent changes made in another tab.
+      window.addEventListener("storage", function (e) {
+        if (e.key === "uniai_settings_v2" || e.key === "uniai-theme") window.location.reload();
       });
 
-    }
-
-
-    /* =====================================================
-       START
-       ===================================================== */
-
-    window.addEventListener(
-      "DOMContentLoaded",
-      loadProfile
-    );
-
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", load);
+      else load();
+    })();
   </script>
 
 </body>
