@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const askAI = require("../services/ai");
+const { aiLimiter } = require("../security/server-headers");
 const supabase = require("../supabase");
 
+
 // Note the 'async' keyword right before (req, res)
-router.post("/chat", async (req, res) => {
+router.post("/chat", aiLimiter, async (req, res) => {
     try {
         const { message } = req.body;
 
