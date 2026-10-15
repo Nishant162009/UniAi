@@ -218,6 +218,23 @@
     .up-tile small { display: block; margin-top: 4px; color: var(--text-muted); font-size: .72rem; font-weight: 600; letter-spacing: .04em; }
     .up-empty-line { margin: 0; color: var(--text-muted); font-size: .88rem; }
 
+    /* ---------- AI transparency (70 / 30) ---------- */
+    .up-ai {
+      display: inline-block; margin-left: 6px; padding: 1px 6px; border-radius: 6px; vertical-align: middle; white-space: nowrap;
+      font: 700 .62rem/1.6 var(--font-body); letter-spacing: .06em; color: #fbbf24;
+      background: rgba(245, 158, 11, .14); border: 1px dashed rgba(245, 158, 11, .6);
+    }
+    html[data-theme="light"] .up-ai { color: #b45309; }
+    .up-split { display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: var(--surface-3); border: 1px solid var(--border-soft); }
+    .up-split i { display: block; height: 100%; width: 0; transition: width 1s cubic-bezier(.2, 1, .3, 1); }
+    .up-split .ds { background: linear-gradient(90deg, var(--primary), var(--primary-dark)); }
+    .up-split .ai { background: repeating-linear-gradient(135deg, #f59e0b 0 6px, #fbbf24 6px 12px); }
+    .up-legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 14px 0 4px; font-size: .84rem; color: var(--text-muted); }
+    .up-legend b { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 7px; }
+    .up-legend b.ds { background: var(--primary); }
+    .up-legend b.ai { background: #f59e0b; }
+    .up-legend strong { margin-left: 4px; color: var(--text); font-family: var(--font-display); }
+
     /* ---------- CTA + notes ---------- */
     .up-cta {
       margin-top: 22px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
@@ -336,8 +353,21 @@
 
       <div class="up-col">
         <section class="up-card up-in" style="--d:.1s">
-          <div class="up-card-head"><h2>About</h2><p>University overview</p></div>
+          <div class="up-card-head"><h2 id="up-about-title">About</h2><p>University overview</p></div>
           <p class="up-about" id="uni-bio">Fetching university details…</p>
+        </section>
+
+        <section class="up-card up-in" style="--d:.13s" id="up-compose" hidden>
+          <div class="up-card-head"><h2>How this profile was built</h2><p id="up-compose-sub"></p></div>
+          <div class="up-split" role="img" aria-label="Share of dataset versus AI-estimated information">
+            <i class="ds" id="up-ds-bar"></i><i class="ai" id="up-ai-bar"></i>
+          </div>
+          <div class="up-legend">
+            <span><b class="ds"></b>Dataset<strong id="up-ds-pct">--</strong></span>
+            <span><b class="ai"></b>AI estimate<strong id="up-ai-pct">--</strong></span>
+          </div>
+          <p class="up-note-inline" id="up-compose-miss"></p>
+          <p class="up-note-inline">AI estimates only fill gaps. They never replace dataset values and they can be wrong, so confirm fees and requirements on the official website.</p>
         </section>
 
         <section class="up-card up-in" style="--d:.16s">
@@ -354,7 +384,7 @@
         </section>
 
         <section class="up-card up-in" style="--d:.18s">
-          <div class="up-card-head"><h2>Annual tuition</h2><p>Estimated cost of study</p></div>
+          <div class="up-card-head"><h2 id="up-tuition-title">Annual tuition</h2><p>Estimated cost of study</p></div>
           <div class="up-money" id="val-tuition">--</div>
           <p class="up-money-sub" id="up-tuition-sub"></p>
         </section>
@@ -442,6 +472,13 @@
         var name = data.name || "Unknown University";
         document.title = name + " | UniAI";
 
+        // Where each value came from (set by the server: "dataset" or "ai")
+        var prov = data._provenance || {};
+        var aiInfo = data._ai || {};
+        function aiTag(key) {
+          return prov[key] === "ai" ? ' <span class="up-ai" title="AI estimate. Verify on the official website.">AI</span>' : "";
+        }
+
         $("uni-name").textContent = name;
         $("up-cta-title").textContent = "Interested in " + name + "?";
 
@@ -513,14 +550,14 @@
         /* quick facts (only rows that have data) */
         var gpa = num(data.avg_gpa);
         var facts = [
-          ["Founded", data.founded_year],
-          ["Country", data.country],
-          ["State / region", data.state],
-          ["City", data.city],
-          ["Typical GPA (4.0 scale)", gpa === null ? "" : fmt(gpa)]
+          ["Founded", data.founded_year, "founded_year"],
+          ["Country", data.country, "country"],
+          ["State / region", data.state, "state"],
+          ["City", data.city, "city"],
+          ["Typical GPA (4.0 scale)", gpa === null ? "" : fmt(gpa), "avg_gpa"]
         ].filter(function (f) { return f[1] !== undefined && f[1] !== null && f[1] !== ""; });
         if (facts.length) {
-          $("up-facts").innerHTML = facts.map(function (f) { return "<li><span>" + f[0] + "</span><b>" + esc(f[1]) + "</b></li>"; }).join("");
+          $("up-facts").innerHTML = facts.map(function (f) { return "<li><span>" + f[0] + "</span><b>" + esc(f[1]) + aiTag(f[2]) + "</b></li>"; }).join("");
         } else {
           $("up-facts-card").hidden = true;
         }
@@ -532,34 +569,67 @@
           money.textContent = "Not available";
           money.classList.add("muted");
         } else {
-          money.textContent = "$" + tuition.toLocaleString("en-US");
-          $("up-tuition-sub").textContent = "per year, in USD. Estimate for international students.";
+          var isAi = prov.tuition_fee === "ai";
+          var span = aiInfo.ranges && aiInfo.ranges.tuition_fee;
+          money.textContent = (isAi ? "≈ " : "") + "$" + tuition.toLocaleString("en-US");
+          $("up-tuition-sub").textContent = isAi && span
+            ? "AI estimate, typically $" + span[0].toLocaleString("en-US") + " to $" + span[1].toLocaleString("en-US") + " per year (USD). Verify on the official website."
+            : "per year, in USD. Estimate for international students.";
+          $("up-tuition-title").innerHTML = "Annual tuition" + aiTag("tuition_fee");
         }
 
         /* admission tiles */
-        var tests = [["IELTS", data.ielts], ["TOEFL", data.toefl], ["GPA", gpa === null ? "" : fmt(gpa)]].filter(function (t) {
+        var tests = [["IELTS", data.ielts, "ielts"], ["TOEFL", data.toefl, "toefl"], ["GPA", gpa === null ? "" : fmt(gpa), "avg_gpa"]].filter(function (t) {
           return t[1] !== undefined && t[1] !== null && t[1] !== "";
         });
         $("up-tests").innerHTML = tests.length
-          ? tests.map(function (t) { return '<div class="up-tile"><b>' + esc(t[1]) + "</b><small>" + t[0] + "</small></div>"; }).join("")
+          ? tests.map(function (t) { return '<div class="up-tile"><b>' + esc(t[1]) + "</b><small>" + t[0] + aiTag(t[2]) + "</small></div>"; }).join("")
           : '<p class="up-empty-line">Requirements are not available yet.</p>';
 
         /* links */
         var web = safeUrl(data.website);
-        if (web) { $("val-web").href = web; $("val-web").hidden = false; }
+        if (web) {
+          $("val-web").href = web;
+          $("val-web").innerHTML = "Official website ↗" + aiTag("website");
+          $("val-web").hidden = false;
+        }
         var wiki = safeUrl(data.wikipedia);
-        if (wiki) { $("wiki-link").href = wiki; $("wiki-link").hidden = false; }
+        if (wiki) {
+          $("wiki-link").href = wiki;
+          $("wiki-link").innerHTML = "Wikipedia ↗" + aiTag("wikipedia");
+          $("wiki-link").hidden = false;
+        }
 
         /* about: only say what we actually know */
         $("uni-bio").textContent =
           data.description ||
           name + (data.country ? " is located in " + data.country + "." : " is listed on UniAI.") +
           " A detailed overview isn't available yet.";
+        $("up-about-title").innerHTML = "About" + aiTag("description");
+
+        /* the 70 / 30 card (only when the server sent composition data) */
+        var comp = data._composition;
+        var showComp = comp && typeof comp.datasetPct === "number" && comp.dataset + comp.ai > 0;
+        if (showComp) {
+          $("up-compose").hidden = false;
+          $("up-ds-pct").textContent = comp.datasetPct + "%";
+          $("up-ai-pct").textContent = comp.aiPct + "%";
+          $("up-compose-sub").textContent = comp.ai
+            ? "Of the information shown, " + comp.datasetPct + "% comes from our dataset and " + comp.aiPct + "% is AI-estimated to fill gaps."
+            : "Everything shown comes from our dataset. No AI estimates were added.";
+          $("up-compose-miss").textContent = comp.missing
+            ? comp.missing + " of " + comp.total + " tracked fields are not available yet and are left as N/A."
+            : "";
+        }
 
         /* animate ring + bars after the first paint */
         requestAnimationFrame(function () {
           requestAnimationFrame(function () {
             $("up-ring").style.strokeDashoffset = String(RING - (overall === null ? 0 : Math.max(0, Math.min(100, overall)) / 100) * RING);
+            if (showComp) {
+              $("up-ds-bar").style.width = comp.datasetPct + "%";
+              $("up-ai-bar").style.width = comp.aiPct + "%";
+            }
             Array.prototype.forEach.call(document.querySelectorAll(".up-fill"), function (el, i) {
               el.style.setProperty("--score", targets[i] + "%");
             });

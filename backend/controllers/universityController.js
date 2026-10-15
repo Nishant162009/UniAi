@@ -1,8 +1,11 @@
+
 const supabase = require("../supabase");
+const enricher = require("../services/enricher");
 
 // ======================
 // GET ALL UNIVERSITIES
 // Search + Filters
+// No AI enrichment on the list
 // ======================
 
 const getUniversities = async (req, res) => {
@@ -34,13 +37,14 @@ const getUniversities = async (req, res) => {
       query = query.lte("qs_rank", Number(rank));
     }
 
-    // Sorting
+    // Sorting by QS rank
     if (sort === "rank") {
       query = query.order("qs_rank", {
         ascending: true,
       });
     }
 
+    // Sorting by overall score
     if (sort === "score") {
       query = query.order("overall_score", {
         ascending: false,
@@ -50,97 +54,129 @@ const getUniversities = async (req, res) => {
     const { data, error } = await query;
 
     if (error) {
-      return res.status(500).json(error);
+      console.error("Fetch universities error:", error);
+
+      return res.status(500).json({
+        message: "Failed to fetch universities",
+      });
     }
 
-    let filtered = data;
+    let filtered = data || [];
 
-    // Budget Filter
+    // Budget filter
     if (budget) {
+      const maxBudget = Number(budget);
+
+      if (!Number.isFinite(maxBudget) || maxBudget < 0) {
+        return res.status(400).json({
+          message: "Invalid budget value",
+        });
+      }
+
       filtered = filtered.filter(
         (u) =>
           !u.tuition_fee ||
-          Number(u.tuition_fee) <= Number(budget)
+          Number(u.tuition_fee) <= maxBudget
       );
     }
 
-    res.json(filtered);
+    return res.json(filtered);
 
   } catch (err) {
-    console.log(err);
-    res.status(500).json({
+    console.error("Get universities error:", err);
+
+    return res.status(500).json({
       message: "Server Error",
     });
   }
 };
 
+
 // ======================
 // GET SINGLE UNIVERSITY
+// AI enrichment only for one university
 // ======================
 
 const getUniversity = async (req, res) => {
   try {
-
     const { slug } = req.params;
 
+    // Fetch one university by slug
     const { data, error } = await supabase
       .from("universities")
       .select("*")
       .eq("slug", slug)
       .single();
 
+    // University not found
     if (error || !data) {
       return res.status(404).json({
-        message: "University not found"
+        message: "University not found",
       });
     }
 
-    res.json(data);
-
-  } catch (err) {
-
-    console.error(err);
-
-    res.status(500).json({
-      message: err.message
+    // Enrich only this university
+    const enriched = await enricher.enrich(data, {
+      generate: true,
+      timeoutMs: 9000,
     });
 
+    return res.json(enriched);
+
+  } catch (err) {
+    console.error("Get single university error:", err);
+
+    return res.status(500).json({
+      message: err.message || "Server Error",
+    });
   }
 };
 
 
-
+// ======================
+// GET ALL COUNTRIES
+// ======================
 
 const getCountries = async (req, res) => {
-    try {
+  try {
+    const { data, error } = await supabase
+      .from("universities")
+      .select("country");
 
-        const { data, error } = await supabase
-            .from("universities")
-            .select("country");
+    if (error) {
+      console.error("Fetch countries error:", error);
 
-        if (error) {
-            return res.status(500).json(error);
-        }
-
-        const countries = [...new Set(
-            data
-                .map(u => u.country)
-                .filter(Boolean)
-        )].sort();
-
-        res.json(countries);
-
-    } catch (err) {
-
-        res.status(500).json({
-            message: err.message
-        });
-
+      return res.status(500).json({
+        message: "Failed to fetch countries",
+      });
     }
+
+    const countries = [
+      ...new Set(
+        (data || [])
+          .map((u) => u.country)
+          .filter(Boolean)
+      ),
+    ].sort();
+
+    return res.json(countries);
+
+  } catch (err) {
+    console.error("Get countries error:", err);
+
+    return res.status(500).json({
+      message: err.message || "Server Error",
+    });
+  }
 };
 
+
+// ======================
+// EXPORT CONTROLLERS
+// ======================
+
 module.exports = {
-    getUniversities,
-    getUniversity,
-    getCountries
+  getUniversities,
+  getUniversity,
+  getCountries,
 };

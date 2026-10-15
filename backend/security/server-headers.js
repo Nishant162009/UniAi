@@ -14,10 +14,9 @@
    ========================================================================== */
 
 const helmet = require("helmet");
-const {
-  rateLimit,
-  ipKeyGenerator
-} = require("express-rate-limit");
+const rateLimit = require("express-rate-limit");
+const ipKeyGenerator = rateLimit.ipKeyGenerator || ((ip) => ip); // helper exists in express-rate-limit 8+
+
 const CSP_REPORT_ONLY = true;
 const isProd = process.env.NODE_ENV === "production";
 
@@ -75,21 +74,12 @@ function applySecurity(app) {
  */
 const aiLimiter = rateLimit({
   windowMs: 60 * 1000,
-  limit: 12,
+  limit: 12, // 12 messages a minute per user is plenty for a human
   standardHeaders: true,
   legacyHeaders: false,
-
-  keyGenerator: (req) => {
-    if (req.user && req.user.id) {
-      return `user:${req.user.id}`;
-    }
-
-    return `ip:${ipKeyGenerator(req.ip)}`;
-  },
-
-  message: {
-    error: "You're sending messages too fast. Please wait a moment."
-  }
+  // per signed-in user, else per IP (IPv6 addresses are grouped so one person can't dodge the limit)
+  keyGenerator: (req) => (req.user && req.user.id) || ipKeyGenerator(req.ip),
+  message: { error: "You're sending messages too fast. Please wait a moment." }
 });
 
 module.exports = { applySecurity, aiLimiter };
