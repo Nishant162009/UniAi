@@ -2558,3 +2558,37 @@ html:not([data-theme="light"]) .auth-signup-btn:hover {
     transform: none;
   }
 }
+
+
+
+
+
+
+
+
+.hero-orbit { position: relative; }
+#hero-globe {
+  position: absolute;
+  inset: -20%;
+  width: 140%;
+  height: 140%;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-orbit .orbit-glow { display: none; }   /* removes the purple disc behind the globe */
+.hero-card { overflow: visible; }            /* lets the globe bleed past the card edge */
+.hero-orbit { user-select: none; -webkit-user-select: none; }
+
+/* `scale` / `translate` are separate properties, so they don't clobber the
+   transform your chips already use for positioning or floating. */
+.hero-orbit .badge-chip {
+  cursor: pointer;
+  transition: scale .35s cubic-bezier(.2,.8,.2,1), translate .35s cubic-bezier(.2,.8,.2,1),
+              box-shadow .35s ease, border-color .35s ease;
+}
+.hero-orbit .badge-chip.is-active {
+  scale: 1.07;
+  translate: 0 -3px;
+  box-shadow: 0 14px 36px rgba(109, 93, 251, .35);
+  border-color: rgba(236, 72, 153, .55);
+}
