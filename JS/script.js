@@ -24,6 +24,14 @@
      SOP / LOR studio ........ sop.js
      Scholarship filtering ... scholarship.js
      Saved items ............. save.js
+
+   ACCESS MODEL (freemium)
+   -----------------------
+   Guests get a free taste of every section; signing in unlocks everything.
+     - AI chat ........ 1 free message
+     - Guides ......... 1 free guide
+     - Workspace, Visa Guide, SOP/LOR, Roadmap ... 1 free pass each
+   Usage is tracked by FreeUse (section 00) in localStorage.
    ========================================================================== */
 
 "use strict";
@@ -51,9 +59,18 @@ const CONFIG = {
   UNI_DETAIL_ROUTE: "/university",
   UNI_DETAIL_FILE: "university.html",
 
-  // Pages that require a signed-in user. Guide pages (guides/*.html) are
-  // locked separately — see setupGuideLocks() and guides/guard.js.
-  PROTECTED_PAGES: ["ai-chat", "workspace", "visaGuide", "sopStudio", "roadmap"],
+  // Nothing is hard-locked any more (freemium model). Kept so older code that
+  // reads CONFIG.PROTECTED_PAGES keeps working.
+  PROTECTED_PAGES: [],
+
+  // Pages that give a guest ONE free pass, then ask them to sign in.
+  PREVIEW_PAGES: ["workspace", "visaGuide", "sopStudio", "roadmap"],
+
+  // Free allowance for guests.
+  FREE: {
+    chatMessages: 1,
+    guides: 1
+  },
 
   // Supabase's default minimum password length.
   MIN_PASSWORD_LENGTH: 6,
@@ -62,18 +79,19 @@ const CONFIG = {
     theme: "uniai-theme",
     chat: "uniAIConversation", // legacy single conversation (imported once)
     chats: "uniAIChats",
-    shortlist: "uniai-shortlist"
+    shortlist: "uniai-shortlist",
+    free: "uniai-free-use"
   }
 };
 
-// Sign-in modal title shown when a locked page/link is opened while signed out.
+// Sign-in modal title shown when a section's free preview has been used up.
 const LOCK_TITLES = {
-  "ai-chat": "Unlock the AI Chat Assistant",
-  workspace: "Unlock your Workspace",
-  visaGuide: "Sign in to open the Visa Guide",
-  sopStudio: "Sign in to use SOP & LOR Tools",
-  roadmap: "Sign in to open your Roadmap",
-  guide: "Sign in to read the guides"
+  "ai-chat": "You've used your free message — sign in to keep chatting",
+  workspace: "You've used your free preview — sign in to unlock your Workspace",
+  visaGuide: "You've used your free preview — sign in to open the Visa Guide",
+  sopStudio: "You've used your free preview — sign in to use SOP & LOR Tools",
+  roadmap: "You've used your free preview — sign in to open your Roadmap",
+  guide: "You've used your free guide — sign in to unlock all guides"
 };
 
 const PLACEHOLDER_LOGO = "https://placehold.co/100x100?text=UNI";
@@ -214,6 +232,86 @@ function writeStore(key, value) {
 function shouldConfirm() {
   return !window.UniAISettings || window.UniAISettings.is("confirmActions");
 }
+
+/* ---------- Free-use tracker (freemium access model) ---------- */
+
+/**
+ * Tracks what a signed-out visitor has already used for free.
+ * Stored in localStorage under CONFIG.STORAGE.free:
+ *   { chat: <messages sent>, guides: [slugs], pages: [page keys], anon: "<id>" }
+ *
+ * NOTE: this is browser-side, so a determined user can clear it. The chat
+ * limit is also enforced on the server (see the /ai/chat middleware).
+ * Don't add this key to the "clear data" list in settings.js, or clearing
+ * data would hand out fresh free passes.
+ */
+const FreeUse = (() => {
+  const read = () => {
+    const d = readStore(CONFIG.STORAGE.free, {}) || {};
+    return {
+      chat: Number(d.chat) || 0,
+      guides: Array.isArray(d.guides) ? d.guides : [],
+      pages: Array.isArray(d.pages) ? d.pages : [],
+      anon: d.anon || null
+    };
+  };
+
+  const save = (d) => writeStore(CONFIG.STORAGE.free, d);
+
+  return {
+    /** Stable anonymous id, sent to the server so it can rate-limit guests. */
+    anonId() {
+      const d = read();
+      if (!d.anon) {
+        d.anon = `a_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 10)}`;
+        save(d);
+      }
+      return d.anon;
+    },
+
+    canChat() {
+      return read().chat < CONFIG.FREE.chatMessages;
+    },
+
+    markChat() {
+      const d = read();
+      d.chat += 1;
+      save(d);
+    },
+
+    /** true = allowed (and recorded); false = the free guide was used on another guide. */
+    claimGuide(slug) {
+      const d = read();
+      if (d.guides.includes(slug)) return true;
+      if (d.guides.length >= CONFIG.FREE.guides) return false;
+      d.guides.push(slug);
+      save(d);
+      return true;
+    },
+
+    /** One free pass per page. The pass stays valid for the current tab session. */
+    claimPage(page) {
+      try {
+        if (sessionStorage.getItem(`uniai-pass-${page}`)) return true;
+      } catch (err) {
+        /* ignore */
+      }
+
+      const d = read();
+      if (d.pages.includes(page)) return false;
+
+      d.pages.push(page);
+      save(d);
+
+      try {
+        sessionStorage.setItem(`uniai-pass-${page}`, "1");
+      } catch (err) {
+        /* ignore */
+      }
+      return true;
+    }
+  };
+})();
 
 /* ==========================================================================
    01. SUPABASE CLIENT
@@ -368,7 +466,7 @@ function syncSessionUI(session) {
     if (settingsSignoutBtn) hide(settingsSignoutBtn);
     if (settingsDeleteBtn) hide(settingsDeleteBtn);
     if (aiChatLockPill) {
-      aiChatLockPill.textContent = "Locked";
+      aiChatLockPill.textContent = "Free preview";
       aiChatLockPill.classList.add("locked");
     }
     if (aiChatLockNotice) show(aiChatLockNotice);
@@ -566,9 +664,7 @@ function setupAuthForm() {
           email,
           password,
           options: {
-                        emailRedirectTo: "https://uniai-0zoq.onrender.com",
-
-
+            emailRedirectTo: "https://uniai-0zoq.onrender.com",
             data: {
               username: username || email.split("@")[0],
               profile_type: roleEl ? roleEl.value : "student"
@@ -632,9 +728,11 @@ function openAuthOverlay(signUp = false, title, pending = null) {
 }
 
 /**
- * Locks every link that points into guides/ (Study Abroad Guide cards,
- * footer directory, footer destination chips) while signed out.
- * The guide pages themselves are guarded by guides/guard.js.
+ * Guides are free for ONE guide, then sign-in unlocks all of them.
+ * Covers every link that points into guides/ (Study Abroad Guide cards,
+ * footer directory, footer destination chips).
+ * The guide pages themselves are guarded by guides/guard.js, which uses the
+ * same "uniai-free-use" storage record.
  */
 function setupGuideLocks() {
   document.addEventListener("click", async (e) => {
@@ -643,8 +741,9 @@ function setupGuideLocks() {
 
     e.preventDefault();
     const href = link.getAttribute("href");
+    const slug = href.split("/").pop().replace(/\.html.*$/i, "");
 
-    if (await hasSession()) {
+    if ((await hasSession()) || FreeUse.claimGuide(slug)) {
       window.location.href = href;
       return;
     }
@@ -654,9 +753,10 @@ function setupGuideLocks() {
 }
 
 /**
- * Guide pages send signed-out visitors here as
+ * Guide pages send visitors here as
  *   index.html?login=required&next=guides/usa.html
- * Open the sign-in modal and continue to that guide after login.
+ * once their free guide is used up. Open the sign-in modal and continue to
+ * that guide after login.
  */
 async function handleLoginRedirect() {
   const params = new URLSearchParams(window.location.search);
@@ -908,17 +1008,18 @@ function setActiveNav(page, event) {
 }
 
 /**
- * Resolves to true when the page was shown, false when it was blocked (needs
- * sign-in) or doesn't exist. Wrappers in settings.js / preferences.js pass the
- * value straight through.
+ * Resolves to true when the page was shown, false when it was blocked (free
+ * preview used up, needs sign-in) or doesn't exist. Wrappers in settings.js /
+ * preferences.js pass the value straight through.
  */
 async function showPage(page, event) {
   if (event && typeof event.preventDefault === "function") event.preventDefault();
 
   const key = String(page || "").replace(/Page$/, "");
 
-  if (CONFIG.PROTECTED_PAGES.includes(key)) {
-    if (!(await hasSession())) {
+  // Freemium: a guest gets ONE free pass per preview page, then must sign in.
+  if (CONFIG.PREVIEW_PAGES.includes(key) && !(await hasSession())) {
+    if (!FreeUse.claimPage(key)) {
       openAuthOverlay(
         false,
         LOCK_TITLES[key] || "Sign in to continue",
@@ -2028,7 +2129,7 @@ function scrollChatToBottom() {
 
 class ChatAuthError extends Error {}
 
-/** Newest access token. getSession() refreshes it if it has expired. */
+/** Newest access token. getSession() refreshes it if it has expired. Returns null for guests. */
 async function getChatAccessToken() {
   try {
     if (supabaseApp) {
@@ -2313,6 +2414,16 @@ async function askUniAI(customMessage = null) {
   const message = customMessage !== null ? String(customMessage) : input.value;
   if (!message.trim()) return;
 
+  // Freemium gate: guests get CONFIG.FREE.chatMessages free message(s).
+  // Checked BEFORE anything is added to the chat or the input is cleared, so
+  // the typed question is kept and handed back after they sign in.
+  const isGuest = !(await hasSession());
+  if (isGuest && !FreeUse.canChat()) {
+    state.pendingPrompt = message.trim();
+    openAuthOverlay(false, LOCK_TITLES["ai-chat"], { type: "page", page: "ai-chat" });
+    return;
+  }
+
   const welcome = $("ai-welcome");
   const conversation = $("ai-conversation");
 
@@ -2340,17 +2451,25 @@ async function askUniAI(customMessage = null) {
   syncSendState();
   renderChatList(); // shows the "working" dot on this chat
 
+  let guestRequest = false;
+
   try {
     const token = await getChatAccessToken();
-    if (!token) throw new ChatAuthError("Sign in to use AI Chat.");
+    guestRequest = !token;
+
+    const headers = {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    };
+
+    // Signed in -> bearer token. Guest -> anonymous id so the server can
+    // enforce the free-message limit too.
+    if (token) headers.Authorization = `Bearer ${token}`;
+    else headers["X-Anon-Id"] = FreeUse.anonId();
 
     const res = await fetch(CONFIG.CHAT_ENDPOINT, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`
-      },
+      headers,
       body: JSON.stringify({
         message,
         conversation: history,
@@ -2358,8 +2477,16 @@ async function askUniAI(customMessage = null) {
       })
     });
 
+    if (res.status === 429 && guestRequest) {
+      // Server says this guest already used their free message.
+      throw new ChatAuthError("Free message used. Sign in to keep chatting.");
+    }
     if (res.status === 401 || res.status === 403) {
-      throw new ChatAuthError("Your session expired. Please sign in again.");
+      throw new ChatAuthError(
+        guestRequest
+          ? "Sign in to keep chatting."
+          : "Your session expired. Please sign in again."
+      );
     }
     if (!res.ok) throw new Error(`Server error: ${res.status}`);
 
@@ -2376,20 +2503,30 @@ async function askUniAI(customMessage = null) {
 
     if (!reply) throw new Error("The backend returned an empty response.");
 
+    if (guestRequest) FreeUse.markChat(); // a free message has now been used
+
     storeReply(chatId, String(reply));
     showReplyInDom(chatId, String(reply));
   } catch (error) {
     console.error("UniAI chat error:", error);
 
+    const isAuthError = error instanceof ChatAuthError;
+
     // Shown to the user, but NOT stored in the conversation — otherwise the
     // error text is sent back to the model as if it had said it.
     showReplyInDom(
       chatId,
-      error instanceof ChatAuthError
+      isAuthError
         ? `🔒 ${error.message}`
         : "⚠️ I couldn't reach UniAI. Check that your server is running and that " +
             `\`${CONFIG.CHAT_ENDPOINT}\` is available.`
     );
+
+    // Guest hit the limit (server-side): open sign-in and keep their question.
+    if (isAuthError && guestRequest) {
+      state.pendingPrompt = message.trim();
+      openAuthOverlay(false, LOCK_TITLES["ai-chat"], { type: "page", page: "ai-chat" });
+    }
   } finally {
     pendingReplies.delete(chatId);
     syncSendState();
@@ -2911,8 +3048,8 @@ async function quickAsk(text) {
   const value = String(text || "").replace(/^[^\w]+/, "").trim();
   if (!value) return;
 
-  // showPage resolves false when sign-in is required. The old code ignored
-  // that and sent the message anyway while the sign-in dialog was open.
+  // Guests can open the chat page (it is no longer hard-locked); askUniAI()
+  // enforces the free-message limit and handles the sign-in prompt itself.
   const shown = await showPage("ai-chat");
 
   if (!shown) {
@@ -3187,6 +3324,7 @@ function setupSettingsAccountActions() {
 // scripts) call by name.
 Object.assign(window, {
   CONFIG,
+  FreeUse,
   showPage,
   showpage: showPage,
   hasSession,

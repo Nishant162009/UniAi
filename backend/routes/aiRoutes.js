@@ -5,30 +5,106 @@ const enricher = require("../services/enricher");
 const { aiLimiter } = require("../security/server-headers");
 const supabase = require("../supabase");
 
+/* ==========================================================================
+   Freemium access: signed-in users chat normally; a signed-out visitor gets
+   ONE free message, then must sign in (the browser shows the sign-in modal
+   when it receives the 429 below).
+   ========================================================================== */
+
+const FREE_GUEST_MESSAGES = 1;
+const GUEST_TTL_MS = 24 * 60 * 60 * 1000; // a guest's usage is forgotten after 24h
+
+// key -> { count, at }. In memory, so it also resets when the server restarts.
+// That is fine for a showcase; use a Supabase table or Redis if you need it durable.
+const guestUsage = new Map();
+
+setInterval(() => {
+  const cutoff = Date.now() - GUEST_TTL_MS;
+  for (const [key, entry] of guestUsage) {
+    if (entry.at < cutoff) guestUsage.delete(key);
+  }
+}, 60 * 60 * 1000).unref();
+
+/** Keys used to recognise one guest: their IP and (if sent) their browser's anon id. */
+function guestKeys(req) {
+  const keys = [`ip:${req.ip}`];
+  const anon = String(req.headers["x-anon-id"] || "");
+  if (/^[a-z0-9_-]{6,64}$/i.test(anon)) keys.push(`id:${anon}`);
+  return keys;
+}
+
+const usedBy = (key) => {
+  const entry = guestUsage.get(key);
+  return entry && Date.now() - entry.at < GUEST_TTL_MS ? entry.count : 0;
+};
+
 /**
- * Reads the Supabase access token the browser already sends (Authorization: Bearer ...)
- * and puts the verified user on req.user, so aiLimiter limits PER USER (not per IP).
- * Signed-out visitors still work (they fall back to the IP limit). To make chat
- * sign-in only, change the `return next()` for "no token" into a 401.
+ * Reads the Supabase access token the browser sends (Authorization: Bearer ...)
+ * and puts the verified user on req.user, so aiLimiter limits PER USER.
+ * - No token            -> guest (handled by guestGate below)
+ * - Token that is valid -> signed-in user
+ * - Token that is bad   -> 401, so the browser can say "session expired"
+ *                          instead of quietly treating them as a guest.
  */
 async function optionalUser(req, res, next) {
   const token = (req.headers.authorization || "").replace(/^Bearer\s+/i, "");
   if (!token) return next();
+
   try {
     const { data, error } = await supabase.auth.getUser(token);
-    if (!error && data && data.user) req.user = data.user;
+    if (error || !data || !data.user) {
+      return res.status(401).json({ error: "Invalid or expired session." });
+    }
+    req.user = data.user;
+    return next();
   } catch (err) {
-    /* an invalid token is treated like no token */
+    console.error("Auth check failed:", err);
+    return res.status(401).json({ error: "Could not verify your session." });
   }
+}
+
+/**
+ * Lets signed-in users straight through. For guests it reserves one of their
+ * free messages BEFORE the model runs (so parallel requests can't sneak extra
+ * messages through) and hands the reservation back if the request fails, so a
+ * server error doesn't cost them their free message.
+ */
+function guestGate(req, res, next) {
+  if (req.user) return next();
+
+  const keys = guestKeys(req);
+
+  if (keys.some((key) => usedBy(key) >= FREE_GUEST_MESSAGES)) {
+    return res.status(429).json({
+      error: "free_limit",
+      message: "You've used your free message. Sign in to keep chatting."
+    });
+  }
+
+  keys.forEach((key) => {
+    guestUsage.set(key, { count: usedBy(key) + 1, at: Date.now() });
+  });
+
+  res.on("finish", () => {
+    if (res.statusCode >= 200 && res.statusCode < 300) return; // success: message stays used
+    keys.forEach((key) => {
+      const entry = guestUsage.get(key);
+      if (entry) entry.count = Math.max(0, entry.count - 1);
+    });
+  });
+
   next();
 }
 
-router.post("/chat", optionalUser, aiLimiter, async (req, res) => {
+/* ========================================================================== */
+
+router.post("/chat", optionalUser, guestGate, aiLimiter, async (req, res) => {
   try {
     const { message } = req.body;
 
     if (!message || typeof message !== "string" || message.trim() === "") {
-      return res.json({ reply: "Please enter a valid message!" });
+      // 400 (not 200) so a guest isn't charged their free message for an empty send
+      return res.status(400).json({ reply: "Please enter a valid message!" });
     }
     const question = message.trim().slice(0, 1500); // cap what a single message can cost
 

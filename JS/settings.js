@@ -596,8 +596,8 @@
       const pill = document.getElementById(pillId);
       const notice = document.getElementById(noticeId);
 
-      if (pill) {
-        pill.textContent = signedIn ? "Unlocked" : "Locked";
+            if (pill) {
+        pill.textContent = signedIn ? "Unlocked" : "Free preview";
         pill.classList.toggle("locked", !signedIn);
       }
 
