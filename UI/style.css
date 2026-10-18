@@ -1077,23 +1077,39 @@ html[data-theme="light"] .hero-card {
 
 .currency-selectors-grid .currency-swap-btn { flex: none; }
 
+/* Whatever element directly wraps a picker: equal share of the row, never tiny. */
+:has(> #fromCurrency),
+:has(> #toCurrency) {
+  flex: 1 1 0 !important;
+  min-width: 150px !important;
+  width: auto !important;
+  max-width: none !important;
+}
+
+/* If the wrapper is a CSS grid with fixed columns, let it flex instead. */
+.currency-selectors-grid:has(#fromCurrency) {
+  display: flex !important;
+  flex-wrap: wrap;
+  grid-template-columns: none !important;
+}
+
 #fromCurrency,
 #toCurrency {
   -webkit-appearance: none;
   appearance: none;
   display: block;
   width: 100%;
-  min-width: 0;
+  min-width: 150px;
   max-width: 100%;
   height: 52px;
   margin: 0;
-  padding: 0 44px 0 16px;
+  padding: 0 38px 0 14px;
   border: 1px solid var(--border);
   border-radius: 14px;
   background-color: var(--surface-2);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 16px center;
+  background-position: right 13px center;
   background-size: 16px;
   color: var(--text);
   font: inherit;
