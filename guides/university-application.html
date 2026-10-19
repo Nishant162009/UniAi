@@ -1,255 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <style id="auth-gate">html{visibility:hidden}</style>
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <script src="guard.js"></script>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>UniAI Guides — Your next chapter is loading</title>
-<meta name="description" content="UniAI Guides: country and city guides for students heading abroad. Coming soon.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  color-scheme:dark;
-  --bg:#05060d;--text:#f5f6fb;--muted:#a3a7b3;--line:rgba(255,255,255,.14);
-  --glass:rgba(5,6,13,.45);--blue:#6f7cff;--pink:#ff5db4;--green:#75f0ae;
-  --head:"Space Grotesk",Inter,system-ui,sans-serif;
-  --body:Inter,system-ui,sans-serif;
-  box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
-}
-@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
-  color-scheme:light;--bg:#f5f6fb;--text:#10121a;--muted:#585d6b;--line:rgba(0,0,0,.14);--glass:rgba(245,246,251,.6);--blue:#4458ff}}
-:root[data-theme="light"]{color-scheme:light;--bg:#f5f6fb;--text:#10121a;--muted:#585d6b;--line:rgba(0,0,0,.14);--glass:rgba(245,246,251,.6);--blue:#4458ff}
-:root[data-theme="dark"]{color-scheme:dark}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
-body{background:var(--bg);color:var(--text);font:400 16px/1.7 var(--body);overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
-img{display:block;max-width:100%}
-
-/* nav */
-.nav{position:fixed;inset:0 0 auto;z-index:50;display:flex;justify-content:space-between;align-items:center;
-  padding:calc(16px + env(safe-area-inset-top,0px)) 28px 16px;
-  background:linear-gradient(var(--bg),transparent)}
-.logo{display:flex;align-items:center;gap:8px;font:700 19px var(--head);letter-spacing:-.04em}
-.logo svg{width:30px;height:30px}
-.logo em{font-style:normal;color:var(--blue)}
-.logo small{font:500 12px var(--body);color:var(--muted);letter-spacing:0}
-.nav-right{display:flex;align-items:center;gap:14px;font-size:12px;color:var(--muted)}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);display:inline-block;margin-right:7px}
-.theme{background:var(--glass);color:var(--text);border:1px solid var(--line);border-radius:99px;padding:7px 13px;font:500 12px var(--body);cursor:pointer;backdrop-filter:blur(10px)}
-
-/* hero: one orchestrated moment — words and city change together */
-.hero{position:relative;min-height:100svh;display:grid;place-items:center;overflow:hidden;isolation:isolate;text-align:center;padding:120px 22px 90px}
-.bg{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center;opacity:0;transform:scale(1.08);
-  transition:opacity 1.6s ease,transform 9s ease}
-.bg.on{opacity:1;transform:scale(1)}
-.hero::after{content:"";position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(rgba(5,6,13,.55),rgba(5,6,13,.7) 60%,var(--bg))}
-.hero-in{max-width:980px;color:#f5f6fb}
-.pill{display:inline-flex;align-items:center;font-size:13px;padding:7px 14px;border:1px solid rgba(255,255,255,.25);border-radius:99px;background:rgba(0,0,0,.3);backdrop-filter:blur(12px)}
-.hero h1{font:700 clamp(3.4rem,11vw,9.5rem)/.86 var(--head);letter-spacing:-.07em;margin:28px 0 22px}
-.hero h1 .grad{display:block;background:linear-gradient(100deg,#fff,#b9c5ff 40%,#ff7cc6);-webkit-background-clip:text;background-clip:text;color:transparent}
-.swap{transition:opacity .45s ease}
-.swap.out{opacity:0}
-.tag{font:600 clamp(1.15rem,2.6vw,1.7rem)/1.3 var(--head);letter-spacing:-.02em}
-.sub{max-width:560px;margin:16px auto 0;color:rgba(255,255,255,.8);font-size:1rem}
-.cta{margin-top:30px;display:inline-flex;align-items:center;gap:12px;padding:13px 22px;border-radius:99px;border:1px solid rgba(255,255,255,.35);
-  background:rgba(255,255,255,.1);color:#fff;font:600 14px var(--body);backdrop-filter:blur(12px);transition:background .25s,transform .25s}
-.cta:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
-.cities{position:absolute;left:0;right:0;bottom:30px;display:flex;justify-content:center;flex-wrap:wrap;gap:6px 24px;padding:0 20px;font-size:13px;color:rgba(255,255,255,.6)}
-
-/* marquee */
-.marquee{padding:90px 0;overflow:hidden;display:grid;gap:12px}
-.row{display:flex;gap:12px;width:max-content;animation:slide 60s linear infinite}
-.row.rev{animation-direction:reverse;animation-duration:70s}
-.photo{position:relative;flex:none;width:280px;height:175px;border-radius:8px;overflow:hidden;background:var(--line)}
-.photo img{width:100%;height:100%;object-fit:cover}
-.photo span{position:absolute;left:12px;bottom:9px;color:#fff;font:600 12px var(--body);text-shadow:0 1px 8px rgba(0,0,0,.7)}
-.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(0,0,0,.55))}
-.photo span{z-index:1}
-@keyframes slide{to{transform:translateX(-50%)}}
-
-/* sections */
-.wrap{width:min(1200px,calc(100% - 40px));margin:auto}
-.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:40px}
-h2{font:700 clamp(2.4rem,6vw,4.6rem)/.95 var(--head);letter-spacing:-.06em}
-.section-head p{max-width:340px;color:var(--muted);font-size:14px}
-.dest{position:relative;height:min(75vh,680px);min-height:480px;margin-bottom:18px;overflow:hidden;border-radius:6px;color:#fff;background:#111}
-.dest img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
-.dest:hover img{transform:scale(1.04)}
-.dest::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 35%,rgba(0,0,0,.85))}
-.badge{position:absolute;z-index:2;top:20px;right:20px;padding:6px 12px;font-size:12px;border:1px solid rgba(255,255,255,.3);border-radius:99px;background:rgba(0,0,0,.3);backdrop-filter:blur(10px)}
-.dest-body{position:absolute;z-index:2;inset:auto 28px 26px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
-.dest h3{font:700 clamp(3.4rem,10vw,8rem)/.85 var(--head);letter-spacing:-.08em;margin:6px 0 14px}
-.dest .c{font-size:14px;color:#e3e4ea}
-.dest p{max-width:470px;font-size:14px;color:#d8dae2}
-.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;max-width:400px}
-.chips span{padding:6px 11px;font-size:12px;border:1px solid rgba(255,255,255,.25);border-radius:99px;background:rgba(0,0,0,.28)}
-
-.split{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:110px 0}
-.split figure{position:relative;height:540px;overflow:hidden;color:#fff}
-.split img{width:100%;height:100%;object-fit:cover}
-.split figure::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 45%,rgba(0,0,0,.7))}
-.split figcaption{position:absolute;z-index:2;left:24px;bottom:22px}
-.split small{display:block;font-size:13px;color:#d4d6dd}
-.split strong{font:700 2.2rem/1.1 var(--head);letter-spacing:-.04em}
-
-.quote{padding:90px 0 110px}
-.quote h2{max-width:900px}
-.quote h2 span{color:var(--muted)}
-.quote p{margin-top:28px;max-width:520px;color:var(--muted)}
-
-.final{text-align:center;padding:100px 20px 110px}
-.final h2{margin:0 0 22px}
-.final p{max-width:540px;margin:auto;color:var(--muted)}
-.bar{width:210px;height:2px;margin:36px auto 14px;background:var(--line);overflow:hidden}
-.bar i{display:block;width:60%;height:100%;background:linear-gradient(90deg,var(--blue),var(--pink));animation:load 2.7s ease-in-out infinite alternate}
-@keyframes load{from{transform:translateX(-100%)}to{transform:translateX(180%)}}
-.final small{color:var(--muted);font-size:13px}
-footer{border-top:1px solid var(--line);padding:30px 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:13px}
-
-@media(max-width:760px){
-  .nav{padding-left:18px;padding-right:18px}.nav-right .status{display:none}
-  .photo{width:200px;height:130px}
-  .split{grid-template-columns:1fr}.split figure{height:420px}
-  .dest{min-height:540px}.dest-body{inset:auto 20px 22px}.chips{justify-content:flex-start}
-}
-@media(prefers-reduced-motion:reduce){
-  .row,.bar i{animation:none}.bg,.swap,.dest img{transition:none}html{scroll-behavior:auto}
-}
-</style>
-</head>
-<body>
-
-<nav class="nav" aria-label="Main">
-  <a class="logo" href="../index.html" aria-label="UniAI home">
-    <svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="32" y2="32"><stop offset="0" stop-color="#4f6bff"/><stop offset="1" stop-color="#a15bff"/></linearGradient></defs>
-      <path d="M16 4 29 10 16 16 3 10Z" fill="url(#g)"/><path d="M8 13.5V20c0 3.5 3.5 6 8 6s8-2.5 8-6v-6.5" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"/>
-      <circle cx="29" cy="10" r="2.6" fill="#ec4899"/><path d="M29 10v7" stroke="#ec4899" stroke-width="1.6"/></svg>
-    Uni<em>AI</em> <small>Guides</small>
-  </a>
-  <div class="nav-right">
-    <span class="status"><i class="dot"></i>Guides are loading</span>
-    <button class="theme" id="theme" type="button" aria-label="Change colour theme">Auto</button>
-  </div>
-</nav>
-
-<header class="hero" id="top">
-  <div id="bgs" aria-hidden="true"></div>
-  <div class="hero-in">
-    <div class="pill"><i class="dot"></i>Coming soon</div>
-    <h1 aria-live="polite"><span class="swap" id="w1">Your next</span><span class="grad swap" id="w2">chapter.</span></h1>
-    <p class="tag swap" id="tag">Don’t just choose a country.<br>Choose a life.</p>
-    <p class="sub swap" id="sub">Cities, campuses and the small moments that turn a destination into home. UniAI Guides is building the map before you arrive.</p>
-    <a class="cta" href="#destinations">See where it starts <span aria-hidden="true">↓</span></a>
-  </div>
-  <div class="cities" aria-hidden="true"><span>New York</span><span>Tokyo</span><span>London</span><span>Berlin</span><span>Toronto</span><span>Sydney</span><span>Amsterdam</span><span>Paris</span></div>
-</header>
-
-<section class="marquee" aria-label="Photos of future student life" id="marquee"></section>
-
-<section class="wrap" id="destinations">
-  <div class="section-head">
-    <h2>Imagine yourself here.</h2>
-    <p>These aren’t finished guides. They’re the first eight destinations we’re building.</p>
-  </div>
-  <div id="dests"></div>
-</section>
-
-<section class="wrap split" aria-labelledby="between">
-  <figure><img loading="lazy" src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80" alt="Students studying together on campus"><figcaption><small>8:15 AM</small><strong>Your new normal.</strong></figcaption></figure>
-  <figure><img loading="lazy" src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1200&q=80" alt="Friends out together in the evening"><figcaption><small>11:48 PM</small><strong>Your life after class.</strong></figcaption></figure>
-</section>
-
-<section class="wrap quote">
-  <h2 id="between">You don’t just move to another country. <span>You become someone new.</span></h2>
-  <p>New streets change your routine. New people change your perspective. That’s the part of studying abroad no application form can explain, and the part our guides are written around.</p>
-</section>
-
-<section class="final">
-  <h2>The guides are coming.</h2>
-  <p>Country and city guides covering student life, costs, neighbourhoods, transport and culture: the little things you wish someone told you before the flight.</p>
-  <div class="bar" role="presentation"><i></i></div>
-  <small>Building one destination at a time</small>
-</section>
-
-<footer><span>© 2026 UniAI</span><span>Your next chapter is loading.</span></footer>
-
-<script>
-const U=(id,w)=>`https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
-const D=[
- {n:"New York",f:"🇺🇸",c:"United States · The city that never waits",i:"1496588152823-86ff7695e68f",t:"A morning lecture, a coffee between classes, a subway across the city. And a skyline you still can’t believe is yours.",l:["NYC","Boston","San Francisco","Los Angeles"]},
- {n:"Tokyo",f:"🇯🇵",c:"Japan · Where tomorrow already exists",i:"1536098561742-ca998e48cbcc",t:"Quiet mornings on the train, campus in the afternoon, neon and ramen at night.",l:["Tokyo","Osaka","Kyoto","Fukuoka"]},
- {n:"London",f:"🇬🇧",c:"United Kingdom · History meets everything",i:"1513635269975-59663e0ac1ad",t:"Lecture halls tucked behind centuries-old streets, rain on the walk home, and a whole city on one Underground map.",l:["London","Edinburgh","Manchester","Bristol"]},
- {n:"Berlin",f:"🇩🇪",c:"Germany · Build something bigger",i:"1560969184-10fe8719e047",t:"Engineering labs, creative spaces and bikes everywhere. Studying here can feel like the start of a career.",l:["Berlin","Munich","Hamburg","Frankfurt"]},
- {n:"Toronto",f:"🇨🇦",c:"Canada · Find your people",i:"1517935706615-2717063c2225",t:"A campus full of faces from everywhere, four real seasons, and a first friend from the other side of the world.",l:["Toronto","Vancouver","Montreal","Ottawa"]},
- {n:"Sydney",f:"🇦🇺",c:"Australia · Study with the ocean nearby",i:"1523482580672-f109ba8cb9be",t:"Sunlight on campus, the ocean after class, and a completely different sky.",l:["Sydney","Melbourne","Brisbane","Perth"]},
- {n:"Amsterdam",f:"🇳🇱",c:"Netherlands · Slow mornings, big ideas",i:"1534351590666-13e3e96b5017",t:"Cycle to class, study beside the canals, and meet people from everywhere.",l:["Amsterdam","Delft","Rotterdam","Utrecht"]},
- {n:"Paris",f:"🇫🇷",c:"France · Make ordinary days beautiful",i:"1502602898657-3e91760cbb34",t:"A university morning, a tiny café after class, and streets you’ve only seen on screens that are suddenly yours.",l:["Paris","Lyon","Nice","Toulouse"]}
-];
-
-/* destinations */
-document.getElementById("dests").innerHTML=D.map(d=>`
-<article class="dest">
-  <img loading="lazy" src="${U(d.i,1800)}" alt="${d.n} city view">
-  <span class="badge">Guide coming soon</span>
-  <div class="dest-body"><div>
-    <div class="c">${d.f} ${d.c}</div><h3>${d.n}</h3><p>${d.t}</p></div>
-    <div class="chips">${d.l.map(x=>`<span>${x}</span>`).join("")}</div>
-  </div>
-</article>`).join("");
-
-/* marquee: two rows, duplicated for seamless loop */
-const M=[["1496588152823-86ff7695e68f","New York"],["1523240795612-9a054b0db644","Campus"],["1560969184-10fe8719e047","Berlin"],["1536098561742-ca998e48cbcc","Tokyo"],["1497366754035-f200968a6e72","Your university"],["1513635269975-59663e0ac1ad","London"],["1534351590666-13e3e96b5017","Amsterdam"],["1517935706615-2717063c2225","Toronto"],["1529156069898-49953e39b3ac","New friends"],["1444723121867-7a241cacace9","City lights"]];
-const row=(a,cls)=>{const h=a.map(([i,t])=>`<div class="photo"><img loading="lazy" src="${U(i,700)}" alt=""><span>${t}</span></div>`).join("");
-  return `<div class="row ${cls}" aria-hidden="true">${h}${h}</div>`};
-document.getElementById("marquee").innerHTML=row(M.slice(0,5).concat(M.slice(5)),"")+row(M.slice().reverse(),"rev");
-
-/* hero: words, copy and background change together */
-const S=[
- {a:"Your next",b:"chapter.",t:"Don’t just choose a country.<br>Choose a life.",s:"Cities, campuses and the small moments that turn a destination into home. UniAI Guides is building the map before you arrive.",i:"1526778548025-fa2f459cd5c1"},
- {a:"Go",b:"farther.",t:"The map ends.<br>Your story starts.",s:"From lecture halls to midnight streets, see the places that could become your everyday. Not tourism. Your future.",i:"1536098561742-ca998e48cbcc"},
- {a:"Find",b:"your place.",t:"One city can change everything.",s:"Compare cities and picture student life, so somewhere feels right before you ever land.",i:"1513635269975-59663e0ac1ad"},
- {a:"Become",b:"someone new.",t:"Your future isn’t far away.",s:"Practical details and the feel of the place, so choosing where to go feels less like a guess.",i:"1506973035872-a4ec16b8e8d3"}
-];
-const bgs=document.getElementById("bgs");
-bgs.innerHTML=S.map((s,k)=>`<div class="bg${k?"":" on"}" style="background-image:url('${U(s.i,2000)}')"></div>`).join("");
-const layers=[...bgs.children],sw=[...document.querySelectorAll(".swap")];
-const el={w1:document.getElementById("w1"),w2:document.getElementById("w2"),tag:document.getElementById("tag"),sub:document.getElementById("sub")};
-let k=0;
-const show=n=>{
-  layers[k].classList.remove("on");k=n;layers[k].classList.add("on");
-  sw.forEach(e=>e.classList.add("out"));
-  setTimeout(()=>{const s=S[k];el.w1.textContent=s.a;el.w2.textContent=s.b;el.tag.innerHTML=s.t;el.sub.textContent=s.s;sw.forEach(e=>e.classList.remove("out"))},450);
-};
-const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
-if(!reduce){
-  let timer=setInterval(()=>show((k+1)%S.length),6000);
-  document.addEventListener("visibilitychange",()=>{
-    if(document.hidden)clearInterval(timer);else timer=setInterval(()=>show((k+1)%S.length),6000);
-  });
-}
-
-/* theme: auto → light → dark, remembered when storage is available */
-(()=>{
-  const r=document.documentElement,b=document.getElementById("theme");
-  try{const v=localStorage.getItem("uniai-theme");if(v)r.dataset.theme=v}catch(e){}
-  const label=()=>b.textContent={light:"Light",dark:"Dark"}[r.dataset.theme]||"Auto";
-  label();
-  b.addEventListener("click",()=>{
-    const n={undefined:"light",light:"dark",dark:undefined}[r.dataset.theme];
-    n?r.dataset.theme=n:delete r.dataset.theme;
-    try{n?localStorage.setItem("uniai-theme",n):localStorage.removeItem("uniai-theme")}catch(e){}
-    label();
-  });
-})();
-</script>
-</body>
-</html>
+<!DOCTYPE html><html lang="en"><head><style id="auth-gate">html{visibility:hidden}
+.stats{display:flex;flex-wrap:wrap;gap:38px;margin-top:44px;padding-top:20px;border-top:1px solid rgba(255,255,255,.15)}.stats strong{display:block;font-size:26px}.stats span{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#a6b3c7}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.note{margin-top:16px;padding:16px 20px;border-left:3px solid var(--b);background:linear-gradient(90deg,rgba(29,78,216,.25),transparent);border-radius:0 12px 12px 0;font-size:13px;color:#d4def0}
+table{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--border);border-radius:14px;overflow:hidden}th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border)}th{background:#15243e;color:var(--b);font-size:11px;text-transform:uppercase;letter-spacing:.1em}td{color:#d5dce8}
+.tw{overflow-x:auto}.pill{display:inline-block;margin:3px;padding:5px 10px;border:1px solid var(--border);border-radius:99px;font-size:10px;color:#aeb8c8}
+.bad strong{color:#ff929d}.lead{color:var(--muted);max-width:760px;font-size:15px;margin:-20px 0 40px}
+@media(max-width:900px){.g2,.g4{grid-template-columns:1fr}}.ph{height:340px;border-radius:22px;border:1px solid var(--border);margin:50px 0 0;background-size:cover;background-position:center;position:relative;overflow:hidden;background-color:var(--card)}.ph:after{content:attr(data-c);position:absolute;left:0;right:0;bottom:0;padding:40px 24px 18px;font-size:12px;color:#e6ebf5;background:linear-gradient(transparent,rgba(5,9,17,.92))}.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}.wk{border-left:3px solid #ff929d}.st{border-left:3px solid #4ade80}.cmp div{padding:18px;border-radius:14px;background:var(--card);font-size:13px;color:#d5dce8}.cmp small{display:block;font-weight:800;margin-bottom:6px;font-size:10px;letter-spacing:.1em;text-transform:uppercase}@media(max-width:900px){.cmp{grid-template-columns:1fr}.ph{height:220px}}</style>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script><script src="guard.js"></script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UniAI | Apply Guide</title>
+<style>:root{--bg:#070b16;--card:#111b30;--text:#f7f8fc;--muted:#a7b1c4;--border:#233452;--a:#1d4ed8;--b:#a78bfa}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.6}
+a{color:inherit;text-decoration:none}.logo{position:fixed;top:0;left:0;right:0;z-index:9;padding:22px 28px;font-weight:800;font-size:22px;letter-spacing:-.05em}
+.logo span,.g{background:linear-gradient(90deg,var(--a),#fff 50%,var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero{min-height:88vh;display:flex;align-items:flex-end;background:linear-gradient(180deg,rgba(5,8,16,.2),var(--bg)),radial-gradient(circle at 80% 20%,var(--a),transparent 40%),url("https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=2000&q=85") center/cover,var(--card)}
+.w{width:min(1180px,92vw);margin:auto}.hero .w{padding:150px 0 70px}
+.kick{color:var(--b);text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:800}
+h1{font-size:clamp(52px,8vw,110px);line-height:.9;letter-spacing:-.07em;margin:16px 0}h2{font-size:clamp(32px,4.5vw,56px);letter-spacing:-.05em;line-height:1;margin:0 0 40px}
+.sub{max-width:680px;color:#d6deeb;font-size:16px}.btn{margin-top:26px;padding:13px 20px;border:0;border-radius:99px;color:#fff;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--a),var(--b))}
+section{padding:90px 0}.alt{background:rgba(255,255,255,.02)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{padding:26px;min-height:200px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(145deg,var(--card),#0b1322)}.num{color:var(--b);font-size:38px;font-weight:800}
+.card h3{margin:16px 0 8px}.card p,.faq-a{color:var(--muted);font-size:13px}
+.tl{position:relative;max-width:760px}.tl:before{content:"";position:absolute;left:17px;top:0;bottom:0;width:1px;background:linear-gradient(var(--a),var(--b))}
+.step{position:relative;padding:0 0 34px 62px}.dot{position:absolute;left:6px;width:23px;height:23px;border:1px solid var(--b);border-radius:50%;background:var(--bg)}.step small{color:var(--b);font-weight:800}.step h3{margin:4px 0}
+.faq{max-width:860px}.faq-item{border-bottom:1px solid var(--border)}.faq-q{all:unset;display:flex;justify-content:space-between;width:100%;padding:20px 0;cursor:pointer;font-weight:700}.faq-a{display:none;margin:0 0 18px}.open .faq-a{display:block}
+.reveal{opacity:0;transform:translateY(24px);transition:.7s}.reveal.v{opacity:1;transform:none}
+footer{padding:40px 0;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.stats{display:flex;flex-wrap:wrap;gap:38px;margin-top:44px;padding-top:20px;border-top:1px solid rgba(255,255,255,.15)}.stats strong{display:block;font-size:26px}.stats span{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#a6b3c7}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.note{margin-top:16px;padding:16px 20px;border-left:3px solid var(--b);background:linear-gradient(90deg,rgba(29,78,216,.25),transparent);border-radius:0 12px 12px 0;font-size:13px;color:#d4def0}
+table{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--border);border-radius:14px;overflow:hidden}th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border)}th{background:#15243e;color:var(--b);font-size:11px;text-transform:uppercase;letter-spacing:.1em}td{color:#d5dce8}
+.tw{overflow-x:auto}.pill{display:inline-block;margin:3px;padding:5px 10px;border:1px solid var(--border);border-radius:99px;font-size:10px;color:#aeb8c8}
+.bad strong{color:#ff929d}.lead{color:var(--muted);max-width:760px;font-size:15px;margin:-20px 0 40px}
+@media(max-width:900px){.g2,.g4{grid-template-columns:1fr}}</style></head><body>
+<a href="#" class="logo">Uni<span>AI</span></a>
+<header class="hero"><div class="w"><div class="kick">The complete application guide · Apply</div><h1>Smart<br><span class="g">Apply.</span></h1><p class="sub">From shortlist to offer: choosing courses, application portals, documents, deadlines, interviews, offer types and mistakes that cost places.</p><button class="btn" onclick="document.getElementById('s1').scrollIntoView()">Start the guide</button>
+<div class="stats"><div><strong>3</strong><span>Shortlist tiers</span></div><div><strong>8</strong><span>Steps</span></div><div><strong>6–12 mo</strong><span>Start early</span></div><div><strong>1</strong><span>Tracker sheet</span></div></div></div></header><section id="s1"><div class="w"><div class="kick reveal">01 · Start here</div><h2 class="reveal">Applying is a campaign, not a form.</h2><div class="g2"><div class="card reveal"><h3>What it involves</h3><p>Choosing courses, preparing documents, writing essays, meeting deadlines and responding to offers. Each step depends on the one before.</p></div><div class="card reveal"><h3>Start early</h3><p>Six to twelve months ahead gives you time for tests, references and funding. Rushed applications show.</p></div></div><div class="note reveal">Every university has its own rules. Use each official course page as the final reference.</div></div></section><div class="w"><div class="ph reveal" data-c="A tracker sheet is the most useful tool in your application." style="background-image:url(https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1600&q=80)"></div></div><section class=alt id="s2"><div class="w"><div class="kick reveal">02 · Shortlist</div><h2 class="reveal">Ambitious, target and safe.</h2><div class="tw reveal"><table><tr><th>Tier</th><th>Meaning</th><th>How many</th></tr><tr><td>Ambitious</td><td>Your profile is below or at the upper edge</td><td>1–2</td></tr><tr><td>Target</td><td>Your profile matches typical admits</td><td>3–4</td></tr><tr><td>Safe</td><td>Your profile is above typical entry</td><td>1–2</td></tr></table></div><div class="note reveal">Balance prestige with course fit, cost, location and career outcomes.</div></div></section><section id="s3"><div class="w"><div class="kick reveal">03 · The process</div><h2 class="reveal">Eight steps to an offer.</h2><div class="tl"><div class="step reveal"><div class="dot"></div><small>STEP 1</small><h3>Research courses</h3><p style="color:var(--muted);font-size:13px;margin:0">Compare modules, teaching language, fees, location and entry requirements.</p></div><div class="step reveal"><div class="dot"></div><small>STEP 2</small><h3>Check requirements</h3><p style="color:var(--muted);font-size:13px;margin:0">Note grades, tests, deadlines, documents and application fees.</p></div><div class="step reveal"><div class="dot"></div><small>STEP 3</small><h3>Take tests early</h3><p style="color:var(--muted);font-size:13px;margin:0">Book language and entrance tests so scores arrive in time.</p></div><div class="step reveal"><div class="dot"></div><small>STEP 4</small><h3>Prepare documents</h3><p style="color:var(--muted);font-size:13px;margin:0">Transcripts, CV, essays, references, portfolio if needed.</p></div><div class="step reveal"><div class="dot"></div><small>STEP 5</small><h3>Apply</h3><p style="color:var(--muted);font-size:13px;margin:0">Use the portal the university specifies and double-check every field.</p></div><div class="step reveal"><div class="dot"></div><small>STEP 6</small><h3>Pay and confirm</h3><p style="color:var(--muted);font-size:13px;margin:0">Keep receipts and confirmation emails.</p></div><div class="step reveal"><div class="dot"></div><small>STEP 7</small><h3>Interview or tests</h3><p style="color:var(--muted);font-size:13px;margin:0">Prepare for any interviews, assessments or portfolio reviews.</p></div><div class="step reveal"><div class="dot"></div><small>STEP 8</small><h3>Decide on offers</h3><p style="color:var(--muted);font-size:13px;margin:0">Read conditions, compare funding and accept before the deadline.</p></div></div></div></section><div class="w"><div class="ph reveal" data-c="Offers come with conditions. Read every one." style="background-image:url(https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1600&q=80)"></div></div><section class=alt id="s4"><div class="w"><div class="kick reveal">04 · Where to apply</div><h2 class="reveal">Application routes.</h2><div class="tw reveal"><table><tr><th>Route</th><th>Used for</th><th>Note</th></tr><tr><td>Direct to university</td><td>Most countries and programmes</td><td>Follow each institution's portal</td></tr><tr><td>Central portals</td><td>Some countries and levels</td><td>Check the official service for your destination</td></tr><tr><td>Third-party centres</td><td>Some institutions</td><td>Check they are recognised</td></tr><tr><td>Specialist applications</td><td>Art, music, portfolio courses</td><td>Extra materials often required</td></tr></table></div><div class="note reveal">Names and processes change. Confirm the route on the course page.</div></div></section><section id="s5"><div class="w"><div class="kick reveal">05 · Documents</div><h2 class="reveal">Application pack.</h2><div class="grid"><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Transcripts and certificates</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Passport copy</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ CV or resume</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Statement of purpose</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Reference letters</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Language or entrance test score</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Portfolio if required</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Application fee receipt</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Proof of finances where required</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Translations if required</div></div></div></section><section class=alt id="s6"><div class="w"><div class="kick reveal">06 · Offers</div><h2 class="reveal">Understanding your offer.</h2><div class="g2"><div class="card reveal"><h3>Conditional offer</h3><p>You must meet extra conditions such as final grades or a language score. Track each condition and its deadline.</p></div><div class="card reveal"><h3>Unconditional offer</h3><p>All requirements are met. You still need to follow deposit, funding and visa steps.</p></div></div><div class="note reveal">Compare offers by course, cost, scholarships and location, not only by name.</div></div></section><section id="s7"><div class="w"><div class="kick reveal">07 · Interviews</div><h2 class="reveal">Be ready to talk.</h2><div class="grid"><article class="card reveal"><div class="num">01</div><h3>Know your application</h3><p>Be ready to discuss everything you submitted.</p></article><article class="card reveal"><div class="num">02</div><h3>Know the course</h3><p>Mention modules, faculty and projects.</p></article><article class="card reveal"><div class="num">03</div><h3>Explain your goals</h3><p>Link your past, the course and your future.</p></article><article class="card reveal"><div class="num">04</div><h3>Prepare questions</h3><p>Ask about teaching, support and outcomes.</p></article><article class="card reveal"><div class="num">05</div><h3>Practise aloud</h3><p>Rehearse with a friend or mentor.</p></article><article class="card reveal"><div class="num">06</div><h3>Stay honest</h3><p>Never claim more than you did.</p></article></div></div></section><section class=alt id="s8"><div class="w"><div class="kick reveal">08 · Mistakes</div><h2 class="reveal">Avoid these.</h2><div class="grid"><article class="card bad reveal"><div class="num">01</div><h3>Missing deadlines</h3><p>Late applications are often rejected.</p></article><article class="card bad reveal"><div class="num">02</div><h3>Ignoring requirements</h3><p>Meet every stated condition.</p></article><article class="card bad reveal"><div class="num">03</div><h3>Generic essays</h3><p>Tailor to the course.</p></article><article class="card bad reveal"><div class="num">04</div><h3>Weak references</h3><p>Brief your referees.</p></article><article class="card bad reveal"><div class="num">05</div><h3>Applying only to top names</h3><p>Balance your list.</p></article><article class="card bad reveal"><div class="num">06</div><h3>No tracking</h3><p>Use a spreadsheet.</p></article></div></div></section><section id="s9"><div class="w"><div class="kick reveal">09 · FAQ</div><h2 class="reveal">Quick answers.</h2><div class="faq"><div class="faq-item"><button class="faq-q">How many universities should I apply to?<span>+</span></button><p class="faq-a">Enough for a balanced list, commonly six to eight.</p></div><div class="faq-item"><button class="faq-q">When do applications open?<span>+</span></button><p class="faq-a">It varies by country and course. Check the official page.</p></div><div class="faq-item"><button class="faq-q">Can I apply without test scores?<span>+</span></button><p class="faq-a">Some programmes are test-optional. Confirm each one.</p></div><div class="faq-item"><button class="faq-q">What if I am rejected?<span>+</span></button><p class="faq-a">Ask for feedback, consider other offers or reapply later.</p></div><div class="faq-item"><button class="faq-q">Can I defer an offer?<span>+</span></button><p class="faq-a">Some universities allow it. Ask in writing.</p></div></div></div></section><footer><div class="w">UniAI · Plan smarter. Go Farther. Always follow each university's official application instructions.</div></footer>
+<script>const o=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('v');o.unobserve(x.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(e=>o.observe(e));
+document.querySelectorAll('.faq-q').forEach(b=>b.onclick=()=>{const i=b.parentElement,w=i.classList.contains('open');document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));if(!w)i.classList.add('open')})</script></body></html>
