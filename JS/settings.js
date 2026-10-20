@@ -40,9 +40,16 @@
     THEME_KEY,
     "theme", // legacy key from the old script
     "uniAIConversation",
+    "uniAIChats", // script.js: all saved chats (was missing, so "clear" left them behind)
     "roadmapProgress", // road.js
     "uniai-roadmap", // legacy
+    "studyAbroadChecklist", // guide.js
+    "uniai-sop-studio", // sop.js drafts
+    "uniai-cost-insights", // cost-insights.js inputs
+    "uniai-fx-insights", // currency-insights.js inputs
     "uniai-shortlist"
+    // NOTE: "uniai-free-use" must NOT be listed here, or clearing data would
+    // hand a guest fresh free passes.
   ];
 
   const DEFAULT_SETTINGS = {
@@ -596,8 +603,8 @@
       const pill = document.getElementById(pillId);
       const notice = document.getElementById(noticeId);
 
-            if (pill) {
-        pill.textContent = signedIn ? "Unlocked" : "Free preview";
+      if (pill) {
+        pill.textContent = signedIn ? "Unlocked" : "Locked";
         pill.classList.toggle("locked", !signedIn);
       }
 
@@ -898,8 +905,9 @@
     if (
       !confirmIfNeeded(
         "Clear saved UniAI data in this browser?\n\n" +
-          "This removes your preferences, saved chat, roadmap progress and shortlist.\n" +
-          "You will stay signed in."
+          "This removes your preferences, saved chats, roadmap and checklist progress, SOP drafts, " +
+          "cost and currency inputs and shortlist from this device.\n" +
+          "You will stay signed in, and anything already synced to your account can come back the next time you sync."
       )
     ) {
       return;

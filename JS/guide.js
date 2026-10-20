@@ -47,6 +47,13 @@ document.addEventListener("DOMContentLoaded", () => {
      STAGE / PROGRESS MAPPING
      ========================================================= */
 
+  /* Opens another UniAI page through the main script's router. */
+  function goTo(page) {
+    if (typeof window.showPage === "function") {
+      window.showPage(page);
+    }
+  }
+
   const stageMap = Array.from(stages);
 
   const progressMap = Array.from(progressSteps);
@@ -81,6 +88,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   startButtons.forEach(button => {
     button.addEventListener("click", () => {
+
+      // The closing call-to-action says "Find my universities".
+      if (button.closest(".guide-final-cta")) {
+        goTo("universityFinder");
+        return;
+      }
 
       if (stageMap.length > 0) {
         scrollToElement(stageMap[0]);
@@ -333,9 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Example:
         // showPage("universityFinderPage");
 
-        console.log(
-          "Opening University Finder..."
-        );
+        goTo("universityFinder");
 
       }
 
@@ -345,9 +356,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Example:
         // showPage("visaGuidePage");
 
-        console.log(
-          "Opening Visa Guide..."
-        );
+        goTo("visaGuide");
 
       }
 
@@ -378,9 +387,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (text.includes("cost calculator")) {
 
-        console.log(
-          "Opening Cost Calculator..."
-        );
+        goTo("living");
 
         // Example:
         // showPage("costCalculatorPage");
@@ -390,9 +397,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (text.includes("currency converter")) {
 
-        console.log(
-          "Opening Currency Converter..."
-        );
+        goTo("currency");
 
         // Example:
         // showPage("currencyConverterPage");
@@ -427,9 +432,7 @@ document.addEventListener("DOMContentLoaded", () => {
          * Connect this to your tracker page.
          */
 
-        console.log(
-          "Opening Application Tracker..."
-        );
+        goTo("roadmap");
 
       }
     );
@@ -601,9 +604,5 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================================================
      FINISHED
      ========================================================= */
-
-  console.log(
-    "Study Abroad Guide initialized successfully."
-  );
 
 });

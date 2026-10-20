@@ -14,8 +14,24 @@
    them on sign-in. No other file needs editing: it watches localStorage writes
    for those keys automatically.
 
+   Changes in this version
+   -----------------------
+   1. Guest -> account MERGE. Guests now get free chat / roadmap previews. If a
+      guest used them and then signs in to an account that already has data,
+      the old "newest copy wins" rule would silently overwrite the account's
+      chats and progress with the guest's. On the first sign-in of a browser
+      that has no owner yet, chats are merged by chat id and roadmap /
+      checklist ticks are OR-ed together instead.
+   2. Edits made in the first seconds after page load are no longer dropped.
+      The start-up guard (which exists to ignore other scripts re-saving the
+      theme) now stops as soon as the person actually interacts.
+   3. LOCAL_ONLY_KEYS: financial inputs (cost / currency insights), activity
+      and quest rewards are never uploaded, but ARE removed on sign-out so
+      the next person on a shared computer does not see them.
+   4. Streak / daily quest state (profile-editor.js) now follow the account.
+
    Load order — put it right after the Supabase CDN tag, BEFORE script.js:
-     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+     <script src="https://unpkg.com/@supabase/supabase-js@2.117.2/dist/umd/supabase.js" ...></script>
      <script src="JS/sync.js"></script>
      <script src="JS/script.js"></script>
      ...
@@ -40,22 +56,119 @@
 
   const PUSH_DELAY = 1500; // ms to batch rapid changes (e.g. chat messages)
   const MAX_VALUE_CHARS = 900 * 1024; // skip absurdly large values
+  const MERGED_CHAT_CHARS = 850 * 1024; // merged chat store is trimmed to this
+  const MAX_CHATS = 60; // same cap as script.js CHAT_LIMITS.chats
   const RELOAD_COOLDOWN = 15000; // never reload twice within 15 s
 
   // Look and feel: follows the account, but stays on this device after sign-out.
   const SHARED_KEYS = ["uniai_settings_v2", "uniai-theme", "theme"];
 
-  // Personal progress/data: removed from the browser on sign-out so the next
-  // person on a shared computer doesn't see it.
+  // Personal progress/data: synced to the account AND removed from the browser
+  // on sign-out so the next person on a shared computer doesn't see it.
   const PERSONAL_KEYS = [
     "roadmapProgress", // road.js
     "studyAbroadChecklist", // guide.js
     "uniAIChats", // script.js chat history (all saved chats)
     "uniAIConversation", // legacy single chat, imported once into uniAIChats
-    "uniai-sop-studio" // sop.js drafts
+    "uniai-sop-studio", // sop.js drafts
+    "uniai-streak", // profile-editor.js
+    "uniai-daily" // profile-editor.js
   ];
 
+  // Never uploaded, but removed on sign-out (exact keys and key prefixes).
+  const LOCAL_ONLY_KEYS = [
+    "uniai-cost-insights", // cost-insights.js (savings, income...)
+    "uniai-fx-insights", // currency-insights.js
+    "uniai-activity", // workspace recent activity
+    "uniai-shortlist" // legacy shortlist mirror
+  ];
+  const LOCAL_ONLY_PREFIXES = ["uniai-quest-rewards:"];
+
   const SYNC_KEYS = new Set(SHARED_KEYS.concat(PERSONAL_KEYS));
+
+  /* ------------------------------------------------------------------------
+     Merge rules (used only for the first sign-in of a browser with no owner)
+     ------------------------------------------------------------------------ */
+
+  function parse(text) {
+    try {
+      return JSON.parse(text);
+    } catch (err) {
+      return null;
+    }
+  }
+
+  const isPlainObject = (x) => x !== null && typeof x === "object" && !Array.isArray(x);
+
+  /** Roadmap / checklist ticks: a box is ticked if it is ticked on either side. */
+  function mergeFlags(localText, remoteText) {
+    const a = parse(localText);
+    const b = parse(remoteText);
+
+    if (Array.isArray(a) && Array.isArray(b)) {
+      const n = Math.max(a.length, b.length);
+      return JSON.stringify(Array.from({ length: n }, (_, i) => Boolean(a[i] || b[i])));
+    }
+
+    if (isPlainObject(a) && isPlainObject(b)) {
+      const out = {};
+      new Set(Object.keys(a).concat(Object.keys(b))).forEach((k) => {
+        out[k] = Boolean(a[k] || b[k]);
+      });
+      return JSON.stringify(out);
+    }
+
+    return null; // shapes differ: caller falls back to newest-wins
+  }
+
+  /** Chats: union by id; for the same id keep the side that was updated last. */
+  function mergeChats(localText, remoteText) {
+    const a = parse(localText);
+    const b = parse(remoteText);
+
+    if (!isPlainObject(a) || !isPlainObject(b) || !Array.isArray(a.chats) || !Array.isArray(b.chats)) {
+      return null;
+    }
+
+    const byId = new Map();
+
+    b.chats.concat(a.chats).forEach((chat) => {
+      if (!chat || typeof chat.id !== "string") return;
+      const have = byId.get(chat.id);
+      const newer = (Number(chat.updatedAt) || 0) >= (Number(have && have.updatedAt) || 0);
+      if (!have || newer) byId.set(chat.id, chat);
+    });
+
+    let chats = Array.from(byId.values()).sort(
+      (x, y) => (Number(y.updatedAt) || 0) - (Number(x.updatedAt) || 0)
+    );
+    chats = chats.slice(0, MAX_CHATS);
+
+    const ids = new Set(chats.map((c) => c.id));
+    const activeId = ids.has(a.activeId) ? a.activeId : ids.has(b.activeId) ? b.activeId : null;
+
+    const build = () =>
+      JSON.stringify({
+        version: 1,
+        activeId,
+        legacyMigrated: Boolean(a.legacyMigrated || b.legacyMigrated),
+        chats
+      });
+
+    let json = build();
+    while (json.length > MERGED_CHAT_CHARS && chats.length > 1) {
+      chats.pop(); // drop the oldest
+      json = build();
+    }
+
+    return json;
+  }
+
+  const MERGE = {
+    uniAIChats: mergeChats,
+    roadmapProgress: mergeFlags,
+    studyAbroadChecklist: mergeFlags
+  };
 
   /* ------------------------------------------------------------------------
      Storage access (bail out quietly if storage is blocked)
@@ -77,8 +190,22 @@
   // Other scripts write to storage while the page starts up (e.g. settings.js
   // re-saves the current theme on every load). Those are not user changes, and
   // must not be stamped "new" or they would overwrite the account's copy.
+  // The guard ends after a few seconds OR the moment the person interacts, so a
+  // real edit made right after load is never ignored.
   let booting = true;
+  let userActive = false;
   setTimeout(() => (booting = false), 6000); // fail-safe
+
+  ["pointerdown", "keydown", "change", "input"].forEach((name) =>
+    window.addEventListener(
+      name,
+      () => {
+        userActive = true;
+      },
+      { capture: true, passive: true, once: true }
+    )
+  );
+
   let userId = null;
   let syncedFor = null;
   let timer = null;
@@ -127,8 +254,8 @@
 
     nativeSet.call(this, key, value);
 
-    // Ignore start-up writes and writes that don't change anything.
-    if (watched && !booting && before !== String(value)) markDirty(key);
+    // Ignore start-up writes (until the person interacts) and no-op writes.
+    if (watched && (!booting || userActive) && before !== String(value)) markDirty(key);
   };
 
   // removeItem is deliberately NOT mirrored. Settings → "Clear local data"
@@ -214,11 +341,19 @@
     applying = true;
     try {
       const meta = readMeta();
+
       PERSONAL_KEYS.forEach((key) => {
         nativeRemove.call(ls, key);
         delete meta[key];
         dirty.delete(key);
       });
+
+      LOCAL_ONLY_KEYS.forEach((key) => nativeRemove.call(ls, key));
+
+      Object.keys(ls)
+        .filter((key) => LOCAL_ONLY_PREFIXES.some((p) => key.indexOf(p) === 0))
+        .forEach((key) => nativeRemove.call(ls, key));
+
       writeMeta(meta);
     } finally {
       applying = false;
@@ -227,7 +362,9 @@
 
   /**
    * Compare this browser with the account, key by key:
-   *   identical                          -> nothing
+   *   identical                            -> nothing
+   *   first sign-in of an owner-less browser and the key is mergeable
+   *                                        -> merge both sides, keep and upload the result
    *   account newer, or never touched here -> take the account's value
    *   this browser newer, or account has none -> upload this browser's value
    */
@@ -250,9 +387,14 @@
       }
     });
 
+    // A browser with no owner is a guest browser (or pre-sync). Its local data
+    // belongs to whoever signs in now, so combine it with the account's data.
+    const firstClaim = !readOwner();
+
     const meta = readMeta();
     const toApply = [];
     const toPush = [];
+    const toMerge = new Map();
 
     SYNC_KEYS.forEach((key) => {
       const remote = cloud.get(key);
@@ -261,7 +403,18 @@
 
       if (remote && local === remote.value) {
         meta[key] = remote.ts;
-      } else if (remote && (local === null || localTs <= remote.ts)) {
+        return;
+      }
+
+      if (remote && local !== null && firstClaim && MERGE[key]) {
+        const merged = MERGE[key](local, remote.value);
+        if (merged !== null) {
+          toMerge.set(key, merged);
+          return;
+        }
+      }
+
+      if (remote && (local === null || localTs <= remote.ts)) {
         toApply.push(key);
       } else if (local !== null) {
         if (!meta[key]) meta[key] = Date.now();
@@ -275,6 +428,13 @@
         const remote = cloud.get(key);
         nativeSet.call(ls, key, remote.value);
         meta[key] = remote.ts;
+      });
+
+      toMerge.forEach((merged, key) => {
+        nativeSet.call(ls, key, merged);
+        meta[key] = Date.now();
+        toApply.push(key); // the page must reload to show the merged copy
+        toPush.push(key); // and the account must receive it
       });
     } finally {
       applying = false;
@@ -378,7 +538,13 @@
   window.UniAISync = {
     keys: Array.from(SYNC_KEYS),
     syncNow: () => (userId ? reconcile(userId) : Promise.resolve()),
-    status: () => ({ signedIn: Boolean(userId), synced: syncedFor === userId && Boolean(userId), pending: Array.from(dirty) })
+    status: () => ({
+      signedIn: Boolean(userId),
+      synced: syncedFor === userId && Boolean(userId),
+      pending: Array.from(dirty)
+    }),
+    // exposed for tests
+    _merge: { chats: mergeChats, flags: mergeFlags }
   };
 
   if (document.readyState === "loading") {

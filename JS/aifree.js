@@ -1,11 +1,12 @@
 /* ==========================================
-   AI FREE JOBS — INTERACTION ENGINE (fixed)
+   AI FREE JOBS — INTERACTION ENGINE
    ========================================== */
 
 let currentFilter = "all";
-let scanRunning = false;
 
-// Legacy store (titles only). Read once to migrate old saves, then emptied.
+// Legacy store (titles only). Saved jobs now live in save.js (UniAISaved) so
+// they show on the Saved page and follow the account. This list is read once
+// to migrate old saves, then emptied.
 let savedJobs = [];
 try {
   const legacy = JSON.parse(localStorage.getItem("aiSavedJobs") || "[]");
@@ -14,69 +15,82 @@ try {
   savedJobs = [];
 }
 
-const $ = id => document.getElementById(id);
-const allCards = () => [...document.querySelectorAll(".crazy-job-card")];
-
 
 /* ------------------------------------------
-   SEARCH + FILTER
+   SEARCH
 ------------------------------------------ */
 
-function filterJobs(animate = true) {
+function filterJobs() {
 
-  const searchEl = $("jobSearch");
-  const query = searchEl ? searchEl.value.toLowerCase().trim() : "";
+  const query =
+    document.getElementById("jobSearch")
+      .value
+      .toLowerCase()
+      .trim();
+
+  const cards =
+    [...document.querySelectorAll(".crazy-job-card")];
 
   let visible = 0;
 
-  allCards().forEach(card => {
+  cards.forEach(card => {
 
-    // textContent works even when the card is display:none
-    const text = card.textContent.toLowerCase();
-    const categories = (card.dataset.category || "").toLowerCase();
+    const text = card.innerText.toLowerCase();
+    const categories =
+      card.dataset.category.toLowerCase();
 
-    const matchesSearch = !query || text.includes(query);
+    const matchesSearch =
+      !query || text.includes(query);
+
     const matchesFilter =
-      currentFilter === "all" || categories.includes(currentFilter);
+      currentFilter === "all" ||
+      categories.includes(currentFilter);
 
-    const show = matchesSearch && matchesFilter;
-    const wasHidden = card.style.display === "none";
+    const show =
+      matchesSearch && matchesFilter;
 
     card.style.display = show ? "" : "none";
 
     if (show) {
       visible++;
 
-      // only animate cards that just appeared
-      if (animate && wasHidden) {
-        card.animate(
-          [
-            { opacity: 0, transform: "translateY(10px)" },
-            { opacity: 1, transform: "translateY(0)" }
-          ],
-          { duration: 250, easing: "ease-out" }
-        );
-      }
+      card.animate(
+        [
+          { opacity: 0, transform: "translateY(10px)" },
+          { opacity: 1, transform: "translateY(0)" }
+        ],
+        {
+          duration: 250,
+          easing: "ease-out"
+        }
+      );
     }
   });
 
-  const count = $("jobCount");
-  if (count) count.textContent = String(visible).padStart(2, "0");
+  document.getElementById("jobCount")
+    .textContent =
+    String(visible).padStart(2, "0");
 
-  const none = $("noJobs");
-  if (none) none.classList.toggle("hidden", visible !== 0);
+  document.getElementById("noJobs")
+    .classList.toggle("hidden", visible !== 0);
 }
 
 
+/* ------------------------------------------
+   FILTERS
+------------------------------------------ */
+
 function setJobFilter(filter, button) {
 
-  currentFilter = String(filter).toLowerCase();
+  currentFilter = filter;
 
   document
     .querySelectorAll(".job-filter")
-    .forEach(btn => btn.classList.remove("active"));
+    .forEach(btn =>
+      btn.classList.remove("active")
+    );
 
-  if (button) button.classList.add("active");
+  button.classList.add("active");
 
   filterJobs();
 }
@@ -88,24 +102,36 @@ function setJobFilter(filter, button) {
 
 function sortJobs(type) {
 
-  const grid = $("jobGrid");
-  if (!grid) return;
+  const grid =
+    document.getElementById("jobGrid");
 
-  const num = (el, key) => Number(el.dataset[key]) || 0;
+  const cards =
+    [...grid.querySelectorAll(".crazy-job-card")];
 
-  const sorters = {
-    match: (a, b) => num(b, "match") - num(a, "match"),
-    pay:   (a, b) => num(b, "pay") - num(a, "pay"),
-    hours: (a, b) => num(a, "hours") - num(b, "hours")
-  };
+  cards.sort((a, b) => {
 
-  const sorter = sorters[type];
-  if (!sorter) return;
+    if (type === "match") {
+      return Number(b.dataset.match) -
+             Number(a.dataset.match);
+    }
 
-  const cards = [...grid.querySelectorAll(".crazy-job-card")].sort(sorter);
+    if (type === "pay") {
+      return Number(b.dataset.pay) -
+             Number(a.dataset.pay);
+    }
+
+    if (type === "hours") {
+      return Number(a.dataset.hours) -
+             Number(b.dataset.hours);
+    }
+
+    return 0; // unknown sort type: keep the current order
+
+  });
+
   cards.forEach(card => grid.appendChild(card));
 
-  filterJobs(false);
+  filterJobs();
 }
 
 
@@ -115,7 +141,7 @@ function sortJobs(type) {
 
 function jobRecord(card) {
 
-  const clean = el => el ? el.textContent.trim() : "";
+  const clean = el => el ? el.innerText.trim() : "";
 
   const tags = [
     clean(card.querySelector(".job-type")),
@@ -136,7 +162,7 @@ function setHeart(button, saved) {
   if (!button) return;
 
   button.classList.toggle("saved", saved);
-  button.textContent = saved ? "♥" : "♡";
+  button.innerText = saved ? "♥" : "♡";
   button.setAttribute("aria-pressed", String(saved));
 }
 
@@ -153,28 +179,33 @@ function isJobSaved(card) {
 
 function toggleSave(button) {
 
-  const card = button.closest(".crazy-job-card");
+  const card =
+    button.closest(".crazy-job-card");
+
   if (!card) return;
 
   const rec = jobRecord(card);
+
   let nowSaved;
 
   if (window.UniAISaved) {
 
-    // save.js stores it, syncs it and shows its own toast.
+    // save.js stores it, syncs it to the account and shows its own toast.
     nowSaved = window.UniAISaved.toggle(rec);
 
   } else {
 
+    // save.js not on this page: old local-only behaviour.
     nowSaved = !savedJobs.includes(rec.name);
 
     savedJobs = nowSaved
       ? [...savedJobs, rec.name]
       : savedJobs.filter(job => job !== rec.name);
 
-    try {
-      localStorage.setItem("aiSavedJobs", JSON.stringify(savedJobs));
-    } catch (err) {}
+    localStorage.setItem(
+      "aiSavedJobs",
+      JSON.stringify(savedJobs)
+    );
 
     toast(nowSaved ? "JOB SAVED" : "REMOVED FROM SAVED");
   }
@@ -193,14 +224,14 @@ function migrateLegacyJobs() {
 
   if (!window.UniAISaved || !savedJobs.length) return;
 
-  const cards = allCards();
+  const cards =
+    [...document.querySelectorAll(".crazy-job-card")];
 
   savedJobs.forEach(title => {
 
-    const card = cards.find(c => {
-      const h3 = c.querySelector("h3");
-      return h3 && h3.textContent.trim() === title;
-    });
+    const card = cards.find(c =>
+      c.querySelector("h3").innerText.trim() === title
+    );
 
     const rec = card
       ? jobRecord(card)
@@ -211,18 +242,22 @@ function migrateLegacyJobs() {
     }
   });
 
+  // Empty the old list (this also clears it on the account copy).
   savedJobs = [];
-  try {
-    localStorage.setItem("aiSavedJobs", "[]");
-  } catch (err) {}
+  localStorage.setItem("aiSavedJobs", "[]");
 }
 
 
 function refreshJobHearts() {
 
-  allCards().forEach(card => {
-    setHeart(card.querySelector(".save-job"), isJobSaved(card));
-  });
+  document
+    .querySelectorAll(".crazy-job-card")
+    .forEach(card => {
+      setHeart(
+        card.querySelector(".save-job"),
+        isJobSaved(card)
+      );
+    });
 }
 
 
@@ -233,6 +268,8 @@ function restoreSavedJobs() {
 }
 
 
+// Hearts follow the Saved page: removing a job there un-hearts it here,
+// and account sync updates them once it finishes loading.
 window.addEventListener("uniai:saved-change", refreshJobHearts);
 
 
@@ -240,59 +277,90 @@ window.addEventListener("uniai:saved-change", refreshJobHearts);
    JOB MODAL
 ------------------------------------------ */
 
-function lockScroll(lock) {
-
-  document.documentElement.style.overflow = lock ? "hidden" : "";
-  document.body.style.overflow = lock ? "hidden" : "";
-}
-
+let openCard = null;
 
 function openJob(button) {
 
-  const card = button.closest(".crazy-job-card");
-  if (!card) return;
+  const card =
+    button.closest(".crazy-job-card");
 
-  const text = sel => {
-    const el = card.querySelector(sel);
-    return el ? el.textContent.trim() : "";
-  };
+  openCard = card;
 
-  const set = (id, value) => {
-    const el = $(id);
-    if (el) el.textContent = value;
-  };
+  const title =
+    card.querySelector("h3").innerText;
 
-  set("modalTitle", text("h3"));
-  set("modalDescription", text("p"));
-  set("modalMatch", (card.dataset.match || "0") + "%");
-  set("modalType", text(".job-type"));
-  set("modalPay", text(".job-bottom strong"));
+  const description =
+    card.querySelector("p").innerText;
 
-  const modal = $("jobModal");
-  if (modal) modal.classList.remove("hidden");
+  const match =
+    card.dataset.match + "%";
 
-  lockScroll(true);
+  const type =
+    card.querySelector(".job-type").innerText;
+
+  const pay =
+    card.querySelector(".job-bottom strong").innerText;
+
+  document.getElementById("modalTitle")
+    .innerText = title;
+
+  document.getElementById("modalDescription")
+    .innerText = description;
+
+  document.getElementById("modalMatch")
+    .innerText = match;
+
+  document.getElementById("modalType")
+    .innerText = type;
+
+  document.getElementById("modalPay")
+    .innerText = pay;
+
+  document
+    .getElementById("jobModal")
+    .classList.remove("hidden");
+
+ document.documentElement.style.overflow = "hidden";
+ document.body.style.overflow = "hidden";
 }
 
 
 function closeJob() {
 
-  const modal = $("jobModal");
+  const modal = document.getElementById("jobModal");
   if (modal) modal.classList.add("hidden");
 
-  // FIX: openJob locked both <html> and <body>, but close only freed <body>,
-  // so the page could stay stuck unscrollable.
-  lockScroll(false);
+  // openJob locks BOTH elements; the old code only released <body>, so the
+  // page could stay unscrollable after closing the modal.
+  document.documentElement.style.overflow = "";
+  document.body.style.overflow = "";
 }
 
 
 function expressInterest() {
 
+  const card = openCard;
+
   closeJob();
 
-  toast("INTEREST RECORDED · APPLICATION FLOW READY");
+  // Applications are not open yet, so be honest: save the role instead of
+  // pretending an application was recorded.
+  if (card && window.UniAISaved) {
 
-  createConfetti(document.querySelector(".scan-btn"));
+    const rec = jobRecord(card);
+
+    if (!window.UniAISaved.isSaved(rec)) {
+      window.UniAISaved.toggle(rec);
+    }
+
+    setHeart(card.querySelector(".save-job"), true);
+
+    toast("SAVED TO YOUR SHORTLIST · APPLICATIONS AREN'T OPEN YET");
+
+  } else {
+
+    toast("APPLICATIONS AREN'T OPEN YET · SIGN IN TO SAVE ROLES");
+  }
 }
 
 
@@ -302,64 +370,76 @@ function expressInterest() {
 
 function runJobScan() {
 
-  if (scanRunning) return;
+  const status =
+    document.getElementById("scanStatus");
 
-  const status = $("scanStatus");
-  const btn = document.querySelector(".scan-btn");
+  const btn =
+    document.querySelector(".scan-btn");
 
   const messages = [
-    "SCANNING NETWORK...",
-    "ANALYZING SKILLS...",
-    "MATCHING OPPORTUNITIES...",
-    "REMOVING PAYWALLS...",
-    "CALCULATING FIT...",
+    "READING SAMPLE LISTINGS...",
+    "COMPARING SKILLS...",
+    "RANKING BY MATCH...",
     "SCAN COMPLETE"
   ];
 
-  scanRunning = true;
-  if (btn) btn.disabled = true;
+  btn.disabled = true;
 
   let index = 0;
 
-  const interval = setInterval(() => {
+  const interval =
+    setInterval(() => {
 
-    if (status) status.textContent = messages[index];
+      status.innerText =
+        messages[index];
 
-    index++;
+      index++;
 
-    if (index >= messages.length) {
+      if (index >= messages.length) {
 
-      clearInterval(interval);
+        clearInterval(interval);
 
-      scanRunning = false;
-      if (btn) btn.disabled = false;
+        btn.disabled = false;
 
-      const found = highlightBestJobs();
+        highlightBestJobs();
 
-      // FIX: toast used to always say "3" no matter what was found.
-      toast(
-        found
-          ? `${found} HIGH-CONFIDENCE OPPORTUNIT${found === 1 ? "Y" : "IES"} DETECTED`
-          : "SCAN COMPLETE · NO HIGH-CONFIDENCE MATCHES"
-      );
-    }
+        const top = document.querySelectorAll(
+          '.crazy-job-card[data-match]'
+        );
 
-  }, 550);
+        const strong = [...top].filter(
+          c => Number(c.dataset.match) >= 90
+        ).length;
+
+        toast(
+          strong + " TOP MATCHES HIGHLIGHTED · PREVIEW DATA"
+        );
+      }
+
+    }, 550);
 }
 
 
+/* ------------------------------------------
+   HIGHLIGHT BEST MATCHES
+------------------------------------------ */
+
 function highlightBestJobs() {
 
-  let found = 0;
+  const cards =
+    [...document.querySelectorAll(".crazy-job-card")];
 
-  allCards().forEach(card => {
+  cards.forEach(card => {
 
-    const strong = Number(card.dataset.match) >= 90;
+    const match =
+      Number(card.dataset.match);
 
-    card.style.boxShadow = strong ? "0 0 45px rgba(120,90,255,.28)" : "";
+    card.style.boxShadow =
+      match >= 90
+        ? "0 0 45px rgba(120,90,255,.28)"
+        : "";
 
-    if (strong) {
-      found++;
+    if (match >= 90) {
 
       card.animate(
         [
@@ -367,12 +447,13 @@ function highlightBestJobs() {
           { transform: "scale(1.02)" },
           { transform: "scale(1)" }
         ],
-        { duration: 700, easing: "ease-out" }
+        {
+          duration: 700,
+          easing: "ease-out"
+        }
       );
     }
   });
-
-  return found;
 }
 
 
@@ -382,22 +463,32 @@ function highlightBestJobs() {
 
 function toast(message) {
 
-  const old = document.querySelector(".ai-toast");
+  const old =
+    document.querySelector(".ai-toast");
+
   if (old) old.remove();
 
-  const el = document.createElement("div");
+  const el =
+    document.createElement("div");
+
   el.className = "ai-toast";
 
   const dot = document.createElement("span");
   dot.className = "toast-dot";
 
-  el.append(dot, document.createTextNode(" " + message));
+  el.appendChild(dot);
+  el.appendChild(document.createTextNode(" " + message));
 
   document.body.appendChild(el);
 
   setTimeout(() => {
     el.classList.add("out");
-    setTimeout(() => el.remove(), 300);
+
+    setTimeout(
+      () => el.remove(),
+      300
+    );
+
   }, 2200);
 }
 
@@ -410,42 +501,64 @@ function createConfetti(origin) {
 
   if (!origin) return;
 
-  const rect = origin.getBoundingClientRect();
+  const rect =
+    origin.getBoundingClientRect();
 
   for (let i = 0; i < 18; i++) {
 
-    const piece = document.createElement("i");
+    const piece =
+      document.createElement("i");
 
     piece.className = "confetti-piece";
-    piece.style.left = rect.left + rect.width / 2 + "px";
-    piece.style.top = rect.top + rect.height / 2 + "px";
-    piece.style.setProperty("--x", `${(Math.random() - .5) * 260}px`);
-    piece.style.setProperty("--y", `${(Math.random() - .5) * 220}px`);
+
+    piece.style.left =
+      rect.left + rect.width / 2 + "px";
+
+    piece.style.top =
+      rect.top + rect.height / 2 + "px";
+
+    piece.style.setProperty(
+      "--x",
+      `${(Math.random() - .5) * 260}px`
+    );
+
+    piece.style.setProperty(
+      "--y",
+      `${(Math.random() - .5) * 220}px`
+    );
 
     document.body.appendChild(piece);
 
-    setTimeout(() => piece.remove(), 900);
+    setTimeout(
+      () => piece.remove(),
+      900
+    );
   }
 }
 
 
 /* ------------------------------------------
-   KEYBOARD
+   KEYBOARD COMMAND CENTER
 ------------------------------------------ */
 
 document.addEventListener("keydown", e => {
 
-  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+  if (
+    (e.metaKey || e.ctrlKey) &&
+    e.key.toLowerCase() === "k"
+  ) {
 
-    const search = $("jobSearch");
+    e.preventDefault();
 
-    if (search) {
-      e.preventDefault();
-      search.focus();
-    }
+    document
+      .getElementById("jobSearch")
+      .focus();
   }
 
-  if (e.key === "Escape") closeJob();
+  if (e.key === "Escape") {
+    const modal = document.getElementById("jobModal");
+    if (modal && !modal.classList.contains("hidden")) closeJob();
+  }
 });
 
 
@@ -453,40 +566,43 @@ document.addEventListener("keydown", e => {
    CARD MAGNETIC EFFECT
 ------------------------------------------ */
 
-function initMagneticCards() {
+const canTilt =
+  window.matchMedia &&
+  window.matchMedia("(hover: hover)").matches &&
+  !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // FIX: this used to run at script load, so if the script sat in <head>
-  // there were no cards yet and the effect silently never attached.
-  // Skipped on touch devices and for reduced-motion users.
-
-  const reduce =
-    window.matchMedia &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  const touch =
-    window.matchMedia &&
-    window.matchMedia("(hover: none)").matches;
-
-  if (reduce || touch) return;
-
-  allCards().forEach(card => {
+document
+  .querySelectorAll(canTilt ? ".crazy-job-card" : ".__no-tilt")
+  .forEach(card => {
 
     card.addEventListener("mousemove", e => {
 
-      const rect = card.getBoundingClientRect();
+      const rect =
+        card.getBoundingClientRect();
 
-      const rotateX = (((e.clientY - rect.top) / rect.height) - .5) * -5;
-      const rotateY = (((e.clientX - rect.left) / rect.width) - .5) * 5;
+      const x =
+        e.clientX - rect.left;
+
+      const y =
+        e.clientY - rect.top;
+
+      const rotateX =
+        ((y / rect.height) - .5) * -5;
+
+      const rotateY =
+        ((x / rect.width) - .5) * 5;
 
       card.style.transform =
-        `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+        `perspective(900px)
+         rotateX(${rotateX}deg)
+         rotateY(${rotateY}deg)
+         translateY(-6px)`;
     });
 
     card.addEventListener("mouseleave", () => {
       card.style.transform = "";
     });
   });
-}
 
 
 /* ------------------------------------------
@@ -496,8 +612,8 @@ function initMagneticCards() {
 document.addEventListener("DOMContentLoaded", () => {
 
   restoreSavedJobs();
-  initMagneticCards();
 
   sortJobs("match");
-  filterJobs(false);
+
+  filterJobs();
 });
