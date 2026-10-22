@@ -80,7 +80,9 @@
     "uniai-cost-insights", // cost-insights.js (savings, income...)
     "uniai-fx-insights", // currency-insights.js
     "uniai-activity", // workspace recent activity
-    "uniai-shortlist" // legacy shortlist mirror
+    "uniai-shortlist", // legacy shortlist mirror
+    "aiSavedJobs", // legacy AI Free job saves (aifree.js)
+    "uniai-last-active" // idle timer stamp (security.js)
   ];
   const LOCAL_ONLY_PREFIXES = ["uniai-quest-rewards:"];
 

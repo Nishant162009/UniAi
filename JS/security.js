@@ -28,7 +28,7 @@
 
   const OPTIONS = Object.assign(
     {
-      IDLE_MINUTES: 30, // 0 turns idle sign-out off
+      IDLE_MINUTES: 240, // 0 turns idle sign-out off (was 30: signed people out whenever a tab was left or resumed)
       WARN_SECONDS: 60, // warning shown this long before sign-out
       LOGOUT_ON_RETURN: false, // true = also sign out when the site is opened after a long absence
       ALLOW_FRAMING: false, // true only if you deliberately embed UniAI elsewhere
@@ -316,10 +316,20 @@
     );
 
     // Timers freeze while a laptop sleeps, so re-check the moment the tab wakes.
+    // A tab coming back to the foreground (phone unlocked, laptop woken, browser
+    // restoring a tab) means the person is here: count that as activity instead of
+    // signing them out for time spent away. Real inactivity while the tab stays in
+    // front of someone still triggers the idle timer. LOGOUT_ON_RETURN: true keeps
+    // the strict behaviour for shared computers.
     document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "visible") check();
+      if (document.visibilityState !== "visible") return;
+      if (!OPTIONS.LOGOUT_ON_RETURN && !warning) touch(true);
+      check();
     });
-    window.addEventListener("focus", check);
+    window.addEventListener("focus", () => {
+      if (!OPTIONS.LOGOUT_ON_RETURN && !warning) touch(true);
+      check();
+    });
 
     // The notice left behind by an idle sign-out.
     try {

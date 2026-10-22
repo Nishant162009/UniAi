@@ -54,10 +54,57 @@
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#039;");
 
+  // DOMParser builds an inert document: nothing in it loads or runs, unlike
+  // assigning to a detached <div>.innerHTML (an <img onerror> still fires there).
   const stripHTML = (html) => {
-    const div = document.createElement("div");
-    div.innerHTML = html || "";
-    return div.textContent || div.innerText || "";
+    const doc = new DOMParser().parseFromString(html || "", "text/html");
+    return doc.body.textContent || "";
+  };
+
+  // Keeps only simple formatting from AI output. Everything else (scripts,
+  // images, links, event handlers, styles) is dropped before it reaches the editor.
+  const SAFE_TAGS = new Set([
+    "P", "BR", "STRONG", "B", "EM", "I", "U", "UL", "OL", "LI",
+    "H1", "H2", "H3", "H4", "H5", "H6", "BLOCKQUOTE", "DIV", "SPAN"
+  ]);
+  const DROP_TAGS = new Set([
+    "SCRIPT", "STYLE", "IFRAME", "OBJECT", "EMBED", "SVG", "MATH",
+    "FORM", "INPUT", "BUTTON", "TEXTAREA", "SELECT", "LINK", "META",
+    "BASE", "TEMPLATE", "NOSCRIPT"
+  ]);
+
+  const sanitizeEditorHTML = (html) => {
+    if (!html) return "";
+
+    const doc = new DOMParser().parseFromString(String(html), "text/html");
+
+    const clean = (node) => {
+      [...node.childNodes].forEach((child) => {
+        if (child.nodeType === Node.TEXT_NODE) return;
+
+        if (child.nodeType !== Node.ELEMENT_NODE) {
+          child.remove();
+          return;
+        }
+
+        if (DROP_TAGS.has(child.tagName)) {
+          child.remove();
+          return;
+        }
+
+        clean(child);
+
+        if (SAFE_TAGS.has(child.tagName)) {
+          [...child.attributes].forEach((a) => child.removeAttribute(a.name));
+        } else {
+          // Unknown tag: keep its text/children, drop the tag itself.
+          child.replaceWith(...child.childNodes);
+        }
+      });
+    };
+
+    clean(doc.body);
+    return doc.body.innerHTML.trim();
   };
 
   const wordCount = (text) =>
@@ -733,7 +780,7 @@
       }
 
       editor.innerHTML =
-        html || buildSOPDraft();
+        sanitizeEditorHTML(html) || buildSOPDraft();
 
       show(output);
 
@@ -1158,7 +1205,7 @@
       }
 
       editor.innerHTML =
-        html || buildLORDraft();
+        sanitizeEditorHTML(html) || buildLORDraft();
 
       show(output);
 
