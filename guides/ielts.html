@@ -1,40 +1,354 @@
-<!DOCTYPE html><html lang="en"><head><style id="auth-gate">html{visibility:hidden}
-.stats{display:flex;flex-wrap:wrap;gap:38px;margin-top:44px;padding-top:20px;border-top:1px solid rgba(255,255,255,.15)}.stats strong{display:block;font-size:26px}.stats span{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#a6b3c7}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.note{margin-top:16px;padding:16px 20px;border-left:3px solid var(--b);background:linear-gradient(90deg,rgba(37,99,235,.18),transparent);border-radius:0 12px 12px 0;font-size:13px;color:#d4def0}
-table{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--border);border-radius:14px;overflow:hidden}th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border)}th{background:#15243e;color:var(--b);font-size:11px;text-transform:uppercase;letter-spacing:.1em}td{color:#d5dce8}
-.tw{overflow-x:auto}.pill{display:inline-block;margin:3px;padding:5px 10px;border:1px solid var(--border);border-radius:99px;font-size:10px;color:#aeb8c8}
-.bad strong{color:#ff929d}.lead{color:var(--muted);max-width:760px;font-size:15px;margin:-20px 0 40px}
-@media(max-width:900px){.g2,.g4{grid-template-columns:1fr}}</style>
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script><script src="guard.js"></script>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UniAI | IELTS Guide</title>
-<style>:root{--bg:#070b16;--card:#111b30;--text:#f7f8fc;--muted:#a7b1c4;--border:#233452;--a:#2563eb;--b:#38bdf8}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.6}
-a{color:inherit;text-decoration:none}.logo{position:fixed;top:0;left:0;right:0;z-index:9;padding:22px 28px;font-weight:800;font-size:22px;letter-spacing:-.05em}
-.logo span,.g{background:linear-gradient(90deg,var(--a),#fff 50%,var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero{min-height:88vh;display:flex;align-items:flex-end;background:linear-gradient(180deg,rgba(5,8,16,.2),var(--bg)),radial-gradient(circle at 80% 20%,var(--a),transparent 40%),url("https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=2000&q=85") center/cover,var(--card)}
-.w{width:min(1180px,92vw);margin:auto}.hero .w{padding:150px 0 70px}
-.kick{color:var(--b);text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:800}
-h1{font-size:clamp(52px,8vw,110px);line-height:.9;letter-spacing:-.07em;margin:16px 0}h2{font-size:clamp(32px,4.5vw,56px);letter-spacing:-.05em;line-height:1;margin:0 0 40px}
-.sub{max-width:680px;color:#d6deeb;font-size:16px}.btn{margin-top:26px;padding:13px 20px;border:0;border-radius:99px;color:#fff;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--a),var(--b))}
-section{padding:90px 0}.alt{background:rgba(255,255,255,.02)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.card{padding:26px;min-height:200px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(145deg,var(--card),#0b1322)}.num{color:var(--b);font-size:38px;font-weight:800}
-.card h3{margin:16px 0 8px}.card p,.faq-a{color:var(--muted);font-size:13px}
-.tl{position:relative;max-width:760px}.tl:before{content:"";position:absolute;left:17px;top:0;bottom:0;width:1px;background:linear-gradient(var(--a),var(--b))}
-.step{position:relative;padding:0 0 34px 62px}.dot{position:absolute;left:6px;width:23px;height:23px;border:1px solid var(--b);border-radius:50%;background:var(--bg)}.step small{color:var(--b);font-weight:800}.step h3{margin:4px 0}
-.faq{max-width:860px}.faq-item{border-bottom:1px solid var(--border)}.faq-q{all:unset;display:flex;justify-content:space-between;width:100%;padding:20px 0;cursor:pointer;font-weight:700}.faq-a{display:none;margin:0 0 18px}.open .faq-a{display:block}
-.reveal{opacity:0;transform:translateY(24px);transition:.7s}.reveal.v{opacity:1;transform:none}
-footer{padding:40px 0;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
-@media(max-width:800px){.grid{grid-template-columns:1fr}}
-.stats{display:flex;flex-wrap:wrap;gap:38px;margin-top:44px;padding-top:20px;border-top:1px solid rgba(255,255,255,.15)}.stats strong{display:block;font-size:26px}.stats span{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#a6b3c7}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.note{margin-top:16px;padding:16px 20px;border-left:3px solid var(--b);background:linear-gradient(90deg,rgba(37,99,235,.18),transparent);border-radius:0 12px 12px 0;font-size:13px;color:#d4def0}
-table{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--border);border-radius:14px;overflow:hidden}th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border)}th{background:#15243e;color:var(--b);font-size:11px;text-transform:uppercase;letter-spacing:.1em}td{color:#d5dce8}
-.tw{overflow-x:auto}.pill{display:inline-block;margin:3px;padding:5px 10px;border:1px solid var(--border);border-radius:99px;font-size:10px;color:#aeb8c8}
-.bad strong{color:#ff929d}.lead{color:var(--muted);max-width:760px;font-size:15px;margin:-20px 0 40px}
-@media(max-width:900px){.g2,.g4{grid-template-columns:1fr}}</style></head><body>
-<a href="#" class="logo">Uni<span>AI</span></a>
-<header class="hero"><div class="w"><div class="kick">The complete test guide · IELTS</div><h1>Crack<br><span class="g">IELTS.</span></h1><p class="sub">Everything international students need: formats, band scores, country requirements, an 8-week plan, test-day tips and the mistakes that cost bands.</p><button class="btn" onclick="document.getElementById('s1').scrollIntoView()">Start the guide</button>
-<div class="stats"><div><strong>0–9</strong><span>Band scale</span></div><div><strong>4</strong><span>Modules</span></div><div><strong>~2h45</strong><span>Test length</span></div><div><strong>2 yrs</strong><span>Usual validity</span></div></div></div></header><section id="s1"><div class="w"><div class="kick reveal">01 · Start here</div><h2 class="reveal">What is IELTS, and do you need it?</h2><p class=lead>Know what you are preparing for before you book anything.</p><div class="g2"><div class="card reveal"><h3>What it is</h3><p>The International English Language Testing System measures English in listening, reading, writing and speaking. It is accepted by universities, employers and immigration authorities in many countries.</p></div><div class="card reveal"><h3>Do you need it?</h3><p>Usually if your previous degree was not taught in English or your nationality is not on the university's exempt list. Some universities accept a medium-of-instruction letter instead, so check first.</p></div></div><div class="note reveal">Always confirm the exact test type, overall band and minimum per module on your course page. These change by programme.</div></div></section><section class=alt id="s2"><div class="w"><div class="kick reveal">02 · Test format</div><h2 class="reveal">Four modules, one band score.</h2><p class=lead>Each module is scored from 0 to 9, then averaged into your overall band.</p><div class="g4"><article class="card reveal"><div class="num">L</div><h3>Listening</h3><p>About 30 minutes plus transfer time, 40 questions across 4 recordings. You hear each recording once.</p></article><article class="card reveal"><div class="num">R</div><h3>Reading</h3><p>60 minutes, 40 questions, 3 long texts. Includes matching, True/False/Not Given and summary completion.</p></article><article class="card reveal"><div class="num">W</div><h3>Writing</h3><p>60 minutes. Task 1 (about 20 min): describe a graph or write a letter, 150+ words. Task 2 (about 40 min): essay, 250+ words. Task 2 carries more weight.</p></article><article class="card reveal"><div class="num">S</div><h3>Speaking</h3><p>11–14 minutes face to face with an examiner, in three parts: introduction, a talk on a topic, and a discussion.</p></article></div><div class="note reveal">Listening, Reading and Writing are taken the same day. Speaking may be on the same day or within a few days either side.</div></div></section><section id="s3"><div class="w"><div class="kick reveal">03 · Versions</div><h2 class="reveal">Academic, General Training or UKVI?</h2><div class="tw reveal"><table><tr><th>Version</th><th>Best for</th><th>Key difference</th></tr><tr><td>Academic</td><td>University degrees, most study abroad</td><td>Academic reading and writing tasks (graphs, essays)</td></tr><tr><td>General Training</td><td>Work or migration, some school-level study</td><td>Everyday reading, letter writing</td></tr><tr><td>IELTS for UKVI</td><td>UK visa routes that require it</td><td>Same format as Academic or GT, taken at approved centres</td></tr><tr><td>Computer-delivered</td><td>Faster results, flexible dates</td><td>Same content; format of delivery differs</td></tr></table></div><div class="note reveal">Most applicants to universities abroad need Academic. If your university asks for UKVI, a normal IELTS will not be enough.</div></div></section><section class=alt id="s4"><div class="w"><div class="kick reveal">04 · Scoring</div><h2 class="reveal">What do the bands actually mean?</h2><div class="tw reveal"><table><tr><th>Band</th><th>Level</th><th>Meaning</th></tr><tr><td>9</td><td>Expert</td><td>Full command, fully appropriate</td></tr><tr><td>8</td><td>Very good</td><td>Occasional unsystematic errors</td></tr><tr><td>7</td><td>Good</td><td>Handles complex language well, some errors</td></tr><tr><td>6</td><td>Competent</td><td>Generally effective despite errors</td></tr><tr><td>5</td><td>Modest</td><td>Partial command, frequent problems</td></tr><tr><td>4 and below</td><td>Limited</td><td>Basic competence only</td></tr></table></div><div class="note reveal">Overall band is the average of the four modules, rounded to the nearest half band.</div></div></section><section id="s5"><div class="w"><div class="kick reveal">05 · Requirements</div><h2 class="reveal">What scores do countries usually ask for?</h2><p class=lead>Typical ranges to help you set a target, not guaranteed requirements.</p><div class="tw reveal"><table><tr><th>Destination</th><th>Typical undergraduate</th><th>Typical postgraduate</th></tr><tr><td>UK</td><td>6.0–6.5</td><td>6.5–7.0</td></tr><tr><td>Canada</td><td>6.0–6.5</td><td>6.5</td></tr><tr><td>Australia</td><td>6.0–6.5</td><td>6.5–7.0</td></tr><tr><td>Germany (English programmes)</td><td>6.0–6.5</td><td>6.5</td></tr><tr><td>Netherlands</td><td>6.0–6.5</td><td>6.5</td></tr><tr><td>USA</td><td>Varies; many prefer TOEFL or Duolingo</td><td>6.5–7.0 where accepted</td></tr></table></div><div class="note reveal">These are common ranges, not rules. Medicine, law and competitive courses often ask for 7.0 or higher, and visa routes can have their own minimums. Verify on the official course and visa pages.</div></div></section><section class=alt id="s6"><div class="w"><div class="kick reveal">06 · Prep plan</div><h2 class="reveal">An 8-week plan you can actually follow.</h2><div class="tl"><div class="step reveal"><div class="dot"></div><small>WEEK 1</small><h3>Diagnose</h3><p style="color:var(--muted);font-size:13px;margin:0">Take a full timed mock. Note your band in each module and set a target for each.</p></div><div class="step reveal"><div class="dot"></div><small>WEEKS 2–3</small><h3>Fix the foundations</h3><p style="color:var(--muted);font-size:13px;margin:0">Listening: practise note-taking and spelling. Reading: learn each question type. Build 15 new words a day.</p></div><div class="step reveal"><div class="dot"></div><small>WEEKS 4–5</small><h3>Writing and speaking</h3><p style="color:var(--muted);font-size:13px;margin:0">Write 2 Task 1 and 2 Task 2 pieces a week and get feedback. Record yourself answering Speaking Part 2.</p></div><div class="step reveal"><div class="dot"></div><small>WEEKS 6–7</small><h3>Timed practice</h3><p style="color:var(--muted);font-size:13px;margin:0">Do full mocks under exam conditions. Review every mistake and keep an error log.</p></div><div class="step reveal"><div class="dot"></div><small>WEEK 8</small><h3>Polish and rest</h3><p style="color:var(--muted);font-size:13px;margin:0">Light revision, check ID and test centre route, and sleep well before test day.</p></div></div></div></section><section id="s7"><div class="w"><div class="kick reveal">07 · Module tips</div><h2 class="reveal">What lifts each band.</h2><div class="g2"><article class="card reveal"><div class="num">L</div><h3>Listening</h3><p>Read the questions before the audio. Watch for spelling, plurals and word limits; wrong spelling loses marks.</p></article><article class="card reveal"><div class="num">R</div><h3>Reading</h3><p>Do not read every word. Skim for structure, find keywords, and manage your time at about 20 minutes per passage.</p></article><article class="card reveal"><div class="num">W</div><h3>Writing</h3><p>Answer every part of the question, structure clearly and use varied but accurate grammar. Do not memorise essays.</p></article><article class="card reveal"><div class="num">S</div><h3>Speaking</h3><p>Extend answers with reasons and examples. Natural, fluent speech beats memorised scripts.</p></article></div></div></section><section class=alt id="s8"><div class="w"><div class="kick reveal">08 · Booking</div><h2 class="reveal">How to register and what to carry.</h2><div class="g2"><div class="card reveal"><h3>Booking</h3><p>Register through an official IELTS test centre (such as British Council or IDP in India), choose paper or computer format, pick a date and pay the fee. Check the current fee on the centre's site.</p></div><div class="card reveal"><h3>Test day</h3><p>Carry the same ID you registered with, arrive early, and leave bags and phones as instructed. Results are usually available within days for computer tests and about 13 days for paper tests.</p></div></div></div></section><section id="s9"><div class="w"><div class="kick reveal">09 · Avoid these</div><h2 class="reveal">Mistakes that cost bands.</h2><div class="grid"><article class="card bad reveal"><div class="num">01</div><h3>Memorised answers</h3><p>Examiners recognise scripts and mark them down.</p></article><article class="card bad reveal"><div class="num">02</div><h3>Ignoring word counts</h3><p>Under-length writing loses marks.</p></article><article class="card bad reveal"><div class="num">03</div><h3>Skipping timed practice</h3><p>Knowing English is not the same as finishing on time.</p></article><article class="card bad reveal"><div class="num">04</div><h3>Wrong test type</h3><p>Booking General instead of Academic wastes the fee.</p></article><article class="card bad reveal"><div class="num">05</div><h3>Last-minute booking</h3><p>Popular dates fill up before deadlines.</p></article><article class="card bad reveal"><div class="num">06</div><h3>Neglecting Speaking</h3><p>Many students prepare it last, and it shows.</p></article></div></div></section><section class=alt id="s10"><div class="w"><div class="kick reveal">10 · FAQ</div><h2 class="reveal">Quick answers.</h2><div class="faq"><div class="faq-item"><button class="faq-q">How long should I prepare?<span>+</span></button><p class="faq-a">Many students plan 6–12 weeks, depending on their starting level and target band.</p></div><div class="faq-item"><button class="faq-q">Can I retake a single module?<span>+</span></button><p class="faq-a">IELTS One Skill Retake is available in some places; check with your test centre.</p></div><div class="faq-item"><button class="faq-q">Do universities see all my attempts?<span>+</span></button><p class="faq-a">You send the results you choose; policies differ, so check each institution.</p></div><div class="faq-item"><button class="faq-q">Is the computer test easier?<span>+</span></button><p class="faq-a">The content is the same. Choose the format you are more comfortable with.</p></div><div class="faq-item"><button class="faq-q">How long is my score valid?<span>+</span></button><p class="faq-a">Usually two years for most uses, but institutions set their own rules.</p></div><div class="faq-item"><button class="faq-q">What if my score is just below?<span>+</span></button><p class="faq-a">Ask the university about conditional offers or pre-sessional English courses.</p></div></div></div></section><footer><div class="w">UniAI · Plan smarter. Go Farther. Verify all details with the official IELTS website and your institution.</div></footer>
-<script>const o=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('v');o.unobserve(x.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(e=>o.observe(e));
-document.querySelectorAll('.faq-q').forEach(b=>b.onclick=()=>{const i=b.parentElement,w=i.classList.contains('open');document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));if(!w)i.classList.add('open')})</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A practical IELTS guide covering test formats, band scores, study plans, module strategies, booking, and test-day preparation.">
+  <title>UniAI | IELTS Master Guide</title>
+  <style>
+    /* =========================================================
+       UNIAI IELTS GUIDE — theme-aware, responsive, self-contained
+       Theme priority: UniAI localStorage key > data-theme attrs > OS
+       ========================================================= */
+    :root {
+      color-scheme: light;
+      --bg:#f5f7fb; --surface:#ffffff; --surface-2:#edf3fb; --text:#142033;
+      --muted:#5b687d; --border:#dbe3ef; --primary:#315fe8; --accent:#0b9dc7;
+      --soft-blue:rgba(49,95,232,.09); --shadow:0 18px 50px rgba(31,48,79,.09);
+      --nav-bg:rgba(255,255,255,.88); --hero-overlay:rgba(8,20,43,.76);
+      --good:#16845b; --warn:#a85c08; --bad:#c13d50;
+    }
+    html[data-guide-theme="dark"] {
+      color-scheme:dark;
+      --bg:#080e1c; --surface:#101b2e; --surface-2:#15243b; --text:#f4f7fd;
+      --muted:#a9b6ca; --border:#263752; --primary:#7192ff; --accent:#4ed3f0;
+      --soft-blue:rgba(113,146,255,.13); --shadow:0 18px 50px rgba(0,0,0,.25);
+      --nav-bg:rgba(8,14,28,.88); --hero-overlay:rgba(4,9,20,.79);
+      --good:#68d5a7; --warn:#ffca80; --bad:#ff8b9a;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:90px}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;transition:background .2s,color .2s}
+    img{display:block;max-width:100%} a{color:var(--primary);text-underline-offset:3px}
+    button,input,select{font:inherit} button{cursor:pointer}
+    .progress{height:3px;position:fixed;top:0;left:0;width:0;z-index:100;background:linear-gradient(90deg,var(--primary),var(--accent))}
+    .topbar{position:sticky;top:0;z-index:50;background:var(--nav-bg);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+    .topbar-inner{width:min(1200px,92vw);margin:auto;min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{font-size:22px;font-weight:900;letter-spacing:-1px;text-decoration:none;color:var(--text)}.brand span{color:var(--primary)}
+    .nav{display:flex;align-items:center;gap:18px;overflow:auto;white-space:nowrap}.nav a{font-size:12px;font-weight:750;color:var(--muted);text-decoration:none}.nav a:hover{color:var(--primary)}
+    .theme-chip{border:1px solid var(--border);border-radius:99px;padding:7px 11px;background:var(--surface);color:var(--text);font-size:12px;font-weight:750;white-space:nowrap}
+    .wrap{width:min(1120px,90vw);margin:auto}.hero{min-height:660px;display:flex;align-items:center;color:white;background:linear-gradient(90deg,var(--hero-overlay),rgba(8,20,43,.25)),url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=2200&q=85') center 45%/cover no-repeat;position:relative}
+    .hero-inner{padding:100px 0 72px;max-width:790px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.19em;font-weight:850;color:var(--accent)}
+    .hero .eyebrow{color:#7fe7ff}.hero h1{font-size:clamp(52px,9vw,104px);line-height:.91;letter-spacing:-.075em;margin:18px 0 24px}.gradient-text{background:linear-gradient(90deg,#9db5ff,#7ce7f4);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero p{max-width:650px;color:#e5ebf7;font-size:clamp(16px,2vw,19px)}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.btn{border:0;border-radius:12px;padding:12px 18px;background:linear-gradient(120deg,#315fe8,#0b9dc7);color:#fff;font-weight:850;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.btn.secondary{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35)}
+    .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:44px}.stat{padding:15px 17px;border:1px solid rgba(255,255,255,.23);border-radius:15px;background:rgba(9,18,38,.36);backdrop-filter:blur(10px)}.stat strong{display:block;font-size:25px}.stat span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#d5e1f3}
+    section{padding:82px 0}.section-alt{background:var(--surface-2)}.section-head{max-width:800px;margin-bottom:30px}.section-head h2{font-size:clamp(32px,5vw,55px);line-height:1.03;letter-spacing:-.055em;margin:10px 0 16px}.lead{font-size:16px;color:var(--muted);max-width:760px;margin:0}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .card{border:1px solid var(--border);border-radius:20px;padding:23px;background:var(--surface);box-shadow:var(--shadow);min-width:0}.card h3{margin:9px 0 7px;font-size:19px;letter-spacing:-.025em}.card p{margin:0;color:var(--muted);font-size:14px}.icon-box{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:var(--soft-blue);font-size:22px}.metric{font-size:35px;font-weight:900;color:var(--primary);line-height:1.1}.tag{display:inline-block;border:1px solid var(--border);padding:4px 9px;border-radius:99px;font-size:11px;color:var(--muted);margin:3px 4px 0 0}
+    .note{padding:17px 20px;margin-top:20px;border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:12px;background:var(--soft-blue);font-size:14px}.note strong{color:var(--primary)}
+    .table-wrap{overflow:auto;border:1px solid var(--border);border-radius:16px;background:var(--surface);box-shadow:var(--shadow)}table{width:100%;border-collapse:collapse;min-width:640px;font-size:13px}th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}th{background:var(--surface-2);color:var(--primary);font-size:11px;text-transform:uppercase;letter-spacing:.09em}td{color:var(--muted)}td strong{color:var(--text)}tbody tr:last-child td{border-bottom:0}tbody tr:hover td{background:var(--soft-blue)}
+    .module-icon{font-size:38px;font-weight:950;color:var(--primary);letter-spacing:-.07em}.card-image{width:100%;height:180px;object-fit:cover;border-radius:13px;margin-bottom:18px}.caption{font-size:11px;color:var(--muted);margin-top:8px}
+    .flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;align-items:stretch}.flow-step{position:relative;border:1px solid var(--border);border-radius:16px;background:var(--surface);padding:17px}.flow-step:not(:last-child):after{content:'→';position:absolute;right:-15px;top:40%;z-index:2;color:var(--primary);font-size:20px;font-weight:900}.flow-step b{display:block;color:var(--primary);font-size:12px;letter-spacing:.07em;text-transform:uppercase}.flow-step span{display:block;font-size:14px;font-weight:800;margin-top:6px}.flow-step small{display:block;color:var(--muted);font-size:12px;margin-top:6px}
+    .timeline{border-left:2px solid var(--primary);margin:10px 0 0 12px;padding-left:28px}.timeline-item{position:relative;padding:0 0 26px}.timeline-item:before{content:'';position:absolute;left:-36px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--surface);border:3px solid var(--primary)}.timeline-item small{font-size:11px;font-weight:900;color:var(--primary);letter-spacing:.12em}.timeline-item h3{margin:4px 0;font-size:18px}.timeline-item p{margin:0;color:var(--muted);font-size:14px}
+    .calculator{display:grid;grid-template-columns:1fr 1fr;gap:22px}.calc-panel{padding:24px;border:1px solid var(--border);border-radius:20px;background:var(--surface)}.field{display:grid;gap:7px;margin:14px 0}.field label{font-size:13px;font-weight:800}.field input,.field select{width:100%;border:1px solid var(--border);background:var(--bg);color:var(--text);padding:11px 12px;border-radius:10px}.result-band{font-size:52px;line-height:1;font-weight:950;color:var(--primary)}.result-caption{font-size:12px;color:var(--muted)}
+    .checklist{display:grid;gap:10px}.check-item{display:flex;align-items:flex-start;gap:11px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface);font-size:14px}.check-item input{margin-top:5px;accent-color:var(--primary);width:16px;height:16px;flex-shrink:0}.check-progress{height:8px;border-radius:99px;background:var(--border);overflow:hidden;margin:13px 0}.check-progress span{height:100%;display:block;width:0;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .2s}.small-muted{font-size:12px;color:var(--muted)}
+    .faq{max-width:850px}.faq-item{border-bottom:1px solid var(--border)}.faq-q{display:flex;width:100%;justify-content:space-between;gap:15px;align-items:center;padding:18px 0;border:0;background:none;color:var(--text);text-align:left;font-weight:850}.faq-a{display:none;color:var(--muted);font-size:14px;padding:0 0 18px}.faq-item.open .faq-a{display:block}.faq-q span{color:var(--primary);font-size:22px}
+    .footer{padding:38px 0;border-top:1px solid var(--border);color:var(--muted);font-size:12px}.footer-inner{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.backtop{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text);box-shadow:var(--shadow);z-index:20}
+    @media(max-width:900px){.nav{display:none}.grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}.flow{grid-template-columns:1fr}.flow-step:not(:last-child):after{content:'↓';right:50%;top:auto;bottom:-21px}.hero{min-height:600px}.calculator{grid-template-columns:1fr}}
+    @media(max-width:620px){section{padding:60px 0}.grid,.grid.two,.grid.four{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.hero h1{font-size:clamp(48px,15vw,76px)}.hero-inner{padding:85px 0 48px}.topbar-inner{min-height:60px}.card{padding:19px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+  </style>
+</head>
+<body>
+  <div class="progress" id="readingProgress" aria-hidden="true"></div>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top" aria-label="UniAI home">Uni<span>AI</span></a>
+      <nav class="nav" aria-label="Guide navigation">
+        <a href="#format">Format</a><a href="#versions">Test types</a><a href="#scores">Bands</a><a href="#plan">Study plan</a><a href="#tools">Tools</a><a href="#testday">Test day</a>
+      </nav>
+      <button class="theme-chip" id="themeButton" type="button" aria-label="Toggle guide theme">◐ Theme</button>
+    </div>
+  </header>
+
+  <main id="top">
+    <header class="hero">
+      <div class="wrap hero-inner">
+        <div class="eyebrow">The practical international student guide · 2026 edition</div>
+        <h1>Make your next<br><span class="gradient-text">IELTS band</span><br>happen.</h1>
+        <p>A clear, visual guide to the IELTS test: modules, test types, band scores, target setting, an 8-week preparation roadmap, practice strategies and test-day readiness.</p>
+        <div class="actions"><a class="btn" href="#start">Explore the guide ↓</a><a class="btn secondary" href="#plan">Jump to the 8-week plan</a></div>
+        <div class="stats" aria-label="IELTS quick facts"><div class="stat"><strong>0–9</strong><span>Band scale</span></div><div class="stat"><strong>4</strong><span>Test modules</span></div><div class="stat"><strong>~2h 45m</strong><span>Test duration</span></div><div class="stat"><strong>4 skills</strong><span>One test profile</span></div></div>
+      </div>
+    </header>
+
+    <section id="start">
+      <div class="wrap">
+        <div class="section-head"><div class="eyebrow">01 · Start here</div><h2>Know the test before you book it.</h2><p class="lead">IELTS measures your ability to use English in listening, reading, writing and speaking. Your first job is to confirm which test and score your university, employer or visa route actually requires.</p></div>
+        <div class="grid two">
+          <article class="card"><img class="card-image" loading="lazy" alt="Student studying at a desk with notebooks" src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=900&q=80"><h3>What IELTS is for</h3><p>Universities, professional bodies, employers and immigration authorities may use IELTS results as evidence of English proficiency. Acceptance and minimum scores depend on the specific institution or route.</p></article>
+          <article class="card"><img class="card-image" loading="lazy" alt="Student reviewing notes and planning study" src="https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=900&q=80"><h3>What to verify first</h3><p>Check the exact test version, overall band, minimum score for each module, result deadline, and whether an alternative English qualification or exemption is accepted.</p></article>
+        </div>
+        <div class="note"><strong>Important:</strong> The country ranges in this guide are planning examples only. Always verify the current requirement on the official course, institution and visa pages before paying for a test.</div>
+      </div>
+    </section>
+
+    <section class="section-alt" id="format">
+      <div class="wrap">
+        <div class="section-head"><div class="eyebrow">02 · Test format</div><h2>Four modules. Four different strategies.</h2><p class="lead">The overall score is based on Listening, Reading, Writing and Speaking. Build a separate practice routine for each module instead of preparing for “English” in a vague way.</p></div>
+        <div class="grid four">
+          <article class="card"><div class="module-icon">L</div><h3>Listening</h3><p>About 30 minutes for the test, with 4 recordings and 40 questions. Audio is played once. Pay attention to spelling, plurals and word limits.</p><div class="tag">40 questions</div><div class="tag">4 recordings</div></article>
+          <article class="card"><div class="module-icon">R</div><h3>Reading</h3><p>60 minutes and 40 questions. Academic and General Training use different reading texts. Work strategically with keywords and evidence.</p><div class="tag">60 minutes</div><div class="tag">40 questions</div></article>
+          <article class="card"><div class="module-icon">W</div><h3>Writing</h3><p>60 minutes. Task 1 is at least 150 words; Task 2 is at least 250 words and carries greater weight in the Writing score.</p><div class="tag">Task 1 + Task 2</div><div class="tag">60 minutes</div></article>
+          <article class="card"><div class="module-icon">S</div><h3>Speaking</h3><p>Usually 11–14 minutes with an examiner. Includes an introduction, an individual long turn and a follow-up discussion.</p><div class="tag">3 parts</div><div class="tag">11–14 minutes</div></article>
+        </div>
+        <div class="table-wrap" style="margin-top:22px"><table><thead><tr><th>Module</th><th>What to practise</th><th>Common trap</th><th>Useful habit</th></tr></thead><tbody>
+          <tr><td><strong>Listening</strong></td><td>Prediction, note completion, maps, multiple choice</td><td>Missing a correction or writing a word incorrectly</td><td>Review transcript and spelling after each practice</td></tr>
+          <tr><td><strong>Reading</strong></td><td>Skimming, scanning, matching headings, T/F/NG</td><td>Confusing “not given” with “false”</td><td>Underline the exact evidence in the passage</td></tr>
+          <tr><td><strong>Writing</strong></td><td>Task response, paragraphing, coherence, grammar</td><td>Writing off-topic or using memorised templates</td><td>Plan briefly, then leave time to proofread</td></tr>
+          <tr><td><strong>Speaking</strong></td><td>Fluency, relevant detail, pronunciation, flexibility</td><td>Short answers or rehearsed scripts</td><td>Answer, explain why, then add a real example</td></tr>
+        </tbody></table></div>
+      </div>
+    </section>
+
+    <section id="versions">
+      <div class="wrap">
+        <div class="section-head"><div class="eyebrow">03 · Choose the right test</div><h2>Academic, General Training or UKVI?</h2><p class="lead">Choose based on the requirement you need to meet—not based on which version sounds easier.</p></div>
+        <div class="table-wrap"><table><thead><tr><th>Test / format</th><th>Often used for</th><th>What differs</th><th>Before you book</th></tr></thead><tbody>
+          <tr><td><strong>IELTS Academic</strong></td><td>University study and some professional registration</td><td>Academic-style reading and Writing Task 1 data/visual description</td><td>Confirm your programme accepts IELTS Academic</td></tr>
+          <tr><td><strong>IELTS General Training</strong></td><td>Some migration, work and non-degree pathways</td><td>Everyday and workplace reading; letter writing in Task 1</td><td>Check the exact pathway requirement</td></tr>
+          <tr><td><strong>IELTS for UKVI</strong></td><td>Specific UK visa routes that require an approved SELT</td><td>Must meet the relevant UKVI test and centre rules</td><td>Confirm visa category and approved test location</td></tr>
+          <tr><td><strong>Computer-delivered / paper</strong></td><td>Delivery options, where available</td><td>Same underlying skills assessed; test-day experience differs</td><td>Choose the format you have practised and verify local availability</td></tr>
+        </tbody></table></div>
+        <div class="note"><strong>Decision flow:</strong> If applying to a university, check the course page first. If the requirement names Academic, choose Academic. If a UK visa route names an approved UKVI/SELT test, follow that exact requirement. If applying for migration or work, check the official authority’s instructions.</div>
+      </div>
+    </section>
+
+    <section class="section-alt" id="scores">
+      <div class="wrap">
+        <div class="section-head"><div class="eyebrow">04 · Band scores</div><h2>Understand the band scale.</h2><p class="lead">IELTS uses bands from 0 to 9. The descriptors below are simplified orientation—not a substitute for the official band descriptors.</p></div>
+        <div class="table-wrap"><table><thead><tr><th>Band</th><th>Common label</th><th>Plain-language guide</th></tr></thead><tbody>
+          <tr><td><strong>9</strong></td><td>Expert</td><td>Full operational command of English, with very high accuracy and appropriateness.</td></tr>
+          <tr><td><strong>8</strong></td><td>Very good</td><td>Very strong command; occasional inaccuracies or misunderstandings may occur.</td></tr>
+          <tr><td><strong>7</strong></td><td>Good</td><td>Handles complex language and detailed reasoning well, though some errors remain.</td></tr>
+          <tr><td><strong>6</strong></td><td>Competent</td><td>Generally effective use despite errors and some misunderstanding.</td></tr>
+          <tr><td><strong>5</strong></td><td>Modest</td><td>Partial command; can manage familiar communication but often struggles with complexity.</td></tr>
+          <tr><td><strong>4 and below</strong></td><td>Limited to very limited</td><td>More restricted ability; performance depends heavily on familiar situations and support.</td></tr>
+        </tbody></table></div>
+        <div class="grid two" style="margin-top:22px">
+          <article class="card"><h3>How the overall band works</h3><p>The four module scores are averaged and the result is rounded to the nearest half or whole band according to IELTS scoring rules. Your target may also include a minimum for each individual module.</p></article>
+          <article class="card"><h3>Overall score is not the whole story</h3><p>A programme might ask for an overall 6.5 with no component below 6.0. Meeting the overall score alone would not satisfy that example if one module is below the minimum.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="requirements">
+      <div class="wrap">
+        <div class="section-head"><div class="eyebrow">05 · Setting a target</div><h2>Country ranges: use them as a starting point.</h2><p class="lead">Requirements vary by university, degree, department, profession and visa category. These broad ranges are illustrative planning guidance, not official country-wide rules.</p></div>
+        <div class="table-wrap"><table><thead><tr><th>Destination</th><th>Illustrative undergraduate range</th><th>Illustrative postgraduate range</th><th>Check especially</th></tr></thead><tbody>
+          <tr><td><strong>United Kingdom</strong></td><td>6.0–6.5</td><td>6.5–7.0</td><td>Course minimums and visa route</td></tr>
+          <tr><td><strong>Canada</strong></td><td>6.0–6.5</td><td>Often around 6.5, varies</td><td>Institution and programme requirements</td></tr>
+          <tr><td><strong>Australia</strong></td><td>6.0–6.5</td><td>6.5–7.0</td><td>Course and registration rules</td></tr>
+          <tr><td><strong>Germany</strong></td><td>6.0–6.5 for some English programmes</td><td>Often around 6.5, varies</td><td>Language requirements listed by the programme</td></tr>
+          <tr><td><strong>Netherlands</strong></td><td>6.0–6.5</td><td>Often around 6.5, varies</td><td>Programme-specific minimums</td></tr>
+          <tr><td><strong>United States</strong></td><td>Varies widely</td><td>Varies widely</td><td>Whether IELTS is accepted and the exact minimum</td></tr>
+        </tbody></table></div>
+        <div class="note"><strong>Target-setting rule:</strong> Write down the required overall band, each module minimum, the score submission deadline and the result-validity policy. Save the official page or email so you can re-check it later.</div>
+      </div>
+    </section>
+
+    <section class="section-alt" id="plan">
+      <div class="wrap">
+        <div class="section-head"><div class="eyebrow">06 · Preparation roadmap</div><h2>An 8-week plan with a purpose.</h2><p class="lead">Adapt the weekly workload to your starting level and deadline. The key is a repeatable cycle: practise, check answers, diagnose the error and practise the weak point again.</p></div>
+        <div class="grid two">
+          <div class="card"><div class="timeline">
+            <div class="timeline-item"><small>WEEK 1 · DIAGNOSE</small><h3>Find your baseline</h3><p>Complete a timed diagnostic or full mock. Record each module score, question types missed and the three highest-impact weaknesses.</p></div>
+            <div class="timeline-item"><small>WEEKS 2–3 · BUILD</small><h3>Fix foundations</h3><p>Practise question types deliberately. Build vocabulary in context, review grammar patterns and listen/read actively rather than passively.</p></div>
+            <div class="timeline-item"><small>WEEKS 4–5 · PRODUCE</small><h3>Focus on Writing and Speaking</h3><p>Write Task 1 and Task 2 responses each week, seek feedback and record Speaking answers. Review structure, relevance and clarity.</p></div>
+            <div class="timeline-item"><small>WEEKS 6–7 · TIME</small><h3>Train under exam conditions</h3><p>Complete timed sections and at least one full mock. Keep an error log and repeat practice for recurring mistakes.</p></div>
+            <div class="timeline-item"><small>WEEK 8 · REFINE</small><h3>Polish and prepare</h3><p>Review common errors, confirm booking and ID requirements, plan your route and protect your sleep before test day.</p></div>
+          </div></div>
+          <div class="card"><img class="card-image" loading="lazy" alt="Open notebook and study materials on a desk" src="https://images.unsplash.com/photo-1455390582262-044cdead?auto=format&fit=crop&w=900&q=80" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=900&q=80'"><h3>Weekly study rhythm</h3><div class="table-wrap" style="box-shadow:none"><table style="min-width:0"><thead><tr><th>Day</th><th>Suggested focus</th></tr></thead><tbody><tr><td>Mon</td><td>Listening practice + error review</td></tr><tr><td>Tue</td><td>Reading question types</td></tr><tr><td>Wed</td><td>Writing Task 1</td></tr><tr><td>Thu</td><td>Speaking recording + feedback</td></tr><tr><td>Fri</td><td>Writing Task 2</td></tr><tr><td>Sat</td><td>Timed section or mock test</td></tr><tr><td>Sun</td><td>Review, vocabulary and rest</td></tr></tbody></table></div><p class="small-muted" style="margin-top:12px">Consistency matters more than following this exact timetable. Move sessions around your school, work and family schedule.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tools">
+      <div class="wrap">
+        <div class="section-head"><div class="eyebrow">07 · Interactive tools</div><h2>Make your target concrete.</h2><p class="lead">Use the calculator to estimate an overall band from four practice scores. This is a learning aid; official IELTS rounding and institutional rules should always be checked.</p></div>
+        <div class="calculator">
+          <div class="calc-panel"><h3>Practice band calculator</h3><p class="small-muted">Enter your latest Listening, Reading, Writing and Speaking practice bands.</p>
+            <div class="field"><label for="listening">Listening band</label><select id="listening"><option>4</option><option>4.5</option><option>5</option><option>5.5</option><option>6</option><option>6.5</option><option>7</option><option>7.5</option><option>8</option><option>8.5</option><option>9</option></select></div>
+            <div class="field"><label for="reading">Reading band</label><select id="reading"><option>4</option><option>4.5</option><option>5</option><option>5.5</option><option>6</option><option>6.5</option><option>7</option><option>7.5</option><option>8</option><option>8.5</option><option>9</option></select></div>
+            <div class="field"><label for="writing">Writing band</label><select id="writing"><option>4</option><option>4.5</option><option>5</option><option>5.5</option><option>6</option><option>6.5</option><option>7</option><option>7.5</option><option>8</option><option>8.5</option><option>9</option></select></div>
+            <div class="field"><label for="speaking">Speaking band</label><select id="speaking"><option>4</option><option>4.5</option><option>5</option><option>5.5</option><option>6</option><option>6.5</option><option>7</option><option>7.5</option><option>8</option><option>8.5</option><option>9</option></select></div>
+          </div>
+          <div class="calc-panel"><div class="eyebrow">Estimated average</div><div class="result-band" id="overallResult" aria-live="polite">4.0</div><p class="result-caption" id="averageDetail">Average of the four entered practice bands.</p><div class="note"><strong>Use it well:</strong> Compare this estimate with the requirement you saved. Then identify the module that most needs attention—especially if the institution has a component minimum.</div><h3 style="margin-top:25px">Your review prompts</h3><ul class="small-muted"><li>Which question type caused the most errors?</li><li>Was the error caused by language, strategy or timing?</li><li>What one practice task will address it next?</li></ul></div>
+        </div>
+        <div class="section-head" style="margin-top:48px"><h2 style="font-size:clamp(27px,4vw,38px)">Choose your next step</h2></div>
+        <div class="flow" aria-label="IELTS preparation flowchart"><div class="flow-step"><b>Step 1</b><span>Check the requirement</span><small>Confirm test type, overall band and module minimums.</small></div><div class="flow-step"><b>Step 2</b><span>Take a diagnostic</span><small>Get a realistic baseline under timed conditions.</small></div><div class="flow-step"><b>Step 3</b><span>Find the gap</span><small>Compare your baseline with your target score.</small></div><div class="flow-step"><b>Step 4</b><span>Practise deliberately</span><small>Focus on the weak skill and review every error.</small></div><div class="flow-step"><b>Step 5</b><span>Re-test and adjust</span><small>Use a new timed practice to measure progress.</small></div></div>
+      </div>
+    </section>
+
+    <section class="section-alt" id="tips">
+      <div class="wrap">
+        <div class="section-head"><div class="eyebrow">08 · Module strategies</div><h2>Small habits, better practice.</h2></div>
+        <div class="grid two">
+          <article class="card"><div class="icon-box">🎧</div><h3>Listening: predict, then verify</h3><p>Use the question to predict the kind of answer needed. After practice, check the transcript and note whether you missed a synonym, a correction, a plural ending or a spelling detail.</p></article>
+          <article class="card"><div class="icon-box">📚</div><h3>Reading: prove each answer</h3><p>Skim for structure, scan for names/dates/key terms, then read the relevant lines carefully. For True/False/Not Given, decide only from what the text supports.</p></article>
+          <article class="card"><div class="icon-box">✍️</div><h3>Writing: answer the actual prompt</h3><p>Plan your position and paragraph purpose before writing. Use examples that support the question, keep the logic clear, and reserve a few minutes to check grammar and word choice.</p></article>
+          <article class="card"><div class="icon-box">🗣️</div><h3>Speaking: develop, don't memorise</h3><p>Give a direct answer, add a reason and then a concrete example or detail. Practise explaining unfamiliar topics naturally instead of memorising complete scripts.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="testday">
+      <div class="wrap">
+        <div class="section-head"><div class="eyebrow">09 · Booking and test day</div><h2>Be ready before the test begins.</h2><p class="lead">Follow the instructions from your own test centre. ID rules, arrival times, permitted belongings and result timelines can vary by location and delivery format.</p></div>
+        <div class="grid two">
+          <div class="card"><h3>Booking checklist</h3><div class="checklist" id="bookingChecklist">
+            <label class="check-item"><input type="checkbox"> I confirmed the exact IELTS test version required.</label>
+            <label class="check-item"><input type="checkbox"> I checked the test date against my application deadline.</label>
+            <label class="check-item"><input type="checkbox"> I used the official IELTS provider / test-centre booking route.</label>
+            <label class="check-item"><input type="checkbox"> I reviewed the current fee, cancellation and rescheduling policy.</label>
+            <label class="check-item"><input type="checkbox"> I checked the accepted ID and registration-name rules.</label>
+          </div><div class="check-progress"><span id="bookingProgress"></span></div><div class="small-muted" id="bookingCount" aria-live="polite">0 of 5 complete</div></div>
+          <div class="card"><h3>Night-before / test-day checklist</h3><div class="checklist" id="dayChecklist">
+            <label class="check-item"><input type="checkbox"> My original accepted ID is ready.</label>
+            <label class="check-item"><input type="checkbox"> I know the venue, route and required arrival time.</label>
+            <label class="check-item"><input type="checkbox"> I have checked the centre's rules for phones and personal items.</label>
+            <label class="check-item"><input type="checkbox"> I will eat, hydrate and get enough rest.</label>
+            <label class="check-item"><input type="checkbox"> I know how and when results will be released for my test.</label>
+          </div><div class="check-progress"><span id="dayProgress"></span></div><div class="small-muted" id="dayCount" aria-live="polite">0 of 5 complete</div></div>
+        </div>
+        <div class="note"><strong>Result timing:</strong> Delivery times differ by test format and location and can change. Check the current official guidance for your booking rather than relying on a general estimate.</div>
+      </div>
+    </section>
+
+    <section class="section-alt" id="mistakes">
+      <div class="wrap"><div class="section-head"><div class="eyebrow">10 · Avoid common mistakes</div><h2>Don't lose points to avoidable errors.</h2></div>
+        <div class="grid three">
+          <article class="card"><div class="metric">01</div><h3>Booking the wrong test</h3><p>Verify Academic, General Training or a required UKVI test before paying.</p></article>
+          <article class="card"><div class="metric">02</div><h3>Practising without review</h3><p>A score alone doesn't teach you. Identify why each mistake happened.</p></article>
+          <article class="card"><div class="metric">03</div><h3>Ignoring the clock</h3><p>Practise timing early, not only in the final week.</p></article>
+          <article class="card"><div class="metric">04</div><h3>Memorising essays or scripts</h3><p>Prepared language can become irrelevant or unnatural. Learn structure instead.</p></article>
+          <article class="card"><div class="metric">05</div><h3>Forgetting module minimums</h3><p>Check each skill requirement as well as the overall band.</p></article>
+          <article class="card"><div class="metric">06</div><h3>Leaving logistics late</h3><p>Check ID, venue, result deadline and booking policies in advance.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap"><div class="section-head"><div class="eyebrow">11 · FAQ</div><h2>Quick answers.</h2></div>
+        <div class="faq">
+          <div class="faq-item"><button class="faq-q" aria-expanded="false">How long should I prepare? <span>+</span></button><div class="faq-a">Many learners plan several weeks of preparation, but the right timeline depends on your current level, target band, study time and feedback access. Start with a diagnostic rather than choosing a timeline blindly.</div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false">Is the computer-delivered test easier? <span>+</span></button><div class="faq-a">The skills assessed are intended to be the same. Choose a delivery format based on your comfort with typing, reading on screen and the available local options.</div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false">Can I retake only one module? <span>+</span></button><div class="faq-a">IELTS One Skill Retake is available only under particular conditions and in participating locations. Check current eligibility and confirm that your receiving institution or authority accepts it.</div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false">How long is my score valid? <span>+</span></button><div class="faq-a">IELTS results are commonly treated as valid for two years, but the receiving institution or authority sets its own acceptance rules. Verify the policy that applies to your application.</div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false">What if I am just below the required score? <span>+</span></button><div class="faq-a">Check the official policy before deciding what to do next. Depending on the institution, options may include a retake, an accepted alternative test or an English preparation pathway—but none is guaranteed.</div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false">Where should I verify current information? <span>+</span></button><div class="faq-a">Use the official IELTS website and your test provider for test details, and the official university, professional body or immigration authority for the score requirement that applies to you.</div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-inner"><div><strong>UniAI · Plan smarter. Go farther.</strong><br>Use this guide for planning and preparation, not as a substitute for official requirements.</div><div><a href="https://ielts.org/" target="_blank" rel="noopener noreferrer">Official IELTS website ↗</a><br><span>Check current rules before booking.</span></div></div></footer>
+  <button class="backtop" type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+  <script>
+    /* Theme bridge: follows UniAI's `uniai-theme` setting where same-origin storage is shared. */
+    (() => {
+      const THEME_KEY = 'uniai-theme';
+      const root = document.documentElement;
+      const themeButton = document.getElementById('themeButton');
+      function detectTheme() {
+        try {
+          const stored = localStorage.getItem(THEME_KEY);
+          if (stored === 'dark' || stored === 'light') return stored;
+        } catch (_) {}
+        const attr = root.getAttribute('data-theme') || document.body?.getAttribute('data-theme') || document.body?.getAttribute('data-bs-theme');
+        if (attr === 'dark' || attr === 'light') return attr;
+        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      function applyTheme(theme) {
+        root.setAttribute('data-guide-theme', theme === 'dark' ? 'dark' : 'light');
+        if (themeButton) themeButton.textContent = theme === 'dark' ? '☀ Light guide' : '☾ Dark guide';
+      }
+      applyTheme(detectTheme());
+      themeButton?.addEventListener('click', () => {
+        const next = root.getAttribute('data-guide-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+      });
+      window.addEventListener('storage', event => { if (event.key === THEME_KEY) applyTheme(detectTheme()); });
+      const observer = new MutationObserver(() => applyTheme(detectTheme()));
+      observer.observe(root, {attributes:true, attributeFilter:['data-theme','data-bs-theme','class']});
+      if (document.body) observer.observe(document.body, {attributes:true, attributeFilter:['data-theme','data-bs-theme','class']});
+      if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => {
+        try { if (!localStorage.getItem(THEME_KEY)) applyTheme(detectTheme()); } catch (_) { applyTheme(detectTheme()); }
+      });
+    })();
+
+    /* Reading progress bar */
+    (() => {
+      const bar = document.getElementById('readingProgress');
+      const update = () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = `${max > 0 ? (window.scrollY / max) * 100 : 0}%`;
+      };
+      window.addEventListener('scroll', update, {passive:true});
+      window.addEventListener('resize', update);
+      update();
+    })();
+
+    /* Approximate overall-band helper: averages four values and rounds to nearest half band. */
+    (() => {
+      const ids = ['listening','reading','writing','speaking'];
+      const result = document.getElementById('overallResult');
+      const detail = document.getElementById('averageDetail');
+      function update() {
+        const values = ids.map(id => Number(document.getElementById(id).value));
+        const average = values.reduce((sum, value) => sum + value, 0) / values.length;
+        const rounded = Math.round(average * 2) / 2;
+        result.textContent = rounded.toFixed(1);
+        detail.textContent = `Raw average: ${average.toFixed(2)} · Rounded estimate: ${rounded.toFixed(1)}. Check official scoring rules for your use case.`;
+      }
+      ids.forEach(id => document.getElementById(id).addEventListener('change', update));
+      update();
+    })();
+
+    /* Checklist progress indicators */
+    (() => {
+      [['bookingChecklist','bookingProgress','bookingCount'],['dayChecklist','dayProgress','dayCount']].forEach(([listId, barId, countId]) => {
+        const list = document.getElementById(listId);
+        const checks = [...list.querySelectorAll('input[type="checkbox"]')];
+        const bar = document.getElementById(barId);
+        const count = document.getElementById(countId);
+        function update() {
+          const complete = checks.filter(item => item.checked).length;
+          bar.style.width = `${complete / checks.length * 100}%`;
+          count.textContent = `${complete} of ${checks.length} complete`;
+        }
+        checks.forEach(check => check.addEventListener('change', update));
+        update();
+      });
+    })();
+
+    /* Accessible FAQ accordion */
+    document.querySelectorAll('.faq-q').forEach(button => {
+      button.addEventListener('click', () => {
+        const item = button.closest('.faq-item');
+        const willOpen = !item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(other => {
+          other.classList.remove('open');
+          other.querySelector('.faq-q').setAttribute('aria-expanded','false');
+          other.querySelector('.faq-q span').textContent = '+';
+        });
+        if (willOpen) {
+          item.classList.add('open');
+          button.setAttribute('aria-expanded','true');
+          button.querySelector('span').textContent = '−';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

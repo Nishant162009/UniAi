@@ -1,13 +1,24 @@
-<!DOCTYPE html><html lang="en"><head><style id="auth-gate">html{visibility:hidden}
-.stats{display:flex;flex-wrap:wrap;gap:38px;margin-top:44px;padding-top:20px;border-top:1px solid rgba(255,255,255,.15)}.stats strong{display:block;font-size:26px}.stats span{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#a6b3c7}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style id="auth-gate">.stats{display:flex;flex-wrap:wrap;gap:38px;margin-top:44px;padding-top:20px;border-top:1px solid rgba(255,255,255,.15)}.stats strong{display:block;font-size:26px}.stats span{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#a6b3c7}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .note{margin-top:16px;padding:16px 20px;border-left:3px solid var(--b);background:linear-gradient(90deg,rgba(194,65,12,.25),transparent);border-radius:0 12px 12px 0;font-size:13px;color:#d4def0}
 table{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--border);border-radius:14px;overflow:hidden}th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border)}th{background:#15243e;color:var(--b);font-size:11px;text-transform:uppercase;letter-spacing:.1em}td{color:#d5dce8}
 .tw{overflow-x:auto}.pill{display:inline-block;margin:3px;padding:5px 10px;border:1px solid var(--border);border-radius:99px;font-size:10px;color:#aeb8c8}
 .bad strong{color:#ff929d}.lead{color:var(--muted);max-width:760px;font-size:15px;margin:-20px 0 40px}
 @media(max-width:900px){.g2,.g4{grid-template-columns:1fr}}.ph{height:340px;border-radius:22px;border:1px solid var(--border);margin:50px 0 0;background-size:cover;background-position:center;position:relative;overflow:hidden;background-color:var(--card)}.ph:after{content:attr(data-c);position:absolute;left:0;right:0;bottom:0;padding:40px 24px 18px;font-size:12px;color:#e6ebf5;background:linear-gradient(transparent,rgba(5,9,17,.92))}.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}.wk{border-left:3px solid #ff929d}.st{border-left:3px solid #4ade80}.cmp div{padding:18px;border-radius:14px;background:var(--card);font-size:13px;color:#d5dce8}.cmp small{display:block;font-weight:800;margin-bottom:6px;font-size:10px;letter-spacing:.1em;text-transform:uppercase}@media(max-width:900px){.cmp{grid-template-columns:1fr}.ph{height:220px}}</style>
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script><script src="guard.js"></script>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UniAI | Home Guide</title>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="guard.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="A practical student accommodation guide covering housing options, budgets, rental checks, contracts and move-in planning.">
+<title>UniAI | Student Housing Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>:root{--bg:#070b16;--card:#111b30;--text:#f7f8fc;--muted:#a7b1c4;--border:#233452;--a:#c2410c;--b:#fdba74}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.6}
 a{color:inherit;text-decoration:none}.logo{position:fixed;top:0;left:0;right:0;z-index:9;padding:22px 28px;font-weight:800;font-size:22px;letter-spacing:-.05em}
@@ -32,9 +43,227 @@ footer{padding:40px 0;border-top:1px solid var(--border);color:var(--muted);font
 table{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--border);border-radius:14px;overflow:hidden}th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border)}th{background:#15243e;color:var(--b);font-size:11px;text-transform:uppercase;letter-spacing:.1em}td{color:#d5dce8}
 .tw{overflow-x:auto}.pill{display:inline-block;margin:3px;padding:5px 10px;border:1px solid var(--border);border-radius:99px;font-size:10px;color:#aeb8c8}
 .bad strong{color:#ff929d}.lead{color:var(--muted);max-width:760px;font-size:15px;margin:-20px 0 40px}
-@media(max-width:900px){.g2,.g4{grid-template-columns:1fr}}</style></head><body>
+@media(max-width:900px){.g2,.g4{grid-template-columns:1fr}}</style>
+
+<style id="guide-upgrade">
+:root{
+ --bg:#f5f7fb;--card:#ffffff;--text:#172033;--muted:#5f6b7d;--border:#dce3ee;
+ --a:#b94713;--b:#a94d12;--accent-soft:#fff0e5;--surface:#edf2f8;--shadow:0 14px 38px rgba(30,48,75,.08);
+ --good:#16794b;--warn:#a94d12;--bad:#b42336;--radius:20px;color-scheme:light dark;
+}
+html[data-guide-theme="dark"]{
+ --bg:#070b16;--card:#111b30;--text:#f7f8fc;--muted:#a7b1c4;--border:#233452;
+ --a:#c2410c;--b:#fdba74;--accent-soft:#321c16;--surface:#0b1322;--shadow:0 14px 38px rgba(0,0,0,.22);
+ --good:#4ade80;--warn:#fdba74;--bad:#ff929d;color-scheme:dark;
+}
+html[data-guide-theme="light"]{color-scheme:light}
+body{font-family:"DM Sans",Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);transition:background .2s,color .2s}
+.logo{backdrop-filter:blur(16px);background:color-mix(in srgb,var(--bg) 84%,transparent);border-bottom:1px solid var(--border);padding:14px 4vw;font-family:Manrope,sans-serif}
+.logo span,.g{background:linear-gradient(90deg,var(--a),var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero{min-height:84vh;background:linear-gradient(180deg,rgba(5,8,16,.06),var(--bg)),radial-gradient(circle at 80% 20%,color-mix(in srgb,var(--a) 35%,transparent),transparent 42%),url("https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=2000&q=85") center/cover,var(--card)}
+.hero .w{padding-top:170px}.kick{color:var(--b)}h1,h2,h3{font-family:Manrope,"DM Sans",sans-serif}
+h1{letter-spacing:-.065em}h2{line-height:1.06;max-width:900px}
+.sub{color:#f3f5fa;text-shadow:0 1px 12px #0008}.btn{background:var(--a);box-shadow:0 8px 20px color-mix(in srgb,var(--a) 25%,transparent);transition:transform .2s,filter .2s}.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+section{padding:clamp(58px,8vw,100px) 0}.alt{background:var(--surface)}
+.card,.cmp div{background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow);border-radius:var(--radius);color:var(--text);transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--a) 45%,var(--border))}
+.card p,.faq-a{color:var(--muted)}.num{color:var(--b)}
+.note{color:var(--text);background:color-mix(in srgb,var(--a) 8%,var(--card));border-left-color:var(--a)}
+table{border-color:var(--border);background:var(--card)}th{background:var(--surface);color:var(--b)}td{color:var(--text)}tr:last-child td{border-bottom:0}tbody tr:hover{background:color-mix(in srgb,var(--a) 5%,var(--card))}
+.stats{border-top-color:var(--border)}.stats span{color:var(--muted)}
+.dot{background:var(--bg)}.step small{color:var(--b)}.tl:before{background:linear-gradient(var(--a),var(--b))}
+.faq-item{border-color:var(--border)}.faq-q{color:var(--text)}.faq-q:hover{color:var(--b)}.faq-a{line-height:1.8}
+footer{border-color:var(--border);color:var(--muted)}
+/* Sticky guide navigation and reading progress */
+#reading-progress{position:fixed;z-index:30;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,var(--a),var(--b));transition:width .08s linear}
+.guide-nav{position:sticky;top:58px;z-index:8;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.guide-nav .nav-inner{width:min(1180px,92vw);margin:auto;display:flex;gap:8px;overflow-x:auto;padding:10px 0;scrollbar-width:thin}
+.guide-nav a{white-space:nowrap;border:1px solid var(--border);border-radius:99px;padding:7px 12px;font-size:11px;font-weight:700;color:var(--muted)}
+.guide-nav a:hover,.guide-nav a.active{background:var(--accent-soft);border-color:color-mix(in srgb,var(--a) 45%,var(--border));color:var(--b)}
+/* Added tools */
+.tool-panel{border:1px solid var(--border);background:var(--card);border-radius:var(--radius);padding:clamp(18px,3vw,28px);box-shadow:var(--shadow);margin-top:24px}
+.tool-panel label{display:block;font-size:12px;font-weight:800;margin:14px 0 6px}
+.tool-panel input,.tool-panel select{width:100%;padding:12px 13px;border:1px solid var(--border);border-radius:12px;background:var(--bg);color:var(--text);font:inherit}
+.calc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.result-card{padding:18px;border-radius:16px;background:var(--surface);border:1px solid var(--border)}
+.result-card strong{display:block;font-size:clamp(22px,3vw,32px);letter-spacing:-.04em;color:var(--b);overflow-wrap:anywhere}
+.result-card span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px;align-items:stretch;margin:28px 0}
+.flow-node{position:relative;padding:18px 14px;border:1px solid var(--border);background:var(--card);border-radius:16px;text-align:center;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;min-height:100px}
+.flow-node:not(:last-child):after{content:"→";position:absolute;right:-20px;color:var(--b);font-size:20px}
+.flow-node small{display:block;font-weight:500;color:var(--muted);font-size:11px;margin-top:7px}
+.checklist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.check-row{display:flex;align-items:flex-start;gap:10px;padding:13px;border:1px solid var(--border);border-radius:12px;background:var(--card);font-size:13px}
+.check-row input{accent-color:var(--a);margin-top:4px;flex-shrink:0}
+.check-summary{font-size:12px;color:var(--muted);margin-top:12px}
+.badge-inline{display:inline-block;padding:4px 8px;border-radius:8px;background:var(--accent-soft);color:var(--b);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.callout{padding:18px;border-radius:16px;background:var(--surface);border:1px solid var(--border);margin-top:18px}
+.ph{border-color:var(--border)}.ph:after{color:#fff}
+@media(max-width:800px){.guide-nav{top:54px}.flow{grid-template-columns:1fr;gap:18px}.flow-node{min-height:68px}.flow-node:not(:last-child):after{content:"↓";right:calc(50% - 6px);bottom:-22px;top:auto}.calc-grid,.checklist{grid-template-columns:1fr}.hero{min-height:76vh}.stats{gap:20px}.stats strong{font-size:22px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+</style>
+
+</head><body>
 <a href="#" class="logo">Uni<span>AI</span></a>
+<div id="reading-progress" aria-hidden="true"></div>
+<nav class="guide-nav" aria-label="Guide sections"><div class="nav-inner">
+<a href="#s1">Start here</a><a href="#s2">Housing types</a><a href="#s3">Compare</a><a href="#budget">Budget tool</a><a href="#s4">Scam alerts</a><a href="#decision">Decision flow</a><a href="#s5">Timeline</a><a href="#s6">Contract</a><a href="#s7">Move-in</a><a href="#s9">FAQ</a>
+</div></nav>
+
 <header class="hero"><div class="w"><div class="kick">The complete accommodation guide · Home</div><h1>Find your<br><span class="g">Home.</span></h1><p class="sub">Halls, shared flats, private rentals and homestays: how to compare them, spot scams, read contracts and get ready for move-in day.</p><button class="btn" onclick="document.getElementById('s1').scrollIntoView()">Start the guide</button>
-<div class="stats"><div><strong>5</strong><span>Housing types</span></div><div><strong>6</strong><span>Scam signs</span></div><div><strong>2–3 mo</strong><span>Start early</span></div><div><strong>1</strong><span>Contract read twice</span></div></div></div></header><section id="s1"><div class="w"><div class="kick reveal">01 · Start here</div><h2 class="reveal">Where you live shapes how you study.</h2><div class="g2"><div class="card reveal"><h3>Why it matters</h3><p>Housing affects cost, commute, safety, sleep and friendships. A good choice makes your first term smoother.</p></div><div class="card reveal"><h3>Start early</h3><p>Popular options fill quickly. Start 2 to 3 months ahead where you can, and always arrange temporary stay for the first days.</p></div></div><div class="note reveal">Never pay money until you have verified the landlord, the property and the contract.</div></div></section><div class="w"><div class="ph reveal" data-c="Home should be safe, affordable and easy to reach from campus." style="background-image:url(https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1600&q=80)"></div></div><section class=alt id="s2"><div class="w"><div class="kick reveal">02 · Options</div><h2 class="reveal">Five types of housing.</h2><div class="tw reveal"><table><tr><th>Type</th><th>Good for</th><th>Watch for</th></tr><tr><td>University halls</td><td>First-year and new arrivals</td><td>Limited places, early deadlines</td></tr><tr><td>Private student residences</td><td>Furnished, managed rooms</td><td>Higher cost, contract length</td></tr><tr><td>Shared flats</td><td>Lower cost, social life</td><td>Housemates, bills, deposits</td></tr><tr><td>Private rental</td><td>Privacy</td><td>Guarantors, full responsibility</td></tr><tr><td>Homestay</td><td>Culture and meals</td><td>House rules, distance</td></tr></table></div><div class="note reveal">Compare the full monthly cost, including bills, internet and transport.</div></div></section><section id="s3"><div class="w"><div class="kick reveal">03 · Choose well</div><h2 class="reveal">What to compare.</h2><div class="grid"><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Rent and deposit</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Bills included or not</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Distance to campus</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Transport options</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Safety of the area</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Contract length</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Furnished or unfurnished</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Internet and laundry</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Cancellation terms</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Reviews and landlord reputation</div></div></div></section><section class=alt id="s4"><div class="w"><div class="kick reveal">04 · Scam alert</div><h2 class="reveal">Rental scams to avoid.</h2><div class="grid"><article class="card bad reveal"><div class="num">01</div><h3>Too cheap to be true</h3><p>Check the market price.</p></article><article class="card bad reveal"><div class="num">02</div><h3>No viewing allowed</h3><p>Insist on a video or in-person tour.</p></article><article class="card bad reveal"><div class="num">03</div><h3>Pay before contract</h3><p>Do not transfer deposits blindly.</p></article><article class="card bad reveal"><div class="num">04</div><h3>Landlord abroad</h3><p>Extra caution; verify ownership.</p></article><article class="card bad reveal"><div class="num">05</div><h3>Pressure to hurry</h3><p>Scammers rush decisions.</p></article><article class="card bad reveal"><div class="num">06</div><h3>Unusual payment methods</h3><p>Use traceable, secure payment only.</p></article></div></div></section><div class="w"><div class="ph reveal" data-c="Always verify a property before paying." style="background-image:url(https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1600&q=80)"></div></div><section id="s5"><div class="w"><div class="kick reveal">05 · Timeline</div><h2 class="reveal">Your housing plan.</h2><div class="tl"><div class="step reveal"><div class="dot"></div><small>3 MONTHS BEFORE</small><h3>Research</h3><p style="color:var(--muted);font-size:13px;margin:0">Check halls deadlines, compare areas and set a budget.</p></div><div class="step reveal"><div class="dot"></div><small>2 MONTHS BEFORE</small><h3>Apply and shortlist</h3><p style="color:var(--muted);font-size:13px;margin:0">Apply for halls or shortlist private options and ask questions.</p></div><div class="step reveal"><div class="dot"></div><small>1 MONTH BEFORE</small><h3>Verify and sign</h3><p style="color:var(--muted);font-size:13px;margin:0">Check the landlord, read the contract and confirm payment terms.</p></div><div class="step reveal"><div class="dot"></div><small>1 WEEK BEFORE</small><h3>Arrival plan</h3><p style="color:var(--muted);font-size:13px;margin:0">Confirm keys, arrival time, address and first-night backup.</p></div><div class="step reveal"><div class="dot"></div><small>MOVE-IN DAY</small><h3>Inspect</h3><p style="color:var(--muted);font-size:13px;margin:0">Photograph the condition, check inventory and report issues in writing.</p></div></div></div></section><section class=alt id="s6"><div class="w"><div class="kick reveal">06 · Contract</div><h2 class="reveal">Read before you sign.</h2><div class="g2"><div class="card reveal"><h3>Key clauses</h3><p>Rent amount and due date, deposit and refund conditions, notice period, repairs, bills and rules on guests or subletting.</p></div><div class="card reveal"><h3>Ask questions</h3><p>If anything is unclear, ask in writing. Keep copies of every message and receipt.</p></div></div><div class="note reveal">If the contract is in another language, get it translated or checked by a trusted adviser.</div></div></section><section id="s7"><div class="w"><div class="kick reveal">07 · Move-in</div><h2 class="reveal">First-week checklist.</h2><div class="grid"><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Collect keys and inventory</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Photograph every room</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Check locks and smoke alarms</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Test water, heating and internet</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Learn rubbish and recycling rules</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Save landlord and emergency contacts</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Meet housemates</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Register your address if required</div></div></div></section><section class=alt id="s8"><div class="w"><div class="kick reveal">08 · Mistakes</div><h2 class="reveal">Avoid these.</h2><div class="grid"><article class="card bad reveal"><div class="num">01</div><h3>Choosing only by price</h3><p>Commute and bills matter.</p></article><article class="card bad reveal"><div class="num">02</div><h3>Skipping the contract</h3><p>Read it fully.</p></article><article class="card bad reveal"><div class="num">03</div><h3>No deposit record</h3><p>Keep receipts.</p></article><article class="card bad reveal"><div class="num">04</div><h3>Ignoring location</h3><p>Check safety and transport.</p></article><article class="card bad reveal"><div class="num">05</div><h3>No backup plan</h3><p>Arrange temporary stay.</p></article><article class="card bad reveal"><div class="num">06</div><h3>Verbal promises only</h3><p>Get it in writing.</p></article></div></div></section><section id="s9"><div class="w"><div class="kick reveal">09 · FAQ</div><h2 class="reveal">Quick answers.</h2><div class="faq"><div class="faq-item"><button class="faq-q">How early should I apply for halls?<span>+</span></button><p class="faq-a">As early as the university allows.</p></div><div class="faq-item"><button class="faq-q">How much is the deposit?<span>+</span></button><p class="faq-a">It varies. Check local rules and the contract.</p></div><div class="faq-item"><button class="faq-q">Can I view before arriving?<span>+</span></button><p class="faq-a">Ask for a live video tour or use verified university listings.</p></div><div class="faq-item"><button class="faq-q">What if I do not find housing?<span>+</span></button><p class="faq-a">Book temporary accommodation and keep searching in person.</p></div><div class="faq-item"><button class="faq-q">Shared or private?<span>+</span></button><p class="faq-a">Depends on budget, privacy and how much you want a social setting.</p></div></div></div></section><footer><div class="w">UniAI · Plan smarter. Go Farther. Verify every landlord, property and contract before paying.</div></footer>
+<div class="stats"><div><strong>5</strong><span>Housing types</span></div><div><strong>6</strong><span>Scam signs</span></div><div><strong>2–3 mo</strong><span>Start early</span></div><div><strong>1</strong><span>Contract read twice</span></div></div></div></header><section id="s1"><div class="w"><div class="kick reveal">01 · Start here</div><h2 class="reveal">Where you live shapes how you study.</h2><div class="g2"><div class="card reveal"><h3>Why it matters</h3><p>Housing affects cost, commute, safety, sleep and friendships. A good choice makes your first term smoother.</p></div><div class="card reveal"><h3>Start early</h3><p>Popular options fill quickly. Start 2 to 3 months ahead where you can, and always arrange temporary stay for the first days.</p></div></div><div class="note reveal">Never pay money until you have verified the landlord, the property and the contract.</div></div></section><div class="w"><div class="ph reveal" data-c="Home should be safe, affordable and easy to reach from campus." style="background-image:url(https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1600&q=80)"></div></div><section class=alt id="s2"><div class="w"><div class="kick reveal">02 · Options</div><h2 class="reveal">Five types of housing.</h2><div class="tw reveal"><table><thead><tr><th>Type</th><th>Good for</th><th>Watch for</th></tr></thead><tbody><tr><td>University halls</td><td>First-year and new arrivals</td><td>Limited places, early deadlines</td></tr><tr><td>Private student residences</td><td>Furnished, managed rooms</td><td>Higher cost, contract length</td></tr><tr><td>Shared flats</td><td>Lower cost, social life</td><td>Housemates, bills, deposits</td></tr><tr><td>Private rental</td><td>Privacy</td><td>Guarantors, full responsibility</td></tr><tr><td>Homestay</td><td>Culture and meals</td><td>House rules, distance</td></tr></table></div><div class="note reveal">Compare the full monthly cost, including bills, internet and transport.</div>
+<div class="callout reveal"><strong>Quick rule:</strong> Compare like with like. A cheap room far from campus may cost more after transport, utilities and travel time are included. Ask what is included in writing.</div>
+<div class="tw reveal" style="margin-top:22px"><table><thead><tr><th>Factor</th><th>Questions to ask</th><th>Evidence to keep</th></tr></thead><tbody>
+<tr><td>Monthly cost</td><td>What is included? Are bills fixed or variable?</td><td>Written cost breakdown</td></tr>
+<tr><td>Deposit</td><td>Who holds it, when is it due, and what are refund rules?</td><td>Receipt and deposit terms</td></tr>
+<tr><td>Room condition</td><td>Any damp, damage, pests or broken appliances?</td><td>Dated photos and inventory</td></tr>
+<tr><td>Access & safety</td><td>Who has keys? Are locks and alarms working?</td><td>Written repair requests</td></tr>
+<tr><td>Exit terms</td><td>How much notice is required? Are there early-exit fees?</td><td>Relevant contract clause</td></tr>
+</tbody></table></div></div></section><section id="s3"><div class="w"><div class="kick reveal">03 · Choose well</div><h2 class="reveal">What to compare.</h2><div class="grid"><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Rent and deposit</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Bills included or not</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Distance to campus</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Transport options</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Safety of the area</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Contract length</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Furnished or unfurnished</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Internet and laundry</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Cancellation terms</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Reviews and landlord reputation</div></div></div></section>
+<section id="budget" class="alt"><div class="w">
+<div class="kick reveal">03B · Plan the numbers</div><h2 class="reveal">Build your monthly housing budget.</h2>
+<p class="lead reveal">Enter estimates in your own currency. This tool calculates a planning estimate only; it does not include one-off costs unless you add them.</p>
+<div class="tool-panel reveal">
+<div class="calc-grid">
+<div><label for="rent">Rent per month</label><input id="rent" type="number" min="0" step="any" value="650"></div>
+<div><label for="bills">Bills & internet</label><input id="bills" type="number" min="0" step="any" value="90"></div>
+<div><label for="travel">Transport</label><input id="travel" type="number" min="0" step="any" value="55"></div>
+<div><label for="food">Food & essentials</label><input id="food" type="number" min="0" step="any" value="220"></div>
+<div><label for="other">Other monthly costs</label><input id="other" type="number" min="0" step="any" value="60"></div>
+<div><label for="currency">Currency symbol</label><input id="currency" type="text" maxlength="4" value="£" aria-label="Currency symbol"></div>
+</div>
+<div class="calc-grid" style="margin-top:18px">
+<div class="result-card"><span>Estimated monthly total</span><strong id="monthly-total">£1,075</strong></div>
+<div class="result-card"><span>Estimated annual total (12 months)</span><strong id="annual-total">£12,900</strong></div>
+<div class="result-card"><span>Three-month buffer target</span><strong id="buffer-total">£3,225</strong></div>
+</div>
+<p class="check-summary">Tip: also plan for one-off costs such as deposits, travel to the property, bedding and kitchen supplies. Confirm whether a deposit is legally capped in your location.</p>
+</div></div></section>
+
+<section class=alt id="s4"><div class="w"><div class="kick reveal">04 · Scam alert</div><h2 class="reveal">Rental scams to avoid.</h2><div class="grid"><article class="card bad reveal"><div class="num">01</div><h3>Too cheap to be true</h3><p>Check the market price.</p></article><article class="card bad reveal"><div class="num">02</div><h3>No viewing allowed</h3><p>Insist on a video or in-person tour.</p></article><article class="card bad reveal"><div class="num">03</div><h3>Pay before contract</h3><p>Do not transfer deposits blindly.</p></article><article class="card bad reveal"><div class="num">04</div><h3>Landlord abroad</h3><p>Extra caution; verify ownership.</p></article><article class="card bad reveal"><div class="num">05</div><h3>Pressure to hurry</h3><p>Scammers rush decisions.</p></article><article class="card bad reveal"><div class="num">06</div><h3>Unusual payment methods</h3><p>Use traceable, secure payment only.</p></article></div></div></section><div class="w"><div class="ph reveal" data-c="Always verify a property before paying." style="background-image:url(https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1600&q=80)"></div></div>
+<section id="decision"><div class="w"><div class="kick reveal">04B · Make the call</div><h2 class="reveal">A simple housing decision flow.</h2>
+<p class="lead reveal">Use this as a shortlist filter—not a substitute for verifying the property and reading the contract.</p>
+<div class="flow reveal" role="img" aria-label="Housing decision flow: start with university housing, check affordability, verify the property and contract, then book only when checks pass.">
+<div class="flow-node"><div>1. Check university options<small>Deadlines, eligibility, support</small></div></div>
+<div class="flow-node"><div>2. Can you afford the full cost?<small>Rent + bills + travel</small></div></div>
+<div class="flow-node"><div>3. Verify the property<small>Live viewing, identity, ownership</small></div></div>
+<div class="flow-node"><div>4. Understand the contract?<small>Deposit, dates, exit terms</small></div></div>
+<div class="flow-node"><div>5. Book with records<small>Written agreement + traceable payment</small></div></div>
+</div>
+<div class="g2 reveal"><div class="card" style="min-height:0"><span class="badge-inline">If any check fails</span><h3>Pause and verify</h3><p>Do not send money under pressure. Ask the university accommodation team, a trusted adviser or a local tenant-support service for help.</p></div><div class="card" style="min-height:0"><span class="badge-inline">If all checks pass</span><h3>Keep a paper trail</h3><p>Save the listing, contract, inventory, landlord contact details, payment receipts and messages in one folder.</p></div></div>
+</div></section>
+
+<section id="s5"><div class="w"><div class="kick reveal">05 · Timeline</div><h2 class="reveal">Your housing plan.</h2><div class="tl"><div class="step reveal"><div class="dot"></div><small>3 MONTHS BEFORE</small><h3>Research</h3><p style="color:var(--muted);font-size:13px;margin:0">Check halls deadlines, compare areas and set a budget.</p></div><div class="step reveal"><div class="dot"></div><small>2 MONTHS BEFORE</small><h3>Apply and shortlist</h3><p style="color:var(--muted);font-size:13px;margin:0">Apply for halls or shortlist private options and ask questions.</p></div><div class="step reveal"><div class="dot"></div><small>1 MONTH BEFORE</small><h3>Verify and sign</h3><p style="color:var(--muted);font-size:13px;margin:0">Check the landlord, read the contract and confirm payment terms.</p></div><div class="step reveal"><div class="dot"></div><small>1 WEEK BEFORE</small><h3>Arrival plan</h3><p style="color:var(--muted);font-size:13px;margin:0">Confirm keys, arrival time, address and first-night backup.</p></div><div class="step reveal"><div class="dot"></div><small>MOVE-IN DAY</small><h3>Inspect</h3><p style="color:var(--muted);font-size:13px;margin:0">Photograph the condition, check inventory and report issues in writing.</p></div></div></div></section><section class=alt id="s6"><div class="w"><div class="kick reveal">06 · Contract</div><h2 class="reveal">Read before you sign.</h2><div class="g2"><div class="card reveal"><h3>Key clauses</h3><p>Rent amount and due date, deposit and refund conditions, notice period, repairs, bills and rules on guests or subletting.</p></div><div class="card reveal"><h3>Ask questions</h3><p>If anything is unclear, ask in writing. Keep copies of every message and receipt.</p></div></div><div class="note reveal">If the contract is in another language, get it translated or checked by a trusted adviser.</div>
+<div class="tw reveal" style="margin-top:22px"><table><thead><tr><th>Contract item</th><th>Check this</th><th>Warning sign</th></tr></thead><tbody>
+<tr><td>Names and address</td><td>Correct parties and exact property</td><td>Blank or inconsistent details</td></tr>
+<tr><td>Rent and due dates</td><td>Amount, frequency, payment method and late fees</td><td>Unexplained extra charges</td></tr>
+<tr><td>Deposit</td><td>Amount, protection/holding rules and return process</td><td>Cash-only demand without a receipt</td></tr>
+<tr><td>Repairs</td><td>How to report urgent and routine issues</td><td>Promises that contradict the written terms</td></tr>
+<tr><td>Ending the tenancy</td><td>Notice period, renewal and early termination</td><td>Terms you do not understand</td></tr>
+</tbody></table></div>
+</div></section><section id="s7"><div class="w"><div class="kick reveal">07 · Move-in</div><h2 class="reveal">First-week checklist.</h2><div class="grid"><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Collect keys and inventory</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Photograph every room</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Check locks and smoke alarms</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Test water, heating and internet</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Learn rubbish and recycling rules</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Save landlord and emergency contacts</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Meet housemates</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Register your address if required</div></div></div>
+<div class="tool-panel reveal" style="margin-top:26px"><h3 style="margin-top:0">Interactive move-in checklist</h3><p style="color:var(--muted);font-size:13px">Tick items as you complete them. Your progress is shown below; this checklist does not transmit data.</p>
+<div class="checklist" id="move-checklist">
+<label class="check-row"><input type="checkbox"> Keys, access cards and entry instructions received</label>
+<label class="check-row"><input type="checkbox"> Dated photos of every room saved</label>
+<label class="check-row"><input type="checkbox"> Inventory and existing damage recorded</label>
+<label class="check-row"><input type="checkbox"> Locks, windows and alarms checked</label>
+<label class="check-row"><input type="checkbox"> Water, electricity, heating and appliances tested</label>
+<label class="check-row"><input type="checkbox"> Meter readings recorded where applicable</label>
+<label class="check-row"><input type="checkbox"> Wi-Fi and laundry arrangements confirmed</label>
+<label class="check-row"><input type="checkbox"> Landlord, maintenance and emergency contacts saved</label>
+<label class="check-row"><input type="checkbox"> Rent and deposit receipts stored safely</label>
+<label class="check-row"><input type="checkbox"> Address registration and local rules checked</label>
+</div><div class="check-summary" id="check-progress" aria-live="polite">0 of 10 completed</div>
+</div>
+</section>
+<section class=alt id="s8">
+    <div class="w"><div class="kick reveal">08 · Mistakes</div><h2 class="reveal">Avoid these.</h2><div class="grid"><article class="card bad reveal"><div class="num">01</div><h3>Choosing only by price</h3><p>Commute and bills matter.</p></article><article class="card bad reveal"><div class="num">02</div><h3>Skipping the contract</h3><p>Read it fully.</p></article><article class="card bad reveal"><div class="num">03</div><h3>No deposit record</h3><p>Keep receipts.</p></article><article class="card bad reveal"><div class="num">04</div><h3>Ignoring location</h3><p>Check safety and transport.</p></article><article class="card bad reveal"><div class="num">05</div><h3>No backup plan</h3><p>Arrange temporary stay.</p></article><article class="card bad reveal"><div class="num">06</div><h3>Verbal promises only</h3><p>Get it in writing.</p></article></div></div></section><section id="s9"><div class="w"><div class="kick reveal">09 · FAQ</div><h2 class="reveal">Quick answers.</h2><div class="faq"><div class="faq-item"><button class="faq-q">How early should I apply for halls?<span>+</span></button><p class="faq-a">As early as the university allows.</p></div><div class="faq-item"><button class="faq-q">How much is the deposit?<span>+</span></button><p class="faq-a">It varies. Check local rules and the contract.</p></div><div class="faq-item"><button class="faq-q">Can I view before arriving?<span>+</span></button><p class="faq-a">Ask for a live video tour or use verified university listings.</p></div><div class="faq-item"><button class="faq-q">What if I do not find housing?<span>+</span></button><p class="faq-a">Book temporary accommodation and keep searching in person.</p></div><div class="faq-item"><button class="faq-q">Shared or private?<span>+</span></button><p class="faq-a">Depends on budget, privacy and how much you want a social setting.</p></div></div></div></section><footer><div class="w">UniAI · Plan smarter. Go Farther. Verify every landlord, property and contract before paying.</div></footer>
 <script>const o=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('v');o.unobserve(x.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(e=>o.observe(e));
-document.querySelectorAll('.faq-q').forEach(b=>b.onclick=()=>{const i=b.parentElement,w=i.classList.contains('open');document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));if(!w)i.classList.add('open')})</script></body></html>
+document.querySelectorAll('.faq-q').forEach(b=>b.onclick=()=>{const i=b.parentElement,w=i.classList.contains('open');document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));if(!w)i.classList.add('open')})</script>
+<script id="guide-upgrade-js">
+(function(){
+  const root=document.documentElement;
+  const darkTokens=['dark','night'];
+  function isDarkColor(color){
+    if(!color || color==='transparent') return null;
+    const m=color.match(/rgba?\(([^)]+)\)/i);
+    if(!m) return null;
+    const p=m[1].split(',').map(v=>parseFloat(v.trim()));
+    if(p.length<3 || p.some(Number.isNaN)) return null;
+    if(p.length>3 && p[3]===0) return null;
+    const lum=(0.2126*p[0]+0.7152*p[1]+0.0722*p[2])/255;
+    return lum<0.48;
+  }
+  // UniAI main.js is the source of truth: CONFIG.STORAGE.theme === "uniai-theme"
+  // and applyTheme() writes the current value to <html data-theme="light|dark">.
+  function websiteTheme(){
+    try {
+      const saved = localStorage.getItem('uniai-theme');
+      if (saved === 'dark' || saved === 'light') return saved;
+    } catch (err) { /* storage may be unavailable */ }
+
+    // Also support a guide embedded into the main site or opened in a context
+    // where the UniAI root attribute is inherited/available.
+    const theme = document.documentElement.getAttribute('data-theme');
+    if (theme === 'dark' || theme === 'light') return theme;
+
+    // Compatibility with pages that expose the same theme through body attrs.
+    const bodyTheme = document.body && (document.body.getAttribute('data-theme') || document.body.getAttribute('data-bs-theme'));
+    if (bodyTheme === 'dark' || bodyTheme === 'light') return bodyTheme;
+
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function applyTheme(){root.setAttribute('data-guide-theme',websiteTheme());}
+  applyTheme();
+  // The main UniAI app saves theme changes under "uniai-theme". The storage
+  // event fires when another tab updates that key, keeping this guide in sync.
+  window.addEventListener('storage', function(event){
+    if (event.key === 'uniai-theme') applyTheme();
+  });
+  // If this guide is embedded in the main app, its data-theme attribute is
+  // updated directly by main.js; observe it and re-apply the guide palette.
+  const observer=new MutationObserver(()=>applyTheme());
+  observer.observe(root,{attributes:true,attributeFilter:['class','style','data-theme','data-bs-theme']});
+  if(document.body) observer.observe(document.body,{attributes:true,attributeFilter:['class','style','data-theme','data-bs-theme']});
+  document.querySelectorAll('[data-theme], [data-bs-theme], .dark, .light, .theme-dark, .theme-light').forEach(el=>observer.observe(el,{attributes:true,attributeFilter:['class','style','data-theme','data-bs-theme']}));
+  if(window.matchMedia){
+    const mq=window.matchMedia('(prefers-color-scheme: dark)');
+    if(mq.addEventListener) mq.addEventListener('change',applyTheme);
+  }
+
+  const progress=document.getElementById('reading-progress');
+  function updateProgress(){
+    if(!progress) return;
+    const max=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(max>0?Math.min(100,Math.max(0,window.scrollY/max*100)):0)+'%';
+  }
+  window.addEventListener('scroll',updateProgress,{passive:true});window.addEventListener('resize',updateProgress);updateProgress();
+
+  const fields=['rent','bills','travel','food','other'];
+  const symbol=document.getElementById('currency');
+  const fmt=n=>{const s=(symbol&&symbol.value.trim())||'¤';return s+' '+n.toLocaleString(undefined,{maximumFractionDigits:2});};
+  function calculate(){
+    const total=fields.reduce((sum,id)=>{const el=document.getElementById(id);const n=el?Number(el.value):0;return sum+(Number.isFinite(n)?Math.max(0,n):0);},0);
+    const m=document.getElementById('monthly-total'),a=document.getElementById('annual-total'),b=document.getElementById('buffer-total');
+    if(m)m.textContent=fmt(total);if(a)a.textContent=fmt(total*12);if(b)b.textContent=fmt(total*3);
+  }
+  fields.concat(['currency']).forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('input',calculate);});calculate();
+
+  const checklist=document.getElementById('move-checklist'),summary=document.getElementById('check-progress');
+  function updateChecklist(){if(!checklist||!summary)return;const boxes=[...checklist.querySelectorAll('input[type=checkbox]')];const n=boxes.filter(x=>x.checked).length;summary.textContent=n+' of '+boxes.length+' completed'+(n===boxes.length?' — all done!':'');}
+  if(checklist){checklist.addEventListener('change',updateChecklist);updateChecklist();}
+
+  const navLinks=[...document.querySelectorAll('.guide-nav a')];
+  const targets=navLinks.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if('IntersectionObserver' in window){
+    const navObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
+      if(entry.isIntersecting){navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+entry.target.id));}
+    }),{rootMargin:'-20% 0px -65% 0px'});
+    targets.forEach(t=>navObserver.observe(t));
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,29 +1,576 @@
-<!DOCTYPE html><html lang="en"><head><style id="auth-gate">html{visibility:hidden}</style>
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script><script src="guard.js"></script>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UniAI | LOR Guide</title>
-<style>:root{--bg:#070b16;--card:#111b30;--text:#f7f8fc;--muted:#a7b1c4;--border:#233452;--a:#be185d;--b:#f9a8d4}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.6}
-a{color:inherit;text-decoration:none}.logo{position:fixed;top:0;left:0;right:0;z-index:9;padding:22px 28px;font-weight:800;font-size:22px;letter-spacing:-.05em}
-.logo span,.g{background:linear-gradient(90deg,var(--a),#fff 50%,var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero{min-height:88vh;display:flex;align-items:flex-end;background:linear-gradient(180deg,rgba(5,8,16,.2),var(--bg)),radial-gradient(circle at 80% 20%,var(--a),transparent 40%),url("https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2000&q=85") center/cover,var(--card)}
-.w{width:min(1180px,92vw);margin:auto}.hero .w{padding:150px 0 70px}
-.kick{color:var(--b);text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:800}
-h1{font-size:clamp(52px,8vw,110px);line-height:.9;letter-spacing:-.07em;margin:16px 0}h2{font-size:clamp(32px,4.5vw,56px);letter-spacing:-.05em;line-height:1;margin:0 0 40px}
-.sub{max-width:680px;color:#d6deeb;font-size:16px}.btn{margin-top:26px;padding:13px 20px;border:0;border-radius:99px;color:#fff;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--a),var(--b))}
-section{padding:90px 0}.alt{background:rgba(255,255,255,.02)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.card{padding:26px;min-height:200px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(145deg,var(--card),#0b1322)}.num{color:var(--b);font-size:38px;font-weight:800}
-.card h3{margin:16px 0 8px}.card p,.faq-a{color:var(--muted);font-size:13px}
-.tl{position:relative;max-width:760px}.tl:before{content:"";position:absolute;left:17px;top:0;bottom:0;width:1px;background:linear-gradient(var(--a),var(--b))}
-.step{position:relative;padding:0 0 34px 62px}.dot{position:absolute;left:6px;width:23px;height:23px;border:1px solid var(--b);border-radius:50%;background:var(--bg)}.step small{color:var(--b);font-weight:800}.step h3{margin:4px 0}
-.faq{max-width:860px}.faq-item{border-bottom:1px solid var(--border)}.faq-q{all:unset;display:flex;justify-content:space-between;width:100%;padding:20px 0;cursor:pointer;font-weight:700}.faq-a{display:none;margin:0 0 18px}.open .faq-a{display:block}
-.reveal{opacity:0;transform:translateY(24px);transition:.7s}.reveal.v{opacity:1;transform:none}
-footer{padding:40px 0;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
-@media(max-width:800px){.grid{grid-template-columns:1fr}}</style></head><body>
-<a href="#" class="logo">Uni<span>AI</span></a>
-<header class="hero"><div class="w"><div class="kick">Applications · LOR</div><h1>LOR<br><span class="g">Guide.</span></h1><p class="sub">Recommendations that carry weight. Choose recommenders and help them write well.</p><button class="btn" onclick="document.getElementById('k').scrollIntoView()">Start the guide</button></div></header>
-<section id="k"><div class="w"><div class="kick">01 · Essentials</div><h2>What you need to know.</h2><div class="grid"><article class="card reveal"><div class="num">01</div><h3>Pick the right people</h3><p>Choose those who know your work closely.</p></article><article class="card reveal"><div class="num">02</div><h3>Give them context</h3><p>Share your CV, goals and deadlines.</p></article><article class="card reveal"><div class="num">03</div><h3>Ask early</h3><p>Allow weeks, not days.</p></article></div></div></section>
-<section class="alt"><div class="w"><div class="kick">02 · Your plan</div><h2>Follow it step by step.</h2><div class="tl"><div class="step reveal"><div class="dot"></div><small>STEP 01</small><h3>List recommenders</h3></div><div class="step reveal"><div class="dot"></div><small>STEP 02</small><h3>Ask politely</h3></div><div class="step reveal"><div class="dot"></div><small>STEP 03</small><h3>Share your resume</h3></div><div class="step reveal"><div class="dot"></div><small>STEP 04</small><h3>Send reminders</h3></div><div class="step reveal"><div class="dot"></div><small>STEP 05</small><h3>Confirm submission</h3></div><div class="step reveal"><div class="dot"></div><small>STEP 06</small><h3>Say thank you</h3></div></div></div></section>
-<section><div class="w"><div class="kick">03 · FAQ</div><h2>Quick answers.</h2><div class="faq"><div class="faq-item"><button class="faq-q">How many LORs?<span>+</span></button><p class="faq-a">Usually two to three.</p></div><div class="faq-item"><button class="faq-q">Can I write it myself?<span>+</span></button><p class="faq-a">Recommenders must write their own.</p></div><div class="faq-item"><button class="faq-q">Confidential?<span>+</span></button><p class="faq-a">Most portals keep it confidential.</p></div></div></div></section>
-<footer><div class="w">UniAI · Plan smarter. Go Farther. Always verify details with official sources.</div></footer>
-<script>const o=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('v');o.unobserve(x.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(e=>o.observe(e));
-document.querySelectorAll('.faq-q').forEach(b=>b.onclick=()=>{const i=b.parentElement,w=i.classList.contains('open');document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));if(!w)i.classList.add('open')})</script></body></html>
+<!DOCTYPE html>
+<html lang="en" data-guide-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="A detailed Letter of Recommendation guide: choosing recommenders, requesting politely, providing a recommender pack, strong vs weak letters, timelines, myths and submission checklists.">
+<title>UniAI | LOR Master Guide</title>
+<style>
+:root{
+  color-scheme:light;
+  --bg:#faf5f8; --surface:#fff; --surface-2:#f8e9f0; --text:#241219; --muted:#705b64;
+  --border:#ecd7df; --primary:#be185d; --accent:#db2777; --soft:rgba(190,24,93,.08);
+  --shadow:0 18px 50px rgba(90,30,55,.09); --nav:rgba(255,255,255,.88);
+  --hero-overlay:rgba(34,7,20,.76); --good:#16845b; --warn:#a85c08; --bad:#c13d50;
+}
+html[data-guide-theme="dark"]{
+  color-scheme:dark;
+  --bg:#10070c; --surface:#1c0d15; --surface-2:#26121c; --text:#fdf2f6; --muted:#c9b0ba;
+  --border:#40222f; --primary:#fb7185; --accent:#f9a8d4; --soft:rgba(251,113,133,.12);
+  --shadow:0 18px 50px rgba(0,0,0,.28); --nav:rgba(16,7,12,.88);
+  --hero-overlay:rgba(14,4,9,.79); --good:#68d5a7; --warn:#ffca80; --bad:#ff8b9a;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:92px}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;transition:background .2s,color .2s}
+a{color:var(--primary);text-decoration:none;text-underline-offset:3px}
+button{font:inherit;cursor:pointer}
+.progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:100;background:linear-gradient(90deg,var(--primary),var(--accent))}
+.topbar{position:sticky;top:0;z-index:50;background:var(--nav);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+.topbar-inner{width:min(1200px,92vw);margin:auto;min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{font-size:22px;font-weight:900;letter-spacing:-1px;color:var(--text)}
+.brand span{color:var(--primary)}
+.nav{display:flex;gap:18px;overflow:auto;white-space:nowrap}
+.nav a{font-size:12px;font-weight:750;color:var(--muted)}
+.theme-chip{border:1px solid var(--border);border-radius:99px;padding:7px 11px;background:var(--surface);color:var(--text);font-size:12px;font-weight:750;white-space:nowrap}
+.wrap{width:min(1160px,90vw);margin:auto}
+.hero{min-height:680px;display:flex;align-items:center;color:#fff;position:relative;background:linear-gradient(90deg,var(--hero-overlay),rgba(34,7,20,.25)),url("https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2200&q=85") center/cover no-repeat}
+.hero-inner{padding:100px 0 72px;max-width:840px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.19em;font-weight:850;color:var(--accent)}
+.hero .eyebrow{color:#ffd0e4}
+h1{font-size:clamp(50px,8.5vw,100px);line-height:.91;letter-spacing:-.075em;margin:18px 0 24px}
+.gradient-text{background:linear-gradient(90deg,#ff9ec1,#ffd0e4);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:700px;color:#f8e6ee;font-size:clamp(16px,2vw,19px)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{border:0;border-radius:12px;padding:12px 18px;background:linear-gradient(120deg,#be185d,#db2777);color:#fff;font-weight:850;display:inline-flex;align-items:center}
+.btn.secondary{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:44px}
+.stat{padding:15px 17px;border:1px solid rgba(255,255,255,.23);border-radius:15px;background:rgba(30,7,18,.38);backdrop-filter:blur(10px)}
+.stat strong{display:block;font-size:25px}
+.stat span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#f3d7e2}
+section{padding:82px 0}
+.alt{background:var(--surface-2)}
+.section-head{max-width:840px;margin-bottom:30px}
+h2{font-size:clamp(32px,5vw,55px);line-height:1.03;letter-spacing:-.055em;margin:10px 0 16px}
+.lead{color:var(--muted);max-width:800px;margin:0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{border:1px solid var(--border);border-radius:20px;padding:23px;background:var(--surface);box-shadow:var(--shadow);min-width:0}
+.card h3{margin:9px 0 7px;font-size:19px;letter-spacing:-.025em}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.icon-box{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:var(--soft);font-size:22px}
+.metric{font-size:35px;font-weight:900;color:var(--primary);line-height:1.1}
+.tag{display:inline-block;border:1px solid var(--border);padding:4px 9px;border-radius:99px;font-size:11px;color:var(--muted);margin:3px 4px 0 0}
+.note{padding:17px 20px;margin-top:20px;border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:12px;background:var(--soft);font-size:14px}
+.note strong{color:var(--primary)}
+.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:16px;background:var(--surface);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;min-width:700px;font-size:13px}
+th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--surface-2);color:var(--primary);font-size:11px;text-transform:uppercase;letter-spacing:.09em}
+td{color:var(--muted)}
+td strong{color:var(--text)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:var(--soft)}
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;align-items:stretch}
+.flow-step{position:relative;border:1px solid var(--border);border-radius:16px;background:var(--surface);padding:17px;box-shadow:var(--shadow)}
+.flow-step:not(:last-child):after{content:"→";position:absolute;right:-15px;top:40%;color:var(--primary);font-size:20px;font-weight:900}
+.flow-step b{display:block;color:var(--primary);font-size:12px;letter-spacing:.07em;text-transform:uppercase}
+.flow-step span{display:block;font-size:14px;font-weight:800;margin-top:6px}
+.flow-step small{display:block;color:var(--muted);font-size:12px;margin-top:6px}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.compare div{padding:18px;border-radius:16px;border:1px solid var(--border);background:var(--surface);font-size:14px;color:var(--muted)}
+.compare .weak{border-left:4px solid var(--bad)}
+.compare .strong{border-left:4px solid var(--good)}
+.compare small{display:block;font-weight:850;margin-bottom:7px;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.compare .weak small{color:var(--bad)}
+.compare .strong small{color:var(--good)}
+.image-card{border:1px solid var(--border);border-radius:22px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+.image-card img{width:100%;height:240px;object-fit:cover;display:block}
+.image-card figcaption{padding:14px 18px;font-size:13px;color:var(--muted)}
+.timeline{border-left:2px solid var(--primary);margin:10px 0 0 12px;padding-left:28px}
+.timeline-item{position:relative;padding:0 0 26px}
+.timeline-item:before{content:"";position:absolute;left:-36px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--surface);border:3px solid var(--primary)}
+.timeline-item small{font-size:11px;font-weight:900;color:var(--primary);letter-spacing:.12em}
+.timeline-item h3{margin:4px 0;font-size:18px}
+.timeline-item p{margin:0;color:var(--muted);font-size:14px}
+.reco-pack{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.panel{padding:24px;border:1px solid var(--border);border-radius:20px;background:var(--surface);box-shadow:var(--shadow)}
+.field{display:grid;gap:7px;margin:14px 0}
+.field label{font-size:13px;font-weight:800}
+.field select,.field input{width:100%;border:1px solid var(--border);background:var(--bg);color:var(--text);padding:11px 12px;border-radius:10px;font:inherit}
+.result{font-size:42px;font-weight:950;color:var(--primary);line-height:1.1}
+.bar{height:10px;border-radius:99px;background:var(--border);overflow:hidden;margin:14px 0}
+.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .25s}
+.checklist{display:grid;gap:10px}
+.check-item{display:flex;align-items:flex-start;gap:11px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface);font-size:14px}
+.check-item input{margin-top:5px;accent-color:var(--primary);width:16px;height:16px;flex-shrink:0}
+.small-muted{font-size:12px;color:var(--muted)}
+.faq{max-width:860px}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{display:flex;width:100%;justify-content:space-between;gap:15px;align-items:center;padding:18px 0;border:0;background:none;color:var(--text);text-align:left;font-weight:850}
+.faq-a{display:none;color:var(--muted);font-size:14px;padding:0 0 18px}
+.faq-item.open .faq-a{display:block}
+.faq-q span{color:var(--primary);font-size:22px}
+.footer{padding:38px 0;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
+.footer-inner{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.backtop{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text);box-shadow:var(--shadow);z-index:20}
+@media(max-width:900px){.nav{display:none}.grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}.flow{grid-template-columns:1fr}.flow-step:not(:last-child):after{content:"↓";right:50%;top:auto;bottom:-21px}.reco-pack{grid-template-columns:1fr}.compare{grid-template-columns:1fr}}
+@media(max-width:620px){section{padding:60px 0}.grid,.grid.two,.grid.four{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.hero h1{font-size:clamp(46px,14vw,72px)}.hero-inner{padding:85px 0 48px}.topbar-inner{min-height:60px}.card{padding:19px}.image-card img{height:190px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="progress" id="readingProgress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top">Uni<span>AI</span></a>
+    <nav class="nav" aria-label="Guide navigation">
+      <a href="#start">Start</a><a href="#choose">Choose</a><a href="#ask">Ask</a>
+      <a href="#pack">Recommender pack</a><a href="#letters">Strong letters</a>
+      <a href="#timeline">Timeline</a><a href="#myths">Myths</a><a href="#tools">Tools</a><a href="#faq">FAQ</a>
+    </nav>
+    <button class="theme-chip" id="themeButton" type="button">◐ Theme</button>
+  </div>
+</header>
+
+<main id="top">
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <div class="eyebrow">The complete Letter of Recommendation guide</div>
+      <h1>Get LORs<br><span class="gradient-text">that carry weight.</span></h1>
+      <p>Choose the right recommenders, ask early, give them the context they need, and help them write specific letters that show your potential—not just your grades.</p>
+      <div class="actions">
+        <a class="btn" href="#start">Explore the guide ↓</a>
+        <a class="btn secondary" href="#tools">Open the LOR planner</a>
+      </div>
+      <div class="stats" aria-label="LOR quick facts">
+        <div class="stat"><strong>2–3</strong><span>Commonly required</span></div>
+        <div class="stat"><strong>4–6 wks</strong><span>Ask early</span></div>
+        <div class="stat"><strong>Specific</strong><span>Beats generic</span></div>
+        <div class="stat"><strong>Confidential</strong><span>Usually best</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section id="start">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">01 · Start here</div>
+        <h2>What is a Letter of Recommendation?</h2>
+        <p class="lead">A Letter of Recommendation—also called a recommendation letter, reference letter or evaluation—is written by someone who has directly observed your academic, professional or personal work and can assess your potential.</p>
+      </div>
+      <div class="grid two">
+        <article class="card">
+          <div class="icon-box">🎓</div>
+          <h3>What it adds</h3>
+          <p>An LOR gives admissions committees an outside view of your ability, work ethic, curiosity, collaboration and readiness. It can add context that grades and test scores cannot.</p>
+        </article>
+        <article class="card">
+          <div class="icon-box">📌</div>
+          <h3>What it cannot fix</h3>
+          <p>A recommendation cannot replace weak academic preparation or compensate for an unclear SOP. It works best when it confirms and expands on a coherent application story.</p>
+        </article>
+      </div>
+
+      <figure class="image-card" style="margin-top:24px">
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1600&q=80" alt="Students and mentors collaborating" loading="lazy">
+        <figcaption>The best recommenders are people who have seen you solve problems, contribute to a team and grow over time.</figcaption>
+      </figure>
+
+      <div class="note"><strong>First rule:</strong> The university’s official requirements override general advice. Check how many letters are required, who may write them, whether they must be academic, and how they must be submitted.</div>
+    </div>
+  </section>
+
+  <section class="alt" id="choose">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">02 · Choosing recommenders</div>
+        <h2>Pick people who know your work.</h2>
+        <p class="lead">A famous professor who barely knows you is usually weaker than a teacher, project guide or manager who can describe your contribution in detail. Prioritise depth of knowledge, relevance and credibility.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Recommender type</th><th>Best for</th><th>What they can show</th><th>Choose them when…</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Professor who taught you</strong></td><td>Master’s and research applications</td><td>Academic ability, curiosity, class performance</td><td>They taught a relevant course and remember your work</td></tr>
+            <tr><td><strong>Project / thesis guide</strong></td><td>Research degrees</td><td>Research skill, independence and technical depth</td><td>They supervised substantial work over time</td></tr>
+            <tr><td><strong>Internship or work manager</strong></td><td>MBA and professional master’s</td><td>Ownership, teamwork, impact and professional maturity</td><td>They directly observed your results</td></tr>
+            <tr><td><strong>Club / NGO mentor</strong></td><td>Leadership or community evidence</td><td>Initiative, service and interpersonal skills</td><td>The programme values leadership beyond academics</td></tr>
+            <tr><td><strong>School counsellor</strong></td><td>Undergraduate applications</td><td>School context, character and overall record</td><td>The university specifically requires a counsellor recommendation</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="flow" style="margin-top:24px">
+        <div class="flow-step"><b>Step 1</b><span>Check requirements</span><small>Number, type and submission method.</small></div>
+        <div class="flow-step"><b>Step 2</b><span>Shortlist 4–5 people</span><small>Include backups in case someone declines.</small></div>
+        <div class="flow-step"><b>Step 3</b><span>Rank by knowledge</span><small>Who can give detailed examples?</small></div>
+        <div class="flow-step"><b>Step 4</b><span>Check relevance</span><small>Can they speak to your target programme?</small></div>
+        <div class="flow-step"><b>Step 5</b><span>Ask early</span><small>Give at least 4–6 weeks where possible.</small></div>
+      </div>
+
+      <div class="note"><strong>Graduate-school pattern:</strong> Many graduate programmes require three letters and prefer at least one from a professor familiar with your academic work; some allow the remaining letters to come from employers. Always check the department’s exact guidance.</div>
+    </div>
+  </section>
+
+  <section id="ask">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">03 · Asking properly</div>
+        <h2>Ask clearly, early and respectfully.</h2>
+        <p class="lead">A good request makes it easy for your recommender to say yes—and easier to write a strong letter if they do.</p>
+      </div>
+      <div class="grid two">
+        <article class="card">
+          <div class="icon-box">✉️</div>
+          <h3>Ask in person or by email</h3>
+          <p>Explain the programme, deadline, submission method and why you are asking them specifically. Give them a genuine opportunity to decline.</p>
+        </article>
+        <article class="card">
+          <div class="icon-box">📦</div>
+          <h3>Send a recommender pack</h3>
+          <p>Include your CV, SOP draft, transcript, project summaries, programme links, deadlines and the specific qualities you hope they can address.</p>
+        </article>
+      </div>
+
+      <div class="panel" style="margin-top:24px">
+        <h3>Polite request template</h3>
+        <p class="small-muted">Personalise every bracketed part. Do not send the same message without editing it.</p>
+        <div style="border:1px solid var(--border);border-radius:14px;padding:18px;background:var(--surface-2);font-size:14px;color:var(--muted)">
+          <strong>Subject:</strong> Recommendation request for [Programme] — deadline [Date]<br><br>
+          Dear Professor [Name],<br><br>
+          I hope you are doing well. I am applying to [Programme] at [University], with a deadline of [Date]. Because you supervised my [project/course/work], I would be honoured if you would consider writing a letter of recommendation for my application.<br><br>
+          Your perspective on my [specific skill/project/contribution] would be especially valuable because [one specific reason]. I have attached my CV, SOP draft, transcript and a short summary of the work we did together. The letter would need to be submitted through [portal/method] by [date].<br><br>
+          I completely understand if your schedule does not allow it. Thank you for considering my request.<br><br>
+          Sincerely,<br>[Your name]
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:24px">
+        <table>
+          <thead><tr><th>Do</th><th>Don’t</th><th>Why it matters</th></tr></thead>
+          <tbody>
+            <tr><td>Ask at least 4–6 weeks before the deadline</td><td>Ask a few days before</td><td>Recommenders need time to write thoughtfully</td></tr>
+            <tr><td>Explain why you chose them</td><td>Send a mass generic request</td><td>It shows respect and helps them recall your work</td></tr>
+            <tr><td>Provide a clear deadline and portal link</td><td>Leave submission steps unclear</td><td>Reduces delays and errors</td></tr>
+            <tr><td>Send a polite reminder 7–10 days before</td><td>Pressure them repeatedly</td><td>A reminder is helpful; nagging is not</td></tr>
+            <tr><td>Thank them after submission</td><td>Disappear after they agree</td><td>Maintains a professional relationship</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="pack">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">04 · Recommender pack</div>
+        <h2>Make their job easier.</h2>
+        <p class="lead">A recommender pack is not a script. It is a concise set of facts and reminders that helps your recommender write accurately and specifically.</p>
+      </div>
+      <div class="reco-pack">
+        <div class="panel">
+          <h3>What to include</h3>
+          <ul class="small-muted">
+            <li>Updated CV or résumé</li>
+            <li>Final SOP or Personal Statement draft</li>
+            <li>Unofficial transcript</li>
+            <li>Programme links and deadlines</li>
+            <li>Submission portal instructions</li>
+            <li>A one-page summary of shared work</li>
+            <li>Two or three qualities you hope they can address</li>
+            <li>Specific results: grades, awards, metrics, outcomes</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>What not to include</h3>
+          <ul class="small-muted">
+            <li>A fully written letter presented as their own</li>
+            <li>Exaggerated claims or invented achievements</li>
+            <li>Twenty pages of unrelated certificates</li>
+            <li>Pressure to submit immediately</li>
+            <li>Requests to submit through your email account</li>
+            <li>Confidential letters shared with you</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:24px">
+        <table>
+          <thead><tr><th>Shared-work summary</th><th>Weak version</th><th>Useful version</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Project</strong></td><td>“I did a machine learning project.”</td><td>“Built a crop-disease classifier using 4,000 images; improved validation accuracy from 78% to 89%.”</td></tr>
+            <tr><td><strong>Role</strong></td><td>“I was a team member.”</td><td>“Led a three-person team, divided tasks and presented the final prototype.”</td></tr>
+            <tr><td><strong>Impact</strong></td><td>“It was successful.”</td><td>“The dashboard reduced manual reporting time by about 40% during the pilot.”</td></tr>
+            <tr><td><strong>Skill</strong></td><td>“I am good at coding.”</td><td>“Implemented the data-cleaning pipeline and debugged deployment issues independently.”</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><strong>Important:</strong> Recommenders must write and submit their own letters. Your pack should provide facts and context, not a finished letter for them to copy.</div>
+    </div>
+  </section>
+
+  <section id="letters">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">05 · Strong vs weak letters</div>
+        <h2>What makes a letter persuasive?</h2>
+        <p class="lead">Strong letters are specific, comparative and credible. They describe what you did, how you did it, what changed and why it matters for graduate study.</p>
+      </div>
+
+      <div class="compare">
+        <div class="weak"><small>Weak</small>[Name] is a hardworking and intelligent student. I highly recommend them for admission.</div>
+        <div class="strong"><small>Stronger</small>In my Data Structures course, [Name] ranked among the top students and redesigned a inefficient search routine in the class project, reducing lookup time in the demo dataset. Their questions showed genuine interest in algorithmic trade-offs.</div>
+      </div>
+
+      <div class="compare" style="margin-top:14px">
+        <div class="weak"><small>Weak</small>They are a good team player and have excellent communication skills.</div>
+        <div class="strong"><small>Stronger</small>When our team fell behind before the final review, [Name] reorganised the task list, coordinated with two members and presented the prototype clearly. The project was completed on time.</div>
+      </div>
+
+      <div class="compare" style="margin-top:14px">
+        <div class="weak"><small>Weak</small>I believe they will succeed in graduate school.</div>
+        <div class="strong"><small>Stronger</small>Based on their ability to identify a research gap, learn new methods quickly and revise their work after feedback, I believe they are well prepared for graduate-level research.</div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:24px">
+        <table>
+          <thead><tr><th>Letter element</th><th>Weak letter</th><th>Strong letter</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Relationship</strong></td><td>Vague or unstated</td><td>Explains how long and in what capacity the writer knows you</td></tr>
+            <tr><td><strong>Evidence</strong></td><td>General praise</td><td>Projects, grades, results, behaviour and concrete examples</td></tr>
+            <tr><td><strong>Comparison</strong></td><td>“Very good student”</td><td>“Among the top students I have taught in recent years”</td></tr>
+            <tr><td><strong>Fit</strong></td><td>No programme connection</td><td>Links your strengths to the programme’s demands</td></tr>
+            <tr><td><strong>Limitations</strong></td><td>None mentioned</td><td>May acknowledge growth areas constructively, if relevant</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="timeline">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">06 · Timeline</div>
+        <h2>A realistic LOR schedule.</h2>
+        <p class="lead">Start earlier than you think. Recommenders may be travelling, teaching, managing deadlines or reviewing many requests at once.</p>
+      </div>
+      <div class="grid two">
+        <div class="card">
+          <div class="timeline">
+            <div class="timeline-item"><small>8–12 WEEKS BEFORE</small><h3>Shortlist and research</h3><p>Check programme requirements and identify people who know your work well.</p></div>
+            <div class="timeline-item"><small>6–8 WEEKS BEFORE</small><h3>Send requests</h3><p>Ask politely, share context and give recommenders a clear way to decline.</p></div>
+            <div class="timeline-item"><small>4–6 WEEKS BEFORE</small><h3>Send the pack</h3><p>Provide CV, SOP draft, transcript, project summary, links and deadlines.</p></div>
+            <div class="timeline-item"><small>2–3 WEEKS BEFORE</small><h3>Check status</h3><p>Confirm that each recommender has received the portal invitation.</p></div>
+            <div class="timeline-item"><small>7–10 DAYS BEFORE</small><h3>Send one reminder</h3><p>Be polite, brief and specific about the remaining deadline.</p></div>
+            <div class="timeline-item"><small>AFTER SUBMISSION</small><h3>Thank them</h3><p>Send a genuine thank-you note and update them on your result later.</p></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Request status tracker</h3>
+          <div class="table-wrap" style="box-shadow:none">
+            <table style="min-width:0">
+              <thead><tr><th>Stage</th><th>What to confirm</th></tr></thead>
+              <tbody>
+                <tr><td>Requested</td><td>Recommender agreed and knows the deadline</td></tr>
+                <tr><td>Invited</td><td>Portal invitation received and accepted</td></tr>
+                <tr><td>In progress</td><td>Recommender has the pack and enough time</td></tr>
+                <tr><td>Submitted</td><td>Letter appears as received in the portal</td></tr>
+                <tr><td>Complete</td><td>All required letters are submitted before the deadline</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small-muted" style="margin-top:12px">Do not wait until deadline day to discover that a portal invitation was missed.</p>
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-top:24px">
+        <figure class="image-card">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1600&q=80" alt="Professional mentor speaking with a student" loading="lazy">
+          <figcaption>A strong professional recommender can describe your ownership, communication and measurable impact at work.</figcaption>
+        </figure>
+        <figure class="image-card">
+          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1600&q=80" alt="Students studying and discussing work" loading="lazy">
+          <figcaption>Academic recommenders can speak to intellectual curiosity, classroom performance and research potential.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="myths">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">07 · Myths vs truths</div>
+        <h2>Stop believing these LOR myths.</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Myth</th><th>Truth</th><th>What to do instead</th></tr></thead>
+          <tbody>
+            <tr><td><strong>“A senior professor is always better.”</strong></td><td>A detailed letter from someone who knows you well is usually stronger.</td><td>Choose knowledge and relevance over title alone.</td></tr>
+            <tr><td><strong>“I should write the letter for them.”</strong></td><td>Recommenders must be the sole authors of their recommendations.</td><td>Provide facts, reminders and context—not a finished letter.</td></tr>
+            <tr><td><strong>“Confidential letters are risky.”</strong></td><td>Confidential letters are often viewed as more credible.</td><td>Waive access where you are comfortable doing so.</td></tr>
+            <tr><td><strong>“More letters are always better.”</strong></td><td>Extra letters may not be accepted or may dilute your application.</td><td>Submit the required number unless the programme clearly welcomes extras.</td></tr>
+            <tr><td><strong>“A family friend or relative can write one.”</strong></td><td>Family and close personal contacts are usually inappropriate.</td><td>Choose academic, professional or verified mentor recommenders.</td></tr>
+            <tr><td><strong>“A reminder is rude.”</strong></td><td>One polite reminder close to the deadline is professional.</td><td>Send it 7–10 days before, with the portal link and deadline.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><strong>Undergraduate note:</strong> Requirements differ greatly. For example, Common App member colleges determine their own recommendation rules, and some require teacher evaluations while others do not.</div>
+    </div>
+  </section>
+
+  <section class="alt" id="tools">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">08 · Interactive tools</div>
+        <h2>Plan your recommender mix.</h2>
+        <p class="lead">Select your applicant type and available recommenders. The planner suggests a balanced mix and flags missing evidence.</p>
+      </div>
+      <div class="reco-pack">
+        <div class="panel">
+          <h3>Your application</h3>
+          <div class="field"><label for="level">Application level</label><select id="level"><option>Undergraduate</option><option selected>Master’s</option><option>MBA</option><option>Research degree</option></select></div>
+          <div class="field"><label for="academicReco">Academic recommenders available</label><select id="academicReco"><option value="0">None</option><option value="1">One</option><option value="2" selected>Two</option><option value="3">Three or more</option></select></div>
+          <div class="field"><label for="workReco">Professional recommenders available</label><select id="workReco"><option value="0" selected>None</option><option value="1">One</option><option value="2">Two or more</option></select></div>
+          <div class="field"><label for="projectReco">Project / research supervisors available</label><select id="projectReco"><option value="0" selected>None</option><option value="1">One</option><option value="2">Two or more</option></select></div>
+        </div>
+        <div class="panel">
+          <div class="eyebrow">Recommended mix</div>
+          <div class="result" id="mixResult">2 Academic + 1 Professional</div>
+          <div class="bar"><span id="mixBar"></span></div>
+          <p class="small-muted" id="mixAdvice">Balance academic depth with professional or research evidence.</p>
+          <div class="note"><strong>Reminder:</strong> This is a planning suggestion. Your target programme’s official requirements always come first.</div>
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-top:24px">
+        <div class="card">
+          <h3>Request checklist</h3>
+          <div class="checklist" id="requestChecklist">
+            <label class="check-item"><input type="checkbox"> I checked the number and type of letters required.</label>
+            <label class="check-item"><input type="checkbox"> I asked at least 4–6 weeks before the deadline.</label>
+            <label class="check-item"><input type="checkbox"> I explained why I chose each recommender.</label>
+            <label class="check-item"><input type="checkbox"> I shared my CV, SOP draft and programme links.</label>
+            <label class="check-item"><input type="checkbox"> I gave clear portal and deadline instructions.</label>
+          </div>
+          <div class="check-progress"><span id="requestProgress"></span></div>
+          <div class="small-muted" id="requestCount">0 of 5 complete</div>
+        </div>
+        <div class="card">
+          <h3>Submission checklist</h3>
+          <div class="checklist" id="submitChecklist">
+            <label class="check-item"><input type="checkbox"> Each recommender accepted the portal invitation.</label>
+            <label class="check-item"><input type="checkbox"> I confirmed the submission deadline in writing.</label>
+            <label class="check-item"><input type="checkbox"> I sent one polite reminder 7–10 days before.</label>
+            <label class="check-item"><input type="checkbox"> All required letters show as received.</label>
+            <label class="check-item"><input type="checkbox"> I thanked every recommender after submission.</label>
+          </div>
+          <div class="check-progress"><span id="submitProgress"></span></div>
+          <div class="small-muted" id="submitCount">0 of 5 complete</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head"><div class="eyebrow">09 · FAQ</div><h2>Quick answers.</h2></div>
+      <div class="faq">
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">How many LORs do I need? <span>+</span></button><div class="faq-a">It varies. Many graduate programmes require three, while undergraduate requirements can range from none to a counsellor plus teacher recommendations. Always check each programme.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Can I write my own LOR? <span>+</span></button><div class="faq-a">No. Recommenders must write and submit their own letters. You can provide a recommender pack with facts and context, but not a finished letter presented as their own.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Should letters be confidential? <span>+</span></button><div class="faq-a">Confidential letters are commonly preferred because they can appear more credible. Waive access only if you are comfortable and the application allows it.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Can a family member write one? <span>+</span></button><div class="faq-a">Generally no. Family members and close personal friends are not appropriate recommenders for most academic applications.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">What if my recommender misses the deadline? <span>+</span></button><div class="faq-a">Send a polite reminder immediately, confirm portal access, and contact the admissions office only if the programme provides guidance for late letters. A backup recommender can help you avoid this situation.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Where should I verify current rules? <span>+</span></button><div class="faq-a">Use each university’s official admissions page and application portal. Requirements differ by degree, department and country.</div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div><strong>UniAI · Plan smarter. Go farther.</strong><br>Use this guide for planning, not as a substitute for official university requirements.</div>
+    <div><a href="https://www.commonapp.org/counselors-and-recommenders/" target="_blank" rel="noopener noreferrer">Common App recommender resources ↗</a><br><span>Check current rules before submitting.</span></div>
+  </div>
+</footer>
+
+<button class="backtop" type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* Theme bridge: follows UniAI's `uniai-theme` setting where same-origin storage is shared. */
+(() => {
+  const KEY='uniai-theme', root=document.documentElement, btn=document.getElementById('themeButton');
+  const detect=()=>{
+    try{const s=localStorage.getItem(KEY);if(s==='dark'||s==='light')return s;}catch(_){}
+    const a=root.getAttribute('data-theme')||document.body?.getAttribute('data-theme')||document.body?.getAttribute('data-bs-theme');
+    if(a==='dark'||a==='light')return a;
+    return matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  };
+  const apply=t=>{root.setAttribute('data-guide-theme',t==='dark'?'dark':'light');btn.textContent=t==='dark'?'☀ Light guide':'☾ Dark guide';};
+  apply(detect());
+  btn.addEventListener('click',()=>{const next=root.getAttribute('data-guide-theme')==='dark'?'light':'dark';apply(next);try{localStorage.setItem(KEY,next);}catch(_){}});
+  addEventListener('storage',e=>{if(e.key===KEY)apply(detect())});
+  new MutationObserver(()=>apply(detect())).observe(root,{attributes:true,attributeFilter:['data-theme','data-bs-theme','class']});
+})();
+
+/* Reading progress */
+(() => {
+  const bar=document.getElementById('readingProgress');
+  const update=()=>{const max=document.documentElement.scrollHeight-innerHeight;bar.style.width=`${max>0?scrollY/max*100:0}%`};
+  addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update();
+})();
+
+/* Recommender mix planner */
+(() => {
+  const level=document.getElementById('level'),a=document.getElementById('academicReco'),w=document.getElementById('workReco'),p=document.getElementById('projectReco');
+  const out=document.getElementById('mixResult'),bar=document.getElementById('mixBar'),advice=document.getElementById('mixAdvice');
+  const update=()=>{
+    const academic=+a.value, work=+w.value, project=+p.value, type=level.value;
+    let mix='2 Academic + 1 Professional', readiness=0, text='';
+    if(type==='MBA'){
+      mix = work>=2 ? '2 Professional + 1 Academic' : work===1 ? '1 Professional + 2 Academic' : 'Prioritise finding professional recommenders';
+      readiness=Math.min(100,(work*35)+(academic*20));
+      text=work>=2?'Strong professional base for an MBA application.':'MBA applications usually benefit from at least one or two direct professional supervisors.';
+    } else if(type==='Research degree'){
+      mix = project>=1 ? `${Math.min(2,project)} Research + ${2-Math.min(2,project)} Academic` : 'Prioritise a research or thesis supervisor';
+      readiness=Math.min(100,(project*40)+(academic*20));
+      text=project>=1?'Research supervision evidence is valuable for research degrees.':'Find a thesis, project or research supervisor who can discuss your work in depth.';
+    } else if(type==='Undergraduate'){
+      mix = academic>=2 ? '2 Academic Teachers + Counsellor' : 'Ask academic teachers and your school counsellor';
+      readiness=Math.min(100,(academic*30)+25);
+      text=academic>=2?'A balanced school-based recommendation mix is a good starting point.':'Identify teachers who know your classroom work and a counsellor if required.';
+    } else {
+      mix = academic>=2 ? '2 Academic + 1 Professional/Research' : academic===1 ? '1 Academic + 1 Professional/Research + 1 Academic' : 'Prioritise academic recommenders';
+      readiness=Math.min(100,(academic*30)+(work*20)+(project*20));
+      text=academic>=2?'Strong academic foundation; add professional or research evidence where relevant.':'Most master’s programmes value at least one academic recommender who knows your work well.';
+    }
+    out.textContent=mix;
+    bar.style.width=`${readiness}%`;
+    advice.textContent=text;
+  };
+  [level,a,w,p].forEach(el=>el.addEventListener('change',update));update();
+})();
+
+/* Checklists */
+(() => {
+  [['requestChecklist','requestProgress','requestCount'],['submitChecklist','submitProgress','submitCount']].forEach(([listId,barId,countId])=>{
+    const list=document.getElementById(listId),checks=[...list.querySelectorAll('input')],bar=document.getElementById(barId),count=document.getElementById(countId);
+    const update=()=>{const done=checks.filter(c=>c.checked).length;bar.style.width=`${done/checks.length*100}%`;count.textContent=`${done} of ${checks.length} complete`};
+    checks.forEach(c=>c.addEventListener('change',update));update();
+  });
+})();
+
+/* FAQ */
+document.querySelectorAll('.faq-q').forEach(button=>{
+  button.addEventListener('click',()=>{
+    const item=button.closest('.faq-item'),open=!item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(other=>{other.classList.remove('open');other.querySelector('.faq-q').setAttribute('aria-expanded','false');other.querySelector('.faq-q span').textContent='+'});
+    if(open){item.classList.add('open');button.setAttribute('aria-expanded','true');button.querySelector('span').textContent='−'}
+  });
+});
+</script>
+</body>
+</html>

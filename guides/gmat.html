@@ -1,29 +1,446 @@
-<!DOCTYPE html><html lang="en"><head><style id="auth-gate">html{visibility:hidden}</style>
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script><script src="guard.js"></script>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UniAI | GMAT Guide</title>
-<style>:root{--bg:#070b16;--card:#111b30;--text:#f7f8fc;--muted:#a7b1c4;--border:#233452;--a:#b45309;--b:#fbbf24}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.6}
-a{color:inherit;text-decoration:none}.logo{position:fixed;top:0;left:0;right:0;z-index:9;padding:22px 28px;font-weight:800;font-size:22px;letter-spacing:-.05em}
-.logo span,.g{background:linear-gradient(90deg,var(--a),#fff 50%,var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero{min-height:88vh;display:flex;align-items:flex-end;background:linear-gradient(180deg,rgba(5,8,16,.2),var(--bg)),radial-gradient(circle at 80% 20%,var(--a),transparent 40%),url("https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=2000&q=85") center/cover,var(--card)}
-.w{width:min(1180px,92vw);margin:auto}.hero .w{padding:150px 0 70px}
-.kick{color:var(--b);text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:800}
-h1{font-size:clamp(52px,8vw,110px);line-height:.9;letter-spacing:-.07em;margin:16px 0}h2{font-size:clamp(32px,4.5vw,56px);letter-spacing:-.05em;line-height:1;margin:0 0 40px}
-.sub{max-width:680px;color:#d6deeb;font-size:16px}.btn{margin-top:26px;padding:13px 20px;border:0;border-radius:99px;color:#fff;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--a),var(--b))}
-section{padding:90px 0}.alt{background:rgba(255,255,255,.02)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.card{padding:26px;min-height:200px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(145deg,var(--card),#0b1322)}.num{color:var(--b);font-size:38px;font-weight:800}
-.card h3{margin:16px 0 8px}.card p,.faq-a{color:var(--muted);font-size:13px}
-.tl{position:relative;max-width:760px}.tl:before{content:"";position:absolute;left:17px;top:0;bottom:0;width:1px;background:linear-gradient(var(--a),var(--b))}
-.step{position:relative;padding:0 0 34px 62px}.dot{position:absolute;left:6px;width:23px;height:23px;border:1px solid var(--b);border-radius:50%;background:var(--bg)}.step small{color:var(--b);font-weight:800}.step h3{margin:4px 0}
-.faq{max-width:860px}.faq-item{border-bottom:1px solid var(--border)}.faq-q{all:unset;display:flex;justify-content:space-between;width:100%;padding:20px 0;cursor:pointer;font-weight:700}.faq-a{display:none;margin:0 0 18px}.open .faq-a{display:block}
-.reveal{opacity:0;transform:translateY(24px);transition:.7s}.reveal.v{opacity:1;transform:none}
-footer{padding:40px 0;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
-@media(max-width:800px){.grid{grid-template-columns:1fr}}</style></head><body>
-<a href="#" class="logo">Uni<span>AI</span></a>
-<header class="hero"><div class="w"><div class="kick">Tests · GMAT</div><h1>GMAT<br><span class="g">Guide.</span></h1><p class="sub">The business school entrance test. Understand the exam and plan for MBA and master's routes.</p><button class="btn" onclick="document.getElementById('k').scrollIntoView()">Start the guide</button></div></header>
-<section id="k"><div class="w"><div class="kick">01 · Essentials</div><h2>What you need to know.</h2><div class="grid"><article class="card reveal"><div class="num">01</div><h3>Core sections</h3><p>Quantitative, Verbal and Data Insights.</p></article><article class="card reveal"><div class="num">02</div><h3>Business focus</h3><p>Used mainly by management and finance programmes.</p></article><article class="card reveal"><div class="num">03</div><h3>Score strategy</h3><p>Aim for the range the school publishes.</p></article></div></div></section>
-<section class="alt"><div class="w"><div class="kick">02 · Your plan</div><h2>Follow it step by step.</h2><div class="tl"><div class="step reveal"><div class="dot"></div><small>STEP 01</small><h3>Shortlist schools</h3></div><div class="step reveal"><div class="dot"></div><small>STEP 02</small><h3>Check score ranges</h3></div><div class="step reveal"><div class="dot"></div><small>STEP 03</small><h3>Diagnostic test</h3></div><div class="step reveal"><div class="dot"></div><small>STEP 04</small><h3>Weekly practice sets</h3></div><div class="step reveal"><div class="dot"></div><small>STEP 05</small><h3>Mock exams</h3></div><div class="step reveal"><div class="dot"></div><small>STEP 06</small><h3>Schedule retake buffer</h3></div></div></div></section>
-<section><div class="w"><div class="kick">03 · FAQ</div><h2>Quick answers.</h2><div class="faq"><div class="faq-item"><button class="faq-q">GMAT or GRE?<span>+</span></button><p class="faq-a">Many schools accept both; confirm.</p></div><div class="faq-item"><button class="faq-q">Online option?<span>+</span></button><p class="faq-a">Check current availability.</p></div><div class="faq-item"><button class="faq-q">When to take it?<span>+</span></button><p class="faq-a">Before application rounds open.</p></div></div></div></section>
-<footer><div class="w">UniAI · Plan smarter. Go Farther. Always verify details with official sources.</div></footer>
-<script>const o=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('v');o.unobserve(x.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(e=>o.observe(e));
-document.querySelectorAll('.faq-q').forEach(b=>b.onclick=()=>{const i=b.parentElement,w=i.classList.contains('open');document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));if(!w)i.classList.add('open')})</script></body></html>
+<!DOCTYPE html>
+<html lang="en" data-guide-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="A practical GMAT Focus Edition guide covering format, sections, scoring, Data Insights strategy, study plans, booking and FAQs.">
+<title>UniAI | GMAT Focus Master Guide</title>
+<style>
+:root{
+  color-scheme:light;
+  --bg:#faf7f2; --surface:#fff; --surface-2:#f6ecdd; --text:#211a12; --muted:#6d6153;
+  --border:#e6d8c3; --primary:#b45309; --accent:#d97706; --soft:rgba(180,83,9,.09);
+  --shadow:0 18px 50px rgba(80,50,20,.10); --nav:rgba(255,255,255,.88);
+  --hero-overlay:rgba(30,16,4,.76); --good:#16845b; --warn:#a85c08; --bad:#c13d50;
+}
+html[data-guide-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0e0a06; --surface:#181209; --surface-2:#221a0d; --text:#faf3e8; --muted:#c7b6a2;
+  --border:#3d2f1d; --primary:#fbbf24; --accent:#f59e0b; --soft:rgba(251,191,36,.12);
+  --shadow:0 18px 50px rgba(0,0,0,.28); --nav:rgba(14,10,6,.88);
+  --hero-overlay:rgba(12,7,2,.79); --good:#68d5a7; --warn:#ffca80; --bad:#ff8b9a;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:92px}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;transition:background .2s,color .2s}
+a{color:var(--primary);text-decoration:none;text-underline-offset:3px}
+button{font:inherit;cursor:pointer}
+.progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:100;background:linear-gradient(90deg,var(--primary),var(--accent))}
+.topbar{position:sticky;top:0;z-index:50;background:var(--nav);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+.topbar-inner{width:min(1200px,92vw);margin:auto;min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{font-size:22px;font-weight:900;letter-spacing:-1px;color:var(--text)}
+.brand span{color:var(--primary)}
+.nav{display:flex;gap:18px;overflow:auto;white-space:nowrap}
+.nav a{font-size:12px;font-weight:750;color:var(--muted)}
+.theme-chip{border:1px solid var(--border);border-radius:99px;padding:7px 11px;background:var(--surface);color:var(--text);font-size:12px;font-weight:750;white-space:nowrap}
+.wrap{width:min(1120px,90vw);margin:auto}
+.hero{min-height:680px;display:flex;align-items:center;color:#fff;position:relative;background:linear-gradient(90deg,var(--hero-overlay),rgba(30,16,4,.25)),url("https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=2200&q=85") center/cover no-repeat}
+.hero-inner{padding:100px 0 72px;max-width:820px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.19em;font-weight:850;color:var(--accent)}
+.hero .eyebrow{color:#ffd48a}
+h1{font-size:clamp(52px,9vw,104px);line-height:.91;letter-spacing:-.075em;margin:18px 0 24px}
+.gradient-text{background:linear-gradient(90deg,#ffd48a,#fff0c2);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:680px;color:#f7ecdc;font-size:clamp(16px,2vw,19px)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{border:0;border-radius:12px;padding:12px 18px;background:linear-gradient(120deg,#b45309,#d97706);color:#fff;font-weight:850;display:inline-flex;align-items:center}
+.btn.secondary{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:44px}
+.stat{padding:15px 17px;border:1px solid rgba(255,255,255,.23);border-radius:15px;background:rgba(25,13,3,.38);backdrop-filter:blur(10px)}
+.stat strong{display:block;font-size:25px}
+.stat span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#f2dfc5}
+section{padding:82px 0}
+.alt{background:var(--surface-2)}
+.section-head{max-width:820px;margin-bottom:30px}
+h2{font-size:clamp(32px,5vw,55px);line-height:1.03;letter-spacing:-.055em;margin:10px 0 16px}
+.lead{color:var(--muted);max-width:780px;margin:0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{border:1px solid var(--border);border-radius:20px;padding:23px;background:var(--surface);box-shadow:var(--shadow);min-width:0}
+.card h3{margin:9px 0 7px;font-size:19px;letter-spacing:-.025em}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.icon-box{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:var(--soft);font-size:22px}
+.metric{font-size:35px;font-weight:900;color:var(--primary);line-height:1.1}
+.tag{display:inline-block;border:1px solid var(--border);padding:4px 9px;border-radius:99px;font-size:11px;color:var(--muted);margin:3px 4px 0 0}
+.note{padding:17px 20px;margin-top:20px;border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:12px;background:var(--soft);font-size:14px}
+.note strong{color:var(--primary)}
+.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:16px;background:var(--surface);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;min-width:680px;font-size:13px}
+th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--surface-2);color:var(--primary);font-size:11px;text-transform:uppercase;letter-spacing:.09em}
+td{color:var(--muted)}
+td strong{color:var(--text)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:var(--soft)}
+.section-icon{font-size:38px;font-weight:950;color:var(--primary);letter-spacing:-.07em}
+.image-card{border:1px solid var(--border);border-radius:22px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+.image-card img{width:100%;height:240px;object-fit:cover;display:block}
+.image-card figcaption{padding:14px 18px;font-size:13px;color:var(--muted)}
+.timeline{border-left:2px solid var(--primary);margin:10px 0 0 12px;padding-left:28px}
+.timeline-item{position:relative;padding:0 0 26px}
+.timeline-item:before{content:"";position:absolute;left:-36px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--surface);border:3px solid var(--primary)}
+.timeline-item small{font-size:11px;font-weight:900;color:var(--primary);letter-spacing:.12em}
+.timeline-item h3{margin:4px 0;font-size:18px}
+.timeline-item p{margin:0;color:var(--muted);font-size:14px}
+.checklist{display:grid;gap:10px}
+.check-item{display:flex;align-items:flex-start;gap:11px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface);font-size:14px}
+.check-item input{margin-top:5px;accent-color:var(--primary);width:16px;height:16px;flex-shrink:0}
+.check-progress{height:8px;border-radius:99px;background:var(--border);overflow:hidden;margin:13px 0}
+.check-progress span{height:100%;display:block;width:0;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .2s}
+.small-muted{font-size:12px;color:var(--muted)}
+.faq{max-width:850px}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{display:flex;width:100%;justify-content:space-between;gap:15px;align-items:center;padding:18px 0;border:0;background:none;color:var(--text);text-align:left;font-weight:850}
+.faq-a{display:none;color:var(--muted);font-size:14px;padding:0 0 18px}
+.faq-item.open .faq-a{display:block}
+.faq-q span{color:var(--primary);font-size:22px}
+.footer{padding:38px 0;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
+.footer-inner{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.backtop{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text);box-shadow:var(--shadow);z-index:20}
+@media(max-width:900px){.nav{display:none}.grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){section{padding:60px 0}.grid,.grid.two,.grid.four{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.hero h1{font-size:clamp(48px,15vw,76px)}.hero-inner{padding:85px 0 48px}.topbar-inner{min-height:60px}.card{padding:19px}.image-card img{height:190px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="progress" id="readingProgress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top">Uni<span>AI</span></a>
+    <nav class="nav" aria-label="Guide navigation">
+      <a href="#start">Start</a><a href="#format">Format</a><a href="#scores">Scores</a>
+      <a href="#targets">Targets</a><a href="#plan">Study plan</a><a href="#strategy">Strategy</a>
+      <a href="#booking">Booking</a><a href="#faq">FAQ</a>
+    </nav>
+    <button class="theme-chip" id="themeButton" type="button">◐ Theme</button>
+  </div>
+</header>
+
+<main id="top">
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <div class="eyebrow">The complete GMAT Focus Edition guide</div>
+      <h1>Own your<br><span class="gradient-text">GMAT.</span></h1>
+      <p>A focused guide to the GMAT Focus Edition: Quantitative Reasoning, Verbal Reasoning and Data Insights—plus the 205–805 score scale, section strategy, an 8-week plan and test-day execution.</p>
+      <div class="actions">
+        <a class="btn" href="#start">Explore the guide ↓</a>
+        <a class="btn secondary" href="#plan">Jump to the 8-week plan</a>
+      </div>
+      <div class="stats" aria-label="GMAT quick facts">
+        <div class="stat"><strong>2h 15m</strong><span>Test duration</span></div>
+        <div class="stat"><strong>3</strong><span>Sections</span></div>
+        <div class="stat"><strong>205–805</strong><span>Total score</span></div>
+        <div class="stat"><strong>5 yrs</strong><span>Score validity</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section id="start">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">01 · Start here</div>
+        <h2>Know whether GMAT fits your goal.</h2>
+        <p class="lead">The GMAT Focus Edition is designed for graduate management admissions, especially MBA and specialised master’s programmes. Many schools also accept the GRE, so your first task is to confirm which test your target programmes prefer.</p>
+      </div>
+      <div class="grid two">
+        <article class="card">
+          <div class="icon-box">💼</div>
+          <h3>Who takes it</h3>
+          <p>Applicants to MBA, MiM, finance, management, analytics and some other business-related programmes. Requirements differ by school, degree and scholarship route.</p>
+        </article>
+        <article class="card">
+          <div class="icon-box">🎯</div>
+          <h3>What to verify first</h3>
+          <p>Check whether GMAT or GRE is accepted, whether there is a minimum score, what the recent class profile looks like, and whether scholarship deadlines require an earlier test date.</p>
+        </article>
+      </div>
+
+      <figure class="image-card" style="margin-top:24px">
+        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1600&q=80" alt="Business planning documents and charts" loading="lazy">
+        <figcaption>The GMAT rewards structured thinking: quantify the problem, identify assumptions, evaluate evidence and choose the best-supported answer.</figcaption>
+      </figure>
+
+      <div class="note"><strong>Important:</strong> The GMAT Focus Edition has no Analytical Writing Assessment. Instead, Data Insights is a full scored section and contributes equally to your total score.</div>
+    </div>
+  </section>
+
+  <section class="alt" id="format">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">02 · Test format</div>
+        <h2>Three sections. You choose the order.</h2>
+        <p class="lead">The GMAT Focus Edition has three 45-minute sections: Quantitative Reasoning, Verbal Reasoning and Data Insights. You can choose the section order before the exam begins.</p>
+      </div>
+      <div class="grid four">
+        <article class="card"><div class="section-icon">Q</div><h3>Quantitative Reasoning</h3><p>Problem solving using arithmetic and algebra. Data Sufficiency now sits within Data Insights.</p><div class="tag">21 questions</div><div class="tag">45 min</div></article>
+        <article class="card"><div class="section-icon">V</div><h3>Verbal Reasoning</h3><p>Reading comprehension and critical reasoning.</p><div class="tag">23 questions</div><div class="tag">45 min</div></article>
+        <article class="card"><div class="section-icon">D</div><h3>Data Insights</h3><p>Data sufficiency, table analysis, graphics interpretation, two-part analysis and multi-source reasoning.</p><div class="tag">20 questions</div><div class="tag">45 min</div></article>
+        <article class="card"><div class="section-icon">⏸</div><h3>Optional break</h3><p>An optional 10-minute break is available between sections, subject to the current test-day rules.</p><div class="tag">10 min</div><div class="tag">Optional</div></article>
+      </div>
+
+      <div class="table-wrap" style="margin-top:22px">
+        <table>
+          <thead><tr><th>Section</th><th>Questions</th><th>Time</th><th>Core skills</th><th>Question types</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Quantitative Reasoning</strong></td><td>21</td><td>45 minutes</td><td>Quantitative problem solving</td><td>Problem Solving</td></tr>
+            <tr><td><strong>Verbal Reasoning</strong></td><td>23</td><td>45 minutes</td><td>Reasoning and comprehension</td><td>Reading Comprehension, Critical Reasoning</td></tr>
+            <tr><td><strong>Data Insights</strong></td><td>20</td><td>45 minutes</td><td>Data literacy and reasoning</td><td>Data Sufficiency, Table Analysis, Graphics Interpretation, Two-Part Analysis, Multi-Source Reasoning</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap" style="margin-top:22px">
+        <table>
+          <thead><tr><th>Section</th><th>What it really tests</th><th>Common trap</th><th>High-impact habit</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Quant</strong></td><td>Reasoning with numbers, not advanced mathematics</td><td>Doing long calculations when estimation is enough</td><td>Look for structure, divisibility and strategic testing</td></tr>
+            <tr><td><strong>Verbal</strong></td><td>Argument logic, evidence and precise reading</td><td>Choosing an answer that is true but does not answer the question</td><td>Identify conclusion, evidence and assumption first</td></tr>
+            <tr><td><strong>Data Insights</strong></td><td>Interpreting multiple data sources under time pressure</td><td>Reading every data point before understanding the task</td><td>Scan headings, units and trends before solving</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><strong>Section-order advantage:</strong> Choose the order that matches your energy and strategy. Many test takers put their strongest section first to build confidence, while others prefer to handle their hardest section while fresh.</div>
+    </div>
+  </section>
+
+  <section id="scores">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">03 · Scoring</div>
+        <h2>205–805, with equal section weight.</h2>
+        <p class="lead">The GMAT Focus Edition total score ranges from 205 to 805 in 10-point increments. All three sections are weighted equally toward the total, and each section is reported on a 60–90 scale.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Score</th><th>Range</th><th>Increments</th><th>What it shows</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Total score</strong></td><td>205–805</td><td>10 points</td><td>Combined performance across all three sections</td></tr>
+            <tr><td><strong>Quantitative Reasoning</strong></td><td>60–90</td><td>1 point</td><td>Problem-solving performance</td></tr>
+            <tr><td><strong>Verbal Reasoning</strong></td><td>60–90</td><td>1 point</td><td>Critical reasoning and reading performance</td></tr>
+            <tr><td><strong>Data Insights</strong></td><td>60–90</td><td>1 point</td><td>Data interpretation and reasoning performance</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid two" style="margin-top:22px">
+        <article class="card">
+          <h3>There is no writing score</h3>
+          <p>Unlike the previous GMAT, the Focus Edition does not include an Analytical Writing Assessment. Your score report focuses on Quant, Verbal and Data Insights.</p>
+        </article>
+        <article class="card">
+          <h3>Balance matters</h3>
+          <p>Because all three sections count equally, a very strong Quant score cannot fully compensate for a weak Data Insights or Verbal performance.</p>
+        </article>
+      </div>
+      <div class="note"><strong>Validity:</strong> GMAT Focus scores are valid for five years, but each school sets its own application and score-submission policy.</div>
+    </div>
+  </section>
+
+  <section class="alt" id="targets">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">04 · Setting a target</div>
+        <h2>Use school data, not guesswork.</h2>
+        <p class="lead">There is no universal “good GMAT score.” Build a target from the recent class profile, scholarship expectations, your background and the strength of the rest of your application.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Programme type</th><th>Often emphasised</th><th>Planning approach</th><th>Check carefully</th></tr></thead>
+          <tbody>
+            <tr><td><strong>MBA</strong></td><td>Balanced profile across all sections</td><td>Target the school’s median or above, then strengthen the weakest section</td><td>Whether GMAT, GRE or both are accepted</td></tr>
+            <tr><td><strong>MiM / Management</strong></td><td>Quant and Data Insights</td><td>Build strong data reasoning early</td><td>Whether work experience is expected</td></tr>
+            <tr><td><strong>Finance / Analytics</strong></td><td>Quant and Data Insights</td><td>Prioritise quantitative accuracy and data interpretation</td><td>Programme-specific quantitative expectations</td></tr>
+            <tr><td><strong>Scholarship routes</strong></td><td>Competitive total score</td><td>Check whether awards have score cutoffs or earlier deadlines</td><td>Round deadlines and score-report timing</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><strong>Target-setting rule:</strong> Record the school’s median or average score, minimum requirements if any, scholarship cutoffs, application deadline and score-report deadline.</div>
+    </div>
+  </section>
+
+  <section id="plan">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">05 · Preparation roadmap</div>
+        <h2>An 8-week plan with a purpose.</h2>
+        <p class="lead">Use a diagnostic to locate your biggest gap, then follow a repeatable cycle: practise timed questions, review every error, identify the cause, and drill that weakness again.</p>
+      </div>
+      <div class="grid two">
+        <div class="card">
+          <div class="timeline">
+            <div class="timeline-item"><small>WEEK 1 · DIAGNOSE</small><h3>Find your baseline</h3><p>Take an official-style GMAT Focus mock. Record section scores, pacing, accuracy and recurring error types.</p></div>
+            <div class="timeline-item"><small>WEEKS 2–3 · FOUNDATIONS</small><h3>Rebuild Quant and Verbal</h3><p>Review arithmetic, algebra, fractions, percentages and word-problem setup. Practise critical reasoning and reading comprehension deliberately.</p></div>
+            <div class="timeline-item"><small>WEEKS 4–5 · DATA INSIGHTS</small><h3>Master data reasoning</h3><p>Drill Data Sufficiency, tables, graphs, two-part analysis and multi-source reasoning. Learn to extract only the data needed.</p></div>
+            <div class="timeline-item"><small>WEEKS 6–7 · SIMULATE</small><h3>Train under exam conditions</h3><p>Take full-length mocks with your chosen section order. Review pacing, careless errors and question-type patterns after each test.</p></div>
+            <div class="timeline-item"><small>WEEK 8 · REFINE</small><h3>Polish and prepare</h3><p>Do light review, revisit your error log, confirm booking details and protect sleep before test day.</p></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Weekly study rhythm</h3>
+          <div class="table-wrap" style="box-shadow:none">
+            <table style="min-width:0">
+              <thead><tr><th>Day</th><th>Suggested focus</th></tr></thead>
+              <tbody>
+                <tr><td>Mon</td><td>Quant topic drill + error review</td></tr>
+                <tr><td>Tue</td><td>Critical Reasoning practice</td></tr>
+                <tr><td>Wed</td><td>Data Sufficiency + table analysis</td></tr>
+                <tr><td>Thu</td><td>Reading Comprehension + graphs</td></tr>
+                <tr><td>Fri</td><td>Two-part and multi-source reasoning</td></tr>
+                <tr><td>Sat</td><td>Timed section or full mock</td></tr>
+                <tr><td>Sun</td><td>Error log, review and rest</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small-muted" style="margin-top:12px">Consistent 8–12 hours per week usually beats occasional long study days.</p>
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-top:24px">
+        <figure class="image-card">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80" alt="Business analytics dashboard and charts" loading="lazy">
+          <figcaption>Data Insights mirrors real management work: read the question, scan the data structure, then extract only what you need.</figcaption>
+        </figure>
+        <figure class="image-card">
+          <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1600&q=80" alt="Student studying with notes and laptop" loading="lazy">
+          <figcaption>Keep an error log: question type, why you missed it, the correct reasoning and the rule to practise next.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="strategy">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">06 · Section strategy</div>
+        <h2>Small habits, better scores.</h2>
+      </div>
+      <div class="grid two">
+        <article class="card"><div class="icon-box">🧮</div><h3>Quant: reason before calculating</h3><p>Look for number properties, estimation, divisibility and strategic substitution. Avoid treating every question as a full algebra problem.</p></article>
+        <article class="card"><div class="icon-box">🧠</div><h3>Verbal: find the argument</h3><p>For Critical Reasoning, identify the conclusion and supporting evidence before evaluating choices. For Reading Comprehension, track the author’s purpose and structure.</p></article>
+        <article class="card"><div class="icon-box">📊</div><h3>Data Insights: scan before solving</h3><p>Read the prompt first, then scan table headers, graph axes, units and trends. In Data Sufficiency, test one statement at a time.</p></article>
+        <article class="card"><div class="icon-box">⏱️</div><h3>Pacing: protect accuracy</h3><p>Use the bookmark-and-review feature strategically, but do not save too many questions for the end. A steady pace protects both accuracy and confidence.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="booking">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">07 · Booking and test day</div>
+        <h2>Be ready before the exam begins.</h2>
+        <p class="lead">Register through the official GMAC / MBA.com route. You can take the GMAT at a test centre or online where eligible; fees, taxes and availability vary by location.</p>
+      </div>
+      <div class="grid two">
+        <div class="card">
+          <h3>Registration checklist</h3>
+          <div class="checklist" id="bookingChecklist">
+            <label class="check-item"><input type="checkbox"> I confirmed whether each programme accepts GMAT Focus.</label>
+            <label class="check-item"><input type="checkbox"> I checked median scores, minimums and scholarship expectations.</label>
+            <label class="check-item"><input type="checkbox"> I chose a date that leaves time for a possible retake.</label>
+            <label class="check-item"><input type="checkbox"> I reviewed the current fee, taxes and rescheduling policy.</label>
+            <label class="check-item"><input type="checkbox"> My registration name matches my accepted ID.</label>
+          </div>
+          <div class="check-progress"><span id="bookingProgress"></span></div>
+          <div class="small-muted" id="bookingCount">0 of 5 complete</div>
+        </div>
+        <div class="card">
+          <h3>Test-day checklist</h3>
+          <div class="checklist" id="dayChecklist">
+            <label class="check-item"><input type="checkbox"> My original accepted ID is ready.</label>
+            <label class="check-item"><input type="checkbox"> I know the centre or online testing rules.</label>
+            <label class="check-item"><input type="checkbox"> I have decided my preferred section order.</label>
+            <label class="check-item"><input type="checkbox"> I have completed at least one full official-style mock.</label>
+            <label class="check-item"><input type="checkbox"> I know how and when to send scores to programmes.</label>
+          </div>
+          <div class="check-progress"><span id="dayProgress"></span></div>
+          <div class="small-muted" id="dayCount">0 of 5 complete</div>
+        </div>
+      </div>
+
+      <div class="note"><strong>Retake rule:</strong> You must wait at least 16 days after an attempt before retaking. You may take the GMAT up to five times in a rolling 12-month period and no more than eight times in a lifetime across delivery channels and exam versions.</div>
+    </div>
+  </section>
+
+  <section class="alt" id="mistakes">
+    <div class="wrap">
+      <div class="section-head"><div class="eyebrow">08 · Avoid these</div><h2>Don’t waste an exam attempt.</h2></div>
+      <div class="grid">
+        <article class="card"><div class="metric">01</div><h3>Ignoring Data Insights</h3><p>It counts equally toward your total score.</p></article>
+        <article class="card"><div class="metric">02</div><h3>Overusing the calculator</h3><p>Reasoning is often faster than calculation.</p></article>
+        <article class="card"><div class="metric">03</div><h3>No timed mocks</h3><p>Pacing and stamina are separate skills.</p></article>
+        <article class="card"><div class="metric">04</div><h3>Random section order</h3><p>Choose an order deliberately and practise it.</p></article>
+        <article class="card"><div class="metric">05</div><h3>Studying without review</h3><p>An error log turns practice into progress.</p></article>
+        <article class="card"><div class="metric">06</div><h3>Booking too late</h3><p>Leave time for score reporting and a retake.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head"><div class="eyebrow">09 · FAQ</div><h2>Quick answers.</h2></div>
+      <div class="faq">
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">GMAT or GRE? <span>+</span></button><div class="faq-a">Many business schools accept both. Choose based on programme preference, your strengths and the score profile you can realistically achieve.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Does GMAT Focus have an essay? <span>+</span></button><div class="faq-a">No. The GMAT Focus Edition has no Analytical Writing Assessment; it has Quantitative Reasoning, Verbal Reasoning and Data Insights.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Can I choose the section order? <span>+</span></button><div class="faq-a">Yes. You can choose the order of Quantitative Reasoning, Verbal Reasoning and Data Insights before beginning the exam.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Can I retake the GMAT? <span>+</span></button><div class="faq-a">Yes. You must wait at least 16 days between attempts, with limits of five attempts in a rolling 12-month period and eight lifetime attempts.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">How long are GMAT scores valid? <span>+</span></button><div class="faq-a">GMAT Focus scores are valid for five years, but individual schools may apply their own submission and recency rules.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Where should I verify current details? <span>+</span></button><div class="faq-a">Use the official GMAC / MBA.com website for exam structure, fees, registration and policies, and each school’s official admissions page for score requirements.</div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div><strong>UniAI · Plan smarter. Go farther.</strong><br>Use this guide for planning, not as a substitute for official GMAC or programme requirements.</div>
+    <div><a href="https://www.mba.com/exams/gmat-focus-edition" target="_blank" rel="noopener noreferrer">Official GMAT website ↗</a><br><span>Check current rules before booking.</span></div>
+  </div>
+</footer>
+
+<button class="backtop" type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* Theme bridge: follows UniAI's `uniai-theme` setting where same-origin storage is shared. */
+(() => {
+  const KEY='uniai-theme', root=document.documentElement, btn=document.getElementById('themeButton');
+  const detect=()=>{
+    try{const s=localStorage.getItem(KEY);if(s==='dark'||s==='light')return s;}catch(_){}
+    const a=root.getAttribute('data-theme')||document.body?.getAttribute('data-theme')||document.body?.getAttribute('data-bs-theme');
+    if(a==='dark'||a==='light')return a;
+    return matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  };
+  const apply=t=>{root.setAttribute('data-guide-theme',t==='dark'?'dark':'light');btn.textContent=t==='dark'?'☀ Light guide':'☾ Dark guide';};
+  apply(detect());
+  btn.addEventListener('click',()=>{const next=root.getAttribute('data-guide-theme')==='dark'?'light':'dark';apply(next);try{localStorage.setItem(KEY,next);}catch(_){}});
+  addEventListener('storage',e=>{if(e.key===KEY)apply(detect())});
+  new MutationObserver(()=>apply(detect())).observe(root,{attributes:true,attributeFilter:['data-theme','data-bs-theme','class']});
+})();
+
+/* Reading progress */
+(() => {
+  const bar=document.getElementById('readingProgress');
+  const update=()=>{const max=document.documentElement.scrollHeight-innerHeight;bar.style.width=`${max>0?scrollY/max*100:0}%`};
+  addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update();
+})();
+
+/* Checklists */
+(() => {
+  [['bookingChecklist','bookingProgress','bookingCount'],['dayChecklist','dayProgress','dayCount']].forEach(([listId,barId,countId])=>{
+    const list=document.getElementById(listId),checks=[...list.querySelectorAll('input')],bar=document.getElementById(barId),count=document.getElementById(countId);
+    const update=()=>{const done=checks.filter(c=>c.checked).length;bar.style.width=`${done/checks.length*100}%`;count.textContent=`${done} of ${checks.length} complete`};
+    checks.forEach(c=>c.addEventListener('change',update));update();
+  });
+})();
+
+/* FAQ */
+document.querySelectorAll('.faq-q').forEach(button=>{
+  button.addEventListener('click',()=>{
+    const item=button.closest('.faq-item'),open=!item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(other=>{other.classList.remove('open');other.querySelector('.faq-q').setAttribute('aria-expanded','false');other.querySelector('.faq-q span').textContent='+'});
+    if(open){item.classList.add('open');button.setAttribute('aria-expanded','true');button.querySelector('span').textContent='−'}
+  });
+});
+</script>
+</body>
+</html>

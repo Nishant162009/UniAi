@@ -1,40 +1,560 @@
-<!DOCTYPE html><html lang="en"><head><style id="auth-gate">html{visibility:hidden}
-.stats{display:flex;flex-wrap:wrap;gap:38px;margin-top:44px;padding-top:20px;border-top:1px solid rgba(255,255,255,.15)}.stats strong{display:block;font-size:26px}.stats span{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#a6b3c7}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.note{margin-top:16px;padding:16px 20px;border-left:3px solid var(--b);background:linear-gradient(90deg,rgba(29,78,216,.25),transparent);border-radius:0 12px 12px 0;font-size:13px;color:#d4def0}
-table{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--border);border-radius:14px;overflow:hidden}th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border)}th{background:#15243e;color:var(--b);font-size:11px;text-transform:uppercase;letter-spacing:.1em}td{color:#d5dce8}
-.tw{overflow-x:auto}.pill{display:inline-block;margin:3px;padding:5px 10px;border:1px solid var(--border);border-radius:99px;font-size:10px;color:#aeb8c8}
-.bad strong{color:#ff929d}.lead{color:var(--muted);max-width:760px;font-size:15px;margin:-20px 0 40px}
-@media(max-width:900px){.g2,.g4{grid-template-columns:1fr}}.ph{height:340px;border-radius:22px;border:1px solid var(--border);margin:50px 0 0;background-size:cover;background-position:center;position:relative;overflow:hidden;background-color:var(--card)}.ph:after{content:attr(data-c);position:absolute;left:0;right:0;bottom:0;padding:40px 24px 18px;font-size:12px;color:#e6ebf5;background:linear-gradient(transparent,rgba(5,9,17,.92))}.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}.wk{border-left:3px solid #ff929d}.st{border-left:3px solid #4ade80}.cmp div{padding:18px;border-radius:14px;background:var(--card);font-size:13px;color:#d5dce8}.cmp small{display:block;font-weight:800;margin-bottom:6px;font-size:10px;letter-spacing:.1em;text-transform:uppercase}@media(max-width:900px){.cmp{grid-template-columns:1fr}.ph{height:220px}}</style>
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script><script src="guard.js"></script>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UniAI | Apply Guide</title>
-<style>:root{--bg:#070b16;--card:#111b30;--text:#f7f8fc;--muted:#a7b1c4;--border:#233452;--a:#1d4ed8;--b:#a78bfa}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.6}
-a{color:inherit;text-decoration:none}.logo{position:fixed;top:0;left:0;right:0;z-index:9;padding:22px 28px;font-weight:800;font-size:22px;letter-spacing:-.05em}
-.logo span,.g{background:linear-gradient(90deg,var(--a),#fff 50%,var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero{min-height:88vh;display:flex;align-items:flex-end;background:linear-gradient(180deg,rgba(5,8,16,.2),var(--bg)),radial-gradient(circle at 80% 20%,var(--a),transparent 40%),url("https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=2000&q=85") center/cover,var(--card)}
-.w{width:min(1180px,92vw);margin:auto}.hero .w{padding:150px 0 70px}
-.kick{color:var(--b);text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:800}
-h1{font-size:clamp(52px,8vw,110px);line-height:.9;letter-spacing:-.07em;margin:16px 0}h2{font-size:clamp(32px,4.5vw,56px);letter-spacing:-.05em;line-height:1;margin:0 0 40px}
-.sub{max-width:680px;color:#d6deeb;font-size:16px}.btn{margin-top:26px;padding:13px 20px;border:0;border-radius:99px;color:#fff;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--a),var(--b))}
-section{padding:90px 0}.alt{background:rgba(255,255,255,.02)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.card{padding:26px;min-height:200px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(145deg,var(--card),#0b1322)}.num{color:var(--b);font-size:38px;font-weight:800}
-.card h3{margin:16px 0 8px}.card p,.faq-a{color:var(--muted);font-size:13px}
-.tl{position:relative;max-width:760px}.tl:before{content:"";position:absolute;left:17px;top:0;bottom:0;width:1px;background:linear-gradient(var(--a),var(--b))}
-.step{position:relative;padding:0 0 34px 62px}.dot{position:absolute;left:6px;width:23px;height:23px;border:1px solid var(--b);border-radius:50%;background:var(--bg)}.step small{color:var(--b);font-weight:800}.step h3{margin:4px 0}
-.faq{max-width:860px}.faq-item{border-bottom:1px solid var(--border)}.faq-q{all:unset;display:flex;justify-content:space-between;width:100%;padding:20px 0;cursor:pointer;font-weight:700}.faq-a{display:none;margin:0 0 18px}.open .faq-a{display:block}
-.reveal{opacity:0;transform:translateY(24px);transition:.7s}.reveal.v{opacity:1;transform:none}
-footer{padding:40px 0;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
-@media(max-width:800px){.grid{grid-template-columns:1fr}}
-.stats{display:flex;flex-wrap:wrap;gap:38px;margin-top:44px;padding-top:20px;border-top:1px solid rgba(255,255,255,.15)}.stats strong{display:block;font-size:26px}.stats span{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#a6b3c7}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.note{margin-top:16px;padding:16px 20px;border-left:3px solid var(--b);background:linear-gradient(90deg,rgba(29,78,216,.25),transparent);border-radius:0 12px 12px 0;font-size:13px;color:#d4def0}
-table{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--border);border-radius:14px;overflow:hidden}th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border)}th{background:#15243e;color:var(--b);font-size:11px;text-transform:uppercase;letter-spacing:.1em}td{color:#d5dce8}
-.tw{overflow-x:auto}.pill{display:inline-block;margin:3px;padding:5px 10px;border:1px solid var(--border);border-radius:99px;font-size:10px;color:#aeb8c8}
-.bad strong{color:#ff929d}.lead{color:var(--muted);max-width:760px;font-size:15px;margin:-20px 0 40px}
-@media(max-width:900px){.g2,.g4{grid-template-columns:1fr}}</style></head><body>
-<a href="#" class="logo">Uni<span>AI</span></a>
-<header class="hero"><div class="w"><div class="kick">The complete application guide · Apply</div><h1>Smart<br><span class="g">Apply.</span></h1><p class="sub">From shortlist to offer: choosing courses, application portals, documents, deadlines, interviews, offer types and mistakes that cost places.</p><button class="btn" onclick="document.getElementById('s1').scrollIntoView()">Start the guide</button>
-<div class="stats"><div><strong>3</strong><span>Shortlist tiers</span></div><div><strong>8</strong><span>Steps</span></div><div><strong>6–12 mo</strong><span>Start early</span></div><div><strong>1</strong><span>Tracker sheet</span></div></div></div></header><section id="s1"><div class="w"><div class="kick reveal">01 · Start here</div><h2 class="reveal">Applying is a campaign, not a form.</h2><div class="g2"><div class="card reveal"><h3>What it involves</h3><p>Choosing courses, preparing documents, writing essays, meeting deadlines and responding to offers. Each step depends on the one before.</p></div><div class="card reveal"><h3>Start early</h3><p>Six to twelve months ahead gives you time for tests, references and funding. Rushed applications show.</p></div></div><div class="note reveal">Every university has its own rules. Use each official course page as the final reference.</div></div></section><div class="w"><div class="ph reveal" data-c="A tracker sheet is the most useful tool in your application." style="background-image:url(https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1600&q=80)"></div></div><section class=alt id="s2"><div class="w"><div class="kick reveal">02 · Shortlist</div><h2 class="reveal">Ambitious, target and safe.</h2><div class="tw reveal"><table><tr><th>Tier</th><th>Meaning</th><th>How many</th></tr><tr><td>Ambitious</td><td>Your profile is below or at the upper edge</td><td>1–2</td></tr><tr><td>Target</td><td>Your profile matches typical admits</td><td>3–4</td></tr><tr><td>Safe</td><td>Your profile is above typical entry</td><td>1–2</td></tr></table></div><div class="note reveal">Balance prestige with course fit, cost, location and career outcomes.</div></div></section><section id="s3"><div class="w"><div class="kick reveal">03 · The process</div><h2 class="reveal">Eight steps to an offer.</h2><div class="tl"><div class="step reveal"><div class="dot"></div><small>STEP 1</small><h3>Research courses</h3><p style="color:var(--muted);font-size:13px;margin:0">Compare modules, teaching language, fees, location and entry requirements.</p></div><div class="step reveal"><div class="dot"></div><small>STEP 2</small><h3>Check requirements</h3><p style="color:var(--muted);font-size:13px;margin:0">Note grades, tests, deadlines, documents and application fees.</p></div><div class="step reveal"><div class="dot"></div><small>STEP 3</small><h3>Take tests early</h3><p style="color:var(--muted);font-size:13px;margin:0">Book language and entrance tests so scores arrive in time.</p></div><div class="step reveal"><div class="dot"></div><small>STEP 4</small><h3>Prepare documents</h3><p style="color:var(--muted);font-size:13px;margin:0">Transcripts, CV, essays, references, portfolio if needed.</p></div><div class="step reveal"><div class="dot"></div><small>STEP 5</small><h3>Apply</h3><p style="color:var(--muted);font-size:13px;margin:0">Use the portal the university specifies and double-check every field.</p></div><div class="step reveal"><div class="dot"></div><small>STEP 6</small><h3>Pay and confirm</h3><p style="color:var(--muted);font-size:13px;margin:0">Keep receipts and confirmation emails.</p></div><div class="step reveal"><div class="dot"></div><small>STEP 7</small><h3>Interview or tests</h3><p style="color:var(--muted);font-size:13px;margin:0">Prepare for any interviews, assessments or portfolio reviews.</p></div><div class="step reveal"><div class="dot"></div><small>STEP 8</small><h3>Decide on offers</h3><p style="color:var(--muted);font-size:13px;margin:0">Read conditions, compare funding and accept before the deadline.</p></div></div></div></section><div class="w"><div class="ph reveal" data-c="Offers come with conditions. Read every one." style="background-image:url(https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1600&q=80)"></div></div><section class=alt id="s4"><div class="w"><div class="kick reveal">04 · Where to apply</div><h2 class="reveal">Application routes.</h2><div class="tw reveal"><table><tr><th>Route</th><th>Used for</th><th>Note</th></tr><tr><td>Direct to university</td><td>Most countries and programmes</td><td>Follow each institution's portal</td></tr><tr><td>Central portals</td><td>Some countries and levels</td><td>Check the official service for your destination</td></tr><tr><td>Third-party centres</td><td>Some institutions</td><td>Check they are recognised</td></tr><tr><td>Specialist applications</td><td>Art, music, portfolio courses</td><td>Extra materials often required</td></tr></table></div><div class="note reveal">Names and processes change. Confirm the route on the course page.</div></div></section><section id="s5"><div class="w"><div class="kick reveal">05 · Documents</div><h2 class="reveal">Application pack.</h2><div class="grid"><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Transcripts and certificates</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Passport copy</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ CV or resume</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Statement of purpose</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Reference letters</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Language or entrance test score</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Portfolio if required</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Application fee receipt</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Proof of finances where required</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Translations if required</div></div></div></section><section class=alt id="s6"><div class="w"><div class="kick reveal">06 · Offers</div><h2 class="reveal">Understanding your offer.</h2><div class="g2"><div class="card reveal"><h3>Conditional offer</h3><p>You must meet extra conditions such as final grades or a language score. Track each condition and its deadline.</p></div><div class="card reveal"><h3>Unconditional offer</h3><p>All requirements are met. You still need to follow deposit, funding and visa steps.</p></div></div><div class="note reveal">Compare offers by course, cost, scholarships and location, not only by name.</div></div></section><section id="s7"><div class="w"><div class="kick reveal">07 · Interviews</div><h2 class="reveal">Be ready to talk.</h2><div class="grid"><article class="card reveal"><div class="num">01</div><h3>Know your application</h3><p>Be ready to discuss everything you submitted.</p></article><article class="card reveal"><div class="num">02</div><h3>Know the course</h3><p>Mention modules, faculty and projects.</p></article><article class="card reveal"><div class="num">03</div><h3>Explain your goals</h3><p>Link your past, the course and your future.</p></article><article class="card reveal"><div class="num">04</div><h3>Prepare questions</h3><p>Ask about teaching, support and outcomes.</p></article><article class="card reveal"><div class="num">05</div><h3>Practise aloud</h3><p>Rehearse with a friend or mentor.</p></article><article class="card reveal"><div class="num">06</div><h3>Stay honest</h3><p>Never claim more than you did.</p></article></div></div></section><section class=alt id="s8"><div class="w"><div class="kick reveal">08 · Mistakes</div><h2 class="reveal">Avoid these.</h2><div class="grid"><article class="card bad reveal"><div class="num">01</div><h3>Missing deadlines</h3><p>Late applications are often rejected.</p></article><article class="card bad reveal"><div class="num">02</div><h3>Ignoring requirements</h3><p>Meet every stated condition.</p></article><article class="card bad reveal"><div class="num">03</div><h3>Generic essays</h3><p>Tailor to the course.</p></article><article class="card bad reveal"><div class="num">04</div><h3>Weak references</h3><p>Brief your referees.</p></article><article class="card bad reveal"><div class="num">05</div><h3>Applying only to top names</h3><p>Balance your list.</p></article><article class="card bad reveal"><div class="num">06</div><h3>No tracking</h3><p>Use a spreadsheet.</p></article></div></div></section><section id="s9"><div class="w"><div class="kick reveal">09 · FAQ</div><h2 class="reveal">Quick answers.</h2><div class="faq"><div class="faq-item"><button class="faq-q">How many universities should I apply to?<span>+</span></button><p class="faq-a">Enough for a balanced list, commonly six to eight.</p></div><div class="faq-item"><button class="faq-q">When do applications open?<span>+</span></button><p class="faq-a">It varies by country and course. Check the official page.</p></div><div class="faq-item"><button class="faq-q">Can I apply without test scores?<span>+</span></button><p class="faq-a">Some programmes are test-optional. Confirm each one.</p></div><div class="faq-item"><button class="faq-q">What if I am rejected?<span>+</span></button><p class="faq-a">Ask for feedback, consider other offers or reapply later.</p></div><div class="faq-item"><button class="faq-q">Can I defer an offer?<span>+</span></button><p class="faq-a">Some universities allow it. Ask in writing.</p></div></div></div></section><footer><div class="w">UniAI · Plan smarter. Go Farther. Always follow each university's official application instructions.</div></footer>
-<script>const o=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('v');o.unobserve(x.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(e=>o.observe(e));
-document.querySelectorAll('.faq-q').forEach(b=>b.onclick=()=>{const i=b.parentElement,w=i.classList.contains('open');document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));if(!w)i.classList.add('open')})</script></body></html>
+<!DOCTYPE html>
+<html lang="en" data-guide-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="A detailed university application guide: shortlisting, portals, documents, deadlines, essays, references, interviews, offers and application tracking.">
+<title>UniAI | Smart Apply Master Guide</title>
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f5f7fd; --surface:#fff; --surface-2:#eef1fc; --text:#141a33; --muted:#5a6280;
+  --border:#dbe1f2; --primary:#1d4ed8; --accent:#7c3aed; --soft:rgba(29,78,216,.09);
+  --shadow:0 18px 50px rgba(30,45,90,.09); --nav:rgba(255,255,255,.88);
+  --hero-overlay:rgba(10,14,38,.76); --good:#16845b; --warn:#a85c08; --bad:#c13d50;
+}
+html[data-guide-theme="dark"]{
+  color-scheme:dark;
+  --bg:#070b18; --surface:#101830; --surface-2:#16203c; --text:#f2f5ff; --muted:#adb6d1;
+  --border:#293456; --primary:#93a7ff; --accent:#c4b5fd; --soft:rgba(147,167,255,.12);
+  --shadow:0 18px 50px rgba(0,0,0,.27); --nav:rgba(7,11,24,.88);
+  --hero-overlay:rgba(5,8,22,.79); --good:#68d5a7; --warn:#ffca80; --bad:#ff8b9a;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:92px}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;transition:background .2s,color .2s}
+a{color:var(--primary);text-decoration:none;text-underline-offset:3px}
+button{font:inherit;cursor:pointer}
+.progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:100;background:linear-gradient(90deg,var(--primary),var(--accent))}
+.topbar{position:sticky;top:0;z-index:50;background:var(--nav);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+.topbar-inner{width:min(1200px,92vw);margin:auto;min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{font-size:22px;font-weight:900;letter-spacing:-1px;color:var(--text)}
+.brand span{color:var(--primary)}
+.nav{display:flex;gap:18px;overflow:auto;white-space:nowrap}
+.nav a{font-size:12px;font-weight:750;color:var(--muted)}
+.theme-chip{border:1px solid var(--border);border-radius:99px;padding:7px 11px;background:var(--surface);color:var(--text);font-size:12px;font-weight:750;white-space:nowrap}
+.wrap{width:min(1160px,90vw);margin:auto}
+.hero{min-height:680px;display:flex;align-items:center;color:#fff;position:relative;background:linear-gradient(90deg,var(--hero-overlay),rgba(10,14,38,.25)),url("https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=2200&q=85") center/cover no-repeat}
+.hero-inner{padding:100px 0 72px;max-width:840px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.19em;font-weight:850;color:var(--accent)}
+.hero .eyebrow{color:#d6c9ff}
+h1{font-size:clamp(50px,8.5vw,100px);line-height:.91;letter-spacing:-.075em;margin:18px 0 24px}
+.gradient-text{background:linear-gradient(90deg,#b4c2ff,#e0d0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:700px;color:#e9edfb;font-size:clamp(16px,2vw,19px)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{border:0;border-radius:12px;padding:12px 18px;background:linear-gradient(120deg,#1d4ed8,#7c3aed);color:#fff;font-weight:850;display:inline-flex;align-items:center}
+.btn.secondary{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:44px}
+.stat{padding:15px 17px;border:1px solid rgba(255,255,255,.23);border-radius:15px;background:rgba(9,13,35,.38);backdrop-filter:blur(10px)}
+.stat strong{display:block;font-size:25px}
+.stat span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#dde4f7}
+section{padding:82px 0}
+.alt{background:var(--surface-2)}
+.section-head{max-width:840px;margin-bottom:30px}
+h2{font-size:clamp(32px,5vw,55px);line-height:1.03;letter-spacing:-.055em;margin:10px 0 16px}
+.lead{color:var(--muted);max-width:800px;margin:0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{border:1px solid var(--border);border-radius:20px;padding:23px;background:var(--surface);box-shadow:var(--shadow);min-width:0}
+.card h3{margin:9px 0 7px;font-size:19px;letter-spacing:-.025em}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.icon-box{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:var(--soft);font-size:22px}
+.metric{font-size:35px;font-weight:900;color:var(--primary);line-height:1.1}
+.tag{display:inline-block;border:1px solid var(--border);padding:4px 9px;border-radius:99px;font-size:11px;color:var(--muted);margin:3px 4px 0 0}
+.note{padding:17px 20px;margin-top:20px;border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:12px;background:var(--soft);font-size:14px}
+.note strong{color:var(--primary)}
+.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:16px;background:var(--surface);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;min-width:700px;font-size:13px}
+th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--surface-2);color:var(--primary);font-size:11px;text-transform:uppercase;letter-spacing:.09em}
+td{color:var(--muted)}
+td strong{color:var(--text)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:var(--soft)}
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;align-items:stretch}
+.flow-step{position:relative;border:1px solid var(--border);border-radius:16px;background:var(--surface);padding:17px;box-shadow:var(--shadow)}
+.flow-step:not(:last-child):after{content:"→";position:absolute;right:-15px;top:40%;color:var(--primary);font-size:20px;font-weight:900}
+.flow-step b{display:block;color:var(--primary);font-size:12px;letter-spacing:.07em;text-transform:uppercase}
+.flow-step span{display:block;font-size:14px;font-weight:800;margin-top:6px}
+.flow-step small{display:block;color:var(--muted);font-size:12px;margin-top:6px}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.compare div{padding:18px;border-radius:16px;border:1px solid var(--border);background:var(--surface);font-size:14px;color:var(--muted)}
+.compare .weak{border-left:4px solid var(--bad)}
+.compare .strong{border-left:4px solid var(--good)}
+.compare small{display:block;font-weight:850;margin-bottom:7px;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.compare .weak small{color:var(--bad)}
+.compare .strong small{color:var(--good)}
+.image-card{border:1px solid var(--border);border-radius:22px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+.image-card img{width:100%;height:240px;object-fit:cover;display:block}
+.image-card figcaption{padding:14px 18px;font-size:13px;color:var(--muted)}
+.timeline{border-left:2px solid var(--primary);margin:10px 0 0 12px;padding-left:28px}
+.timeline-item{position:relative;padding:0 0 26px}
+.timeline-item:before{content:"";position:absolute;left:-36px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--surface);border:3px solid var(--primary)}
+.timeline-item small{font-size:11px;font-weight:900;color:var(--primary);letter-spacing:.12em}
+.timeline-item h3{margin:4px 0;font-size:18px}
+.timeline-item p{margin:0;color:var(--muted);font-size:14px}
+.tracker{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.panel{padding:24px;border:1px solid var(--border);border-radius:20px;background:var(--surface);box-shadow:var(--shadow)}
+.field{display:grid;gap:7px;margin:14px 0}
+.field label{font-size:13px;font-weight:800}
+.field select,.field input{width:100%;border:1px solid var(--border);background:var(--bg);color:var(--text);padding:11px 12px;border-radius:10px;font:inherit}
+.result{font-size:42px;font-weight:950;color:var(--primary);line-height:1.1}
+.bar{height:10px;border-radius:99px;background:var(--border);overflow:hidden;margin:14px 0}
+.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .25s}
+.checklist{display:grid;gap:10px}
+.check-item{display:flex;align-items:flex-start;gap:11px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface);font-size:14px}
+.check-item input{margin-top:5px;accent-color:var(--primary);width:16px;height:16px;flex-shrink:0}
+.small-muted{font-size:12px;color:var(--muted)}
+.faq{max-width:860px}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{display:flex;width:100%;justify-content:space-between;gap:15px;align-items:center;padding:18px 0;border:0;background:none;color:var(--text);text-align:left;font-weight:850}
+.faq-a{display:none;color:var(--muted);font-size:14px;padding:0 0 18px}
+.faq-item.open .faq-a{display:block}
+.faq-q span{color:var(--primary);font-size:22px}
+.footer{padding:38px 0;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
+.footer-inner{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.backtop{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text);box-shadow:var(--shadow);z-index:20}
+@media(max-width:900px){.nav{display:none}.grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}.flow{grid-template-columns:1fr}.flow-step:not(:last-child):after{content:"↓";right:50%;top:auto;bottom:-21px}.tracker{grid-template-columns:1fr}.compare{grid-template-columns:1fr}}
+@media(max-width:620px){section{padding:60px 0}.grid,.grid.two,.grid.four{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.hero h1{font-size:clamp(46px,14vw,72px)}.hero-inner{padding:85px 0 48px}.topbar-inner{min-height:60px}.card{padding:19px}.image-card img{height:190px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="progress" id="readingProgress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top">Uni<span>AI</span></a>
+    <nav class="nav" aria-label="Guide navigation">
+      <a href="#start">Start</a><a href="#shortlist">Shortlist</a><a href="#process">Process</a>
+      <a href="#portals">Portals</a><a href="#documents">Documents</a><a href="#offers">Offers</a>
+      <a href="#interviews">Interviews</a><a href="#tools">Tools</a><a href="#faq">FAQ</a>
+    </nav>
+    <button class="theme-chip" id="themeButton" type="button">◐ Theme</button>
+  </div>
+</header>
+
+<main id="top">
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <div class="eyebrow">The complete university application guide</div>
+      <h1>Smart<br><span class="gradient-text">Apply.</span></h1>
+      <p>From shortlist to offer: choose the right courses, manage portals and documents, meet deadlines, prepare for interviews and compare offers with confidence.</p>
+      <div class="actions">
+        <a class="btn" href="#start">Explore the guide ↓</a>
+        <a class="btn secondary" href="#tools">Open the application tracker</a>
+      </div>
+      <div class="stats" aria-label="Application quick facts">
+        <div class="stat"><strong>3</strong><span>Shortlist tiers</span></div>
+        <div class="stat"><strong>8</strong><span>Core steps</span></div>
+        <div class="stat"><strong>6–12 mo</strong><span>Start early</span></div>
+        <div class="stat"><strong>1</strong><span>Tracker sheet</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section id="start">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">01 · Start here</div>
+        <h2>Applying is a campaign, not a form.</h2>
+        <p class="lead">A strong application is a sequence: research courses, build a balanced list, prepare evidence, meet deadlines, submit correctly and respond strategically to offers.</p>
+      </div>
+      <div class="grid two">
+        <article class="card">
+          <div class="icon-box">🗂️</div>
+          <h3>What it involves</h3>
+          <p>Course research, entrance and language tests, transcripts, essays, references, portfolios, application fees, interviews and offer decisions.</p>
+        </article>
+        <article class="card">
+          <div class="icon-box">⏳</div>
+          <h3>Why start early</h3>
+          <p>Six to twelve months ahead gives you time for test scores, references, funding applications and a possible retake. Rushed applications often contain avoidable errors.</p>
+        </article>
+      </div>
+
+      <figure class="image-card" style="margin-top:24px">
+        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1600&q=80" alt="Student planning applications with notes" loading="lazy">
+        <figcaption>A single tracker sheet—courses, deadlines, documents, fees and status—prevents most application disasters.</figcaption>
+      </figure>
+
+      <div class="note"><strong>Golden rule:</strong> Every university has its own rules. The official course page and application portal always override blogs, agents and general guides.</div>
+    </div>
+  </section>
+
+  <section class="alt" id="shortlist">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">02 · Shortlisting</div>
+        <h2>Ambitious, target and safe.</h2>
+        <p class="lead">Do not apply only to famous names. Build a balanced list based on academic fit, cost, location, career outcomes, funding chances and admission requirements.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tier</th><th>Meaning</th><th>Suggested number</th><th>What to check</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Ambitious</strong></td><td>Your profile is below or at the upper edge of typical admits</td><td>1–2</td><td>Whether the programme values your specific strengths</td></tr>
+            <tr><td><strong>Target</strong></td><td>Your profile broadly matches recent admitted students</td><td>3–4</td><td>Course fit, funding and career outcomes</td></tr>
+            <tr><td><strong>Safe</strong></td><td>Your profile is above typical entry requirements</td><td>1–2</td><td>Whether you would genuinely attend</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap" style="margin-top:22px">
+        <table>
+          <thead><tr><th>Factor</th><th>Questions to ask</th><th>Red flag</th><th>Where to verify</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Course fit</strong></td><td>Do the modules match your goals?</td><td>You like the university name but not the syllabus</td><td>Official course page</td></tr>
+            <tr><td><strong>Entry requirements</strong></td><td>Do you meet academic, test and language rules?</td><td>Missing a compulsory subject or minimum score</td><td>Admissions requirements</td></tr>
+            <tr><td><strong>Cost</strong></td><td>What is tuition plus living, insurance and travel?</td><td>Only checking tuition</td><td>Fee and funding pages</td></tr>
+            <tr><td><strong>Career outcomes</strong></td><td>Do graduates enter roles or sectors you want?</td><td>No clear employment or further-study data</td><td>Programme outcomes page</td></tr>
+            <tr><td><strong>Location</strong></td><td>Can you manage housing, climate, transport and part-time work?</td><td>Ignoring total living cost</td><td>City and student-support pages</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><strong>Shortlist rule:</strong> A “safe” university is not truly safe if you would not accept its offer. Apply only to programmes you would be happy to join.</div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">03 · The process</div>
+        <h2>Eight steps to an offer.</h2>
+        <p class="lead">Treat your application like a project. Each step depends on the previous one, so delays in tests, transcripts or references can affect everything else.</p>
+      </div>
+      <div class="grid two">
+        <div class="card">
+          <div class="timeline">
+            <div class="timeline-item"><small>STEP 1</small><h3>Research courses</h3><p>Compare modules, teaching language, fees, location, entry requirements and career outcomes.</p></div>
+            <div class="timeline-item"><small>STEP 2</small><h3>Check requirements</h3><p>Note grades, tests, deadlines, documents, references and application fees.</p></div>
+            <div class="timeline-item"><small>STEP 3</small><h3>Take tests early</h3><p>Book language and entrance tests so scores arrive before deadlines.</p></div>
+            <div class="timeline-item"><small>STEP 4</small><h3>Prepare documents</h3><p>Collect transcripts, CV, essays, references, portfolio and financial documents where needed.</p></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="timeline">
+            <div class="timeline-item"><small>STEP 5</small><h3>Apply</h3><p>Use the portal specified by the university and double-check every field before submitting.</p></div>
+            <div class="timeline-item"><small>STEP 6</small><h3>Pay and confirm</h3><p>Keep fee receipts, application IDs and confirmation emails.</p></div>
+            <div class="timeline-item"><small>STEP 7</small><h3>Interview or assessment</h3><p>Prepare for interviews, portfolios, writing samples or subject tests if required.</p></div>
+            <div class="timeline-item"><small>STEP 8</small><h3>Decide on offers</h3><p>Compare conditions, funding, total cost and deadlines before accepting.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:22px">
+        <table>
+          <thead><tr><th>Time before deadline</th><th>Recommended action</th><th>Why it matters</th></tr></thead>
+          <tbody>
+            <tr><td><strong>12–18 months</strong></td><td>Research destinations, degree level and funding options</td><td>Gives time to build academic and test profile</td></tr>
+            <tr><td><strong>8–12 months</strong></td><td>Shortlist courses and book required tests</td><td>Test dates and score reporting take time</td></tr>
+            <tr><td><strong>8 weeks</strong></td><td>Request transcripts and test-score reporting</td><td>Duke recommends arranging these about eight weeks ahead</td></tr>
+            <tr><td><strong>4–6 weeks</strong></td><td>Request recommendation letters</td><td>Recommenders need time to write strong letters</td></tr>
+            <tr><td><strong>2 weeks</strong></td><td>Finalise and submit</td><td>Duke recommends submitting at least two weeks before the deadline</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="portals">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">04 · Where to apply</div>
+        <h2>Know the application route.</h2>
+        <p class="lead">Some universities use their own portal; others use a central system. The route affects deadlines, references, fees and how you track your application.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Route</th><th>Used for</th><th>How it works</th><th>Watch for</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Direct university portal</strong></td><td>Many postgraduate and international applications</td><td>Create an account on the university’s system</td><td>Different deadlines per department</td></tr>
+            <tr><td><strong>UCAS</strong></td><td>Most UK undergraduate courses</td><td>One application with course choices and a reference</td><td>Equal-consideration and final deadlines</td></tr>
+            <tr><td><strong>Common App</strong></td><td>Many US undergraduate applications</td><td>One platform for multiple colleges</td><td>Each college may set its own requirements and deadlines</td></tr>
+            <tr><td><strong>Central national portals</strong></td><td>Some countries and public universities</td><td>Apply through an official national service</td><td>Document verification and country-specific rules</td></tr>
+            <tr><td><strong>Specialist applications</strong></td><td>Art, design, music, architecture and portfolios</td><td>May require portfolios, auditions or interviews</td><td>Extra submission formats and earlier deadlines</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap" style="margin-top:22px">
+        <table>
+          <thead><tr><th>System</th><th>Deadline example</th><th>What it means</th></tr></thead>
+          <tbody>
+            <tr><td><strong>UCAS 2026 entry</strong></td><td>14 January 2026, 18:00 UK time</td><td>Equal-consideration deadline for most undergraduate courses</td></tr>
+            <tr><td><strong>UCAS 2026 entry</strong></td><td>15 October 2025 for some courses</td><td>Applies to certain competitive courses; check the course page</td></tr>
+            <tr><td><strong>Common App</strong></td><td>Often 1 November or 15 January</td><td>Early and regular deadlines vary by college</td></tr>
+            <tr><td><strong>US graduate programmes</strong></td><td>Often November–February</td><td>Deadlines vary by programme and term</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><strong>Deadline warning:</strong> “Equal consideration” does not mean every applicant is admitted. It means applications received by that deadline must be considered equally; later applications may only be considered if places remain.</div>
+    </div>
+  </section>
+
+  <section id="documents">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">05 · Application pack</div>
+        <h2>Prepare documents once, reuse them wisely.</h2>
+        <p class="lead">Create a master folder with clearly named files. Then tailor essays, CVs and course-specific answers for each application.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Document</th><th>What universities check</th><th>Common mistake</th><th>Best practice</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Transcripts</strong></td><td>Subjects, grades, progression and degree completion</td><td>Uploading unclear scans</td><td>Use clear, complete and correctly certified documents</td></tr>
+            <tr><td><strong>Passport / ID</strong></td><td>Name, nationality and date of birth</td><td>Name mismatch with application</td><td>Use the exact name on your official ID</td></tr>
+            <tr><td><strong>CV / Resume</strong></td><td>Education, projects, work and skills</td><td>Generic CV for every course</td><td>Tailor the order and keywords</td></tr>
+            <tr><td><strong>SOP / Personal Statement</strong></td><td>Motivation, preparation and fit</td><td>Repeating the CV</td><td>Explain why this course is the next step</td></tr>
+            <tr><td><strong>References</strong></td><td>Academic or professional credibility</td><td>Asking someone who barely knows you</td><td>Choose people who can give specific examples</td></tr>
+            <tr><td><strong>Test scores</strong></td><td>English or entrance-test readiness</td><td>Booking too late</td><td>Check score-report delivery time</td></tr>
+            <tr><td><strong>Portfolio</strong></td><td>Creative or technical ability</td><td>Uploading uncurated work</td><td>Show fewer, stronger, relevant pieces</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><strong>File-name rule:</strong> Use a clear format such as `Firstname_Lastname_SOP_University.pdf`. Avoid files named `final_final_2.pdf`.</div>
+    </div>
+  </section>
+
+  <section class="alt" id="offers">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">06 · Offers</div>
+        <h2>Understand what you are accepting.</h2>
+        <p class="lead">An offer is not always the end of the process. Conditional offers require you to meet specific requirements, while unconditional offers still come with enrolment, funding and visa steps.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Offer type</th><th>What it means</th><th>What to do</th><th>Watch for</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Conditional offer</strong></td><td>Admission depends on meeting stated conditions</td><td>List every condition and deadline</td><td>Final grades, language score, documents or deposit</td></tr>
+            <tr><td><strong>Unconditional offer</strong></td><td>Academic requirements are met</td><td>Follow acceptance, deposit and enrolment steps</td><td>Acceptance and housing deadlines</td></tr>
+            <tr><td><strong>Conditional scholarship offer</strong></td><td>Funding depends on meeting criteria</td><td>Confirm renewal rules and required GPA</td><td>Whether funding is guaranteed for all years</td></tr>
+            <tr><td><strong>Waitlist / reserve list</strong></td><td>A place may become available</td><td>Follow instructions and keep other options open</td><td>Do not assume acceptance</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="compare" style="margin-top:22px">
+        <div class="weak"><small>Weak decision-making</small>“This university is more famous, so I will accept it.”</div>
+        <div class="strong"><small>Stronger decision-making</small>“Course A fits my specialisation, gives a £5,000 award, and has stronger placement support; Course B costs more and lacks my required module.”</div>
+      </div>
+      <div class="note"><strong>Offer comparison:</strong> Compare total cost, funding renewal, course content, location, career support and visa pathway—not only ranking or brand name.</div>
+    </div>
+  </section>
+
+  <section id="interviews">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">07 · Interviews</div>
+        <h2>Be ready to explain your story.</h2>
+        <p class="lead">Some programmes interview applicants to assess motivation, communication, subject knowledge and fit. Your goal is not to perform perfectly—it is to explain your work and goals clearly.</p>
+      </div>
+      <div class="grid two">
+        <article class="card">
+          <div class="icon-box">🧠</div>
+          <h3>Prepare your core answers</h3>
+          <p>Practise why this course, why this university, why now, your strongest project, a challenge you handled and your future plans.</p>
+        </article>
+        <article class="card">
+          <div class="icon-box">🎤</div>
+          <h3>Practise out loud</h3>
+          <p>Rehearse with a friend or mentor. Record yourself, check pacing, remove filler words and make sure your examples match your written application.</p>
+        </article>
+      </div>
+
+      <div class="table-wrap" style="margin-top:22px">
+        <table>
+          <thead><tr><th>Interview question</th><th>Weak answer</th><th>Stronger answer structure</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Why this course?</strong></td><td>“It is a good university.”</td><td>Specific module or method + your goal + what you will contribute</td></tr>
+            <tr><td><strong>Tell us about a project.</strong></td><td>“I made an app.”</td><td>Problem → your role → tools/method → result → learning</td></tr>
+            <tr><td><strong>What are your weaknesses?</strong></td><td>“I am a perfectionist.”</td><td>Real improvement area + action taken + current progress</td></tr>
+            <tr><td><strong>Why should we admit you?</strong></td><td>“I am hardworking.”</td><td>Relevant evidence + unique perspective + clear fit</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><strong>Integrity rule:</strong> Never claim work, scores, leadership or research you cannot explain in detail. Interviewers often ask follow-up questions.</div>
+    </div>
+  </section>
+
+  <section class="alt" id="myths">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">08 · Myths vs truth</div>
+        <h2>Stop believing these application myths.</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Myth</th><th>Truth</th><th>What to do instead</th></tr></thead>
+          <tbody>
+            <tr><td><strong>“Only perfect grades get offers.”</strong></td><td>Programmes assess the whole application: academics, experience, goals, references and fit.</td><td>Build a coherent story and address weaknesses honestly.</td></tr>
+            <tr><td><strong>“More applications always mean more offers.”</strong></td><td>Too many rushed applications reduce quality.</td><td>Apply to a balanced, researched list.</td></tr>
+            <tr><td><strong>“Rankings decide everything.”</strong></td><td>Course fit, cost, outcomes and support matter more for many students.</td><td>Compare the actual programme and total cost.</td></tr>
+            <tr><td><strong>“Agents can guarantee admission.”</strong></td><td>No legitimate agent can guarantee an offer.</td><td>Use official portals and verify every claim.</td></tr>
+            <tr><td><strong>“An unconditional offer means nothing is left.”</strong></td><td>You may still need to accept, pay a deposit, arrange funding and apply for a visa.</td><td>Follow every post-offer deadline.</td></tr>
+            <tr><td><strong>“A rejection means you are not good enough.”</strong></td><td>Admissions are competitive and programme-specific.</td><td>Seek feedback, improve your profile and consider other routes.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="tools">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">09 · Interactive tools</div>
+        <h2>Check your application readiness.</h2>
+        <p class="lead">Answer honestly to identify the biggest gap in your application campaign.</p>
+      </div>
+      <div class="tracker">
+        <div class="panel">
+          <h3>Application readiness</h3>
+          <div class="field"><label for="level">Application level</label><select id="level"><option>Undergraduate</option><option selected>Master’s</option><option>MBA</option><option>Research degree</option></select></div>
+          <div class="field"><label for="shortlist">Shortlist completeness</label><select id="shortlist"><option value="0">Not started</option><option value="1">Only ambitious choices</option><option value="2" selected>Balanced list</option><option value="3">Balanced and researched</option></select></div>
+          <div class="field"><label for="tests">Tests completed</label><select id="tests"><option value="0">Not booked</option><option value="1">Booked</option><option value="2" selected>Completed</option><option value="3">Completed and sent</option></select></div>
+          <div class="field"><label for="docs">Documents ready</label><select id="docs"><option value="0">Not started</option><option value="1">Partly ready</option><option value="2" selected>Mostly ready</option><option value="3">Fully ready</option></select></div>
+          <div class="field"><label for="refs">References arranged</label><select id="refs"><option value="0">Not asked</option><option value="1">One confirmed</option><option value="2" selected>Two confirmed</option><option value="3">Three or more confirmed</option></select></div>
+        </div>
+        <div class="panel">
+          <div class="eyebrow">Readiness score</div>
+          <div class="result" id="applyScore">0%</div>
+          <div class="bar"><span id="applyBar"></span></div>
+          <p class="small-muted" id="applyAdvice">Start with a balanced shortlist and test plan.</p>
+          <div class="note"><strong>Next action:</strong> <span id="nextAction">Build a balanced shortlist.</span></div>
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-top:24px">
+        <div class="card">
+          <h3>Pre-submission checklist</h3>
+          <div class="checklist" id="preChecklist">
+            <label class="check-item"><input type="checkbox"> I checked every course’s official requirements.</label>
+            <label class="check-item"><input type="checkbox"> My name matches my passport and academic records.</label>
+            <label class="check-item"><input type="checkbox"> My SOP is tailored to each course.</label>
+            <label class="check-item"><input type="checkbox"> My references know the deadlines and portal process.</label>
+            <label class="check-item"><input type="checkbox"> I have checked application fees and payment methods.</label>
+          </div>
+          <div class="check-progress"><span id="preProgress"></span></div>
+          <div class="small-muted" id="preCount">0 of 5 complete</div>
+        </div>
+        <div class="card">
+          <h3>Post-submission checklist</h3>
+          <div class="checklist" id="postChecklist">
+            <label class="check-item"><input type="checkbox"> I saved my application ID and confirmation email.</label>
+            <label class="check-item"><input type="checkbox"> I confirmed that references and test scores were received.</label>
+            <label class="check-item"><input type="checkbox"> I checked the portal regularly for updates.</label>
+            <label class="check-item"><input type="checkbox"> I recorded every offer condition and deadline.</label>
+            <label class="check-item"><input type="checkbox"> I compared total cost and funding before accepting.</label>
+          </div>
+          <div class="check-progress"><span id="postProgress"></span></div>
+          <div class="small-muted" id="postCount">0 of 5 complete</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mistakes">
+    <div class="wrap">
+      <div class="section-head"><div class="eyebrow">10 · Avoid these</div><h2>Mistakes that cost places.</h2></div>
+      <div class="grid">
+        <article class="card"><div class="metric">01</div><h3>Missing deadlines</h3><p>Late applications may not be considered.</p></article>
+        <article class="card"><div class="metric">02</div><h3>Ignoring requirements</h3><p>One missing document can delay or block an application.</p></article>
+        <article class="card"><div class="metric">03</div><h3>Generic essays</h3><p>Tailor every SOP to the course.</p></article>
+        <article class="card"><div class="metric">04</div><h3>Weak references</h3><p>Choose people who know your work.</p></article>
+        <article class="card"><div class="metric">05</div><h3>Applying only to top names</h3><p>Balance ambition with realistic targets.</p></article>
+        <article class="card"><div class="metric">06</div><h3>No tracking</h3><p>Use one spreadsheet for every deadline and status.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="faq">
+    <div class="wrap">
+      <div class="section-head"><div class="eyebrow">11 · FAQ</div><h2>Quick answers.</h2></div>
+      <div class="faq">
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">How many universities should I apply to? <span>+</span></button><div class="faq-a">There is no fixed number. Many applicants build a balanced list of around six to eight programmes, but quality and fit matter more than quantity.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">When should I start? <span>+</span></button><div class="faq-a">For graduate study, many universities suggest beginning 12–18 months before your intended start date, especially if tests, research or funding are involved.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Can I apply without test scores? <span>+</span></button><div class="faq-a">Some programmes are test-optional or waive tests under conditions. Confirm the policy for your exact course and intake.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">What if I am rejected? <span>+</span></button><div class="faq-a">Ask for feedback where available, review other offers, consider a later intake and strengthen the weakest part of your profile before reapplying.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Can I defer an offer? <span>+</span></button><div class="faq-a">Some universities allow deferral, but rules and deadlines vary. Request it in writing and get confirmation before making plans.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Where should I verify current details? <span>+</span></button><div class="faq-a">Use the official university course page, application portal and admissions office. Requirements and deadlines can change every cycle.</div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div><strong>UniAI · Plan smarter. Go farther.</strong><br>Use this guide for planning, not as a substitute for official university application instructions.</div>
+    <div><a href="https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications" target="_blank" rel="noopener noreferrer">UCAS deadlines ↗</a> · <a href="https://www.commonapp.org/apply/first-year-students/" target="_blank" rel="noopener noreferrer">Common App ↗</a><br><span>Check current rules before applying.</span></div>
+  </div>
+</footer>
+
+<button class="backtop" type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* Theme bridge: follows UniAI's `uniai-theme` setting where same-origin storage is shared. */
+(() => {
+  const KEY='uniai-theme', root=document.documentElement, btn=document.getElementById('themeButton');
+  const detect=()=>{
+    try{const s=localStorage.getItem(KEY);if(s==='dark'||s==='light')return s;}catch(_){}
+    const a=root.getAttribute('data-theme')||document.body?.getAttribute('data-theme')||document.body?.getAttribute('data-bs-theme');
+    if(a==='dark'||a==='light')return a;
+    return matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  };
+  const apply=t=>{root.setAttribute('data-guide-theme',t==='dark'?'dark':'light');btn.textContent=t==='dark'?'☀ Light guide':'☾ Dark guide';};
+  apply(detect());
+  btn.addEventListener('click',()=>{const next=root.getAttribute('data-guide-theme')==='dark'?'light':'dark';apply(next);try{localStorage.setItem(KEY,next);}catch(_){}});
+  addEventListener('storage',e=>{if(e.key===KEY)apply(detect())});
+  new MutationObserver(()=>apply(detect())).observe(root,{attributes:true,attributeFilter:['data-theme','data-bs-theme','class']});
+})();
+
+/* Reading progress */
+(() => {
+  const bar=document.getElementById('readingProgress');
+  const update=()=>{const max=document.documentElement.scrollHeight-innerHeight;bar.style.width=`${max>0?scrollY/max*100:0}%`};
+  addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update();
+})();
+
+/* Application readiness planner */
+(() => {
+  const ids=['shortlist','tests','docs','refs'];
+  const score=document.getElementById('applyScore'),bar=document.getElementById('applyBar'),advice=document.getElementById('applyAdvice'),next=document.getElementById('nextAction');
+  const update=()=>{
+    const values=ids.map(id=>+document.getElementById(id).value);
+    const total=values.reduce((a,b)=>a+b,0);
+    const readiness=Math.round(total/12*100);
+    score.textContent=`${readiness}%`;
+    bar.style.width=`${readiness}%`;
+    if(values[0]<=1){advice.textContent='Your shortlist needs balance and research.';next.textContent='Build ambitious, target and safe options.'}
+    else if(values[1]<=1){advice.textContent='Tests may become your bottleneck.';next.textContent='Book required tests and check score-report timing.'}
+    else if(values[2]<=1){advice.textContent='Your document pack is incomplete.';next.textContent='Collect transcripts, CV, SOP and financial documents.'}
+    else if(values[3]<=1){advice.textContent='References need attention.';next.textContent='Ask suitable recommenders and share deadlines.'}
+    else if(readiness>=85){advice.textContent='Strong readiness. Finalise, proofread and submit early.';next.textContent='Submit at least two weeks before your earliest deadline.'}
+    else{advice.textContent='Good progress. Strengthen your weakest application area.';next.textContent='Improve your lowest-scoring readiness area.'}
+  };
+  ids.forEach(id=>document.getElementById(id).addEventListener('change',update));update();
+})();
+
+/* Checklists */
+(() => {
+  [['preChecklist','preProgress','preCount'],['postChecklist','postProgress','postCount']].forEach(([listId,barId,countId])=>{
+    const list=document.getElementById(listId),checks=[...list.querySelectorAll('input')],bar=document.getElementById(barId),count=document.getElementById(countId);
+    const update=()=>{const done=checks.filter(c=>c.checked).length;bar.style.width=`${done/checks.length*100}%`;count.textContent=`${done} of ${checks.length} complete`};
+    checks.forEach(c=>c.addEventListener('change',update));update();
+  });
+})();
+
+/* FAQ */
+document.querySelectorAll('.faq-q').forEach(button=>{
+  button.addEventListener('click',()=>{
+    const item=button.closest('.faq-item'),open=!item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(other=>{other.classList.remove('open');other.querySelector('.faq-q').setAttribute('aria-expanded','false');other.querySelector('.faq-q span').textContent='+'});
+    if(open){item.classList.add('open');button.setAttribute('aria-expanded','true');button.querySelector('span').textContent='−'}
+  });
+});
+</script>
+</body>
+</html>

@@ -1,40 +1,460 @@
-<!DOCTYPE html><html lang="en"><head><style id="auth-gate">html{visibility:hidden}
-.stats{display:flex;flex-wrap:wrap;gap:38px;margin-top:44px;padding-top:20px;border-top:1px solid rgba(255,255,255,.15)}.stats strong{display:block;font-size:26px}.stats span{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#a6b3c7}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.note{margin-top:16px;padding:16px 20px;border-left:3px solid var(--b);background:linear-gradient(90deg,rgba(190,18,60,.25),transparent);border-radius:0 12px 12px 0;font-size:13px;color:#d4def0}
-table{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--border);border-radius:14px;overflow:hidden}th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border)}th{background:#15243e;color:var(--b);font-size:11px;text-transform:uppercase;letter-spacing:.1em}td{color:#d5dce8}
-.tw{overflow-x:auto}.pill{display:inline-block;margin:3px;padding:5px 10px;border:1px solid var(--border);border-radius:99px;font-size:10px;color:#aeb8c8}
-.bad strong{color:#ff929d}.lead{color:var(--muted);max-width:760px;font-size:15px;margin:-20px 0 40px}
-@media(max-width:900px){.g2,.g4{grid-template-columns:1fr}}.ph{height:340px;border-radius:22px;border:1px solid var(--border);margin:50px 0 0;background-size:cover;background-position:center;position:relative;overflow:hidden;background-color:var(--card)}.ph:after{content:attr(data-c);position:absolute;left:0;right:0;bottom:0;padding:40px 24px 18px;font-size:12px;color:#e6ebf5;background:linear-gradient(transparent,rgba(5,9,17,.92))}.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}.wk{border-left:3px solid #ff929d}.st{border-left:3px solid #4ade80}.cmp div{padding:18px;border-radius:14px;background:var(--card);font-size:13px;color:#d5dce8}.cmp small{display:block;font-weight:800;margin-bottom:6px;font-size:10px;letter-spacing:.1em;text-transform:uppercase}@media(max-width:900px){.cmp{grid-template-columns:1fr}.ph{height:220px}}</style>
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script><script src="guard.js"></script>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UniAI | German Guide</title>
-<style>:root{--bg:#070b16;--card:#111b30;--text:#f7f8fc;--muted:#a7b1c4;--border:#233452;--a:#be123c;--b:#facc15}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.6}
-a{color:inherit;text-decoration:none}.logo{position:fixed;top:0;left:0;right:0;z-index:9;padding:22px 28px;font-weight:800;font-size:22px;letter-spacing:-.05em}
-.logo span,.g{background:linear-gradient(90deg,var(--a),#fff 50%,var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero{min-height:88vh;display:flex;align-items:flex-end;background:linear-gradient(180deg,rgba(5,8,16,.2),var(--bg)),radial-gradient(circle at 80% 20%,var(--a),transparent 40%),url("https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=2000&q=85") center/cover,var(--card)}
-.w{width:min(1180px,92vw);margin:auto}.hero .w{padding:150px 0 70px}
-.kick{color:var(--b);text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:800}
-h1{font-size:clamp(52px,8vw,110px);line-height:.9;letter-spacing:-.07em;margin:16px 0}h2{font-size:clamp(32px,4.5vw,56px);letter-spacing:-.05em;line-height:1;margin:0 0 40px}
-.sub{max-width:680px;color:#d6deeb;font-size:16px}.btn{margin-top:26px;padding:13px 20px;border:0;border-radius:99px;color:#fff;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--a),var(--b))}
-section{padding:90px 0}.alt{background:rgba(255,255,255,.02)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.card{padding:26px;min-height:200px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(145deg,var(--card),#0b1322)}.num{color:var(--b);font-size:38px;font-weight:800}
-.card h3{margin:16px 0 8px}.card p,.faq-a{color:var(--muted);font-size:13px}
-.tl{position:relative;max-width:760px}.tl:before{content:"";position:absolute;left:17px;top:0;bottom:0;width:1px;background:linear-gradient(var(--a),var(--b))}
-.step{position:relative;padding:0 0 34px 62px}.dot{position:absolute;left:6px;width:23px;height:23px;border:1px solid var(--b);border-radius:50%;background:var(--bg)}.step small{color:var(--b);font-weight:800}.step h3{margin:4px 0}
-.faq{max-width:860px}.faq-item{border-bottom:1px solid var(--border)}.faq-q{all:unset;display:flex;justify-content:space-between;width:100%;padding:20px 0;cursor:pointer;font-weight:700}.faq-a{display:none;margin:0 0 18px}.open .faq-a{display:block}
-.reveal{opacity:0;transform:translateY(24px);transition:.7s}.reveal.v{opacity:1;transform:none}
-footer{padding:40px 0;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
-@media(max-width:800px){.grid{grid-template-columns:1fr}}
-.stats{display:flex;flex-wrap:wrap;gap:38px;margin-top:44px;padding-top:20px;border-top:1px solid rgba(255,255,255,.15)}.stats strong{display:block;font-size:26px}.stats span{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#a6b3c7}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.note{margin-top:16px;padding:16px 20px;border-left:3px solid var(--b);background:linear-gradient(90deg,rgba(190,18,60,.25),transparent);border-radius:0 12px 12px 0;font-size:13px;color:#d4def0}
-table{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--border);border-radius:14px;overflow:hidden}th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border)}th{background:#15243e;color:var(--b);font-size:11px;text-transform:uppercase;letter-spacing:.1em}td{color:#d5dce8}
-.tw{overflow-x:auto}.pill{display:inline-block;margin:3px;padding:5px 10px;border:1px solid var(--border);border-radius:99px;font-size:10px;color:#aeb8c8}
-.bad strong{color:#ff929d}.lead{color:var(--muted);max-width:760px;font-size:15px;margin:-20px 0 40px}
-@media(max-width:900px){.g2,.g4{grid-template-columns:1fr}}</style></head><body>
-<a href="#" class="logo">Uni<span>AI</span></a>
-<header class="hero"><div class="w"><div class="kick">The complete German language guide · German</div><h1>Learn<br><span class="g">German.</span></h1><p class="sub">CEFR levels, exams like Goethe, TestDaF and telc, how long it takes, a study routine and tips for studying and living in German-speaking countries.</p><button class="btn" onclick="document.getElementById('s1').scrollIntoView()">Start the guide</button>
-<div class="stats"><div><strong>6</strong><span>CEFR levels</span></div><div><strong>B2/C1</strong><span>Common uni level</span></div><div><strong>4</strong><span>Main exams</span></div><div><strong>Daily</strong><span>Habit wins</span></div></div></div></header><section id="s1"><div class="w"><div class="kick reveal">01 · Start here</div><h2 class="reveal">Do you need German?</h2><div class="g2"><div class="card reveal"><h3>Depends on the course</h3><p>English-taught programmes may not require it, but German-taught degrees usually do. Daily life and jobs are far easier with it.</p></div><div class="card reveal"><h3>Know your target</h3><p>Check each programme for the exact level and accepted exam.</p></div></div><div class="note reveal">Many programmes ask for B2 or C1. Confirm on the course page.</div></div></section><div class="w"><div class="ph reveal" data-c="German opens doors well beyond the classroom." style="background-image:url(https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=1600&q=80)"></div></div><section class=alt id="s2"><div class="w"><div class="kick reveal">02 · Levels</div><h2 class="reveal">The CEFR scale.</h2><div class="tw reveal"><table><tr><th>Level</th><th>Description</th><th>Typical use</th></tr><tr><td>A1–A2</td><td>Basic user</td><td>Daily survival</td></tr><tr><td>B1</td><td>Independent user</td><td>Everyday work and study basics</td></tr><tr><td>B2</td><td>Upper intermediate</td><td>Often accepted for study</td></tr><tr><td>C1</td><td>Advanced</td><td>Common for university entry</td></tr><tr><td>C2</td><td>Mastery</td><td>Rarely required</td></tr></table></div></div></section><section id="s3"><div class="w"><div class="kick reveal">03 · Exams</div><h2 class="reveal">Common exams.</h2><div class="tw reveal"><table><tr><th>Exam</th><th>Used for</th><th>Notes</th></tr><tr><td>Goethe-Zertifikat</td><td>General and academic proof</td><td>Widely recognised</td></tr><tr><td>TestDaF</td><td>University admission</td><td>Common for German-taught degrees</td></tr><tr><td>DSH</td><td>University admission in Germany</td><td>Taken at German universities</td></tr><tr><td>telc</td><td>General and academic levels</td><td>Widely accepted</td></tr></table></div><div class="note reveal">Always use the exam your university accepts.</div></div></section><section class=alt id="s4"><div class="w"><div class="kick reveal">04 · Study routine</div><h2 class="reveal">A realistic plan.</h2><div class="tl"><div class="step reveal"><div class="dot"></div><small>DAILY</small><h3>Short sessions</h3><p style="color:var(--muted);font-size:13px;margin:0">30 to 60 minutes beats one long weekly session.</p></div><div class="step reveal"><div class="dot"></div><small>WEEKLY</small><h3>Speak</h3><p style="color:var(--muted);font-size:13px;margin:0">Practise with a tutor or language partner.</p></div><div class="step reveal"><div class="dot"></div><small>MONTHLY</small><h3>Test yourself</h3><p style="color:var(--muted);font-size:13px;margin:0">Use mock exams at your target level.</p></div><div class="step reveal"><div class="dot"></div><small>BEFORE EXAM</small><h3>Simulate</h3><p style="color:var(--muted);font-size:13px;margin:0">Do full timed practice and review errors.</p></div></div></div></section><div class="w"><div class="ph reveal" data-c="Immersion helps: media, conversation and reading." style="background-image:url(https://images.unsplash.com/photo-1560969184-10fe8719e047?auto=format&fit=crop&w=1600&q=80)"></div></div><section id="s5"><div class="w"><div class="kick reveal">05 · Tips</div><h2 class="reveal">What helps most.</h2><div class="grid"><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Learn articles with nouns</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Practise speaking early</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Listen to German media</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Read simple texts daily</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Use spaced repetition</div><div class="card reveal" style="min-height:0;padding:18px;font-size:13px">✓ Join a language group</div></div></div></section><section class=alt id="s6"><div class="w"><div class="kick reveal">06 · Avoid these</div><h2 class="reveal">Common mistakes.</h2><div class="grid"><article class="card bad reveal"><div class="num">01</div><h3>Memorising rules only</h3><p>Use the language.</p></article><article class="card bad reveal"><div class="num">02</div><h3>Ignoring articles</h3><p>They change grammar.</p></article><article class="card bad reveal"><div class="num">03</div><h3>Skipping speaking</h3><p>Fluency needs practice.</p></article><article class="card bad reveal"><div class="num">04</div><h3>Wrong exam</h3><p>Check acceptance.</p></article><article class="card bad reveal"><div class="num">05</div><h3>Starting late</h3><p>Levels take time.</p></article><article class="card bad reveal"><div class="num">06</div><h3>Only apps</h3><p>Add conversation and courses.</p></article></div></div></section><section id="s7"><div class="w"><div class="kick reveal">07 · FAQ</div><h2 class="reveal">Quick answers.</h2><div class="faq"><div class="faq-item"><button class="faq-q">How long to reach B2?<span>+</span></button><p class="faq-a">It varies by intensity and prior experience.</p></div><div class="faq-item"><button class="faq-q">Is German hard?<span>+</span></button><p class="faq-a">Grammar is demanding, but steady practice works.</p></div><div class="faq-item"><button class="faq-q">Can I study in English only?<span>+</span></button><p class="faq-a">Some programmes allow it, but German still helps.</p></div><div class="faq-item"><button class="faq-q">Which exam is best?<span>+</span></button><p class="faq-a">The one your university accepts.</p></div></div></div></section><footer><div class="w">UniAI · Plan smarter. Go Farther. Verify requirements with your university and the exam provider.</div></footer>
-<script>const o=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('v');o.unobserve(x.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(e=>o.observe(e));
-document.querySelectorAll('.faq-q').forEach(b=>b.onclick=()=>{const i=b.parentElement,w=i.classList.contains('open');document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));if(!w)i.classList.add('open')})</script></body></html>
+<!DOCTYPE html>
+<html lang="en" data-guide-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="A practical German language guide covering CEFR levels, Goethe-Zertifikat, TestDaF, DSH and telc, study routines, grammar strategy and study-abroad preparation.">
+<title>UniAI | German Master Guide</title>
+<style>
+:root{
+  color-scheme:light;
+  --bg:#fbf7f4; --surface:#fff; --surface-2:#f7ece9; --text:#201417; --muted:#6f5f63;
+  --border:#e8d6d2; --primary:#be123c; --accent:#ca8a04; --soft:rgba(190,18,60,.08);
+  --shadow:0 18px 50px rgba(80,30,40,.09); --nav:rgba(255,255,255,.88);
+  --hero-overlay:rgba(28,8,14,.76); --good:#16845b; --warn:#a85c08; --bad:#c13d50;
+}
+html[data-guide-theme="dark"]{
+  color-scheme:dark;
+  --bg:#100709; --surface:#1b0d12; --surface-2:#251119; --text:#fbf1f3; --muted:#c8b3b9;
+  --border:#3d262e; --primary:#fb7185; --accent:#facc15; --soft:rgba(251,113,133,.12);
+  --shadow:0 18px 50px rgba(0,0,0,.28); --nav:rgba(16,7,9,.88);
+  --hero-overlay:rgba(12,4,7,.79); --good:#68d5a7; --warn:#ffca80; --bad:#ff8b9a;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:92px}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;transition:background .2s,color .2s}
+a{color:var(--primary);text-decoration:none;text-underline-offset:3px}
+button{font:inherit;cursor:pointer}
+.progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:100;background:linear-gradient(90deg,var(--primary),var(--accent))}
+.topbar{position:sticky;top:0;z-index:50;background:var(--nav);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+.topbar-inner{width:min(1200px,92vw);margin:auto;min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{font-size:22px;font-weight:900;letter-spacing:-1px;color:var(--text)}
+.brand span{color:var(--primary)}
+.nav{display:flex;gap:18px;overflow:auto;white-space:nowrap}
+.nav a{font-size:12px;font-weight:750;color:var(--muted)}
+.theme-chip{border:1px solid var(--border);border-radius:99px;padding:7px 11px;background:var(--surface);color:var(--text);font-size:12px;font-weight:750;white-space:nowrap}
+.wrap{width:min(1120px,90vw);margin:auto}
+.hero{min-height:680px;display:flex;align-items:center;color:#fff;position:relative;background:linear-gradient(90deg,var(--hero-overlay),rgba(28,8,14,.25)),url("https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=2200&q=85") center/cover no-repeat}
+.hero-inner{padding:100px 0 72px;max-width:820px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.19em;font-weight:850;color:var(--accent)}
+.hero .eyebrow{color:#ffe08a}
+h1{font-size:clamp(52px,9vw,104px);line-height:.91;letter-spacing:-.075em;margin:18px 0 24px}
+.gradient-text{background:linear-gradient(90deg,#ff9db0,#ffe08a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:680px;color:#f7e7ea;font-size:clamp(16px,2vw,19px)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{border:0;border-radius:12px;padding:12px 18px;background:linear-gradient(120deg,#be123c,#ca8a04);color:#fff;font-weight:850;display:inline-flex;align-items:center}
+.btn.secondary{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:44px}
+.stat{padding:15px 17px;border:1px solid rgba(255,255,255,.23);border-radius:15px;background:rgba(25,7,12,.38);backdrop-filter:blur(10px)}
+.stat strong{display:block;font-size:25px}
+.stat span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#f1d9dd}
+section{padding:82px 0}
+.alt{background:var(--surface-2)}
+.section-head{max-width:820px;margin-bottom:30px}
+h2{font-size:clamp(32px,5vw,55px);line-height:1.03;letter-spacing:-.055em;margin:10px 0 16px}
+.lead{color:var(--muted);max-width:780px;margin:0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{border:1px solid var(--border);border-radius:20px;padding:23px;background:var(--surface);box-shadow:var(--shadow);min-width:0}
+.card h3{margin:9px 0 7px;font-size:19px;letter-spacing:-.025em}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.icon-box{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:var(--soft);font-size:22px}
+.metric{font-size:35px;font-weight:900;color:var(--primary);line-height:1.1}
+.tag{display:inline-block;border:1px solid var(--border);padding:4px 9px;border-radius:99px;font-size:11px;color:var(--muted);margin:3px 4px 0 0}
+.note{padding:17px 20px;margin-top:20px;border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:12px;background:var(--soft);font-size:14px}
+.note strong{color:var(--primary)}
+.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:16px;background:var(--surface);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;min-width:680px;font-size:13px}
+th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--surface-2);color:var(--primary);font-size:11px;text-transform:uppercase;letter-spacing:.09em}
+td{color:var(--muted)}
+td strong{color:var(--text)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:var(--soft)}
+.level-icon{font-size:38px;font-weight:950;color:var(--primary);letter-spacing:-.07em}
+.image-card{border:1px solid var(--border);border-radius:22px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+.image-card img{width:100%;height:240px;object-fit:cover;display:block}
+.image-card figcaption{padding:14px 18px;font-size:13px;color:var(--muted)}
+.timeline{border-left:2px solid var(--primary);margin:10px 0 0 12px;padding-left:28px}
+.timeline-item{position:relative;padding:0 0 26px}
+.timeline-item:before{content:"";position:absolute;left:-36px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--surface);border:3px solid var(--primary)}
+.timeline-item small{font-size:11px;font-weight:900;color:var(--primary);letter-spacing:.12em}
+.timeline-item h3{margin:4px 0;font-size:18px}
+.timeline-item p{margin:0;color:var(--muted);font-size:14px}
+.checklist{display:grid;gap:10px}
+.check-item{display:flex;align-items:flex-start;gap:11px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface);font-size:14px}
+.check-item input{margin-top:5px;accent-color:var(--primary);width:16px;height:16px;flex-shrink:0}
+.check-progress{height:8px;border-radius:99px;background:var(--border);overflow:hidden;margin:13px 0}
+.check-progress span{height:100%;display:block;width:0;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .2s}
+.small-muted{font-size:12px;color:var(--muted)}
+.faq{max-width:850px}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{display:flex;width:100%;justify-content:space-between;gap:15px;align-items:center;padding:18px 0;border:0;background:none;color:var(--text);text-align:left;font-weight:850}
+.faq-a{display:none;color:var(--muted);font-size:14px;padding:0 0 18px}
+.faq-item.open .faq-a{display:block}
+.faq-q span{color:var(--primary);font-size:22px}
+.footer{padding:38px 0;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
+.footer-inner{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.backtop{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text);box-shadow:var(--shadow);z-index:20}
+@media(max-width:900px){.nav{display:none}.grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){section{padding:60px 0}.grid,.grid.two,.grid.four{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.hero h1{font-size:clamp(48px,15vw,76px)}.hero-inner{padding:85px 0 48px}.topbar-inner{min-height:60px}.card{padding:19px}.image-card img{height:190px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="progress" id="readingProgress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top">Uni<span>AI</span></a>
+    <nav class="nav" aria-label="Guide navigation">
+      <a href="#start">Start</a><a href="#levels">CEFR</a><a href="#exams">Exams</a>
+      <a href="#testdaf">TestDaF</a><a href="#plan">Study plan</a><a href="#grammar">Grammar</a>
+      <a href="#germany">Germany</a><a href="#faq">FAQ</a>
+    </nav>
+    <button class="theme-chip" id="themeButton" type="button">◐ Theme</button>
+  </div>
+</header>
+
+<main id="top">
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <div class="eyebrow">The complete German language guide</div>
+      <h1>Learn<br><span class="gradient-text">German.</span></h1>
+      <p>From A1 to C2: understand CEFR levels, Goethe-Zertifikat, TestDaF, DSH and telc, then build a practical routine for grammar, vocabulary, speaking and university readiness.</p>
+      <div class="actions">
+        <a class="btn" href="#start">Explore the guide ↓</a>
+        <a class="btn secondary" href="#plan">Jump to the study plan</a>
+      </div>
+      <div class="stats" aria-label="German quick facts">
+        <div class="stat"><strong>A1–C2</strong><span>CEFR levels</span></div>
+        <div class="stat"><strong>B2/C1</strong><span>Common uni level</span></div>
+        <div class="stat"><strong>4</strong><span>Key exams</span></div>
+        <div class="stat"><strong>Daily</strong><span>Best habit</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section id="start">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">01 · Start here</div>
+        <h2>Do you need German?</h2>
+        <p class="lead">It depends on your programme. English-taught degrees may not require German for admission, but German-taught programmes usually require B2 or C1—and daily life, part-time work and integration become much easier with German.</p>
+      </div>
+      <div class="grid two">
+        <article class="card">
+          <div class="icon-box">🇩🇪</div>
+          <h3>For university</h3>
+          <p>German-taught bachelor’s and master’s programmes often require B2 or C1. English-taught programmes may require IELTS or TOEFL instead, but still benefit from German for everyday life.</p>
+        </article>
+        <article class="card">
+          <div class="icon-box">🎯</div>
+          <h3>Know your target</h3>
+          <p>Check the exact CEFR level, accepted certificate, required score or TDN result, validity expectations and whether the university accepts online or in-person testing.</p>
+        </article>
+      </div>
+
+      <figure class="image-card" style="margin-top:24px">
+        <img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=1600&q=80" alt="German city architecture and street scene" loading="lazy">
+        <figcaption>German opens doors beyond admission: housing, bureaucracy, part-time jobs, friendships and everyday confidence all become easier.</figcaption>
+      </figure>
+
+      <div class="note"><strong>Do not assume:</strong> “German-taught” and “English-taught” programmes can have different language rules. Always use the official course page and university admissions office as the final source.</div>
+    </div>
+  </section>
+
+  <section class="alt" id="levels">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">02 · CEFR levels</div>
+        <h2>A1 to C2 at a glance.</h2>
+        <p class="lead">The Common European Framework of Reference describes what you can do with the language—not just how many words you know. Each level builds on vocabulary, grammar, listening speed and communication confidence.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Level</th><th>Plain-language ability</th><th>Typical use</th><th>Main challenge</th></tr></thead>
+          <tbody>
+            <tr><td><strong>A1</strong></td><td>Basic introductions, simple questions and everyday phrases</td><td>Survival German</td><td>Articles, pronunciation and basic sentence structure</td></tr>
+            <tr><td><strong>A2</strong></td><td>Simple exchanges about routine topics</td><td>Everyday basics</td><td>Past tenses, separable verbs and cases</td></tr>
+            <tr><td><strong>B1</strong></td><td>Independent communication on familiar topics</td><td>Work, travel and everyday study</td><td>Connectors, subordinate clauses and more vocabulary</td></tr>
+            <tr><td><strong>B2</strong></td><td>Clear, detailed discussion and understanding of complex texts</td><td>Often accepted for German-taught study</td><td>Passive voice, formal writing and listening speed</td></tr>
+            <tr><td><strong>C1</strong></td><td>Flexible, effective use in academic and professional contexts</td><td>Common for university entry</td><td>Nuance, academic vocabulary and extended speaking</td></tr>
+            <tr><td><strong>C2</strong></td><td>Near-native command and precise expression</td><td>Rarely required</td><td>Idiomatic precision and stylistic control</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><strong>Level rule:</strong> Do not choose an exam level based on how long you have studied. Take a placement test or mock exam, then target the level your university actually requires.</div>
+    </div>
+  </section>
+
+  <section id="exams">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">03 · German exams</div>
+        <h2>Choose the exam your university accepts.</h2>
+        <p class="lead">Goethe, TestDaF, DSH and telc all assess German, but they differ in level coverage, format, availability and typical use. The right exam is the one your university explicitly accepts.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Exam</th><th>Level coverage</th><th>Commonly used for</th><th>Key difference</th><th>Before booking</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Goethe-Zertifikat</strong></td><td>A1–C2</td><td>General, academic and professional proof</td><td>Separate exams by CEFR level; widely recognised</td><td>Confirm the exact level and exam format</td></tr>
+            <tr><td><strong>TestDaF</strong></td><td>B2–C1</td><td>Admission to German-taught universities</td><td>Academic orientation; TDN 3–5 results per skill</td><td>Check the TDN result your course requires</td></tr>
+            <tr><td><strong>DSH</strong></td><td>Mainly university-entry level</td><td>German university admission</td><td>Usually organised or recognised by German universities</td><td>Confirm whether your university accepts your DSH result</td></tr>
+            <tr><td><strong>telc Deutsch</strong></td><td>A1–C2</td><td>General, work and academic purposes</td><td>Broad exam portfolio, including specialised versions</td><td>Confirm the exact telc exam and level</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid two" style="margin-top:22px">
+        <article class="card">
+          <div class="icon-box">🏫</div>
+          <h3>Goethe-Zertifikat</h3>
+          <p>A strong general-purpose option because Goethe offers exams from A1 to C2. It is useful for university, professional recognition and personal milestones, but always confirm that your specific programme accepts the exact level.</p>
+        </article>
+        <article class="card">
+          <div class="icon-box">🎓</div>
+          <h3>TestDaF and DSH</h3>
+          <p>TestDaF is explicitly positioned at B2–C1 and is commonly used for German-taught university admission. DSH is another university-focused route, but acceptance and administration can vary by institution.</p>
+        </article>
+      </div>
+      <div class="note"><strong>Exam-selection rule:</strong> If your university names “TestDaF 4 in all sections” or “Goethe C2,” treat that exact wording as the requirement—not a general equivalent.</div>
+    </div>
+  </section>
+
+  <section class="alt" id="testdaf">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">04 · TestDaF focus</div>
+        <h2>Four skills. Three TDN levels.</h2>
+        <p class="lead">TestDaF assesses Reading, Listening, Writing and Speaking separately. Results are reported as TDN 3, TDN 4 or TDN 5 for each skill; many German-taught programmes ask for TDN 4 in every section.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Skill</th><th>Structure</th><th>What you do</th><th>Strategy focus</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Reading</strong></td><td>3 texts, 30 items, 60 minutes</td><td>Understand academic and study-related texts</td><td>Skim for structure, scan for evidence, manage time</td></tr>
+            <tr><td><strong>Listening</strong></td><td>3 audio texts, 25 items, 40 minutes</td><td>Follow interviews, discussions and presentations</td><td>Predict answers, note key transitions and numbers</td></tr>
+            <tr><td><strong>Writing</strong></td><td>1 guided task</td><td>Use data and prompts to build an argument</td><td>Describe trends, compare data, state a clear position</td></tr>
+            <tr><td><strong>Speaking</strong></td><td>7 tasks, about 35 minutes</td><td>Handle university-style situations and discussions</td><td>Use reusable structures, speak clearly and keep moving</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap" style="margin-top:22px">
+        <table>
+          <thead><tr><th>TDN result</th><th>Plain-language orientation</th><th>Typical university use</th></tr></thead>
+          <tbody>
+            <tr><td><strong>TDN 5</strong></td><td>Very strong academic German</td><td>May meet demanding programme requirements</td></tr>
+            <tr><td><strong>TDN 4</strong></td><td>Strong academic German with minor limitations</td><td>Common requirement for German-taught degrees</td></tr>
+            <tr><td><strong>TDN 3</strong></td><td>Satisfactory but more limited academic German</td><td>May be insufficient for many direct-entry programmes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><strong>Important:</strong> TestDaF results are calculated separately for each skill. A high Reading result does not compensate for a lower Speaking or Writing result if your programme requires TDN 4 in all parts.</div>
+    </div>
+  </section>
+
+  <section id="plan">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">05 · Study roadmap</div>
+        <h2>A realistic routine that compounds.</h2>
+        <p class="lead">Language learning rewards frequency. Short daily sessions, weekly speaking and monthly mock testing will usually beat irregular cramming.</p>
+      </div>
+      <div class="grid two">
+        <div class="card">
+          <div class="timeline">
+            <div class="timeline-item"><small>DAILY · 30–60 MIN</small><h3>Build the base</h3><p>Review vocabulary with spaced repetition, read a short text, listen to German and write a few sentences using new grammar.</p></div>
+            <div class="timeline-item"><small>WEEKLY · SPEAK</small><h3>Use the language</h3><p>Practise with a tutor, language partner or speaking group. Record yourself and review pronunciation, pauses and repeated errors.</p></div>
+            <div class="timeline-item"><small>MONTHLY · TEST</small><h3>Measure progress</h3><p>Take a mock exam at your target level. Track Reading, Listening, Writing and Speaking separately.</p></div>
+            <div class="timeline-item"><small>FINAL MONTH · SIMULATE</small><h3>Exam mode</h3><p>Do full timed practice, review every error, and rehearse the exact task formats used by your chosen exam.</p></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Weekly study rhythm</h3>
+          <div class="table-wrap" style="box-shadow:none">
+            <table style="min-width:0">
+              <thead><tr><th>Day</th><th>Suggested focus</th></tr></thead>
+              <tbody>
+                <tr><td>Mon</td><td>Vocabulary + articles and cases</td></tr>
+                <tr><td>Tue</td><td>Grammar pattern + short writing</td></tr>
+                <tr><td>Wed</td><td>Listening + transcript review</td></tr>
+                <tr><td>Thu</td><td>Reading + unknown-word log</td></tr>
+                <tr><td>Fri</td><td>Speaking practice + recording</td></tr>
+                <tr><td>Sat</td><td>Mock section or full exam</td></tr>
+                <tr><td>Sun</td><td>Review, immersion and rest</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small-muted" style="margin-top:12px">Consistency matters more than intensity. Even 30 focused minutes daily compounds quickly.</p>
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-top:24px">
+        <figure class="image-card">
+          <img src="https://images.unsplash.com/photo-1526307616774-60d0098f7642?auto=format&fit=crop&w=1600&q=80" alt="German study materials and language learning" loading="lazy">
+          <figcaption>Learn nouns with their articles from day one: der, die or das changes the grammar around the word.</figcaption>
+        </figure>
+        <figure class="image-card">
+          <img src="https://images.unsplash.com/photo-1560969184-10fe8719e047?auto=format&fit=crop&w=1600&q=80" alt="German street and cultural scene" loading="lazy">
+          <figcaption>Use German podcasts, news, series and simple books to make the language feel familiar before exam day.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="grammar">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">06 · Grammar and vocabulary</div>
+        <h2>Learn patterns, not isolated rules.</h2>
+        <p class="lead">German grammar becomes manageable when you learn articles, cases and word order through complete phrases. Avoid collecting rules you never use in speaking or writing.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Area</th><th>What to practise</th><th>Common trap</th><th>Better habit</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Articles</strong></td><td>der / die / das with every new noun</td><td>Learning nouns without gender</td><td>Learn “das Buch,” “die Wohnung,” “der Termin” as fixed chunks</td></tr>
+            <tr><td><strong>Cases</strong></td><td>Nominative, accusative, dative and genitive</td><td>Using the wrong article after prepositions</td><td>Learn common preposition + case combinations</td></tr>
+            <tr><td><strong>Verbs</strong></td><td>Present, perfect, simple past, modal and separable verbs</td><td>Translating English tense patterns directly</td><td>Practise complete sentences and everyday situations</td></tr>
+            <tr><td><strong>Word order</strong></td><td>Main clauses, subordinate clauses and verb position</td><td>Keeping English word order</td><td>Read aloud and copy model sentences</td></tr>
+            <tr><td><strong>Vocabulary</strong></td><td>Themes, collocations and academic language</td><td>Memorising isolated translations</td><td>Learn words in example sentences and topic sets</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><strong>Spaced repetition:</strong> Review new words after one day, three days, one week and then at increasing intervals. Always test yourself from German to English and English to German.</div>
+    </div>
+  </section>
+
+  <section id="germany">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">07 · Studying in Germany</div>
+        <h2>German helps beyond the classroom.</h2>
+        <p class="lead">Even if your degree is in English, German makes daily life easier—from accommodation and health insurance to part-time work, transport and social life.</p>
+      </div>
+      <div class="grid two">
+        <div class="card">
+          <h3>Pre-departure checklist</h3>
+          <div class="checklist" id="germanyChecklist">
+            <label class="check-item"><input type="checkbox"> I confirmed the language requirement for my exact programme.</label>
+            <label class="check-item"><input type="checkbox"> I know which exam and level my university accepts.</label>
+            <label class="check-item"><input type="checkbox"> I checked whether my certificate must be original, certified or sent directly.</label>
+            <label class="check-item"><input type="checkbox"> I planned German learning for daily life, not only for the exam.</label>
+            <label class="check-item"><input type="checkbox"> I know the deadline for submitting my language proof.</label>
+          </div>
+          <div class="check-progress"><span id="germanyProgress"></span></div>
+          <div class="small-muted" id="germanyCount">0 of 5 complete</div>
+        </div>
+        <div class="card">
+          <h3>Exam-day checklist</h3>
+          <div class="checklist" id="examChecklist">
+            <label class="check-item"><input type="checkbox"> My ID and exam confirmation are ready.</label>
+            <label class="check-item"><input type="checkbox"> I know the venue, reporting time and permitted items.</label>
+            <label class="check-item"><input type="checkbox"> I have completed a full timed mock at my target level.</label>
+            <label class="check-item"><input type="checkbox"> I reviewed my most common grammar and vocabulary errors.</label>
+            <label class="check-item"><input type="checkbox"> I know when and how results will be released.</label>
+          </div>
+          <div class="check-progress"><span id="examProgress"></span></div>
+          <div class="small-muted" id="examCount">0 of 5 complete</div>
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-top:24px">
+        <figure class="image-card">
+          <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1600&q=80" alt="University students studying together" loading="lazy">
+          <figcaption>Join a language group or find a tandem partner early—conversation turns passive knowledge into usable German.</figcaption>
+        </figure>
+        <figure class="image-card">
+          <img src="https://images.unsplash.com/photo-1520962922320-2038eebab146?auto=format&fit=crop&w=1600&q=80" alt="European city street and culture" loading="lazy">
+          <figcaption>Use real German around you: signs, announcements, menus, news and everyday conversations.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="mistakes">
+    <div class="wrap">
+      <div class="section-head"><div class="eyebrow">08 · Avoid these</div><h2>Don’t slow down your progress.</h2></div>
+      <div class="grid">
+        <article class="card"><div class="metric">01</div><h3>Memorising rules only</h3><p>Use German in speaking and writing.</p></article>
+        <article class="card"><div class="metric">02</div><h3>Ignoring articles</h3><p>Gender and case affect the whole sentence.</p></article>
+        <article class="card"><div class="metric">03</div><h3>Skipping speaking</h3><p>Fluency needs production, not only input.</p></article>
+        <article class="card"><div class="metric">04</div><h3>Choosing the wrong exam</h3><p>Confirm the exact certificate your university accepts.</p></article>
+        <article class="card"><div class="metric">05</div><h3>Starting too late</h3><p>Language levels take sustained time to build.</p></article>
+        <article class="card"><div class="metric">06</div><h3>Using apps alone</h3><p>Add tutors, classes, media and real conversation.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head"><div class="eyebrow">09 · FAQ</div><h2>Quick answers.</h2></div>
+      <div class="faq">
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">How long does B2 take? <span>+</span></button><div class="faq-a">There is no fixed timeline. It depends on your starting point, study intensity, language background and exposure. Use a placement test rather than copying someone else’s schedule.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Is German difficult? <span>+</span></button><div class="faq-a">German grammar can be demanding, especially articles, cases and word order. But it is highly pattern-based, so consistent practice and exposure make steady progress possible.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Can I study in Germany in English only? <span>+</span></button><div class="faq-a">Some programmes are taught entirely in English and may not require German for admission. However, German remains valuable for daily life, part-time work and wider integration.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Which German exam is best? <span>+</span></button><div class="faq-a">The best exam is the one your university or authority explicitly accepts at the required level. For German-taught degrees, TestDaF and DSH are common university-focused options.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">What is TDN 4? <span>+</span></button><div class="faq-a">TDN 4 is a TestDaF result level indicating strong academic German. Many German-taught programmes require TDN 4 in Reading, Listening, Writing and Speaking.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Where should I verify current details? <span>+</span></button><div class="faq-a">Use the official Goethe-Institut, TestDaF, DSH or telc websites for exam details, and your university’s official course page for admission requirements.</div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div><strong>UniAI · Plan smarter. Go farther.</strong><br>Use this guide for planning, not as a substitute for official university or exam-provider requirements.</div>
+    <div><a href="https://www.goethe.de/en/m/spr/prf.html" target="_blank" rel="noopener noreferrer">Official Goethe-Institut exams ↗</a><br><span>Check current rules before booking.</span></div>
+  </div>
+</footer>
+
+<button class="backtop" type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* Theme bridge: follows UniAI's `uniai-theme` setting where same-origin storage is shared. */
+(() => {
+  const KEY='uniai-theme', root=document.documentElement, btn=document.getElementById('themeButton');
+  const detect=()=>{
+    try{const s=localStorage.getItem(KEY);if(s==='dark'||s==='light')return s;}catch(_){}
+    const a=root.getAttribute('data-theme')||document.body?.getAttribute('data-theme')||document.body?.getAttribute('data-bs-theme');
+    if(a==='dark'||a==='light')return a;
+    return matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  };
+  const apply=t=>{root.setAttribute('data-guide-theme',t==='dark'?'dark':'light');btn.textContent=t==='dark'?'☀ Light guide':'☾ Dark guide';};
+  apply(detect());
+  btn.addEventListener('click',()=>{const next=root.getAttribute('data-guide-theme')==='dark'?'light':'dark';apply(next);try{localStorage.setItem(KEY,next);}catch(_){}});
+  addEventListener('storage',e=>{if(e.key===KEY)apply(detect())});
+  new MutationObserver(()=>apply(detect())).observe(root,{attributes:true,attributeFilter:['data-theme','data-bs-theme','class']});
+})();
+
+/* Reading progress */
+(() => {
+  const bar=document.getElementById('readingProgress');
+  const update=()=>{const max=document.documentElement.scrollHeight-innerHeight;bar.style.width=`${max>0?scrollY/max*100:0}%`};
+  addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update();
+})();
+
+/* Checklists */
+(() => {
+  [['germanyChecklist','germanyProgress','germanyCount'],['examChecklist','examProgress','examCount']].forEach(([listId,barId,countId])=>{
+    const list=document.getElementById(listId),checks=[...list.querySelectorAll('input')],bar=document.getElementById(barId),count=document.getElementById(countId);
+    const update=()=>{const done=checks.filter(c=>c.checked).length;bar.style.width=`${done/checks.length*100}%`;count.textContent=`${done} of ${checks.length} complete`};
+    checks.forEach(c=>c.addEventListener('change',update));update();
+  });
+})();
+
+/* FAQ */
+document.querySelectorAll('.faq-q').forEach(button=>{
+  button.addEventListener('click',()=>{
+    const item=button.closest('.faq-item'),open=!item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(other=>{other.classList.remove('open');other.querySelector('.faq-q').setAttribute('aria-expanded','false');other.querySelector('.faq-q span').textContent='+'});
+    if(open){item.classList.add('open');button.setAttribute('aria-expanded','true');button.querySelector('span').textContent='−'}
+  });
+});
+</script>
+</body>
+</html>

@@ -1,29 +1,531 @@
-<!DOCTYPE html><html lang="en"><head><style id="auth-gate">html{visibility:hidden}</style>
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script><script src="guard.js"></script>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UniAI | Resume / CV Guide</title>
-<style>:root{--bg:#070b16;--card:#111b30;--text:#f7f8fc;--muted:#a7b1c4;--border:#233452;--a:#0369a1;--b:#67e8f9}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.6}
-a{color:inherit;text-decoration:none}.logo{position:fixed;top:0;left:0;right:0;z-index:9;padding:22px 28px;font-weight:800;font-size:22px;letter-spacing:-.05em}
-.logo span,.g{background:linear-gradient(90deg,var(--a),#fff 50%,var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero{min-height:88vh;display:flex;align-items:flex-end;background:linear-gradient(180deg,rgba(5,8,16,.2),var(--bg)),radial-gradient(circle at 80% 20%,var(--a),transparent 40%),url("https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=2000&q=85") center/cover,var(--card)}
-.w{width:min(1180px,92vw);margin:auto}.hero .w{padding:150px 0 70px}
-.kick{color:var(--b);text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:800}
-h1{font-size:clamp(52px,8vw,110px);line-height:.9;letter-spacing:-.07em;margin:16px 0}h2{font-size:clamp(32px,4.5vw,56px);letter-spacing:-.05em;line-height:1;margin:0 0 40px}
-.sub{max-width:680px;color:#d6deeb;font-size:16px}.btn{margin-top:26px;padding:13px 20px;border:0;border-radius:99px;color:#fff;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--a),var(--b))}
-section{padding:90px 0}.alt{background:rgba(255,255,255,.02)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.card{padding:26px;min-height:200px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(145deg,var(--card),#0b1322)}.num{color:var(--b);font-size:38px;font-weight:800}
-.card h3{margin:16px 0 8px}.card p,.faq-a{color:var(--muted);font-size:13px}
-.tl{position:relative;max-width:760px}.tl:before{content:"";position:absolute;left:17px;top:0;bottom:0;width:1px;background:linear-gradient(var(--a),var(--b))}
-.step{position:relative;padding:0 0 34px 62px}.dot{position:absolute;left:6px;width:23px;height:23px;border:1px solid var(--b);border-radius:50%;background:var(--bg)}.step small{color:var(--b);font-weight:800}.step h3{margin:4px 0}
-.faq{max-width:860px}.faq-item{border-bottom:1px solid var(--border)}.faq-q{all:unset;display:flex;justify-content:space-between;width:100%;padding:20px 0;cursor:pointer;font-weight:700}.faq-a{display:none;margin:0 0 18px}.open .faq-a{display:block}
-.reveal{opacity:0;transform:translateY(24px);transition:.7s}.reveal.v{opacity:1;transform:none}
-footer{padding:40px 0;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
-@media(max-width:800px){.grid{grid-template-columns:1fr}}</style></head><body>
-<a href="#" class="logo">Uni<span>AI</span></a>
-<header class="hero"><div class="w"><div class="kick">Applications · Resume / CV</div><h1>Resume / CV<br><span class="g">Guide.</span></h1><p class="sub">One clean page that gets read. Build a resume or academic CV for admissions.</p><button class="btn" onclick="document.getElementById('k').scrollIntoView()">Start the guide</button></div></header>
-<section id="k"><div class="w"><div class="kick">01 · Essentials</div><h2>What you need to know.</h2><div class="grid"><article class="card reveal"><div class="num">01</div><h3>Academic vs corporate</h3><p>Admissions CVs stress education, research and projects.</p></article><article class="card reveal"><div class="num">02</div><h3>Quantify impact</h3><p>Numbers make achievements concrete.</p></article><article class="card reveal"><div class="num">03</div><h3>Keep it clean</h3><p>Simple layout, consistent formatting.</p></article></div></div></section>
-<section class="alt"><div class="w"><div class="kick">02 · Your plan</div><h2>Follow it step by step.</h2><div class="tl"><div class="step reveal"><div class="dot"></div><small>STEP 01</small><h3>Gather achievements</h3></div><div class="step reveal"><div class="dot"></div><small>STEP 02</small><h3>Pick a template</h3></div><div class="step reveal"><div class="dot"></div><small>STEP 03</small><h3>Write bullets</h3></div><div class="step reveal"><div class="dot"></div><small>STEP 04</small><h3>Check length</h3></div><div class="step reveal"><div class="dot"></div><small>STEP 05</small><h3>Proofread</h3></div><div class="step reveal"><div class="dot"></div><small>STEP 06</small><h3>Export PDF</h3></div></div></div></section>
-<section><div class="w"><div class="kick">03 · FAQ</div><h2>Quick answers.</h2><div class="faq"><div class="faq-item"><button class="faq-q">How long?<span>+</span></button><p class="faq-a">One page for most students.</p></div><div class="faq-item"><button class="faq-q">Photo?<span>+</span></button><p class="faq-a">Usually not needed.</p></div><div class="faq-item"><button class="faq-q">Include projects?<span>+</span></button><p class="faq-a">Yes, if relevant.</p></div></div></div></section>
-<footer><div class="w">UniAI · Plan smarter. Go Farther. Always verify details with official sources.</div></footer>
-<script>const o=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('v');o.unobserve(x.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(e=>o.observe(e));
-document.querySelectorAll('.faq-q').forEach(b=>b.onclick=()=>{const i=b.parentElement,w=i.classList.contains('open');document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));if(!w)i.classList.add('open')})</script></body></html>
+<!DOCTYPE html>
+<html lang="en" data-guide-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="A detailed resume and academic CV guide for university admissions: structure, bullet formulas, quantification, ATS, templates, common mistakes and final checks.">
+<title>UniAI | Resume & CV Master Guide</title>
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f4f9fc; --surface:#fff; --surface-2:#e8f4fa; --text:#0e1c26; --muted:#546b78;
+  --border:#d4e6ef; --primary:#0369a1; --accent:#06b6d4; --soft:rgba(3,105,161,.09);
+  --shadow:0 18px 50px rgba(15,60,85,.09); --nav:rgba(255,255,255,.88);
+  --hero-overlay:rgba(4,23,36,.76); --good:#16845b; --warn:#a85c08; --bad:#c13d50;
+}
+html[data-guide-theme="dark"]{
+  color-scheme:dark;
+  --bg:#050d14; --surface:#0d1a24; --surface-2:#122430; --text:#eef8fd; --muted:#a8c0cd;
+  --border:#23404f; --primary:#67e8f9; --accent:#38bdf8; --soft:rgba(103,232,249,.12);
+  --shadow:0 18px 50px rgba(0,0,0,.27); --nav:rgba(5,13,20,.88);
+  --hero-overlay:rgba(2,10,16,.79); --good:#68d5a7; --warn:#ffca80; --bad:#ff8b9a;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:92px}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;transition:background .2s,color .2s}
+a{color:var(--primary);text-decoration:none;text-underline-offset:3px}
+button{font:inherit;cursor:pointer}
+.progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:100;background:linear-gradient(90deg,var(--primary),var(--accent))}
+.topbar{position:sticky;top:0;z-index:50;background:var(--nav);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+.topbar-inner{width:min(1200px,92vw);margin:auto;min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{font-size:22px;font-weight:900;letter-spacing:-1px;color:var(--text)}
+.brand span{color:var(--primary)}
+.nav{display:flex;gap:18px;overflow:auto;white-space:nowrap}
+.nav a{font-size:12px;font-weight:750;color:var(--muted)}
+.theme-chip{border:1px solid var(--border);border-radius:99px;padding:7px 11px;background:var(--surface);color:var(--text);font-size:12px;font-weight:750;white-space:nowrap}
+.wrap{width:min(1160px,90vw);margin:auto}
+.hero{min-height:680px;display:flex;align-items:center;color:#fff;position:relative;background:linear-gradient(90deg,var(--hero-overlay),rgba(4,23,36,.25)),url("https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=2200&q=85") center/cover no-repeat}
+.hero-inner{padding:100px 0 72px;max-width:840px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.19em;font-weight:850;color:var(--accent)}
+.hero .eyebrow{color:#a5f3fc}
+h1{font-size:clamp(48px,8vw,98px);line-height:.91;letter-spacing:-.075em;margin:18px 0 24px}
+.gradient-text{background:linear-gradient(90deg,#a5f3fc,#e0f2fe);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:700px;color:#e4f2f8;font-size:clamp(16px,2vw,19px)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{border:0;border-radius:12px;padding:12px 18px;background:linear-gradient(120deg,#0369a1,#06b6d4);color:#fff;font-weight:850;display:inline-flex;align-items:center}
+.btn.secondary{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:44px}
+.stat{padding:15px 17px;border:1px solid rgba(255,255,255,.23);border-radius:15px;background:rgba(4,20,30,.38);backdrop-filter:blur(10px)}
+.stat strong{display:block;font-size:25px}
+.stat span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#d3e8f2}
+section{padding:82px 0}
+.alt{background:var(--surface-2)}
+.section-head{max-width:840px;margin-bottom:30px}
+h2{font-size:clamp(32px,5vw,55px);line-height:1.03;letter-spacing:-.055em;margin:10px 0 16px}
+.lead{color:var(--muted);max-width:800px;margin:0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{border:1px solid var(--border);border-radius:20px;padding:23px;background:var(--surface);box-shadow:var(--shadow);min-width:0}
+.card h3{margin:9px 0 7px;font-size:19px;letter-spacing:-.025em}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.icon-box{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:var(--soft);font-size:22px}
+.metric{font-size:35px;font-weight:900;color:var(--primary);line-height:1.1}
+.tag{display:inline-block;border:1px solid var(--border);padding:4px 9px;border-radius:99px;font-size:11px;color:var(--muted);margin:3px 4px 0 0}
+.note{padding:17px 20px;margin-top:20px;border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:12px;background:var(--soft);font-size:14px}
+.note strong{color:var(--primary)}
+.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:16px;background:var(--surface);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;min-width:700px;font-size:13px}
+th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--surface-2);color:var(--primary);font-size:11px;text-transform:uppercase;letter-spacing:.09em}
+td{color:var(--muted)}
+td strong{color:var(--text)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:var(--soft)}
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;align-items:stretch}
+.flow-step{position:relative;border:1px solid var(--border);border-radius:16px;background:var(--surface);padding:17px;box-shadow:var(--shadow)}
+.flow-step:not(:last-child):after{content:"→";position:absolute;right:-15px;top:40%;color:var(--primary);font-size:20px;font-weight:900}
+.flow-step b{display:block;color:var(--primary);font-size:12px;letter-spacing:.07em;text-transform:uppercase}
+.flow-step span{display:block;font-size:14px;font-weight:800;margin-top:6px}
+.flow-step small{display:block;color:var(--muted);font-size:12px;margin-top:6px}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.compare div{padding:18px;border-radius:16px;border:1px solid var(--border);background:var(--surface);font-size:14px;color:var(--muted)}
+.compare .weak{border-left:4px solid var(--bad)}
+.compare .strong{border-left:4px solid var(--good)}
+.compare small{display:block;font-weight:850;margin-bottom:7px;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.compare .weak small{color:var(--bad)}
+.compare .strong small{color:var(--good)}
+.image-card{border:1px solid var(--border);border-radius:22px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+.image-card img{width:100%;height:240px;object-fit:cover;display:block}
+.image-card figcaption{padding:14px 18px;font-size:13px;color:var(--muted)}
+.timeline{border-left:2px solid var(--primary);margin:10px 0 0 12px;padding-left:28px}
+.timeline-item{position:relative;padding:0 0 26px}
+.timeline-item:before{content:"";position:absolute;left:-36px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--surface);border:3px solid var(--primary)}
+.timeline-item small{font-size:11px;font-weight:900;color:var(--primary);letter-spacing:.12em}
+.timeline-item h3{margin:4px 0;font-size:18px}
+.timeline-item p{margin:0;color:var(--muted);font-size:14px}
+.builder{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.panel{padding:24px;border:1px solid var(--border);border-radius:20px;background:var(--surface);box-shadow:var(--shadow)}
+.field{display:grid;gap:7px;margin:14px 0}
+.field label{font-size:13px;font-weight:800}
+.field select,.field input{width:100%;border:1px solid var(--border);background:var(--bg);color:var(--text);padding:11px 12px;border-radius:10px;font:inherit}
+.result{font-size:42px;font-weight:950;color:var(--primary);line-height:1.1}
+.bar{height:10px;border-radius:99px;background:var(--border);overflow:hidden;margin:14px 0}
+.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .25s}
+.checklist{display:grid;gap:10px}
+.check-item{display:flex;align-items:flex-start;gap:11px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface);font-size:14px}
+.check-item input{margin-top:5px;accent-color:var(--primary);width:16px;height:16px;flex-shrink:0}
+.small-muted{font-size:12px;color:var(--muted)}
+.faq{max-width:860px}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{display:flex;width:100%;justify-content:space-between;gap:15px;align-items:center;padding:18px 0;border:0;background:none;color:var(--text);text-align:left;font-weight:850}
+.faq-a{display:none;color:var(--muted);font-size:14px;padding:0 0 18px}
+.faq-item.open .faq-a{display:block}
+.faq-q span{color:var(--primary);font-size:22px}
+.footer{padding:38px 0;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
+.footer-inner{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.backtop{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text);box-shadow:var(--shadow);z-index:20}
+@media(max-width:900px){.nav{display:none}.grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}.flow{grid-template-columns:1fr}.flow-step:not(:last-child):after{content:"↓";right:50%;top:auto;bottom:-21px}.builder{grid-template-columns:1fr}.compare{grid-template-columns:1fr}}
+@media(max-width:620px){section{padding:60px 0}.grid,.grid.two,.grid.four{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.hero h1{font-size:clamp(46px,14vw,72px)}.hero-inner{padding:85px 0 48px}.topbar-inner{min-height:60px}.card{padding:19px}.image-card img{height:190px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="progress" id="readingProgress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top">Uni<span>AI</span></a>
+    <nav class="nav" aria-label="Guide navigation">
+      <a href="#start">Start</a><a href="#choose">Resume or CV</a><a href="#structure">Structure</a>
+      <a href="#bullets">Bullets</a><a href="#examples">Examples</a><a href="#ats">ATS</a>
+      <a href="#myths">Myths</a><a href="#tools">Tools</a><a href="#faq">FAQ</a>
+    </nav>
+    <button class="theme-chip" id="themeButton" type="button">◐ Theme</button>
+  </div>
+</header>
+
+<main id="top">
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <div class="eyebrow">The complete Resume & CV guide for admissions</div>
+      <h1>Build a resume<br><span class="gradient-text">that gets read.</span></h1>
+      <p>Create a clean, relevant one-page resume or academic CV: choose the right format, write impact-focused bullets, quantify results, avoid common mistakes and submit a polished PDF.</p>
+      <div class="actions">
+        <a class="btn" href="#start">Explore the guide ↓</a>
+        <a class="btn secondary" href="#tools">Open the resume scorer</a>
+      </div>
+      <div class="stats" aria-label="Resume quick facts">
+        <div class="stat"><strong>1 page</strong><span>Most students</span></div>
+        <div class="stat"><strong>3–5</strong><span>Bullets per role</span></div>
+        <div class="stat"><strong>Action + result</strong><span>Bullet formula</span></div>
+        <div class="stat"><strong>PDF</strong><span>Preferred format</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section id="start">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">01 · Start here</div>
+        <h2>Your resume is evidence, not a biography.</h2>
+        <p class="lead">A strong admissions resume quickly shows what you have built, studied, led or improved. Every line should help the reader understand why you are prepared for the programme.</p>
+      </div>
+      <div class="grid two">
+        <article class="card">
+          <div class="icon-box">📄</div>
+          <h3>What admissions wants</h3>
+          <p>Relevant education, projects, research, internships, leadership, skills and measurable outcomes—presented clearly and honestly.</p>
+        </article>
+        <article class="card">
+          <div class="icon-box">🎯</div>
+          <h3>What to cut</h3>
+          <p>Irrelevant hobbies, outdated skills, long paragraphs, personal details, photo requirements and achievements you cannot explain in an interview.</p>
+        </article>
+      </div>
+
+      <figure class="image-card" style="margin-top:24px">
+        <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=1600&q=80" alt="Clean resume and workspace" loading="lazy">
+        <figcaption>A clean layout helps a reviewer find your strongest evidence in seconds.</figcaption>
+      </figure>
+
+      <div class="note"><strong>First rule:</strong> If a university provides a template, page limit or required sections, follow it exactly. Otherwise, use a clean one-page resume unless your academic record genuinely requires a CV.</div>
+    </div>
+  </section>
+
+  <section class="alt" id="choose">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">02 · Resume or CV?</div>
+        <h2>Choose the right document.</h2>
+        <p class="lead">A resume is a focused summary of relevant experience. A CV is a detailed record of academic work, including research, publications, teaching, awards and presentations.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Feature</th><th>Resume</th><th>Academic CV</th><th>Use it when…</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Purpose</strong></td><td>Show relevant skills and impact</td><td>Show complete academic record</td><td>Match the document to the application request</td></tr>
+            <tr><td><strong>Length</strong></td><td>Usually one page for students</td><td>Can be longer</td><td>Use a resume unless research output requires a CV</td></tr>
+            <tr><td><strong>Best for</strong></td><td>Master’s, MBA, internships, jobs</td><td>Research degrees, academic roles</td><td>Check whether the university asks for “resume” or “CV”</td></tr>
+            <tr><td><strong>Core sections</strong></td><td>Education, projects, experience, skills</td><td>Education, research, publications, teaching, awards</td><td>Include only relevant material</td></tr>
+            <tr><td><strong>Tone</strong></td><td>Concise and impact-focused</td><td>Formal and comprehensive</td><td>Keep formatting consistent in both</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="flow" style="margin-top:24px">
+        <div class="flow-step"><b>Step 1</b><span>Check the requirement</span><small>Does it say resume, CV or curriculum vitae?</small></div>
+        <div class="flow-step"><b>Step 2</b><span>Check your profile</span><small>Do you have research, publications or teaching?</small></div>
+        <div class="flow-step"><b>Step 3</b><span>Choose format</span><small>Resume for focus; CV for academic depth.</small></div>
+        <div class="flow-step"><b>Step 4</b><span>Order sections</span><small>Put the strongest relevant evidence first.</small></div>
+        <div class="flow-step"><b>Step 5</b><span>Tailor and export</span><small>Match keywords, then save as PDF.</small></div>
+      </div>
+
+      <div class="note"><strong>Oxford example:</strong> Where a separate CV is required, Oxford says it should usually be one or two pages and summarise recent achievements, qualifications, publications and relevant experience; it also notes that a page is often enough at master’s level.</div>
+    </div>
+  </section>
+
+  <section id="structure">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">03 · Structure</div>
+        <h2>Sections that matter.</h2>
+        <p class="lead">Use only sections that add relevant evidence. For most students, education and projects should appear near the top; for experienced applicants, work experience may come first.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Section</th><th>What to include</th><th>What to avoid</th><th>Placement</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Header</strong></td><td>Name, professional email, phone, LinkedIn, portfolio or GitHub</td><td>Photo, full address, date of birth, marital status</td><td>Top</td></tr>
+            <tr><td><strong>Education</strong></td><td>Degree, institution, expected graduation, relevant coursework, GPA if strong</td><td>Every school since primary school</td><td>High for students</td></tr>
+            <tr><td><strong>Projects</strong></td><td>Title, tools, your role, outcome and link if available</td><td>Group projects without your contribution</td><td>High for students</td></tr>
+            <tr><td><strong>Experience</strong></td><td>Role, organisation, dates, 3–5 impact bullets</td><td>Job descriptions without results</td><td>High with internships/work</td></tr>
+            <tr><td><strong>Research</strong></td><td>Topic, supervisor, method, contribution and outcome</td><td>Vague “research experience”</td><td>High for research degrees</td></tr>
+            <tr><td><strong>Skills</strong></td><td>Relevant technical and language skills</td><td>“MS Office” as your main skill</td><td>Bottom or side</td></tr>
+            <tr><td><strong>Awards</strong></td><td>Relevant scholarships, competitions and honours</td><td>Old or unrelated awards</td><td>Bottom</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap" style="margin-top:22px">
+        <table>
+          <thead><tr><th>Applicant type</th><th>Recommended order</th><th>Emphasise</th><th>De-emphasise</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Fresher / student</strong></td><td>Education → Projects → Experience → Skills</td><td>Coursework, projects and initiative</td><td>Unrelated part-time work</td></tr>
+            <tr><td><strong>Internship applicant</strong></td><td>Education → Projects → Experience → Skills</td><td>Technical skills and learning ability</td><td>Long objective statements</td></tr>
+            <tr><td><strong>Master’s applicant</strong></td><td>Education → Research/Projects → Experience → Skills</td><td>Academic preparation and specialisation</td><td>School-level achievements</td></tr>
+            <tr><td><strong>MBA applicant</strong></td><td>Experience → Education → Leadership → Skills</td><td>Ownership, results, teams and progression</td><td>Basic coursework</td></tr>
+            <tr><td><strong>Research applicant</strong></td><td>Education → Research → Publications → Projects</td><td>Research question, methods and output</td><td>Generic skills lists</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="bullets">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">04 · Writing bullets</div>
+        <h2>Use action, evidence and result.</h2>
+        <p class="lead">Start with a strong action verb, describe the specific work, and add a measurable result where truthful. Avoid “I,” “we,” passive phrasing and vague responsibilities.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Formula</th><th>Weak bullet</th><th>Stronger bullet</th><th>Why it works</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Action + task + result</strong></td><td>Worked on a website project.</td><td>Built a responsive college event website using HTML, CSS and JavaScript, increasing registration by 35%.</td><td>Shows contribution and outcome</td></tr>
+            <tr><td><strong>Problem + action + impact</strong></td><td>Helped with data entry.</td><td>Cleaned 2,000+ survey records in Excel and created validation rules, reducing duplicate entries.</td><td>Quantifies scale and value</td></tr>
+            <tr><td><strong>Leadership + outcome</strong></td><td>Was part of a team.</td><td>Led a four-member team to build a campus navigation app; presented the prototype to 120 students.</td><td>Shows ownership and scale</td></tr>
+            <tr><td><strong>Research + method</strong></td><td>Did research on machine learning.</td><td>Designed a sentiment-analysis pipeline using Python and scikit-learn; achieved 87% accuracy on a labelled dataset.</td><td>Shows method and result</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap" style="margin-top:22px">
+        <table>
+          <thead><tr><th>Weak verb</th><th>Stronger alternatives</th><th>Use when…</th></tr></thead>
+          <tbody>
+            <tr><td>Participated</td><td>Contributed to, collaborated on, supported</td><td>You had a defined but supporting role</td></tr>
+            <tr><td>Worked on</td><td>Built, developed, implemented, analysed</td><td>You created or improved something</td></tr>
+            <tr><td>Helped</td><td>Streamlined, coordinated, improved, resolved</td><td>You made a measurable contribution</td></tr>
+            <tr><td>Responsible for</td><td>Managed, led, owned, delivered</td><td>You had direct accountability</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><strong>Honesty rule:</strong> Quantify only what you can verify. “Improved accuracy by 12%” is powerful only if you can explain the dataset, baseline and method.</div>
+    </div>
+  </section>
+
+  <section id="examples">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">05 · Before and after</div>
+        <h2>Turn duties into achievements.</h2>
+        <p class="lead">These are style examples. Replace every detail with your own real work, tools and outcomes.</p>
+      </div>
+
+      <div class="compare">
+        <div class="weak"><small>Weak</small>Worked on a machine learning project.</div>
+        <div class="strong"><small>Stronger</small>Built a crop-disease classifier using Python, TensorFlow and 4,000 labelled images; improved validation accuracy from 78% to 89% through data augmentation.</div>
+      </div>
+
+      <div class="compare" style="margin-top:14px">
+        <div class="weak"><small>Weak</small>Responsible for social media.</div>
+        <div class="strong"><small>Stronger</small>Managed Instagram and LinkedIn content for a 1,200-member college club, increasing average post reach by 45% over one semester.</div>
+      </div>
+
+      <div class="compare" style="margin-top:14px">
+        <div class="weak"><small>Weak</small>Did an internship at a company.</div>
+        <div class="strong"><small>Stronger</small>Interned at [Company], where I automated a weekly Excel reporting task using Python, saving approximately six hours per week.</div>
+      </div>
+
+      <div class="compare" style="margin-top:14px">
+        <div class="weak"><small>Weak</small>Good at coding and communication.</div>
+        <div class="strong"><small>Stronger</small>Skills: Python, SQL, Git, Power BI · Presented technical findings to a 30-person review panel and documented the project for future teams.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="ats">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">06 · ATS and formatting</div>
+        <h2>Make it easy to scan.</h2>
+        <p class="lead">Many portals and employers use applicant tracking systems. A simple, text-based PDF with clear headings is usually safer than a heavily designed graphic resume.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Element</th><th>Recommended</th><th>Avoid</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td><strong>File format</strong></td><td>PDF unless the portal requires Word</td><td>JPG, PNG or password-protected files</td><td>Preserves layout and is widely readable</td></tr>
+            <tr><td><strong>Font</strong></td><td>Calibri, Arial, Helvetica or Inter</td><td>Decorative or very small fonts</td><td>Improves readability</td></tr>
+            <tr><td><strong>Layout</strong></td><td>Clear headings, bullets and white space</td><td>Tables, text boxes and complex columns</td><td>Reduces parsing problems</td></tr>
+            <tr><td><strong>Length</strong></td><td>One page for most students</td><td>Two pages of repeated content</td><td>Keeps the strongest evidence visible</td></tr>
+            <tr><td><strong>Keywords</strong></td><td>Use terms from the programme or job description</td><td>Keyword stuffing</td><td>Improves relevance without misleading readers</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><strong>Formatting guidance:</strong> MIT recommends a conservative font no smaller than 10pt, at least half-inch margins, one page for most applicants, action-verb bullets and quantified results where possible. [119][123]</div>
+    </div>
+  </section>
+
+  <section id="myths">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">07 · Myths vs truths</div>
+        <h2>Stop believing these resume myths.</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Myth</th><th>Truth</th><th>What to do instead</th></tr></thead>
+          <tbody>
+            <tr><td><strong>“A colourful template looks professional.”</strong></td><td>Clarity matters more than decoration.</td><td>Use a clean, readable layout with consistent formatting.</td></tr>
+            <tr><td><strong>“Longer resumes show more experience.”</strong></td><td>Irrelevant length hides your best evidence.</td><td>Keep one page unless you have substantial relevant experience.</td></tr>
+            <tr><td><strong>“Every job needs an objective.”</strong></td><td>Most modern resumes do not need one.</td><td>Use a targeted summary only if it adds value.</td></tr>
+            <tr><td><strong>“A photo makes it personal.”</strong></td><td>Photos are usually unnecessary and may be inappropriate in some markets.</td><td>Follow the country and employer/university norm.</td></tr>
+            <tr><td><strong>“I should list every skill.”</strong></td><td>Irrelevant skills distract from your fit.</td><td>List skills you can demonstrate or discuss confidently.</td></tr>
+            <tr><td><strong>“AI can write my whole resume.”</strong></td><td>AI can help polish language, but it cannot know your real impact.</td><td>Use AI to critique clarity and grammar after you provide accurate content.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="tools">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">08 · Interactive tools</div>
+        <h2>Score your resume readiness.</h2>
+        <p class="lead">Answer honestly. This is a self-check, not an automated review of your actual file.</p>
+      </div>
+      <div class="builder">
+        <div class="panel">
+          <h3>Resume self-check</h3>
+          <div class="field"><label for="target">Target</label><select id="target"><option>University admission</option><option selected>Internship</option><option>Job</option><option>Research position</option></select></div>
+          <div class="field"><label for="length">Current length</label><select id="length"><option value="3">Over two pages</option><option value="2">Two pages</option><option value="3" selected>One page</option></select></div>
+          <div class="field"><label for="quantified">Quantified bullets</label><select id="quantified"><option value="0">None</option><option value="1">A few</option><option value="2" selected>Most</option><option value="3">Nearly all</option></select></div>
+          <div class="field"><label for="relevance">Relevance to target</label><select id="relevance"><option value="0">Low</option><option value="1">Medium</option><option value="2" selected>High</option><option value="3">Very high</option></select></div>
+          <div class="field"><label for="format">Formatting quality</label><select id="format"><option value="0">Inconsistent</option><option value="1">Basic</option><option value="2" selected>Clean and consistent</option><option value="3">Excellent</option></select></div>
+        </div>
+        <div class="panel">
+          <div class="eyebrow">Readiness score</div>
+          <div class="result" id="resumeScore">0%</div>
+          <div class="bar"><span id="resumeBar"></span></div>
+          <p class="small-muted" id="resumeAdvice">Add measurable outcomes and tailor your content to the target.</p>
+          <div class="note"><strong>Next action:</strong> <span id="nextAction">Quantify your strongest three bullets.</span></div>
+        </div>
+      </div>
+
+      <div class="section-head" style="margin-top:48px"><h2 style="font-size:clamp(27px,4vw,38px)">Your resume workflow</h2></div>
+      <div class="grid two">
+        <div class="card">
+          <div class="timeline">
+            <div class="timeline-item"><small>STEP 1</small><h3>Gather achievements</h3><p>List projects, internships, competitions, leadership roles, tools and measurable results.</p></div>
+            <div class="timeline-item"><small>STEP 2</small><h3>Choose the format</h3><p>Use a resume for most applications; use a CV when academic depth is required.</p></div>
+            <div class="timeline-item"><small>STEP 3</small><h3>Prioritise relevance</h3><p>Put your strongest, most relevant evidence near the top.</p></div>
+            <div class="timeline-item"><small>STEP 4</small><h3>Write impact bullets</h3><p>Use action verb + task + measurable result.</p></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="timeline">
+            <div class="timeline-item"><small>STEP 5</small><h3>Tailor keywords</h3><p>Mirror important terms from the course or job description—truthfully.</p></div>
+            <div class="timeline-item"><small>STEP 6</small><h3>Proofread</h3><p>Check spelling, dates, grammar, consistency and contact details.</p></div>
+            <div class="timeline-item"><small>STEP 7</small><h3>Get feedback</h3><p>Ask a mentor whether your strongest achievement is immediately visible.</p></div>
+            <div class="timeline-item"><small>STEP 8</small><h3>Export and submit</h3><p>Save as PDF with a professional file name, unless another format is required.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="checklist">
+    <div class="wrap">
+      <div class="section-head"><div class="eyebrow">09 · Final check</div><h2>Before you submit.</h2></div>
+      <div class="grid two">
+        <div class="card">
+          <h3>Content checklist</h3>
+          <div class="checklist" id="contentChecklist">
+            <label class="check-item"><input type="checkbox"> It is tailored to the programme or role.</label>
+            <label class="check-item"><input type="checkbox"> My strongest evidence appears near the top.</label>
+            <label class="check-item"><input type="checkbox"> Most bullets begin with an action verb.</label>
+            <label class="check-item"><input type="checkbox"> Key achievements include measurable results.</label>
+            <label class="check-item"><input type="checkbox"> I removed irrelevant or outdated information.</label>
+            <label class="check-item"><input type="checkbox"> Every claim is truthful and explainable.</label>
+          </div>
+          <div class="check-progress"><span id="contentProgress"></span></div>
+          <div class="small-muted" id="contentCount">0 of 6 complete</div>
+        </div>
+        <div class="card">
+          <h3>Formatting checklist</h3>
+          <div class="checklist" id="formatChecklist">
+            <label class="check-item"><input type="checkbox"> The document fits the required page limit.</label>
+            <label class="check-item"><input type="checkbox"> Fonts, dates and bullet styles are consistent.</label>
+            <label class="check-item"><input type="checkbox"> Contact details and links are correct.</label>
+            <label class="check-item"><input type="checkbox"> The file is saved as PDF unless another format is required.</label>
+            <label class="check-item"><input type="checkbox"> The file name is professional.</label>
+            <label class="check-item"><input type="checkbox"> Someone else has proofread it.</label>
+          </div>
+          <div class="check-progress"><span id="formatProgress"></span></div>
+          <div class="small-muted" id="formatCount">0 of 6 complete</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="faq">
+    <div class="wrap">
+      <div class="section-head"><div class="eyebrow">10 · FAQ</div><h2>Quick answers.</h2></div>
+      <div class="faq">
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">How long should my resume be? <span>+</span></button><div class="faq-a">For most students, one page is ideal. Two pages may be appropriate with extensive experience, an advanced degree or a research-heavy profile—but follow the application’s instructions.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Should I include a photo? <span>+</span></button><div class="faq-a">Usually no for applications in the US, UK, Canada and Australia. Some European countries may expect one, but follow the specific university or employer’s guidance.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Should I include projects? <span>+</span></button><div class="faq-a">Yes, especially if you are a student or career changer. Include your role, tools, outcome and a link only if the work is public and polished.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Should I include GPA? <span>+</span></button><div class="faq-a">Include it if it is strong or specifically requested. Otherwise, emphasise relevant coursework, projects and achievements.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Can I use one resume everywhere? <span>+</span></button><div class="faq-a">Keep one master resume, but tailor the order, summary and keywords for each application.</div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false">Where should I verify current requirements? <span>+</span></button><div class="faq-a">Use the official university, scholarship or employer page. Their instructions override general resume advice.</div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div><strong>UniAI · Plan smarter. Go farther.</strong><br>Use this guide for planning, not as a substitute for official university or employer requirements.</div>
+    <div><a href="https://capd.mit.edu/resources/resumes/" target="_blank" rel="noopener noreferrer">MIT resume guidance ↗</a><br><span>Check current requirements before submitting.</span></div>
+  </div>
+</footer>
+
+<button class="backtop" type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* Theme bridge: follows UniAI's `uniai-theme` setting where same-origin storage is shared. */
+(() => {
+  const KEY='uniai-theme', root=document.documentElement, btn=document.getElementById('themeButton');
+  const detect=()=>{
+    try{const s=localStorage.getItem(KEY);if(s==='dark'||s==='light')return s;}catch(_){}
+    const a=root.getAttribute('data-theme')||document.body?.getAttribute('data-theme')||document.body?.getAttribute('data-bs-theme');
+    if(a==='dark'||a==='light')return a;
+    return matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  };
+  const apply=t=>{root.setAttribute('data-guide-theme',t==='dark'?'dark':'light');btn.textContent=t==='dark'?'☀ Light guide':'☾ Dark guide';};
+  apply(detect());
+  btn.addEventListener('click',()=>{const next=root.getAttribute('data-guide-theme')==='dark'?'light':'dark';apply(next);try{localStorage.setItem(KEY,next);}catch(_){}});
+  addEventListener('storage',e=>{if(e.key===KEY)apply(detect())});
+  new MutationObserver(()=>apply(detect())).observe(root,{attributes:true,attributeFilter:['data-theme','data-bs-theme','class']});
+})();
+
+/* Reading progress */
+(() => {
+  const bar=document.getElementById('readingProgress');
+  const update=()=>{const max=document.documentElement.scrollHeight-innerHeight;bar.style.width=`${max>0?scrollY/max*100:0}%`};
+  addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update();
+})();
+
+/* Resume scorer */
+(() => {
+  const ids=['length','quantified','relevance','format'];
+  const score=document.getElementById('resumeScore'),bar=document.getElementById('resumeBar'),advice=document.getElementById('resumeAdvice'),next=document.getElementById('nextAction');
+  const update=()=>{
+    const values=ids.map(id=>+document.getElementById(id).value);
+    const total=values.reduce((a,b)=>a+b,0);
+    const readiness=Math.round(total/12*100);
+    score.textContent=`${readiness}%`;
+    bar.style.width=`${readiness}%`;
+    if(values[1]===0){advice.textContent='Your bullets need measurable evidence.';next.textContent='Quantify your strongest three bullets.'}
+    else if(values[2]<=1){advice.textContent='Your resume is not targeted enough.';next.textContent='Reorder sections around the target role or programme.'}
+    else if(values[3]<=1){advice.textContent='Formatting may be hurting readability.';next.textContent='Simplify the layout and make headings consistent.'}
+    else if(readiness>=85){advice.textContent='Strong resume foundation. Focus on proofreading and tailoring.';next.textContent='Proofread, export as PDF and tailor keywords.'}
+    else{advice.textContent='Good start. Strengthen relevance, evidence and formatting.';next.textContent='Improve your two weakest areas first.'}
+  };
+  ids.forEach(id=>document.getElementById(id).addEventListener('change',update));update();
+})();
+
+/* Checklists */
+(() => {
+  [['contentChecklist','contentProgress','contentCount'],['formatChecklist','formatProgress','formatCount']].forEach(([listId,barId,countId])=>{
+    const list=document.getElementById(listId),checks=[...list.querySelectorAll('input')],bar=document.getElementById(barId),count=document.getElementById(countId);
+    const update=()=>{const done=checks.filter(c=>c.checked).length;bar.style.width=`${done/checks.length*100}%`;count.textContent=`${done} of ${checks.length} complete`};
+    checks.forEach(c=>c.addEventListener('change',update));update();
+  });
+})();
+
+/* FAQ */
+document.querySelectorAll('.faq-q').forEach(button=>{
+  button.addEventListener('click',()=>{
+    const item=button.closest('.faq-item'),open=!item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(other=>{other.classList.remove('open');other.querySelector('.faq-q').setAttribute('aria-expanded','false');other.querySelector('.faq-q span').textContent='+'});
+    if(open){item.classList.add('open');button.setAttribute('aria-expanded','true');button.querySelector('span').textContent='−'}
+  });
+});
+</script>
+</body>
+</html>
