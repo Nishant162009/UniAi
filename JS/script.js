@@ -1223,11 +1223,83 @@ async function loadCountries() {
   }
 }
 
-function getCategory(userGPA, uniGPA) {
-  if (!userGPA) return "Target";
-  if (userGPA >= uniGPA + 0.3) return "Safe";
-  if (userGPA >= uniGPA - 0.2) return "Target";
-  return "Dream";
+/* ---------- 06a. Data helpers: nothing here invents data ---------------------- */
+
+/** A positive finite number, or null when the value is missing / 0 / junk. */
+function numberOrNull(value) {
+  if (value === null || value === undefined || value === "") return null;
+  const n = Number(value);
+  return Number.isFinite(n) && n > 0 ? n : null;
+}
+
+/** Accepts "40,000", "$40000", "40000 usd"; returns a number or 0. */
+function parseBudget(value) {
+  const n = Number(String(value || "").replace(/[^0-9.]/g, ""));
+  return Number.isFinite(n) ? n : 0;
+}
+
+const money = (n) => `$${Number(n).toLocaleString()}`;
+
+/**
+ * Adds display fields while keeping the raw record. Missing values stay null:
+ * the old code filled in $25,000 tuition, IELTS 6.5 and GPA 3.2 for every
+ * university that had no data, which made unknown universities look real.
+ */
+function normalizeUniversity(raw) {
+  const tuition = numberOrNull(raw.tuition_fee ?? raw.Tuition_Fee);
+  const ielts = numberOrNull(raw.ielts ?? raw.Ielts);
+
+  return {
+    ...raw,
+    displayName: String(raw.name || raw.Name || "").trim() || "Unnamed university",
+    displayTuition: tuition,
+    displayIelts: ielts,
+    displayLogo: safeUrl(raw.logo) || "",
+    rank: numberOrNull(raw.qs_rank)
+  };
+}
+
+/* ---------- 06b. GPA -------------------------------------------------------- */
+
+/**
+ * Students enter 3.5 (4.0 scale), 8.5 (10-point CGPA) or 85 (percentage).
+ * Everything is converted to an approximate 4.0 value, and the card says so.
+ */
+function parseGpaInput(value) {
+  const raw = String(value ?? "").trim().replace(",", ".");
+  const n = parseFloat(raw);
+
+  if (!raw) return null;
+  if (!Number.isFinite(n) || n <= 0 || n > 100) {
+    return { invalid: true, note: "That GPA looks out of range. Use 0–4, a 10-point CGPA, or a percentage." };
+  }
+
+  if (n <= 4.5) {
+    return { value: n, gpa4: Math.min(n, 4), scale: "4.0", note: "" };
+  }
+
+  if (n <= 10) {
+    const gpa4 = (n / 10) * 4;
+    return { value: n, gpa4, scale: "10-point", note: `Read as a ${n} / 10 CGPA ≈ ${gpa4.toFixed(2)} on the 4.0 scale (approximate).` };
+  }
+
+  const gpa4 = (n / 100) * 4;
+  return { value: n, gpa4, scale: "percentage", note: `Read as ${n}% ≈ ${gpa4.toFixed(2)} on the 4.0 scale (approximate).` };
+}
+
+/**
+ * How the student's GPA compares with the university's typical admitted GPA.
+ * Returns null (not a guess) when either side is unknown.
+ */
+function classifyFit(gpa4, uni) {
+  const typical = numberOrNull(uni.avg_gpa);
+  if (gpa4 === null || gpa4 === undefined || typical === null) return null;
+
+  const gap = gpa4 - typical;
+  const tag = gap >= 0.3 ? "Safe" : gap >= -0.2 ? "Target" : "Dream";
+  const score = Math.max(5, Math.min(95, Math.round(50 + gap * 60)));
+
+  return { tag, gap, score, typical };
 }
 
 function getColor(tag) {
@@ -1236,60 +1308,130 @@ function getColor(tag) {
   return "#ff5252";
 }
 
-/**
- * Deterministic match score — the original used Math.random(), so a card's
- * score changed on every re-render.
- */
-function getMatchScore(gpa, uni) {
-  const target = Number(uni.avg_gpa) || 3.2;
-  const gap = (Number(gpa) || target) - target;
-  const rankBonus = uni.qs_rank ? Math.max(0, 12 - Number(uni.qs_rank) / 40) : 4;
-  return Math.max(55, Math.min(98, Math.round(78 + gap * 18 + rankBonus)));
+/* ---------- 06c. Search ----------------------------------------------------- */
+
+const STOP_WORDS = new Set(["of", "the", "and", "for", "in", "at", "de", "la", "du", "des", "von", "der", "di", "da"]);
+
+const COUNTRY_ALIASES = {
+  usa: "united states",
+  us: "united states",
+  america: "united states",
+  uk: "united kingdom",
+  britain: "united kingdom",
+  england: "united kingdom",
+  uae: "united arab emirates",
+  korea: "south korea",
+  holland: "netherlands"
+};
+
+/** Lower-case, accent-free, punctuation-free text ("Zürich" -> "zurich"). */
+function foldText(value) {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim();
 }
 
-/** Accepts "40,000", "$40000", "40k"-less input; returns a number or 0. */
-function parseBudget(value) {
-  const n = Number(String(value || "").replace(/[^0-9.]/g, ""));
-  return Number.isFinite(n) ? n : 0;
+/** Small bounded edit distance, for typo tolerance ("harvrd" -> "harvard"). */
+function editDistance(a, b, max) {
+  if (Math.abs(a.length - b.length) > max) return max + 1;
+
+  let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
+
+  for (let i = 1; i <= a.length; i++) {
+    const cur = [i];
+    let rowMin = i;
+
+    for (let j = 1; j <= b.length; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      const v = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + cost);
+      cur[j] = v;
+      if (v < rowMin) rowMin = v;
+    }
+
+    if (rowMin > max) return max + 1;
+    prev = cur;
+  }
+
+  return prev[b.length];
 }
 
-function filterLocally({ country, searchQuery, budget }) {
-  const maxBudget = parseBudget(budget);
+/** Search index per university, built once and kept off the enumerable fields. */
+function indexUniversity(u) {
+  if (u._ix) return u._ix;
 
-  return state.universities.filter((u) => {
-    const name = String(u.name || "");
-    const uniCountry = String(u.country || "");
+  const name = foldText(u.name || u.displayName);
+  const words = name.split(" ").filter(Boolean);
+  const acronym = words.filter((w) => !STOP_WORDS.has(w)).map((w) => w[0]).join("");
+  const ix = { name, words, acronym, country: foldText(u.country) };
 
-    if (country && uniCountry.toLowerCase() !== country.toLowerCase()) return false;
-    if (searchQuery && !name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
-    if (maxBudget && Number(u.tuition_fee || 0) > maxBudget) return false;
-    return true;
-  });
+  Object.defineProperty(u, "_ix", { value: ix, enumerable: false });
+  return ix;
 }
+
+function scoreToken(ix, token) {
+  if (ix.acronym === token) return 90; // "mit", "tum", "ucl"
+  if (ix.words.includes(token)) return 70;
+  if (ix.words.some((w) => w.startsWith(token))) return 60;
+
+  const aliased = COUNTRY_ALIASES[token];
+  if (aliased && ix.country === aliased) return 30;
+  if (token.length >= 3 && ix.country.startsWith(token)) return 25;
+
+  if (token.length >= 3 && ix.name.includes(token)) return 40;
+
+  if (token.length >= 4) {
+    const max = token.length >= 8 ? 2 : 1;
+    const close = ix.words.some(
+      (w) => editDistance(token, w, max) <= max || editDistance(token, w.slice(0, token.length), max) <= max
+    );
+    if (close) return 20;
+  }
+
+  return 0;
+}
+
+/** 0 = no match. Every word the student typed has to match something. */
+function scoreQuery(u, tokens, phrase) {
+  if (!tokens.length) return 1;
+
+  const ix = indexUniversity(u);
+  if (ix.name === phrase) return 120;
+
+  let total = 0;
+  for (const token of tokens) {
+    const s = scoreToken(ix, token);
+    if (!s) return 0;
+    total += s;
+  }
+
+  let score = total / tokens.length;
+  if (ix.name.startsWith(phrase)) score += 15;
+  return score;
+}
+
+function countryMatches(uniCountry, wanted) {
+  if (!wanted) return true;
+  const a = foldText(uniCountry);
+  const b = foldText(wanted);
+  return a === b || a === (COUNTRY_ALIASES[b] || b);
+}
+
+function dedupeKey(u) {
+  return `${foldText(u.name || u.displayName)}|${foldText(u.country)}`;
+}
+
+/* ---------- 06d. Fetching + filtering ------------------------------------- */
 
 let finderRequestId = 0;
 
-async function findUniversities() {
-  const results = $("results");
-  if (!results) return;
-
-  // Only the newest search may paint (rapid clicks used to race).
-  const requestId = ++finderRequestId;
-
-  const country = $("country") ? $("country").value : "";
-  const searchQuery = $("uni-search") ? $("uni-search").value.trim() : "";
-  const gpa = parseFloat($("gpa") ? $("gpa").value : "") || 0;
-  const budget = parseBudget($("budget") ? $("budget").value : "");
-
-  results.innerHTML = `
-    <div class="finder-loading" style="grid-column:1/-1;padding:40px;text-align:center;background:rgba(0,0,0,.03);border-radius:20px;border:1px dashed rgba(109,93,251,.3);">
-      <div style="font-size:2rem;margin-bottom:12px;">⚡</div>
-      <div style="font-family:var(--font-display,sans-serif);font-size:1.2rem;font-weight:700;color:var(--primary,#6d5dfb);">Matching your profile</div>
-      <p style="color:var(--text-muted,#94a3b8);margin-top:6px;font-size:.9rem;">Scanning institution data…</p>
-    </div>
-  `;
-
-  let matches = [];
+/** Asks the backend with a time limit. Returns an array, or null if it failed. */
+async function fetchServerMatches({ country, searchQuery, budget }) {
+  const controller = typeof AbortController === "function" ? new AbortController() : null;
+  const timer = controller ? setTimeout(() => controller.abort(), 7000) : null;
 
   try {
     const params = new URLSearchParams();
@@ -1298,129 +1440,500 @@ async function findUniversities() {
     if (budget) params.set("budget", String(budget));
 
     const query = params.toString();
-    const response = await fetch(`${api("/universities")}${query ? `?${query}` : ""}`);
+    const response = await fetch(`${api("/universities")}${query ? `?${query}` : ""}`, {
+      signal: controller ? controller.signal : undefined
+    });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    matches = await response.json();
+
+    const data = await response.json();
+    return Array.isArray(data) ? data : null;
   } catch (err) {
-    // Graceful degradation instead of a hard error state.
-    if (!state.universities.length) state.universities = SAMPLE_UNIVERSITIES.slice();
-    matches = filterLocally({ country, searchQuery, budget });
-    console.warn("Finder: backend unavailable, filtered locally.");
+    console.warn("Finder: backend search unavailable, using the loaded list.", err);
+    return null;
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
+/**
+ * Local list + backend answer, merged. The page only loads the first batch of
+ * universities, so a filtered backend call can find ones the local list misses.
+ */
+async function collectMatches({ country, searchQuery, budget }) {
+  if (!state.universities.length) await loadUniversities();
+
+  const hasFilter = Boolean(country || searchQuery || budget);
+  const server = hasFilter ? await fetchServerMatches({ country, searchQuery, budget }) : null;
+
+  const merged = new Map();
+  state.universities.forEach((raw) => {
+    const u = normalizeUniversity(raw);
+    merged.set(dedupeKey(u), { u, fromServer: false });
+  });
+  (server || []).forEach((raw) => {
+    const u = normalizeUniversity(raw);
+    merged.set(dedupeKey(u), { u, fromServer: true }); // backend copy wins
+  });
+
+  const phrase = foldText(searchQuery);
+  const tokens = phrase ? phrase.split(" ") : [];
+
+  const out = [];
+  merged.forEach(({ u, fromServer }) => {
+    if (!countryMatches(u.country, country)) return;
+
+    // Unknown tuition is kept (and labelled) instead of silently dropped or invented.
+    if (budget && u.displayTuition !== null && u.displayTuition > budget) return;
+
+    let relevance = scoreQuery(u, tokens, phrase);
+    if (!relevance && fromServer && tokens.length) relevance = 1; // backend said it matches
+    if (tokens.length && !relevance) return;
+
+    u.relevance = relevance;
+    out.push(u);
+  });
+
+  return { items: out, usedServer: server !== null };
+}
+
+/* ---------- 06e. View state, sorting and rendering ------------------------ */
+
+const PAGE_SIZE = 24;
+
+const finderView = {
+  all: [], // everything that matched the last search
+  list: [], // after the Safe / Target / Dream chip
+  gpa: null,
+  query: "",
+  country: "",
+  budget: 0,
+  sort: "best",
+  fit: "all",
+  shown: 0
+};
+
+const FIT_ORDER = { Target: 0, Safe: 1, Dream: 2 };
+const byRank = (a, b) => (a.rank ?? Infinity) - (b.rank ?? Infinity);
+
+function sortFinderList(list) {
+  const hasFit = finderView.gpa && !finderView.gpa.invalid;
+
+  const sorters = {
+    best: (a, b) => {
+      if (finderView.query && b.relevance !== a.relevance) return b.relevance - a.relevance;
+      if (hasFit) {
+        const fa = a.fit ? FIT_ORDER[a.fit.tag] : 3;
+        const fb = b.fit ? FIT_ORDER[b.fit.tag] : 3;
+        if (fa !== fb) return fa - fb;
+      }
+      return byRank(a, b);
+    },
+    rank: byRank,
+    tuition: (a, b) => (a.displayTuition ?? Infinity) - (b.displayTuition ?? Infinity),
+    name: (a, b) => a.displayName.localeCompare(b.displayName)
+  };
+
+  return list.slice().sort(sorters[finderView.sort] || sorters.best);
+}
+
+function applyFinderView() {
+  const chip = finderView.fit;
+  const filtered = chip === "all" ? finderView.all : finderView.all.filter((u) => u.fit && u.fit.tag === chip);
+
+  finderView.list = sortFinderList(filtered);
+  window.__uniResults = finderView.list; // save.js + the details modal read this
+}
+
+function initialsOf(name) {
+  const letters = String(name)
+    .split(/\s+/)
+    .filter((w) => w && !STOP_WORDS.has(w.toLowerCase()))
+    .slice(0, 2)
+    .map((w) => Array.from(w)[0]);
+  return (letters.join("") || "U").toUpperCase();
+}
+
+function logoHue(name) {
+  let h = 0;
+  for (const ch of String(name)) h = (h * 31 + ch.charCodeAt(0)) % 360;
+  return h;
+}
+
+function logoHTML(u) {
+  const alt = escapeHTML(u.displayName);
+  if (u.displayLogo) {
+    return `<img class="unc-logo" src="${escapeHTML(u.displayLogo)}" alt="" loading="lazy" data-logo-name="${alt}">`;
+  }
+  return `<span class="unc-logo unc-logo--fallback" style="--h:${logoHue(u.displayName)}" aria-hidden="true">${escapeHTML(initialsOf(u.displayName))}</span>`;
+}
+
+function fitHTML(u) {
+  const gpa = finderView.gpa;
+
+  if (u.fit) {
+    const color = getColor(u.fit.tag);
+    return `
+      <div class="unc-fit" style="--fit:${color}">
+        <div class="unc-fit-top">
+          <span class="unc-fit-tag">${u.fit.tag}</span>
+          <span class="unc-fit-hint">GPA fit</span>
+        </div>
+        <div class="unc-bar" role="img" aria-label="GPA fit ${u.fit.score} out of 100">
+          <div class="unc-bar-fill" style="width:${u.fit.score}%"></div>
+        </div>
+        <p class="unc-fit-note">Your GPA ≈ ${gpa.gpa4.toFixed(2)} · typical admit ≈ ${u.fit.typical.toFixed(2)}</p>
+      </div>`;
   }
 
-  if (requestId !== finderRequestId) return; // a newer search took over
+  if (gpa && !gpa.invalid) {
+    return `<div class="unc-fit unc-fit--none"><p class="unc-fit-note">No typical GPA on record for this university, so fit can't be estimated.</p></div>`;
+  }
 
-  if (!Array.isArray(matches) || !matches.length) {
-    results.innerHTML = `
-      <div style="grid-column:1/-1;padding:32px;text-align:center;background:rgba(0,0,0,.02);border-radius:20px;border:1px solid var(--border,#e2e8f0);">
-        <div style="font-size:2.2rem;margin-bottom:8px;">🔍</div>
-        <h3 style="font-size:1.2rem;margin-bottom:4px;">No matches found</h3>
-        <p style="color:var(--text-muted,#94a3b8);font-size:.9rem;">Try widening your budget, clearing the country filter, or checking the spelling.</p>
+  return `<div class="unc-fit unc-fit--none"><p class="unc-fit-note">Add your GPA above to see how you compare.</p></div>`;
+}
+
+function renderUniCard(u, index) {
+  const saved = state.shortlist.includes(u.displayName);
+  const tuition = u.displayTuition !== null ? `${money(u.displayTuition)}<small>/yr</small>` : `<span class="unc-na">Not listed</span>`;
+  const ielts = u.displayIelts !== null ? escapeHTML(u.displayIelts) : `<span class="unc-na">—</span>`;
+  const typical = numberOrNull(u.avg_gpa) !== null ? Number(u.avg_gpa).toFixed(2) : `<span class="unc-na">—</span>`;
+  const website = safeUrl(u.website);
+  const detailUrl = uniDetailUrl(u) || "#";
+
+  return `
+    <div class="unc bento-card" data-index="${index}">
+      <div class="unc-head">
+        ${logoHTML(u)}
+        <div class="unc-title">
+          <div class="unc-name">${escapeHTML(u.displayName)}</div>
+          <div class="unc-loc">📍 ${escapeHTML(u.country || "Location not listed")}</div>
+        </div>
+        ${u.rank !== null ? `<span class="unc-rank" title="QS World University Ranking">QS #${escapeHTML(u.rank)}</span>` : ""}
       </div>
-    `;
+
+      ${fitHTML(u)}
+
+      <div class="unc-facts">
+        <div class="unc-fact"><span class="unc-k">Tuition</span><span class="unc-v">${tuition}</span></div>
+        <div class="unc-fact"><span class="unc-k">IELTS</span><span class="unc-v">${ielts}</span></div>
+        <div class="unc-fact"><span class="unc-k">Typical GPA</span><span class="unc-v">${typical}</span></div>
+      </div>
+
+      <div class="unc-actions">
+        <button type="button" class="unc-btn" data-action="save">${saved ? "★ Saved" : "☆ Save"}</button>
+        <button type="button" class="unc-btn" data-action="peek">Quick view</button>
+        <button type="button" class="unc-btn" data-action="website" data-url="${escapeHTML(website)}" ${website ? "" : "disabled"}>Website</button>
+        <a class="unc-btn unc-btn--primary" data-action="details" href="${escapeHTML(detailUrl)}">Explore →</a>
+      </div>
+    </div>`;
+}
+
+function moreButtonHTML() {
+  const left = finderView.list.length - finderView.shown;
+  return left > 0
+    ? `<div class="uf-more"><button type="button" class="unc-btn" data-uf-more>Show ${Math.min(PAGE_SIZE, left)} more <small>(${left} left)</small></button></div>`
+    : "";
+}
+
+function renderFinderResults({ scroll = false } = {}) {
+  const results = $("results");
+  if (!results) return;
+
+  injectFinderStyles();
+  applyFinderView();
+
+  if (!finderView.list.length) {
+    // The chip can hide everything while results exist; say so instead of "no matches".
+    if (finderView.all.length) {
+      results.innerHTML = `<div class="uf-empty"><h3>No ${escapeHTML(finderView.fit)} universities in these results</h3><p>Switch the filter back to “All” to see the other matches.</p></div>`;
+      renderFinderToolbar();
+      return;
+    }
+    return;
+  }
+
+  finderView.shown = Math.min(PAGE_SIZE, finderView.list.length);
+
+  results.innerHTML =
+    finderView.list.slice(0, finderView.shown).map((u, i) => renderUniCard(u, i)).join("") + moreButtonHTML();
+
+  renderFinderToolbar();
+
+  if (scroll) {
+    const top = results.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+  }
+}
+
+function showMoreResults() {
+  const results = $("results");
+  if (!results) return;
+
+  const from = finderView.shown;
+  const to = Math.min(from + PAGE_SIZE, finderView.list.length);
+
+  const more = results.querySelector(".uf-more");
+  if (more) more.remove();
+
+  finderView.shown = to;
+
+  results.insertAdjacentHTML(
+    "beforeend",
+    finderView.list.slice(from, to).map((u, i) => renderUniCard(u, from + i)).join("") + moreButtonHTML()
+  );
+
+  renderFinderToolbar();
+}
+
+/* ---------- 06f. Toolbar + summary ----------------------------------------- */
+
+function renderFinderToolbar() {
+  const results = $("results");
+  if (!results) return;
+
+  let bar = $("finderToolbar");
+  if (!bar) {
+    bar = document.createElement("div");
+    bar.id = "finderToolbar";
+    bar.className = "uf-toolbar";
+    results.parentNode.insertBefore(bar, results);
+  }
+
+  const hasFit = finderView.gpa && !finderView.gpa.invalid;
+  const counts = { Safe: 0, Target: 0, Dream: 0 };
+  finderView.all.forEach((u) => u.fit && counts[u.fit.tag]++);
+
+  const chips = hasFit
+    ? ["all", "Target", "Safe", "Dream"]
+        .map((key) => {
+          const label = key === "all" ? `All (${finderView.all.length})` : `${key} (${counts[key]})`;
+          const pressed = finderView.fit === key;
+          return `<button type="button" class="uf-chip" data-uf-fit="${key}" aria-pressed="${pressed}">${label}</button>`;
+        })
+        .join("")
+    : "";
+
+  const sortOption = (value, label) =>
+    `<option value="${value}" ${finderView.sort === value ? "selected" : ""}>${label}</option>`;
+
+  const notes = [];
+  if (finderView.gpa && finderView.gpa.invalid) notes.push(finderView.gpa.note);
+  else if (finderView.gpa && finderView.gpa.note) notes.push(finderView.gpa.note);
+  if (finderView.budget) {
+    const unknown = finderView.all.filter((u) => u.displayTuition === null).length;
+    if (unknown) notes.push(`${unknown} ${unknown === 1 ? "university has" : "universities have"} no tuition listed, so the budget filter can't check ${unknown === 1 ? "it" : "them"}.`);
+  }
+
+  const heading = finderView.query ? ` for “${escapeHTML(finderView.query)}”` : "";
+
+  // The page only loads a first batch (Supabase/APIs usually cap at 1,000 rows). Say so,
+  // instead of implying the database only has that many universities.
+  const noFilters = !finderView.query && !finderView.country && !finderView.budget;
+  const capped = noFilters && finderView.all.length >= 1000 && finderView.all.length % 1000 === 0;
+  if (capped) {
+    notes.push("This is the first batch of your database. Search by name, country or budget to look through all universities.");
+  }
+
+  bar.innerHTML = `
+    <div class="uf-row">
+      <p class="uf-count" role="status" aria-live="polite">Showing <strong>${finderView.shown}</strong> of <strong>${finderView.list.length}${capped ? "+" : ""}</strong> universities${heading}</p>
+      <label class="uf-sort">Sort by
+        <select data-uf-sort>
+          ${sortOption("best", finderView.query ? "Best match" : "Best fit")}
+          ${sortOption("rank", "QS rank")}
+          ${sortOption("tuition", "Tuition: low to high")}
+          ${sortOption("name", "Name A–Z")}
+        </select>
+      </label>
+    </div>
+    ${chips ? `<div class="uf-chips" role="group" aria-label="Filter by admission fit">${chips}</div>` : ""}
+    ${notes.map((n) => `<p class="uf-note">${escapeHTML(n)}</p>`).join("")}
+  `;
+}
+
+/**
+ * Four summary tiles. A tile only shows a university when one really fits it;
+ * the old code fell back to the first result, so "Safest choice" could be MIT.
+ */
+function buildSummaryTiles(items) {
+  const hasFit = finderView.gpa && !finderView.gpa.invalid;
+  const none = "None in these results";
+  const cheapest = items.filter((u) => u.displayTuition !== null).sort((a, b) => a.displayTuition - b.displayTuition)[0];
+  const tuitionTile = {
+    icon: "💳",
+    label: "LOWEST TUITION",
+    value: cheapest ? `${money(cheapest.displayTuition)}/yr` : "Not listed",
+    sub: cheapest ? cheapest.displayName : ""
+  };
+
+  if (!hasFit) {
+    const top = items.filter((u) => u.rank !== null).sort(byRank)[0];
+    const countries = new Set(items.map((u) => u.country).filter(Boolean));
+    return [
+      { icon: "🏆", label: "HIGHEST RANKED", value: top ? top.displayName : "No ranking data", sub: top ? `QS #${top.rank}` : "" },
+      tuitionTile,
+      { icon: "🌍", label: "COUNTRIES", value: String(countries.size), sub: "in these results" },
+      { icon: "🎓", label: "UNIVERSITIES", value: String(items.length), sub: "Add your GPA for Safe / Target / Dream" }
+    ];
+  }
+
+  const pick = (tag, sorter) => items.filter((u) => u.fit && u.fit.tag === tag).sort(sorter)[0];
+  const best = pick("Target", (a, b) => Math.abs(a.fit.gap) - Math.abs(b.fit.gap) || byRank(a, b));
+  const safe = pick("Safe", (a, b) => byRank(a, b));
+  const dream = pick("Dream", (a, b) => byRank(a, b));
+
+  const tile = (icon, label, u) => ({ icon, label, value: u ? u.displayName : none, sub: u && u.rank !== null ? `QS #${u.rank}` : "" });
+
+  return [tile("🎯", "TARGET MATCH", best), tile("🛡️", "SAFE OPTION", safe), tile("✨", "DREAM REACH", dream), tuitionTile];
+}
+
+function updateAISummaryBar(items) {
+  const resultsArea = $("results");
+  if (!resultsArea) return;
+
+  let panel = $("aiInsightsPanel");
+
+  if (!items || !items.length) {
+    if (panel) panel.remove();
+    const bar = $("finderToolbar");
+    if (bar) bar.remove();
+    return;
+  }
+
+  if (!panel) {
+    panel = document.createElement("div");
+    panel.id = "aiInsightsPanel";
+    panel.className = "ai-insights-panel bento-card";
+    resultsArea.parentNode.insertBefore(panel, resultsArea);
+  }
+
+  panel.innerHTML = buildSummaryTiles(items)
+    .map(
+      (t) => `
+    <div class="insight-card">
+      <div class="insight-label">${t.icon} ${escapeHTML(t.label)}</div>
+      <div class="insight-value">${escapeHTML(t.value)}</div>
+      ${t.sub ? `<div class="uf-tile-sub">${escapeHTML(t.sub)}</div>` : ""}
+    </div>`
+    )
+    .join("");
+}
+
+/* ---------- 06g. The search itself ------------------------------------------ */
+
+function finderMessage(icon, title, text) {
+  return `<div class="uf-empty"><div class="uf-empty-icon">${icon}</div><h3>${escapeHTML(title)}</h3><p>${escapeHTML(text)}</p></div>`;
+}
+
+async function findUniversities(options = {}) {
+  const results = $("results");
+  if (!results) return;
+
+  injectFinderStyles();
+
+  const requestId = ++finderRequestId; // only the newest search may paint
+
+  const country = $("country") ? $("country").value : "";
+  const searchQuery = $("uni-search") ? $("uni-search").value.trim() : "";
+  const budget = parseBudget($("budget") ? $("budget").value : "");
+  const gpa = parseGpaInput($("gpa") ? $("gpa").value : "");
+
+  results.innerHTML = `
+    <div class="uf-loading" role="status">
+      <div class="uf-spinner" aria-hidden="true"></div>
+      <div><strong>Searching universities…</strong><span>Checking names, countries and budget</span></div>
+    </div>`;
+
+  const { items, usedServer } = await collectMatches({ country, searchQuery, budget });
+
+  if (requestId !== finderRequestId) return;
+
+  if (!state.universities.length && !items.length) {
+    results.innerHTML = finderMessage(
+      "⚠️",
+      "University data isn't available right now",
+      "We couldn't reach the server. Check your connection and try again."
+    );
     window.__uniResults = [];
     updateAISummaryBar(null);
     return;
   }
 
-  const processed = matches
-    .map((u) => ({
-      ...u,
-      displayName: u.name || "University",
-      displayTuition: Number(u.tuition_fee || u.Tuition_Fee || 25000),
-      displayIelts: u.ielts || u.Ielts || 6.5,
-      displayLogo: u.logo || PLACEHOLDER_LOGO,
-      tag: getCategory(gpa, Number(u.avg_gpa) || 3.2),
-      matchScore: getMatchScore(gpa, u)
-    }))
-    .sort((a, b) => {
-      const order = { Safe: 1, Target: 2, Dream: 3 };
-      return (order[a.tag] || 2) - (order[b.tag] || 2) || b.matchScore - a.matchScore;
-    });
+  finderView.gpa = gpa;
+  finderView.query = searchQuery;
+  finderView.country = country;
+  finderView.budget = budget;
+  finderView.fit = "all";
 
-  // Keep the processed objects so the details modal / save.js can read them.
-  window.__uniResults = processed;
-
-  updateAISummaryBar({
-    bestMatch: (processed.find((u) => u.tag === "Target") || processed[0]).displayName,
-    safestChoice: (processed.find((u) => u.tag === "Safe") || processed[0]).displayName,
-    dreamTarget: (processed.find((u) => u.tag === "Dream") || processed[0]).displayName,
-    budgetFriendly: `$${Math.min(...processed.map((u) => u.displayTuition)).toLocaleString()}/yr`
+  const gpa4 = gpa && !gpa.invalid ? gpa.gpa4 : null;
+  items.forEach((u) => {
+    u.fit = classifyFit(gpa4, u);
   });
+  finderView.all = items;
 
-  // Each card is a flex column at full grid-row height, so the footer buttons
-  // always sit on the same baseline and long names can't overflow.
-  results.innerHTML = processed
-    .map((u, index) => {
-      const matchColor = getColor(u.tag);
-      const saved = state.shortlist.includes(u.displayName);
-      const logo = safeUrl(u.displayLogo) || PLACEHOLDER_LOGO;
+  if (!items.length) {
+    const parts = [];
+    if (searchQuery) parts.push(`“${searchQuery}”`);
+    if (country) parts.push(country);
+    if (budget) parts.push(`under ${money(budget)}`);
 
-      return `
-        <div class="uni-card-enhanced uni-card bento-card" data-index="${index}" style="cursor:pointer;display:flex;flex-direction:column;height:100%;min-width:0;box-sizing:border-box;">
-          <div class="uni-header-row" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
-            <div style="display:flex;gap:14px;align-items:center;min-width:0;flex:1;">
-              <img src="${escapeHTML(logo)}" class="uni-logo" alt="${escapeHTML(u.displayName)}"
-                   style="width:48px;height:48px;flex-shrink:0;border-radius:12px;object-fit:cover;background:var(--bg,#fff);border:1px solid var(--border,#e2e8f0);"
-                   onerror="this.onerror=null;this.src='${PLACEHOLDER_LOGO}'">
-              <div style="min-width:0;">
-                <div class="uni-name" style="font-weight:700;overflow-wrap:anywhere;">${escapeHTML(u.displayName)}</div>
-                <div class="uni-location">📍 ${escapeHTML(u.country || "Global")}</div>
-                <div style="font-size:12px;color:var(--text-muted,#8a8aa3);margin-top:2px;">IELTS ${escapeHTML(u.displayIelts)}</div>
-              </div>
-            </div>
-            <span class="rank-badge" style="flex-shrink:0;white-space:nowrap;">🏆 #${escapeHTML(u.qs_rank || "N/A")}</span>
-          </div>
+    results.innerHTML = finderMessage(
+      "🔍",
+      "No matches found",
+      parts.length
+        ? `Nothing matched ${parts.join(" · ")}. Try fewer words, check the spelling, raise the budget, or clear the country.`
+        : "Try adding a country, a budget, or a university name."
+    );
+    window.__uniResults = [];
+    finderView.list = [];
+    updateAISummaryBar(null);
+    return;
+  }
 
-          <div class="uni-meta-pills" style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;">
-            <span class="uni-pill">🎯 ${u.matchScore}% Match</span>
-            <span class="uni-pill">💰 $${u.displayTuition.toLocaleString()}</span>
-            <span class="uni-pill" style="border-color:${matchColor};color:${matchColor};">${u.tag}</span>
-          </div>
+  updateAISummaryBar(items);
+  renderFinderResults({ scroll: options.scroll !== false });
 
-          <div class="confidence-bar-wrapper">
-            <div class="confidence-header" style="display:flex;justify-content:space-between;font-size:.8rem;">
-              <strong>Admission probability</strong><span>${u.tag}</span>
-            </div>
-            <div class="confidence-track" style="height:8px;background:var(--border,#e2e8f0);border-radius:6px;overflow:hidden;margin-top:6px;">
-              <div class="confidence-fill" style="height:100%;width:${u.matchScore}%;background:${matchColor};"></div>
-            </div>
-          </div>
-
-          <div class="uni-footer" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:auto;padding-top:14px;">
-            <button type="button" class="secondary-btn" data-action="save" style="width:100%;margin:0;box-sizing:border-box;justify-content:center;">
-              ${saved ? "★ Saved" : "☆ Save"}
-            </button>
-            <button type="button" class="secondary-btn" data-action="website" data-url="${escapeHTML(safeUrl(u.website))}" style="width:100%;margin:0;box-sizing:border-box;justify-content:center;">Website</button>
-            <button type="button" class="secondary-btn" data-action="peek" style="width:100%;margin:0;box-sizing:border-box;justify-content:center;">Quick view</button>
-            <a class="profile-btn glow-btn" data-action="details"
-               href="${escapeHTML(uniDetailUrl(u) || "#")}"
-               style="width:100%;margin:0;box-sizing:border-box;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Explore →</a>
-          </div>
-        </div>
-      `;
-    })
-    .join("");
-
-  const top = results.getBoundingClientRect().top + window.scrollY - 80;
-  window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+  if (!usedServer && (country || searchQuery || budget)) {
+    console.info("Finder: showing results from the loaded list only (server search was unavailable).");
+  }
 }
 
 /**
- * One delegated listener for every card — no inline handlers, so names with
- * quotes or apostrophes can't break anything.
+ * One delegated listener set for every card, chip, selector and "show more".
+ * No inline handlers, so names with quotes or apostrophes can't break anything.
  */
 function setupFinderDelegation() {
   const results = $("results");
   if (!results || results.dataset.bound) return;
   results.dataset.bound = "1";
 
+  // A logo that fails to load becomes an initials badge (no external placeholder needed).
+  results.addEventListener(
+    "error",
+    (e) => {
+      const img = e.target;
+      if (!img || img.tagName !== "IMG" || !img.classList.contains("unc-logo")) return;
+      const name = img.getAttribute("data-logo-name") || "";
+      const badge = document.createElement("span");
+      badge.className = "unc-logo unc-logo--fallback";
+      badge.style.setProperty("--h", logoHue(name));
+      badge.setAttribute("aria-hidden", "true");
+      badge.textContent = initialsOf(name);
+      img.replaceWith(badge);
+    },
+    true
+  );
+
   results.addEventListener("click", (e) => {
-    const card = e.target.closest(".uni-card");
+    if (e.target.closest("[data-uf-more]")) {
+      showMoreResults();
+      return;
+    }
+
+    const card = e.target.closest(".unc");
     if (!card) return;
 
-    const list = window.__uniResults || [];
-    const uni = list[Number(card.dataset.index)];
+    const uni = (window.__uniResults || [])[Number(card.dataset.index)];
     if (!uni) return;
 
     const actionBtn = e.target.closest("[data-action]");
@@ -1433,10 +1946,8 @@ function setupFinderDelegation() {
     }
 
     if (action === "save") {
-      // save.js returns the new saved state; the fallback does too.
       const result = toggleShortlist(uni.displayName);
-      const nowSaved =
-        typeof result === "boolean" ? result : state.shortlist.includes(uni.displayName);
+      const nowSaved = typeof result === "boolean" ? result : state.shortlist.includes(uni.displayName);
       actionBtn.textContent = nowSaved ? "★ Saved" : "☆ Save";
       return;
     }
@@ -1447,40 +1958,138 @@ function setupFinderDelegation() {
     }
 
     // "details", or a click anywhere else on the card -> the detail page.
-    // The Explore button is a real <a>, so middle-click / shift-click still
-    // work natively; only intercept the plain left click.
+    // The Explore button is a real <a>, so middle-click / shift-click still work natively.
     const isLink = actionBtn && actionBtn.tagName === "A";
     if (isLink && (e.shiftKey || e.button === 1)) return;
 
     e.preventDefault();
     openUniDetailPage(uni, e.ctrlKey || e.metaKey);
   });
+
+  // Sort + Safe/Target/Dream chips live in the toolbar above the grid.
+  const section = results.parentNode;
+
+  section.addEventListener("change", (e) => {
+    const select = e.target.closest("[data-uf-sort]");
+    if (!select) return;
+    finderView.sort = select.value;
+    renderFinderResults();
+  });
+
+  section.addEventListener("click", (e) => {
+    const chip = e.target.closest("[data-uf-fit]");
+    if (!chip) return;
+    finderView.fit = chip.dataset.ufFit;
+    renderFinderResults();
+  });
+
+  // Typing in the top search bar searches as you type, but only while the
+  // finder is on screen; Enter elsewhere still jumps to the finder (index.html).
+  const search = $("uni-search");
+  if (search && !search.dataset.liveBound) {
+    search.dataset.liveBound = "1";
+    let timer = null;
+
+    search.addEventListener("input", () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        if (!results.offsetParent) return; // finder not visible
+        findUniversities({ scroll: false });
+      }, 300);
+    });
+  }
+
+  // Enter in the GPA or budget box runs the search too.
+  ["gpa", "budget"].forEach((id) => {
+    const input = $(id);
+    if (!input || input.dataset.enterBound) return;
+    input.dataset.enterBound = "1";
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") findUniversities();
+    });
+  });
 }
 
-function updateAISummaryBar(data) {
-  const resultsArea = $("results");
-  if (!resultsArea) return;
+/* ---------- 06h. Styles (injected, so no stylesheet edit is needed) -------- */
 
-  let panel = $("aiInsightsPanel");
+function injectFinderStyles() {
+  if (document.getElementById("finder-styles")) return;
 
-  if (!data) {
-    if (panel) panel.remove();
-    return;
-  }
+  const style = document.createElement("style");
+  style.id = "finder-styles";
+  style.textContent = `
+    #results .unc{display:flex;flex-direction:column;gap:14px;min-width:0;height:100%;box-sizing:border-box;padding:20px;cursor:pointer}
+    #results .unc *{box-sizing:border-box}
+    #results .unc-head{display:flex;align-items:flex-start;gap:12px;min-width:0}
+    #results .unc-logo{flex:0 0 48px;width:48px;height:48px;border-radius:12px;object-fit:contain;background:#fff;border:1px solid var(--border,#e2e8f0)}
+    #results .unc-logo--fallback{display:inline-grid;place-items:center;color:#fff;font:800 1rem/1 var(--font-display,inherit);
+      background:hsl(var(--h,250) 58% 46%);border:0}
+    #results .unc-title{min-width:0;flex:1}
+    #results .unc-name{margin:0;font-size:1rem;line-height:1.3;font-weight:700;overflow-wrap:anywhere;
+      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    #results .unc-loc{margin:4px 0 0;font-size:.82rem;line-height:1.3;color:var(--text-muted,#8a8aa3)}
+    #results .unc-rank{flex:0 0 auto;white-space:nowrap;font-size:.74rem;font-weight:700;padding:5px 9px;border-radius:999px;
+      border:1px solid var(--border,#e2e8f0);color:var(--text,inherit)}
 
-  if (!panel) {
-    panel = document.createElement("div");
-    panel.id = "aiInsightsPanel";
-    panel.className = "ai-insights-panel bento-card";
-    resultsArea.parentNode.insertBefore(panel, resultsArea);
-  }
+    #results .unc-fit{padding:12px;border-radius:14px;border:1px solid var(--border,#e2e8f0)}
+    #results .unc-fit-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+    #results .unc-fit-tag{font-weight:800;font-size:.82rem;color:var(--fit,#888)}
+    #results .unc-fit-hint{font-size:.72rem;color:var(--text-muted,#8a8aa3)}
+    #results .unc-bar{height:8px;border-radius:6px;background:var(--border,#e2e8f0);overflow:hidden}
+    #results .unc-bar-fill{height:100%;border-radius:6px;background:var(--fit,#888)}
+    #results .unc-fit-note{margin:8px 0 0;font-size:.78rem;line-height:1.4;color:var(--text-muted,#8a8aa3)}
+    #results .unc-fit--none{border-style:dashed}
+    #results .unc-fit--none .unc-fit-note{margin:0}
 
-  panel.innerHTML = `
-    <div class="insight-card"><div class="insight-label">🎯 TARGET MATCH</div><div class="insight-value">${escapeHTML(data.bestMatch)}</div></div>
-    <div class="insight-card"><div class="insight-label">🛡️ SAFEST CHOICE</div><div class="insight-value">${escapeHTML(data.safestChoice)}</div></div>
-    <div class="insight-card"><div class="insight-label">✨ DREAM TARGET</div><div class="insight-value">${escapeHTML(data.dreamTarget)}</div></div>
-    <div class="insight-card"><div class="insight-label">💳 MIN TUITION</div><div class="insight-value" style="color:var(--accent,#6d5dfb);">${escapeHTML(data.budgetFriendly)}</div></div>
+    #results .unc-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    #results .unc-fact{display:flex;flex-direction:column;gap:3px;min-width:0}
+    #results .unc-k{font-size:.66rem;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted,#8a8aa3);white-space:nowrap}
+    #results .unc-v{font-weight:700;font-size:.92rem;line-height:1.2;white-space:nowrap}
+    #results .unc-v small{font-weight:500;color:var(--text-muted,#8a8aa3)}
+    #results .unc-na{font-weight:500;color:var(--text-muted,#8a8aa3)}
+
+    #results .unc-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:auto;padding-top:4px}
+    #results .unc-btn{display:inline-flex;align-items:center;justify-content:center;width:100%;min-width:0;height:40px;margin:0;padding:0 10px;
+      border-radius:12px;border:1px solid var(--border,#e2e8f0);background:transparent;color:var(--text,inherit);
+      font:600 .84rem/1 var(--font-body,inherit);white-space:nowrap;text-decoration:none;cursor:pointer;
+      transition:border-color .15s,background .15s,transform .1s}
+    #results .unc-btn:hover:not(:disabled){border-color:var(--primary,#6d5dfb);background:rgba(109,93,251,.08)}
+    #results .unc-btn:active:not(:disabled){transform:scale(.98)}
+    #results .unc-btn:disabled{opacity:.45;cursor:not-allowed}
+    #results .unc-btn--primary{background:var(--primary,#6d5dfb);border-color:transparent;color:#fff}
+    #results .unc-btn--primary:hover{background:var(--primary,#6d5dfb);filter:brightness(1.08);border-color:transparent}
+    #results .unc-btn:focus-visible{outline:2px solid var(--primary,#6d5dfb);outline-offset:2px}
+
+    .uf-toolbar{margin:0 0 16px;display:flex;flex-direction:column;gap:10px}
+    .uf-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+    .uf-count{margin:0;font-size:.9rem;color:var(--text-muted,#8a8aa3)}
+    .uf-count strong{color:var(--text,inherit)}
+    .uf-sort{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;color:var(--text-muted,#8a8aa3)}
+    .uf-sort select{padding:8px 10px;border-radius:10px;border:1px solid var(--border,#e2e8f0);background:var(--card-bg,transparent);color:var(--text,inherit);font:inherit}
+    .uf-chips{display:flex;gap:8px;flex-wrap:wrap}
+    .uf-chip{padding:7px 14px;border-radius:999px;cursor:pointer;font:600 .82rem/1 var(--font-body,inherit);
+      border:1px solid var(--border,#e2e8f0);background:transparent;color:var(--text,inherit)}
+    .uf-chip[aria-pressed="true"]{background:var(--primary,#6d5dfb);border-color:var(--primary,#6d5dfb);color:#fff}
+    .uf-note{margin:0;font-size:.8rem;color:var(--text-muted,#8a8aa3)}
+    .uf-tile-sub{margin-top:3px;font-size:.74rem;color:var(--text-muted,#8a8aa3)}
+
+    #results .uf-more{grid-column:1/-1;display:flex;justify-content:center;padding:8px 0 4px}
+    #results .uf-more .unc-btn{width:auto;padding:0 22px}
+    #results .uf-more small{opacity:.7;margin-left:6px}
+
+    #results .uf-loading,#results .uf-empty{grid-column:1/-1;border-radius:20px;border:1px dashed rgba(109,93,251,.3);padding:32px;text-align:center}
+    #results .uf-loading{display:flex;align-items:center;justify-content:center;gap:16px}
+    #results .uf-loading div:last-child{display:flex;flex-direction:column;text-align:left;gap:2px}
+    #results .uf-loading span{font-size:.85rem;color:var(--text-muted,#8a8aa3)}
+    .uf-spinner{width:28px;height:28px;border-radius:50%;border:3px solid rgba(109,93,251,.25);border-top-color:var(--primary,#6d5dfb);animation:uf-spin .8s linear infinite}
+    #results .uf-empty-icon{font-size:2rem;margin-bottom:6px}
+    #results .uf-empty h3{margin:0 0 4px;font-size:1.15rem}
+    #results .uf-empty p{margin:0;color:var(--text-muted,#8a8aa3);font-size:.9rem}
+    @keyframes uf-spin{to{transform:rotate(360deg)}}
+    @media(prefers-reduced-motion:reduce){.uf-spinner{animation:none}}
+    @media(max-width:480px){#results .unc-facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
   `;
+  document.head.appendChild(style);
 }
 
 /** Makes sure `country` exists as an option, then selects it. */
@@ -1576,7 +2185,7 @@ function showUniDetails(uni) {
         ${row("Citations", uni.citations_score)}
         ${row("International Score", uni.international_score)}
         ${row("Sustainability", uni.sustainability_score)}
-        ${row("Estimated Tuition", `$${Number(uni.tuition_fee || uni.displayTuition || 25000).toLocaleString()}`)}
+        ${row("Estimated Tuition", (Number(uni.tuition_fee || uni.displayTuition) > 0) ? `$${Number(uni.tuition_fee || uni.displayTuition).toLocaleString()} / year` : "Not listed")}
         ${row("IELTS", uni.ielts || uni.displayIelts)}
         ${row("TOEFL", uni.toefl)}
       </div>
