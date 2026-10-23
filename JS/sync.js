@@ -82,7 +82,8 @@
     "uniai-activity", // workspace recent activity
     "uniai-shortlist", // legacy shortlist mirror
     "aiSavedJobs", // legacy AI Free job saves (aifree.js)
-    "uniai-last-active" // idle timer stamp (security.js)
+    "uniai-last-active", // idle timer stamp (security.js)
+    "uniai-notifications" // notification centre (notifications.js): per device, wiped on sign-out
   ];
   const LOCAL_ONLY_PREFIXES = ["uniai-quest-rewards:"];
 

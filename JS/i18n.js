@@ -180,7 +180,48 @@
     /* roadmap */
     "THE ROADMAP": ["ロードマップ", "로드맵", "路线图"],
     "Your journey at a glance": ["旅の全体像", "한눈에 보는 여정", "旅程一览"],
-    "Start the journey →": ["旅を始める →", "여정 시작하기 →", "开启旅程 →"]
+    "Start the journey →": ["旅を始める →", "여정 시작하기 →", "开启旅程 →"],
+
+    /* notification centre (notifications.js) */
+    "Mark all read": ["すべて既読にする", "모두 읽음 표시", "全部标为已读"],
+    "Clear all": ["すべて削除", "모두 지우기", "全部清除"],
+    "All": ["すべて", "전체", "全部"],
+    "Unread": ["未読", "읽지 않음", "未读"],
+    "Unread ({x})": ["未読 ({x})", "읽지 않음 ({x})", "未读 ({x})"],
+    "Dismiss": ["閉じる", "삭제", "忽略"],
+    "Deadline": ["締め切り", "마감", "截止日期"],
+    "Sync": ["同期", "동기화", "同步"],
+    "What's new": ["新機能", "새로운 소식", "新功能"],
+    "Tip": ["ヒント", "팁", "提示"],
+    "You're all caught up.": ["すべて確認済みです。", "모두 확인했어요.", "你已查看全部通知。"],
+    "No notifications yet. Deadline reminders, roadmap progress and updates will show up here.": [
+      "まだ通知はありません。締め切りのリマインダー、ロードマップの進捗、お知らせがここに表示されます。",
+      "아직 알림이 없어요. 마감 알림, 로드맵 진행 상황, 업데이트 소식이 여기에 표시됩니다.",
+      "暂无通知。截止日期提醒、路线图进度和更新将显示在这里。"
+    ],
+    "Welcome to UniAI": ["UniAIへようこそ", "UniAI에 오신 것을 환영합니다", "欢迎使用 UniAI"],
+    "Start with the University Finder, then save universities and scholarships to track them here.": [
+      "まず大学検索から始めて、気になる大学や奨学金を保存するとここで管理できます。",
+      "대학 찾기부터 시작하고, 대학과 장학금을 저장하면 여기서 관리할 수 있어요.",
+      "先从大学查找开始，把大学和奖学金保存下来，就能在这里跟踪。"
+    ],
+    "Notifications are live": ["通知機能が使えるようになりました", "알림 기능이 시작되었어요", "通知功能已上线"],
+    "You'll now get reminders for saved scholarship deadlines, roadmap milestones and account sync.": [
+      "保存した奨学金の締め切り、ロードマップの節目、アカウント同期についてお知らせします。",
+      "저장한 장학금 마감일, 로드맵 단계, 계정 동기화에 대한 알림을 받게 됩니다.",
+      "现在你会收到已保存奖学金的截止提醒、路线图里程碑和账户同步通知。"
+    ],
+    "A smarter University Finder": ["より賢くなった大学検索", "더 똑똑해진 대학 찾기", "更智能的大学查找"],
+    "Search understands MIT, UCL and typos. Cards show real data only, and GPA works as 4.0, 10-point or %.": [
+      "MITやUCLなどの略称やタイプミスにも対応。カードには実際のデータのみ表示し、GPAは4.0・10段階・％で入力できます。",
+      "MIT, UCL 같은 약어와 오타도 이해해요. 카드에는 실제 데이터만 표시되며 GPA는 4.0, 10점제, %로 입력할 수 있어요.",
+      "搜索可识别 MIT、UCL 等缩写和拼写错误。卡片只显示真实数据，GPA 支持 4.0 制、10 分制或百分制。"
+    ],
+    "UniAI can now be used in Japanese, Korean and Chinese. Use the globe button in the top bar.": [
+      "UniAIが日本語・韓国語・中国語で使えるようになりました。上部バーの地球儀ボタンから切り替えられます。",
+      "이제 UniAI를 일본어, 한국어, 중국어로 사용할 수 있어요. 상단 바의 지구본 버튼을 눌러 보세요.",
+      "UniAI 现已支持日语、韩语和中文。请使用顶部栏的地球图标切换。"
+    ]
   };
 
   /* ------------------------------------------------------------------------
