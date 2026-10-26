@@ -1288,18 +1288,44 @@ function parseGpaInput(value) {
 }
 
 /**
+ * Typical admitted GPA (4.0 scale). Uses the database value when there is one.
+ * Many databases have no GPA column filled in, so otherwise it is ESTIMATED from the
+ * QS rank (clearly marked as an estimate on the card). No rank and no GPA -> a broad
+ * default, also marked as an estimate.
+ */
+function typicalGpaFor(uni) {
+  const real = numberOrNull(uni.avg_gpa);
+  if (real !== null) return { value: real, estimated: false };
+
+  const rank = numberOrNull(uni.qs_rank ?? uni.rank);
+  const bands = [[10, 3.9], [25, 3.85], [50, 3.75], [100, 3.6], [200, 3.45], [300, 3.3], [500, 3.15], [800, 3.0]];
+
+  let value = 3.0; // unranked
+  if (rank !== null) {
+    value = 2.85;
+    for (const [limit, gpa] of bands) {
+      if (rank <= limit) {
+        value = gpa;
+        break;
+      }
+    }
+  }
+  return { value, estimated: true, byRank: rank !== null };
+}
+
+/**
  * How the student's GPA compares with the university's typical admitted GPA.
- * Returns null (not a guess) when either side is unknown.
+ * Returns null only when the student has not entered a GPA.
  */
 function classifyFit(gpa4, uni) {
-  const typical = numberOrNull(uni.avg_gpa);
-  if (gpa4 === null || gpa4 === undefined || typical === null) return null;
+  if (gpa4 === null || gpa4 === undefined) return null;
 
-  const gap = gpa4 - typical;
+  const t = typicalGpaFor(uni);
+  const gap = gpa4 - t.value;
   const tag = gap >= 0.3 ? "Safe" : gap >= -0.2 ? "Target" : "Dream";
   const score = Math.max(5, Math.min(95, Math.round(50 + gap * 60)));
 
-  return { tag, gap, score, typical };
+  return { tag, gap, score, typical: t.value, estimated: t.estimated, byRank: t.byRank };
 }
 
 function getColor(tag) {
@@ -1581,12 +1607,8 @@ function fitHTML(u) {
         <div class="unc-bar" role="img" aria-label="GPA fit ${u.fit.score} out of 100">
           <div class="unc-bar-fill" style="width:${u.fit.score}%"></div>
         </div>
-        <p class="unc-fit-note">Your GPA ≈ ${gpa.gpa4.toFixed(2)} · typical admit ≈ ${u.fit.typical.toFixed(2)}</p>
+        <p class="unc-fit-note">Your GPA ≈ ${gpa.gpa4.toFixed(2)} · typical admit ≈ ${u.fit.typical.toFixed(2)}${u.fit.estimated ? " (estimated)" : ""}</p>
       </div>`;
-  }
-
-  if (gpa && !gpa.invalid) {
-    return `<div class="unc-fit unc-fit--none"><p class="unc-fit-note">No typical GPA on record for this university, so fit can't be estimated.</p></div>`;
   }
 
   return `<div class="unc-fit unc-fit--none"><p class="unc-fit-note">Add your GPA above to see how you compare.</p></div>`;
@@ -1596,7 +1618,8 @@ function renderUniCard(u, index) {
   const saved = state.shortlist.includes(u.displayName);
   const tuition = u.displayTuition !== null ? `${money(u.displayTuition)}<small>/yr</small>` : `<span class="unc-na">Not listed</span>`;
   const ielts = u.displayIelts !== null ? escapeHTML(u.displayIelts) : `<span class="unc-na">—</span>`;
-  const typical = numberOrNull(u.avg_gpa) !== null ? Number(u.avg_gpa).toFixed(2) : `<span class="unc-na">—</span>`;
+  const tg = typicalGpaFor(u);
+  const typical = tg.estimated ? `≈ ${tg.value.toFixed(2)}<small>est.</small>` : tg.value.toFixed(2);
   const website = safeUrl(u.website);
   const detailUrl = uniDetailUrl(u) || "#";
 
@@ -1606,7 +1629,7 @@ function renderUniCard(u, index) {
         ${logoHTML(u)}
         <div class="unc-title">
           <div class="unc-name">${escapeHTML(u.displayName)}</div>
-          <div class="unc-loc">📍 ${escapeHTML(u.country || "Location not listed")}</div>
+          <div class="unc-loc"><span aria-hidden="true">📍</span> <span>${escapeHTML(u.country || "Location not listed")}</span></div>
         </div>
         ${u.rank !== null ? `<span class="unc-rank" title="QS World University Ranking">QS #${escapeHTML(u.rank)}</span>` : ""}
       </div>
@@ -1717,6 +1740,9 @@ function renderFinderToolbar() {
     `<option value="${value}" ${finderView.sort === value ? "selected" : ""}>${label}</option>`;
 
   const notes = [];
+  if (hasFit && finderView.all.some((u) => u.fit && u.fit.estimated)) {
+    notes.push("Where your database has no typical GPA, it is estimated from the QS rank. Treat Safe / Target / Dream as a guide, not a prediction.");
+  }
   if (finderView.gpa && finderView.gpa.invalid) notes.push(finderView.gpa.note);
   else if (finderView.gpa && finderView.gpa.note) notes.push(finderView.gpa.note);
   if (finderView.budget) {
@@ -1724,7 +1750,6 @@ function renderFinderToolbar() {
     if (unknown) notes.push(`${unknown} ${unknown === 1 ? "university has" : "universities have"} no tuition listed, so the budget filter can't check ${unknown === 1 ? "it" : "them"}.`);
   }
 
-  const heading = finderView.query ? ` for “${escapeHTML(finderView.query)}”` : "";
 
   // The page only loads a first batch (Supabase/APIs usually cap at 1,000 rows). Say so,
   // instead of implying the database only has that many universities.
@@ -1734,9 +1759,14 @@ function renderFinderToolbar() {
     notes.push("This is the first batch of your database. Search by name, country or budget to look through all universities.");
   }
 
+  // One plain sentence (no <strong> pieces) so the language switcher can translate and reorder it.
+  const countText =
+    `Showing ${finderView.shown} of ${finderView.list.length}${capped ? "+" : ""} universities` +
+    (finderView.query ? ` for “${finderView.query}”` : "");
+
   bar.innerHTML = `
     <div class="uf-row">
-      <p class="uf-count" role="status" aria-live="polite">Showing <strong>${finderView.shown}</strong> of <strong>${finderView.list.length}${capped ? "+" : ""}</strong> universities${heading}</p>
+      <p class="uf-count" role="status" aria-live="polite">${escapeHTML(countText)}</p>
       <label class="uf-sort">Sort by
         <select data-uf-sort>
           ${sortOption("best", finderView.query ? "Best match" : "Best fit")}
