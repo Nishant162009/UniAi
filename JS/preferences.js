@@ -338,7 +338,7 @@
 .ob-dock{max-height:48vh;overflow-y:auto;padding:16px 24px calc(16px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--border,#282c34)}
 .ob-ctl{margin-bottom:12px}.ob-lab{display:block;margin-bottom:6px;color:var(--text-muted,#9da3ae);font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
 .ob-row{display:flex;flex-wrap:wrap;gap:8px}
-.ob-opt{min-height:44px;padding:0 15px;border:1px solid var(--border,#282c34);border-radius:14px;background:var(--surface-2,#17191f);color:var(--text,#f5f7fa);font:600 .88rem inherit;cursor:pointer;transition:.15s}
+.ob-opt{min-height:44px;padding:0 15px;border:1px solid var(--border,#282c34);border-radius:14px;background:var(--surface-2,#17191f);color:var(--text,#f5f7fa);font-family:inherit;font-weight:600;font-size:.88rem;cursor:pointer;transition:.15s}
 .ob-opt:hover{border-color:var(--primary,#8b5cf6)}.ob-opt.on{background:var(--violet-light,#241c3d);border-color:var(--primary,#8b5cf6);color:var(--primary,#a78bfa)}
 .ob-in,.ob-sel{width:100%;min-height:46px;padding:0 14px;border:1px solid var(--border,#282c34);border-radius:12px;background:var(--bg,#0b0c10);color:var(--text,#f5f7fa);font-size:16px;outline:none}
 .ob-in:focus,.ob-sel:focus{border-color:var(--primary,#8b5cf6)}
@@ -923,19 +923,23 @@ function setTalking(on) {
 
     const country = realCountries(prefs)[0];
 
-    if (select && !select.value && country) {
-      let option = Array.from(select.options).find(
-        (o) => o.value === country || o.textContent.trim() === country
-      );
-
-      if (!option) {
-        option = document.createElement("option");
-        option.value = country;
-        option.textContent = country;
-        select.appendChild(option);
-      }
-
-      select.value = option.value;
+    // The country list is loaded from the server a moment after the page opens, and that
+    // load rebuilds the dropdown. Keep trying until the real option exists (or give up),
+    // instead of adding a fake one that would be wiped.
+    if (select && country) {
+      let tries = 0;
+      const pick = () => {
+        if (select.value) return; // the person already chose something
+        const option = Array.from(select.options).find(
+          (o) => o.value === country || o.textContent.trim() === country
+        );
+        if (option) {
+          select.value = option.value;
+        } else if (tries++ < 12) {
+          setTimeout(pick, 500);
+        }
+      };
+      pick();
     }
 
     // The finder's GPA box is out of 4.0, the profile's may be out of 10 or 100.
@@ -982,6 +986,11 @@ function setTalking(on) {
     scholarshipApplied = true;
   }
 
+  /**
+   * The "Study Identity" row + button on the Profile page. They are ALWAYS there:
+   * "Set up" before a profile exists, "Edit" afterwards. (They used to be added only
+   * after a profile was saved, so there was no way to create the first one.)
+   */
   function renderPrefsOnProfilePage(prefs) {
     const grid = document.querySelector(".profile-info-grid");
     if (!grid) return;
@@ -995,8 +1004,9 @@ function setTalking(on) {
       grid.appendChild(row);
     }
 
-    const summary =
-      [prefs.degree, prefs.field, listText(prefs) || "Exploring"].filter(Boolean).join(" · ");
+    const summary = prefs
+      ? [prefs.degree, prefs.field, listText(prefs) || "Exploring"].filter(Boolean).join(" · ")
+      : "Not set up yet. Tap to build yours.";
 
     // textContent only: these values are user-typed.
     row.textContent = "";
@@ -1020,23 +1030,43 @@ function setTalking(on) {
     row.append(label, valueRow);
 
     row.style.cursor = "pointer";
+    row.setAttribute("role", "button");
+    row.setAttribute("tabindex", "0");
     row.onclick = openPrefsModal;
+    row.onkeydown = (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openPrefsModal();
+      }
+    };
   }
 
-  function injectProfileEditButton() {
-    if (byId("prefs-edit-btn")) return;
+  function injectProfileEditButton(hasPrefs) {
+    let button = byId("prefs-edit-btn");
 
-    const anchor = document.querySelector(".profile-edit-btn");
-    if (!anchor || !anchor.parentElement) return;
+    if (!button) {
+      const anchor = document.querySelector(".profile-edit-btn");
+      if (!anchor || !anchor.parentElement) return;
 
-    const button = document.createElement("button");
-    button.id = "prefs-edit-btn";
-    button.type = "button";
-    button.className = "profile-footer-action";
-    button.innerHTML = "<span>Edit Study Identity</span><span>✦</span>";
-    button.addEventListener("click", openPrefsModal);
+      button = document.createElement("button");
+      button.id = "prefs-edit-btn";
+      button.type = "button";
+      button.className = "profile-footer-action";
+      button.addEventListener("click", openPrefsModal);
 
-    anchor.parentElement.appendChild(button);
+      anchor.parentElement.appendChild(button);
+    }
+
+    button.innerHTML = hasPrefs
+      ? "<span>Edit Study Identity</span><span>✦</span>"
+      : "<span>Set up Study Identity</span><span>✦</span>";
+  }
+
+  /** Draws the Profile page entry for whatever is saved right now (or nothing). */
+  function ensureProfileEntry() {
+    const prefs = readPrefs();
+    injectProfileEditButton(Boolean(prefs));
+    renderPrefsOnProfilePage(prefs ? normalizePrefs(prefs) : null);
   }
 
   function applyPersonalization(prefs) {
@@ -1046,7 +1076,7 @@ function setTalking(on) {
 
     personalizeHome(normalized);
     personalizeFinder(normalized);
-    injectProfileEditButton();
+    injectProfileEditButton(true);
     renderPrefsOnProfilePage(normalized);
 
     window.UniAIStudyProfile = normalized;
@@ -1062,11 +1092,8 @@ function setTalking(on) {
     const search = byId("uni-search");
     if (search) search.placeholder = "Search universities, courses, countries...";
 
-    const row = byId("prefs-info-row");
-    if (row) row.remove();
-
-    const button = byId("prefs-edit-btn");
-    if (button) button.remove();
+    injectProfileEditButton(false);
+    renderPrefsOnProfilePage(null);
 
     const filter = byId("scholarship-filter");
     if (filter && autoScholarshipValue && filter.value.trim() === autoScholarshipValue) {
@@ -1113,6 +1140,8 @@ function setTalking(on) {
     window.showPage = async function (page, event) {
       const result = await originalShowPage(page, event);
 
+      if (page === "profile" || page === "profilePage") ensureProfileEntry();
+
       if (readPrefs()) {
         if (page === "scholarships" || page === "scholarshipsPage") {
           setTimeout(applyScholarshipCountry, 150);
@@ -1130,7 +1159,7 @@ function setTalking(on) {
               typeof window.findUniversities === "function"
             ) {
               finderSearched = true;
-              window.findUniversities();
+              window.findUniversities({ scroll: false });
             }
           }, 400);
         }
@@ -1264,6 +1293,9 @@ function setTalking(on) {
     // Paint this browser's copy straight away if it belongs to a signed-in
     // account. The auth event then confirms it, replaces it, or clears it.
     const prefs = readPrefs();
+
+    // The Profile page entry exists from the first visit, with or without a saved profile.
+    ensureProfileEntry();
 
     if (prefs && readOwner()) {
       setTimeout(() => commitPrefs(prefs), 300);

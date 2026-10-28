@@ -230,6 +230,10 @@
     const saved = window.UniAISaved;
     if (!saved || typeof saved.list !== "function") return;
 
+    // Respect the choice made in the Study Identity ("Application deadlines" switch).
+    const profile = window.UniAIStudyProfile;
+    if (profile && profile.notifications && profile.notifications.deadlines === false) return;
+
     const now = Date.now();
 
     saved.list().forEach((item) => {
@@ -628,6 +632,7 @@
     // Sources.
     addStatic();
     window.addEventListener("uniai:saved-change", checkDeadlines);
+    window.addEventListener("uniai:preferences", checkDeadlines);
     window.addEventListener("uniai:sync", (e) => {
       onSync(e);
       lastPercent = readRoadmapPercent();
