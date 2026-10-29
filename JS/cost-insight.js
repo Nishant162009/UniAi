@@ -313,6 +313,9 @@
 
   let last = null; // most recent calculation, used by copy / CSV
 
+  // Read-only access for other scripts (loan.js uses the funding gap).
+  window.UniAICostInsight = { gap: () => (last ? last.gap : null), total: () => (last ? last.grand : null) };
+
   function compute() {
     const v = {
       rent: num("rent"),

@@ -386,6 +386,16 @@
               <strong>Currency Converter</strong>
               <small>Convert between currencies</small>
             </button>
+            <button class="tool-card" onclick="showPage('tracker', event)">
+              <div class="tool-icon icon-blue">📋</div>
+              <strong>Application Tracker</strong>
+              <small>Track every application and its status</small>
+            </button>
+            <button class="tool-card" onclick="showPage('calendar', event)">
+              <div class="tool-icon icon-pink">📅</div>
+              <strong>Deadline Calendar</strong>
+              <small>See all your deadlines in one place</small>
+            </button>
           </div>
         </div>
       </aside>
@@ -6404,5 +6414,11 @@
 <script src="JS/globe.js"></script>
 <script src="JS/cost-insight.js"></script>
 <script src="JS/currency-insight.js"></script>
+<script src="JS/tracker.js"></script>        <!-- + "uniai-tracker" in PERSONAL_KEYS -->
+<script src="JS/calendar.js"></script>
+<script src="JS/compare.js"></script>
+<script src="JS/loan.js"></script>           <!-- needs the updated cost-insight.js -->
+<script src="JS/interview.js"></script>      <!-- needs the backend route -->
+<script src="JS/currency-options.js"></script>
 </body>
 </html>

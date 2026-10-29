@@ -1616,6 +1616,7 @@ function fitHTML(u) {
 
 function renderUniCard(u, index) {
   const saved = state.shortlist.includes(u.displayName);
+  const comparing = !!(window.UniAICompare && window.UniAICompare.has(u.displayName));
   const tuition = u.displayTuition !== null ? `${money(u.displayTuition)}<small>/yr</small>` : `<span class="unc-na">Not listed</span>`;
   const ielts = u.displayIelts !== null ? escapeHTML(u.displayIelts) : `<span class="unc-na">—</span>`;
   const tg = typicalGpaFor(u);
@@ -1644,6 +1645,7 @@ function renderUniCard(u, index) {
 
       <div class="unc-actions">
         <button type="button" class="unc-btn" data-action="save">${saved ? "★ Saved" : "☆ Save"}</button>
+        <button type="button" class="unc-btn${comparing ? " is-on" : ""}" data-action="compare" data-name="${escapeHTML(u.displayName)}">${comparing ? "✓ Comparing" : "⚖ Compare"}</button>
         <button type="button" class="unc-btn" data-action="peek">Quick view</button>
         <button type="button" class="unc-btn" data-action="website" data-url="${escapeHTML(website)}" ${website ? "" : "disabled"}>Website</button>
         <a class="unc-btn unc-btn--primary" data-action="details" href="${escapeHTML(detailUrl)}">Explore →</a>
@@ -1982,6 +1984,18 @@ function setupFinderDelegation() {
       return;
     }
 
+    if (action === "compare") {
+      const cmp = window.UniAICompare;
+      if (!cmp || typeof cmp.toggle !== "function") return;
+      const res = cmp.toggle({ name: uni.displayName, slug: getUniSlug(uni) });
+      if (res.full) {
+        const before = actionBtn.textContent;
+        actionBtn.textContent = "Max 3 — remove one";
+        setTimeout(() => { actionBtn.textContent = before; }, 1600);
+      }
+      return;
+    }
+
     if (action === "peek") {
       showUniDetails(uni);
       return;
@@ -2086,7 +2100,7 @@ function injectFinderStyles() {
     #results .unc-btn:hover:not(:disabled){border-color:var(--primary,#6d5dfb);background:rgba(109,93,251,.08)}
     #results .unc-btn:active:not(:disabled){transform:scale(.98)}
     #results .unc-btn:disabled{opacity:.45;cursor:not-allowed}
-    #results .unc-btn--primary{background:var(--primary,#6d5dfb);border-color:transparent;color:#fff}
+    #results .unc-btn--primary{grid-column:1/-1;background:var(--primary,#6d5dfb);border-color:transparent;color:#fff}
     #results .unc-btn--primary:hover{background:var(--primary,#6d5dfb);filter:brightness(1.08);border-color:transparent}
     #results .unc-btn:focus-visible{outline:2px solid var(--primary,#6d5dfb);outline-offset:2px}
 

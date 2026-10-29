@@ -72,7 +72,8 @@
     "uniAIConversation", // legacy single chat, imported once into uniAIChats
     "uniai-sop-studio", // sop.js drafts
     "uniai-streak", // profile-editor.js
-    "uniai-daily" // profile-editor.js
+    "uniai-daily", // profile-editor.js
+    "uniai-tracker" // tracker.js
   ];
 
   // Never uploaded, but removed on sign-out (exact keys and key prefixes).
