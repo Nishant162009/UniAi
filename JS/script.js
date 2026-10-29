@@ -28,8 +28,8 @@
    ACCESS MODEL (freemium)
    -----------------------
    Guests get a free taste of every section; signing in unlocks everything.
-     - AI chat ........ 1 free message
-     - Guides ......... 1 free guide
+     - AI chat ........ 5 free messages
+     - Guides ......... 5 free guides
      - Workspace, Visa Guide, SOP/LOR, Roadmap ... 1 free pass each
    Usage is tracked by FreeUse (section 00) in localStorage.
    ========================================================================== */
@@ -68,8 +68,8 @@ const CONFIG = {
 
   // Free allowance for guests.
   FREE: {
-    chatMessages: 1,
-    guides: 1
+    chatMessages: 5,
+    guides: 5
   },
 
   // Supabase's default minimum password length.
@@ -86,12 +86,12 @@ const CONFIG = {
 
 // Sign-in modal title shown when a section's free preview has been used up.
 const LOCK_TITLES = {
-  "ai-chat": "You've used your free message — sign in to keep chatting",
+  "ai-chat": "You've used your 5 free messages — sign in to keep chatting",
   workspace: "You've used your free preview — sign in to unlock your Workspace",
   visaGuide: "You've used your free preview — sign in to open the Visa Guide",
   sopStudio: "You've used your free preview — sign in to use SOP & LOR Tools",
   roadmap: "You've used your free preview — sign in to open your Roadmap",
-  guide: "You've used your free guide — sign in to unlock all guides"
+  guide: "You've used your 5 free guides — sign in to unlock all guides"
 };
 
 const PLACEHOLDER_LOGO = "https://placehold.co/100x100?text=UNI";
@@ -3118,7 +3118,7 @@ async function askUniAI(customMessage = null) {
 
     if (res.status === 429 && guestRequest) {
       // Server says this guest already used their free message.
-      throw new ChatAuthError("Free message used. Sign in to keep chatting.");
+      throw new ChatAuthError("Free messages used. Sign in to keep chatting.");
     }
     if (res.status === 401 || res.status === 403) {
       throw new ChatAuthError(
