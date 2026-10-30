@@ -8,6 +8,7 @@ const fs = require("fs");
 const universityRoutes = require("./routes/universityRoutes");
 const aiRoutes = require("./routes/aiRoutes");
 const accountRoutes = require("./routes/accountRoutes");
+   const interviewRoutes = require("./routes/interviewroutes");
 
 const { applySecurity } = require("./security/server-headers");
 
@@ -30,6 +31,8 @@ app.use(express.static(rootPath));
 app.use("/universities", universityRoutes);
 app.use("/ai", aiRoutes);
 app.use("/api/account", accountRoutes);
+   app.use("/ai/interview", interviewRoutes);
+
 
 // Home route
 app.get("/", (req, res) => {
