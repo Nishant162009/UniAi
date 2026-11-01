@@ -617,6 +617,7 @@
     });
 
     render();
+    if (window.UniAIRegion) applyRegion(window.UniAIRegion.get(), false);
     return true;
   }
 
@@ -1182,6 +1183,18 @@
   function open() {
     return typeof window.showPage === "function" ? window.showPage("visaInterview") : false;
   }
+
+  /** Follows the site-wide region (JS/region.js) when it maps to an interview destination. */
+  function applyRegion(r, force) {
+    const code = r && r.interview;
+    if (!code || s.running || s.busy || !COUNTRIES.some((c) => c[0] === code)) return;
+    if (!force && (loadStore().prefs || {}).country) return; // keep a choice the user already made
+    s.country = code;
+    savePrefs();
+    render();
+  }
+
+  window.addEventListener("uniai:region-change", (e) => applyRegion(e.detail, true));
 
   window.UniAIInterview = { open, check: checkAnswer };
 

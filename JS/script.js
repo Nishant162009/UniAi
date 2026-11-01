@@ -2172,6 +2172,9 @@ function presetFinder(country, gpa, budget) {
 function showUniDetails(uni) {
   if (!uni) return;
 
+  // Lets the home page learn from what the user opens (JS/region.js).
+  window.dispatchEvent(new CustomEvent("uniai:uni-viewed", { detail: { name: uni.displayName || uni.name || "" } }));
+
   let modal = $("details-modal");
 
   if (!modal) {
